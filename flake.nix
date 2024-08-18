@@ -33,7 +33,6 @@
 
           modules = [
             ./hosts/nixos-qemu
-            # ./users/${username}/configuration.nix
 
             home-manager.nixosModules.home-manager
             {
