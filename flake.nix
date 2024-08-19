@@ -12,13 +12,17 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = inputs@{ home-manager, nixpkgs, ... }:
+  outputs = inputs@{ disko, home-manager, nixpkgs, ... }:
 
   {
     nixosConfigurations = {
@@ -32,7 +36,14 @@
           inherit specialArgs;
 
           modules = [
+            disko.nixosModules.disko
+
             ./hosts/nixos-qemu
+            ./hosts/nixos-qemu/disko.nix
+
+            {
+              _module.args.disks = [ "/dev/vda" "/dev/vdb" ];
+            }
 
             home-manager.nixosModules.home-manager
             {
