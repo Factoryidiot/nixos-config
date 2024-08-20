@@ -45,8 +45,8 @@
 
   i18n.defaultLocale = "en_AU.UTF-8";
 
-  netwo rking = {
-    fire wall = {
+  networking = {
+    firewall = {
       allowedTCPPorts = [ 22 80 443 8080 ];
       # allowedUDPPorts = [ ... ];
       enable = false;
