@@ -31,7 +31,7 @@
     # useXkbConfig = true;
   };
 
-  environm ent = {
+  environment = {
     systemPackages = with pkgs; [
       curl
       git
