@@ -10,7 +10,7 @@
         content = {
           type = "gpt";
           partitions = {
-            ESP = {
+            ESP = { 
               name = "ESP";
               start = "1MiB";
               end = "128MiB";
@@ -44,24 +44,22 @@
         };
       };
       vdb = {
-        device = builtins.elemAt disks 1;
         type = "disk";
+        device = builtins.elemAt disks 1;
         content = {
-          type = "table";
-          format = "gpt";
-          partitions = [
-            {
+          type = "gpt";
+          partitions = {
+            HOME = {
               name = "HOME";
               start = "1MiB";
               end = "100%";
               content = {
-                format = "btrfs";
+                type = "btrfs";
                 mountOptions = [ "compress=zstd" ];
                 mountpoint = "/home";
               };
-            }
-          ];
-        };
+            };
+          };
       };
     };
   };
