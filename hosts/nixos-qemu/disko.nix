@@ -14,11 +14,11 @@
               name = "ESP";
               start = "1MiB";
               end = "128MiB";
-              bootable = "true";
+              priority = 1;
+              type = "EF00";
               content = {
                 type = "filesystem";
                 format = "vfat";
-                bootable = true;
                 mountpoint = "/boot";
               };
             }
