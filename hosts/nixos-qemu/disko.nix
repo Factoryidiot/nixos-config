@@ -5,18 +5,18 @@
   disko.devices = {
     disk = {
       vda = {
-        device = builtins.elemAt disks 0;
         type = "disk";
+        device = builtins.elemAt disks 0;
         content = {
-          type = "table";
-          format = "gpt";
+          type = "gpt";
           partitions = [
             {
               name = "ESP";
               start = "1MiB";
-              end = "500MiB";
+              end = "128MiB";
               bootable = "true";
               content = {
+                type = "filesystem";
                 format = "vfat";
                 bootable = true;
                 mountpoint = "/boot";
@@ -24,11 +24,20 @@
             }
             {
               name = "ROOT";
-              start = "500MiB";
+              start = "128MiB";
               end = "100%";
               content = {
-                format = "btrfs";
-                mountpoint = "/";
+                type = "btrfs";
+                extraArgs = [ "-f" ];
+                subvolumes = {
+                  "/root" = {
+                    mountpoint = "/";
+                  };
+                  "/nix" = {
+                    mountOptions = [ "compress=zstd" "noatime" ];
+                    mountpoint = "/nix";
+                  };
+                };
               };
             }
           ];
@@ -47,6 +56,7 @@
               end = "100%";
               content = {
                 format = "btrfs";
+                mountOptions = [ "compress=zstd" ];
                 mountpoint = "/home";
               };
             }
