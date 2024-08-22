@@ -9,8 +9,8 @@
         device = builtins.elemAt disks 0;
         content = {
           type = "gpt";
-          partitions = [
-            {
+          partitions = {
+            ESP = {
               name = "ESP";
               start = "1MiB";
               end = "128MiB";
@@ -21,8 +21,8 @@
                 format = "vfat";
                 mountpoint = "/boot";
               };
-            }
-            {
+            };
+            ROOT = {
               name = "ROOT";
               start = "128MiB";
               end = "100%";
@@ -32,15 +32,16 @@
                 subvolumes = {
                   "/root" = {
                     mountpoint = "/";
-                  };
+                   };
                   "/nix" = {
                     mountOptions = [ "compress=zstd" "noatime" ];
                     mountpoint = "/nix";
                   };
                 };
               };
-            }
-          ];
+            };
+          };
+         ];
         };
       };
       vdb = {
