@@ -97,7 +97,7 @@
 
   users = {
     users.${username} = {
-      isNormal = true;
+      isNormalUser = true;
       description = username;
       extraGroups = [ "audio" "netowkrmanager" "video" "wheel" ];
      };
