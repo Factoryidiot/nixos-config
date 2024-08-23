@@ -3,6 +3,10 @@
 {
   imports = [
     ../../home/default.nix
+
+    ../../home/fastfetch.nix
+    ../../home/git.nix
+
   ];
 
   programs.git = {
