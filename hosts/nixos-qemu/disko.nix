@@ -11,7 +11,7 @@
           type = "gpt";
           partitions = {
             ESP = { 
-              name = "ESP";
+             # name = "ESP";
               start = "1MiB";
               end = "128MiB";
               priority = 1;
@@ -24,8 +24,9 @@
             };
             ROOT = {
               name = "ROOT";
-              start = "128MiB";
-              end = "100%";
+              # start = "128MiB";
+              # end = "100%";
+              size = "100%";
               content = {
                 type = "btrfs";
                 extraArgs = [ "-f" ];
@@ -50,9 +51,10 @@
           type = "gpt";
           partitions = {
             HOME = {
-              name = "HOME";
-              start = "1MiB";
-              end = "100%";
+              # name = "HOME";
+              # start = "1MiB";
+              # end = "100%";
+              size = "100%";
               content = {
                 type = "btrfs";
                 mountOptions = [ "compress=zstd" ];
