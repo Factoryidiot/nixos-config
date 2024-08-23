@@ -10,7 +10,7 @@
       accept-flake-config = true;
       experimental-features = [ "nix-command" "flakes" ];
       trusted-users = [username];
-      substiturers = [
+      substituters = [
         "https://cache.nixos.org"
       ]; 
     };
