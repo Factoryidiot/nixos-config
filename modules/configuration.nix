@@ -9,7 +9,7 @@
     settings = {
       accept-flake-config = true;
       experimental-features = [ "nix-command" "flakes" ];
-      trusted-users = [username];
+      trusted-users = [ username ];
       substituters = [
         "https://cache.nixos.org"
       ]; 
@@ -99,7 +99,7 @@
     users.${username} = {
       isNormalUser = true;
       description = username;
-      extraGroups = [ "audio" "netowkrmanager" "video" "wheel" ];
+      extraGroups = [ "audio" "networkmanager" "video" "wheel" ];
      };
   };
 }
