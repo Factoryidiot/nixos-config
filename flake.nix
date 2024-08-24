@@ -16,24 +16,44 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    flake-parts.url = "github:hercules-ci/flake-parts";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = inputs@{ disko, home-manager, nixpkgs, self, ... }:
-
+  outputs = inputs@{ disko, flake-parts, home-manager, nixpkgs, self, ... }:
+  flake-parts.lib.mkFlake { inherit inputs; } 
   {
-    nixosConfigurations = {
+    systems = [ "x86_64-linux" ];
 
-      nixos-qemu = let
-        username = "rhys";
-        specialArgs = { inherit username; };
-      in
+    flake = let 
+      username = "rhys";
+      specialArgs = { inherit username; };
+      system = "x86_64-linux";
+      pkgs = nixpkgs.legacyPackages.${system};
+    in {
+
+      homeConfigurations.${username} = home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+        modules = [
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+
+            home-manager.extraSpecialArgs = inputs // specialArgs;
+            home-manager.users.${username} = import ./users/${username}/home.nix;
+          }
+
+
+        ];
+      };
+
+      nixosConfigurations.nixos-qemu = {
         nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          inherit specialArgs;
+          # inherit specialArgs;
 
           modules = [
             disko.nixosModules.disko
@@ -45,14 +65,6 @@
               _module.args.disks = [ "/dev/vda" "/dev/vdb" ];
             }
 
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-
-              home-manager.extraSpecialArgs = inputs // specialArgs;
-              home-manager.users.${username} = import ./users/${username}/home.nix;
-            }
           ];
         };
     };
