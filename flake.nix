@@ -37,6 +37,7 @@
 
       homeConfigurations.${username} = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
+        inherit specialArgs;
         modules = [
           home-manager.nixosModules.home-manager
           {
