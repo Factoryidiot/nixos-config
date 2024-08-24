@@ -22,7 +22,7 @@
     };
   };
 
-  outputs = inputs@{ disko, home-manager, nixpkgs, ... }:
+  outputs = inputs@{ disko, home-manager, nixpkgs, self, ... }:
 
   {
     nixosConfigurations = {
