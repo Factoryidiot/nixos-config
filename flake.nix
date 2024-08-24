@@ -46,26 +46,22 @@
             home-manager.extraSpecialArgs = inputs // specialArgs;
             home-manager.users.${username} = import ./users/${username}/home.nix;
           }
-
-
         ];
       };
 
       nixosConfigurations.nixos-qemu = nixpkgs.lib.nixosSystem {
-          # inherit specialArgs;
+        # inherit specialArgs;
+        modules = [
+          disko.nixosModules.disko
 
-          modules = [
-            disko.nixosModules.disko
+          ./hosts/nixos-qemu
+          ./hosts/nixos-qemu/disko.nix
 
-            ./hosts/nixos-qemu
-            ./hosts/nixos-qemu/disko.nix
-
-            {
-              _module.args.disks = [ "/dev/vda" "/dev/vdb" ];
-            }
-
-          ];
-        };
+          {
+            _module.args.disks = [ "/dev/vda" "/dev/vdb" ];
+          }
+        ];
+      };
     };
   };
   
