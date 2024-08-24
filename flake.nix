@@ -51,8 +51,7 @@
         ];
       };
 
-      nixosConfigurations.nixos-qemu = {
-        nixpkgs.lib.nixosSystem {
+      nixosConfigurations.nixos-qemu = nixpkgs.lib.nixosSystem {
           # inherit specialArgs;
 
           modules = [
