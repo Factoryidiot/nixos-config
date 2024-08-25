@@ -35,6 +35,7 @@
     systemPackages = with pkgs; [
       curl
       git
+      home-manager
       vim
       wget
     ]; 
