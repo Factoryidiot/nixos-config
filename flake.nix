@@ -16,53 +16,47 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    flake-parts.url = "github:hercules-ci/flake-parts";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = inputs@{ disko, flake-parts, home-manager, nixpkgs, self, ... }:
-  flake-parts.lib.mkFlake { inherit inputs; } 
+  outputs = inputs@{ disko, home-manager, nixpkgs, self, ... }:
+
   {
-    systems = [ "x86_64-linux" ];
+    nixosConfigurations = {
 
-    flake = let 
-      username = "rhys";
-      specialArgs = { inherit username; };
-      system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
-    in {
+      nixos-qemu = let
+        username = "rhys";
+        specialArgs = { inherit username; };
+      in
+        nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          inherit specialArgs;
 
-      homeConfigurations.${username} = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        inherit specialArgs;
-        modules = [
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
+          modules = [
+            disko.nixosModules.disko
 
-            home-manager.extraSpecialArgs = inputs // specialArgs;
-            home-manager.users.${username} = import ./users/${username}/home.nix;
-          }
-        ];
-      };
+            ./hosts/nixos-qemu
+            ./hosts/nixos-qemu/disko.nix
 
-      nixosConfigurations.nixos-qemu = nixpkgs.lib.nixosSystem {
-        # inherit specialArgs;
-        modules = [
-          disko.nixosModules.disko
+            {
+              _module.args.disks = [ "/dev/vda" "/dev/vdb" ];
+            }
 
-          ./hosts/nixos-qemu
-          ./hosts/nixos-qemu/disko.nix
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
 
-          {
-            _module.args.disks = [ "/dev/vda" "/dev/vdb" ];
-          }
-        ];
-      };
+              home-manager.extraSpecialArgs = inputs // specialArgs;
+              home-manager.users.${username} = import ./users/${username}/home.nix;
+            }
+
+
+          ];
+        };
     };
   };
   
