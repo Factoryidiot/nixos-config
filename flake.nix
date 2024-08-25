@@ -56,6 +56,8 @@
 
         rhys = home-manager.lib.homeManagerConfiguration {
 
+            pkgs = 
+
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
