@@ -59,7 +59,7 @@
           pkgs = nixpkgs.legacyPackages.${system};
           
           modules = [
-            import ./users/${username}/home.nix;
+            import ./users/${username}/home.nix
             # home-manager.nixosModules.home-manager
             # {
             #   home-manager.useGlobalPkgs = true;
