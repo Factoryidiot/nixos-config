@@ -23,16 +23,19 @@
   };
 
   outputs = inputs@{ disko, home-manager, nixpkgs, self, ... }:
+    let
+      username = "rhys";
+      specialArgs = { inherit username; };
+      system = "x86_64-linux";
+    in {
+      nixosConfigurations = {
 
-  {
-    nixosConfigurations = {
-
-      nixos-qemu = let
-        username = "rhys";
-        specialArgs = { inherit username; };
-      in
-        nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
+      # nixos-qemu = let
+      #  username = "rhys";
+      #  specialArgs = { inherit username; };
+      # in
+        nixos-qemu = nixpkgs.lib.nixosSystem {
+          # system = "x86_64-linux";
           inherit specialArgs;
 
           modules = [
@@ -44,6 +47,14 @@
             {
               _module.args.disks = [ "/dev/vda" "/dev/vdb" ];
             }
+          ];
+        };
+
+      };
+
+      homeConfigurations = {
+
+        rhys = home-manager.lib.homeManagerConfiguration {
 
             home-manager.nixosModules.home-manager
             {
@@ -54,10 +65,10 @@
               home-manager.users.${username} = import ./users/${username}/home.nix;
             }
 
+       };
+      };
 
-          ];
-        };
+
     };
-  };
   
 }
