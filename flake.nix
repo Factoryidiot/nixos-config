@@ -30,10 +30,6 @@
     in {
       nixosConfigurations = {
 
-      # nixos-qemu = let
-      #  username = "rhys";
-      #  specialArgs = { inherit username; };
-      # in
         nixos-qemu = nixpkgs.lib.nixosSystem {
           # system = "x86_64-linux";
           inherit specialArgs;
@@ -47,19 +43,6 @@
             {
               _module.args.disks = [ "/dev/vda" "/dev/vdb" ];
             }
-          ];
-        };
-
-      };
-
-      homeConfigurations = {
-
-        rhys = home-manager.lib.homeManagerConfiguration {
-
-          pkgs = nixpkgs.legacyPackages.${system};
-          
-          modules = [
-            # import ./users/${username}/home.nix
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
