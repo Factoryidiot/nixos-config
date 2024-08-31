@@ -20,12 +20,12 @@
               };
             };
             luks = {
-              size = "100%"
+              size = "100%";
               content = {
                 type = "luks";
-                name = "encrypted"
+                name = "encrypted";
                 settings = {
-                  keyFile = "/dev/disk/by-label/LUKS-CRYPT"; # The keyfile is stored on a USB stick
+                  keyFile = "/dev/disk/by-label/CRYPT"; # The keyfile is stored on a USB stick
                   # The maximum size of the keyfile is 8192 KiB
                   # type `cryptsetup --help` to see the compiled-in key and passphrase maximum sizes
                   keyFileSize = 512 * 64; # match the `bs * count` of the `dd` command
@@ -80,4 +80,5 @@
       };
     };
   };
+
 }
