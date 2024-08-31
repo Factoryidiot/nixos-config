@@ -51,6 +51,7 @@
               home-manager.users.${username} = import ./users/${username}/home.nix;
             }
           ];
+        };
 
         whio = nixpkgs.lib.nixosSystem {
           inherit specialArgs;
@@ -74,6 +75,6 @@
           ];
         };
 
-    };
-  
+      };
+
 }
