@@ -62,9 +62,6 @@
             ./hosts/whio
             ./hosts/whio/disko.nix
 
-            # {
-            #   _module.args.disks = [ "/dev/nvme0n1" ];
-            # }
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
@@ -76,5 +73,6 @@
         };
 
       };
+    };
 
 }
