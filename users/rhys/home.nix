@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ../../home/
+    ../../home/core.nix
 
     ../../home/fastfetch.nix
     ../../home/git.nix
