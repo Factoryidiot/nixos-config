@@ -2,11 +2,11 @@
 
   fileSystems."/persistent".neededForBoot = true;
 
-  fileSystems."/dev/disk/by-uuid/4efd0169-587a-46d6-b3df-abe9199d8765" = {
-    device = "/dev/disk/by-label/CRYPT";
-    fsType = "ext4";
-    options = [ "ro" ];
-  };
+  # fileSystems."/dev/disk/by-uuid/4efd0169-587a-46d6-b3df-abe9199d8765" = {
+  #   device = "/dev/disk/by-label/CRYPT";
+  #   fsType = "ext4";
+  #   options = [ "ro" ];
+  # };
 
   disko.devices = {
     disk = {
@@ -33,7 +33,7 @@
                 type = "luks";
                 name = "crypted";
                 settings = {
-                  keyFile = "/dev/disk/by-label/CRYPT"; # The keyfile is stored on a USB stick
+                  # keyFile = "/dev/disk/by-label/CRYPT"; # The keyfile is stored on a USB stick
                   # The maximum size of the keyfile is 8192 KiB
                   # type `cryptsetup --help` to see the compiled-in key and passphrase maximum sizes
                   passwordFile = "/tmp/secret.key";
