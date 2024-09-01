@@ -24,13 +24,14 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    lanzaboote = {
-      url = "github:nix-community/lanzaboote/v0.4.1";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # lanzaboote = {
+    #   url = "github:nix-community/lanzaboote/v0.4.1";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
   };
 
-  outputs = inputs@{ agenix, disko, home-manager, lanzaboote, nixpkgs, self, ... }:
+  # outputs = inputs@{ agenix, disko, home-manager, lanzaboote, nixpkgs, self, ... }:
+  outputs = inputs@{ disko, home-manager, nixpkgs, self, ... }:
     let
       username = "rhys";
       specialArgs = { inherit username; };
