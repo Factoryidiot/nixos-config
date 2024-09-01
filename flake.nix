@@ -12,6 +12,10 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    agenix = {
+      url = "github:ryan4yin/ragenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };  
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -20,9 +24,13 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote/v0.4.1";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = inputs@{ disko, home-manager, nixpkgs, self, ... }:
+  outputs = inputs@{ agenix, disko, home-manager, lanzaboote, nixpkgs, self, ... }:
     let
       username = "rhys";
       specialArgs = { inherit username; };
