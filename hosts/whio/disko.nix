@@ -1,6 +1,6 @@
 {
 
-  filesystems."/persistent".neededForBoot = true;
+  fileSystems."/persistent".neededForBoot = true;
 
   fileSystems."/dev/disk/by-uuid/4efd0169-587a-46d6-b3df-abe9199d8765" = {
     device = "/dev/disk/by-label/CRYPT";
