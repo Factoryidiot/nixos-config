@@ -24,6 +24,7 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    impermanence.url = "github:nix-community/impermanence";
     lanzaboote = {
       url = "github:nix-community/lanzaboote/v0.4.1";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -31,7 +32,7 @@
   };
 
   # outputs = inputs@{ agenix, disko, home-manager, lanzaboote, nixpkgs, self, ... }:
-  outputs = inputs@{ disko, home-manager, nixpkgs, self, ... }:
+  outputs = inputs@{ agenix, disko, home-manager, impermanence, lanzaboote, nixpkgs, self, ... }:
     let
       username = "rhys";
       specialArgs = { inherit username; };
@@ -40,7 +41,6 @@
       nixosConfigurations = {
 
         nixos-qemu = nixpkgs.lib.nixosSystem {
-          # system = "x86_64-linux";
           inherit specialArgs;
 
           modules = [

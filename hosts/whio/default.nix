@@ -5,13 +5,16 @@
     ../../modules/configuration.nix
  
     ./hardware-configuration.nix
+
+    ./impermanence.nix
+    ./secureboot.nix
   ];
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking = {
-    hostName = "nixos-qemu";
+    hostName = "nixos-whio";
   };
 
   # This value determines the NixOS release from which the default
