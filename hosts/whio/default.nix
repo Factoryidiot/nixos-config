@@ -6,12 +6,12 @@
  
     ./hardware-configuration.nix
 
-    ./impermanence.nix
-    ./secureboot.nix
+    # ./impermanence.nix
+    # ./secureboot.nix
   ];
 
   networking = {
-    hostName = "nixos-whio";
+    hostName = "whio";
   };
 
   # This value determines the NixOS release from which the default
