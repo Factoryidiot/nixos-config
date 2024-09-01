@@ -1,8 +1,12 @@
 {
 
-  filesystems."".neededForBoot = true;
+  filesystems."/persistent".neededForBoot = true;
 
-  fileSystems."" = 
+  fileSystems."/dev/disk/by-uuid/4efd0169-587a-46d6-b3df-abe9199d8765" = {
+    device = "/dev/disk/by-label/CRYPT";
+    fsType = "ext4";
+    options = [ "ro" ];
+  };
 
   disko.devices = {
     disk = {
@@ -23,11 +27,11 @@
                 mountpoint = "/boot";
               };
             };
-            nixos = {
+            luks = {
               size = "100%";
               content = {
                 type = "luks";
-                name = "encrypted";
+                name = "crypted";
                 settings = {
                   # keyFile = "/dev/disk/by-label/CRYPT"; # The keyfile is stored on a USB stick
                   # The maximum size of the keyfile is 8192 KiB
