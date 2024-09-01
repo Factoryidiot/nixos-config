@@ -37,12 +37,13 @@
                   # The maximum size of the keyfile is 8192 KiB
                   # type `cryptsetup --help` to see the compiled-in key and passphrase maximum sizes
                   passwordFile = "/tmp/secret.key";
-                  keyFileSize = 512 * 64; # match the `bs * count` of the `dd` command
-                  keyFileOffset = 512 * 128; # match the `bs * skip` of the `dd` command
+                  # keyFileSize = 512 * 64; # match the `bs * count` of the `dd` command
+                  # keyFileOffset = 512 * 128; # match the `bs * skip` of the `dd` command
                   fallbackToPassword = true;
                   allowDiscards = true;
                 };
-                additionalKeyFiles = [];
+                initrdUnlock = true;
+                # additionalKeyFiles = [];
                 extraFormatArgs = [
                   "--type luks2"
                   "--cipher aes-xts-plain64"
@@ -64,15 +65,15 @@
                       mountOptions = [ "compress-force=zstd:1" "noatime" ];
                       mountpoint = "/";
                     };
+                    "@guix" = {
+                      mountOptions = [ "compress-force=zstd:1" "noatime" ];
+                      mountpoint = "/gnu";
+                    };
                     "@nix" = {
                       mountOptions = [ "compress-force=zstd:1" "noatime" ];
                       mountpoint = "/nix";
                     };
-                    "@tmp" = {
-                      mountOptions = [ "compress-force=zstd:1" "noatime" ];
-                      mountpoint = "/tmp";
-                    };
-                    "@persistent" = {
+                   "@persistent" = {
                       mountOptions = [ "compress-force=zstd:1" "noatime" ];
                       mountpoint = "/persistent";
                     };
@@ -80,7 +81,11 @@
                       mountOptions = [ "compress-force=zstd:1" "noatime" ];
                       mountpoint = "/snapshots";
                     };
-
+                    "@tmp" = {
+                      mountOptions = [ "compress-force=zstd:1" "noatime" ];
+                      mountpoint = "/tmp";
+                    };
+ 
                   };
                 };
               };
