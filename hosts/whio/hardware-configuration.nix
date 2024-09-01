@@ -38,16 +38,15 @@
       options = [ "fmask=0022" "dmask=0022" ];
     };
 
-  fileSystems."/btr_pool" =
-    { device = "/dev/disk/by-uuid/766d2f04-c7ed-4f8e-b1da-aeff8570e4af";
-      fsType = "btrfs"; 
-      options = [ "subvolid=5" ];
-    };
+  #fileSystems."/btr_pool" =
+  #  { device = "/dev/disk/by-uuid/766d2f04-c7ed-4f8e-b1da-aeff8570e4af";
+  #    fsType = "btrfs"; 
+  #    options = [ "subvolid=5" ];
+  #  };
 
   fileSystems."/" = 
-    { device = "tmpfs";
-      fsType = "tmpfs";
-      options = [ "relatime" "mode=755" ];
+    { device = "/dev/disk/by-uuid/766d2f04-c7ed-4f8e-b1da-aeff8570e4af";
+      fsType = "btrfs";
     };
 
   fileSystems."/gnu" = 
