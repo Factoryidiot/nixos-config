@@ -4,7 +4,7 @@
   imports = [
     ../../modules/configuration.nix
  
-    # ./hardware-configuration.nix
+    ./hardware-configuration.nix
 
     # ./impermanence.nix
     # ./secureboot.nix
