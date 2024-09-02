@@ -2,12 +2,6 @@
 
   fileSystems."/persistent".neededForBoot = true;
 
-  # fileSystems."/dev/disk/by-uuid/4efd0169-587a-46d6-b3df-abe9199d8765" = {
-  #   device = "/dev/disk/by-label/CRYPT";
-  #   fsType = "ext4";
-  #   options = [ "ro" ];
-  # };
-
   disko.devices = {
     disk = {
       main = {
@@ -62,8 +56,8 @@
                   extraArgs = [ "-f" ];
                   subvolumes = {
                     "/" = {
-                      mountOptions = [ "compress-force=zstd:1" "noatime" ];
-                      mountpoint = "/";
+                      mountOptions = [ "subvolid=5" ];
+                      mountpoint = "/btr_pool";
                     };
                     "@guix" = {
                       mountOptions = [ "compress-force=zstd:1" "noatime" ];
@@ -74,15 +68,19 @@
                       mountpoint = "/nix";
                     };
                    "@persistent" = {
-                      mountOptions = [ "compress-force=zstd:1" "noatime" ];
+                      mountOptions = [ "compress-force=zstd:1" ];
                       mountpoint = "/persistent";
                     };
                     "@snapshots" = {
-                      mountOptions = [ "compress-force=zstd:1" "noatime" ];
+                      mountOptions = [ "compress-force=zstd:1" ];
                       mountpoint = "/snapshots";
                     };
+                    "@swap" = {
+                      mountOptions = [ "ro" ];
+                      mountpoint = "/swap";
+                    };
                     "@tmp" = {
-                      mountOptions = [ "compress-force=zstd:1" "noatime" ];
+                      mountOptions = [ "compress-force=zstd:1" ];
                       mountpoint = "/tmp";
                     };
  
