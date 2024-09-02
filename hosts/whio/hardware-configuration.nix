@@ -84,7 +84,7 @@
   fileSystems."/swap/swapfile" = {
     depends = [ "/swap" ];
     device = "/swap/swapfile";
-    fstype = "none";
+    fsType = "none";
     options = [ "bind" "rw" ];
   };
 
