@@ -40,7 +40,8 @@
   };
 
   fileSystems."/btr_pool" = {
-    device = "/dev/disk/by-uuid/766d2f04-c7ed-4f8e-b1da-aeff8570e4af";
+    device = "/dev/mapper/crypted";
+    # device = "/dev/disk/by-uuid/766d2f04-c7ed-4f8e-b1da-aeff8570e4af";
     fsType = "btrfs"; 
     options = [ "subvolid=5" ];
   };
