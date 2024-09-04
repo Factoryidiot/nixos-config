@@ -6,7 +6,7 @@
  
     ./hardware-configuration.nix
 
-    ./impermanence.nix
+    #./impermanence.nix
     # ./secureboot.nix
   ];
 
