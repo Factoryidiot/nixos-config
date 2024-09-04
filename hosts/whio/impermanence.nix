@@ -1,11 +1,11 @@
-{ impermanence, pkgs, ... }:
+{ impermanence, ... }:
 
 {
   imports = [
     impermanence.nixosModules.impermanence
   ];
 
-  # ienvironment.systemPackages = [ ];
+  # environment.systemPackages = [ ];
 
   # There are two ways to clear the root filesystem on every boot:
   ##  1. use tmpfs for /
