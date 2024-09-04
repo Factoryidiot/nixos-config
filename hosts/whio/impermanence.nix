@@ -5,7 +5,7 @@
     impermanence.nixosModules.impermanence
   ];
 
-  environment.systemPackages = [ ];
+  # ienvironment.systemPackages = [ ];
 
   # There are two ways to clear the root filesystem on every boot:
   ##  1. use tmpfs for /
@@ -32,7 +32,7 @@
       "/etc/nix/inputs"
       "/etc/secureboot" # lanzaboote - secure boot
       # my secrets
-      "/etc/agenix/"
+      # "/etc/agenix/"
 
       "/var/log"
       "/var/lib"
@@ -110,7 +110,7 @@
         # neovim plugins(copilot)
         ".config/github-copilot"
       ];
-      files = [ ];
+      # files = [ ];
     };
   };
 }
