@@ -32,16 +32,16 @@
     };
   };
 
-  fileSystems."/boot" = {
-      device = "/dev/disk/by-partlabel/disk-main-ESP";
-      # device = "/dev/disk/by-uuid/433D-31E1";
+  fileSystems."/boot" = lib.mkForce {
+      # device = "/dev/disk/by-partlabel/disk-main-ESP";
+      device = "/dev/disk/by-uuid/433D-31E1";
       fsType = "vfat";
       options = [ "fmask=0022" "dmask=0022" ];
   };
 
-  fileSystems."/btr_pool" = {
-    device = "/dev/mapper/crypted";
-    # device = "/dev/disk/by-uuid/766d2f04-c7ed-4f8e-b1da-aeff8570e4af";
+  fileSystems."/btr_pool" = lib.mkForce {
+    # device = "/dev/mapper/crypted";
+    device = "/dev/disk/by-uuid/766d2f04-c7ed-4f8e-b1da-aeff8570e4af";
     fsType = "btrfs"; 
     options = [ "subvolid=5" ];
   };

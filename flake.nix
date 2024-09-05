@@ -32,7 +32,7 @@
   };
 
   # outputs = inputs@{ agenix, disko, home-manager, lanzaboote, nixpkgs, self, ... }:
-  outputs = inputs@{ agenix, disko, home-manager, impermanence, lanzaboote, nixpkgs, self, ... }:
+  outputs = inputs@{ disko, home-manager, nixpkgs, self, ... }:
     let
       username = "rhys";
       specialArgs = { inherit username; };
