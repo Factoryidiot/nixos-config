@@ -36,7 +36,7 @@
                   fallbackToPassword = true;
                   allowDiscards = true;
                 };
-                initrdUnlock = false;
+                initrdUnlock = true;
                 # additionalKeyFiles = [];
                 extraFormatArgs = [
                   "--type luks2"
@@ -76,8 +76,8 @@
                       mountpoint = "/snapshots";
                     };
                     "@swap" = {
-                      mountOptions = [ "ro" ];
                       mountpoint = "/swap";
+                      swap.swapfile.size = "24G";
                     };
                     "@tmp" = {
                       mountOptions = [ "compress-force=zstd:1" ];
