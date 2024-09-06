@@ -33,52 +33,52 @@
   };
 
   fileSystems."/boot" = lib.mkDefault
-  # { device = "/dev/disk/by-partlabel/disk-main-ESP";
-    device = "/dev/disk/by-uuid/433D-31E1";
+  { device = "/dev/disk/by-partlabel/disk-main-ESP";
+    # device = "/dev/disk/by-uuid/433D-31E1";
     fsType = "vfat";
     options = [ "fmask=0022" "dmask=0022" ];
   };
 
   fileSystems."/btr_pool" = lib.mkDefault
-  # { device = "/dev/mapper/crypted";
+  { device = "/dev/mapper/crypted";
     # device = "/dev/disk/by-uuid/766d2f04-c7ed-4f8e-b1da-aeff8570e4af";
     fsType = "btrfs"; 
     options = [ "subvolid=5" ];
   };
 
   fileSystems."/" =
-  # { device = "tmpfs";
+  { device = "tmpfs";
     fsType = "tmpfs";
     options = [ "relatime" "mode=755" ];
   };
 
   fileSystems."/gnu" = lib.mkDefault
-  # { device = "/dev/mapper/crypted";
+  { device = "/dev/mapper/crypted";
     fsType = "btrfs";
     options = [ "subvol=@guix" "noatime" "compress-force=zstd:1" ];
   };
 
   fileSystems."/nix" = lib.mkDefault
-  # { device = "/dev/mapper/crypted";
+  { device = "/dev/mapper/crypted";
     fsType = "btrfs";
     options = [ "subvol=@nix" "noatime" "compress-force=zstd:1" ];
   };
 
   fileSystems."/persistent" = lib.mkDefault
-  # { device = "/dev/mapper/crypted";
+  { device = "/dev/mapper/crypted";
     fsType = "btrfs";
     options = [ "subvol=@persistent" "compress-force=zstd:1" ];
     neededForBoot = true;
   };
 
   fileSystems."/snapshots" = lib.mkDefault
-  # { device = "/dev/mapper/crypted";
+  { device = "/dev/mapper/crypted";
     fsType = "btrfs";
     options = [ "subvol=@snapshots" "compress-force=zstd:1" ];
   };
 
   fileSystems."/swap" = lib.mkDefault
-  # { device = "/dev/mapper/crypted";
+  { device = "/dev/mapper/crypted";
     fsType = "btrfs";
     options = [ "subvol=@swap" "ro" ];
   };
@@ -91,7 +91,7 @@
   };
 
   fileSystems."/tmp" = lib.mkDefault
-  # { device = "/dev/mapper/crypted";
+  { device = "/dev/mapper/crypted";
     fsType = "btrfs";
     options = [ "subvol=@tmp" "compress-force=zstd:1" ];
   };
