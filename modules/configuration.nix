@@ -99,7 +99,7 @@
     users.${username} = {
       isNormalUser = true;
       description = username;
-      # initialHashedPassword = "password";
+      initialHashedPassword = "$5$Nj9bUYRY9JrqUXIy$pNFGfzODNx9uV6TXMlW1qZtIEBfLXjkFoSic5/kZtiA";
       extraGroups = [ "audio" "networkmanager" "video" "wheel" ];
      };
   };
