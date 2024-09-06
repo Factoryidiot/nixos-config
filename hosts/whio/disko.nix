@@ -36,7 +36,7 @@
                   fallbackToPassword = true;
                   allowDiscards = true;
                 };
-                initrdUnlock = true;
+                initrdUnlock = false;
                 # additionalKeyFiles = [];
                 extraFormatArgs = [
                   "--type luks2"
