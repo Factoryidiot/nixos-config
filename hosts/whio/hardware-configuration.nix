@@ -47,8 +47,8 @@
   };
 
   fileSystems."/" = { 
-    device = "btrfs";
-    fsType = "btrfs";
+    device = "tmpfs";
+    fsType = "tmpfs";
     options = [ "relatime" "mode=755" ];
   };
 
