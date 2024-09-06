@@ -96,11 +96,20 @@
   time.timeZone = "Australia/Brisbane";
 
   users = {
+    mutableUsers = true;
+
+    users.groups = {};
+
+    users.root = {
+       initialHashedPassword = "$5$Nj9bUYRY9JrqUXIy$pNFGfzODNx9uV6TXMlW1qZtIEBfLXjkFoSic5/kZtiA";
+    };
+
     users.${username} = {
       isNormalUser = true;
       description = username;
-      initialHashedPassword = "$5$Nj9bUYRY9JrqUXIy$pNFGfzODNx9uV6TXMlW1qZtIEBfLXjkFoSic5/kZtiA";
+      # initialHashedPassword = "$5$Nj9bUYRY9JrqUXIy$pNFGfzODNx9uV6TXMlW1qZtIEBfLXjkFoSic5/kZtiA";
       extraGroups = [ "audio" "networkmanager" "video" "wheel" ];
      };
+
   };
 }
