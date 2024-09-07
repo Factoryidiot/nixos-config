@@ -98,7 +98,7 @@
   users = {
     mutableUsers = true;
 
-    users.groups = {};
+    groups = {};
 
     users.root = {
        initialHashedPassword = "$5$Nj9bUYRY9JrqUXIy$pNFGfzODNx9uV6TXMlW1qZtIEBfLXjkFoSic5/kZtiA";

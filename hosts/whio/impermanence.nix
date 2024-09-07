@@ -2,7 +2,7 @@
 
 {
   imports = [
-    impermanence.nixosModules.impermanence
+    # impermanence.nixosModules.impermanence
   ];
 
   # environment.systemPackages = [ ];
@@ -29,7 +29,8 @@
     directories = [
       "/etc/NetworkManager/system-connections"
       "/etc/ssh"
-      "/etc/nix/inputs"
+      #"/etc/nix/inputs"
+      "/etc/nix/"
       "/etc/secureboot" # lanzaboote - secure boot
       # my secrets
       # "/etc/agenix/"
@@ -52,10 +53,11 @@
         "nixos-config"
         "tmp"
 
+        "Documents"
         "Downloads"
         "Music"
         "Pictures"
-        "Documents"
+        "Projects"
         "Videos"
 
         {
@@ -73,23 +75,23 @@
         ".steam" # steam games
 
         # cloud native
-        {
-          # pulumi - infrastructure as code
-          directory = ".pulumi";
-          mode = "0700";
-        }
-        {
-          directory = ".aws";
-          mode = "0700";
-        }
-        {
-          directory = ".docker";
-          mode = "0700";
-        }
+        #{
+        #  # pulumi - infrastructure as code
+        #  directory = ".pulumi";
+        #  mode = "0700";
+        #}
+        #{
+        #  directory = ".aws";
+        #  mode = "0700";
+        #}
+        #{
+        #  directory = ".docker";
+        #  mode = "0700";
+        #}
 
         # remote desktop
-        ".config/remmina"
-        ".config/freerdp"
+        #".config/remmina"
+        #".config/freerdp"
 
         # vscode
         ".vscode"

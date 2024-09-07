@@ -32,7 +32,7 @@
   };
 
   # outputs = inputs@{ agenix, disko, home-manager, lanzaboote, nixpkgs, self, ... }:
-  outputs = inputs@{ disko, home-manager, nixpkgs, self, ... }:
+  outputs = inputs@{ disko, home-manager, impermanence, nixpkgs, self, ... }:
     let
       username = "rhys";
       specialArgs = { inherit username; };
@@ -67,9 +67,11 @@
 
           modules = [
             disko.nixosModules.disko
+            impermanence.nixosModules.impermanence
 
             ./hosts/whio
             ./hosts/whio/disko.nix
+            ./hosts/whio/impermanence.nix
 
             home-manager.nixosModules.home-manager
             {
