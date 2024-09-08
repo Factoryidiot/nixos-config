@@ -104,13 +104,12 @@
     groups = {};
 
     users.root = {
-       initialHashedPassword = "$5$Nj9bUYRY9JrqUXIy$pNFGfzODNx9uV6TXMlW1qZtIEBfLXjkFoSic5/kZtiA";
+       initialHashedPassword = "$7$CU..../....XaFP2ISgvPZc.mYeUHWQx.$V1f6AYOWu77klTUZb.9nmwshOLBiE7cFxMjIrXPvrE7";
     };
-
     users.${username} = {
       isNormalUser = true;
       description = username;
-      initialHashedPassword = "$5$Nj9bUYRY9JrqUXIy$pNFGfzODNx9uV6TXMlW1qZtIEBfLXjkFoSic5/kZtiA";
+      initialHashedPassword = "$7$CU..../....XaFP2ISgvPZc.mYeUHWQx.$V1f6AYOWu77klTUZb.9nmwshOLBiE7cFxMjIrXPvrE7";
       extraGroups = [ "audio" "networkmanager" "video" "wheel" ];
      };
 
