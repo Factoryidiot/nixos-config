@@ -1,6 +1,9 @@
-{ pkgs, lib, username, ... }:
-
 {
+  pkgs,
+  lib,
+  username,
+  ...
+}: {
 
   imports = [];
 
@@ -107,7 +110,7 @@
     users.${username} = {
       isNormalUser = true;
       description = username;
-      # initialHashedPassword = "$5$Nj9bUYRY9JrqUXIy$pNFGfzODNx9uV6TXMlW1qZtIEBfLXjkFoSic5/kZtiA";
+      initialHashedPassword = "$5$Nj9bUYRY9JrqUXIy$pNFGfzODNx9uV6TXMlW1qZtIEBfLXjkFoSic5/kZtiA";
       extraGroups = [ "audio" "networkmanager" "video" "wheel" ];
      };
 

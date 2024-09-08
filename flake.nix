@@ -29,13 +29,18 @@
     #  url = "github:nix-community/lanzaboote/v0.4.1";
     #  inputs.nixpkgs.follows = "nixpkgs";
     #};
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
   };
 
   # outputs = inputs@{ agenix, disko, home-manager, lanzaboote, nixpkgs, self, ... }:
-  outputs = inputs@{ disko, home-manager, impermanence, nixpkgs, self, ... }:
+  outputs = inputs@{ disko, home-manager, impermanence, nixos-hardware, nixpkgs, self, ... }:
     let
       username = "rhys";
-      specialArgs = { inherit username; };
+      specialArgs =
+        inputs
+        // { 
+         inherit username;
+        };
       system = "x86_64-linux";
     in {
       nixosConfigurations = {
@@ -69,7 +74,7 @@
             disko.nixosModules.disko
             impermanence.nixosModules.impermanence
 
-            ./hosts/whio
+            ./hosts/whio/default.nix
             ./hosts/whio/disko.nix
             ./hosts/whio/impermanence.nix
 
