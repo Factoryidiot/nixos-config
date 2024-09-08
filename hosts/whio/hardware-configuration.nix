@@ -6,8 +6,9 @@
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
-  boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.efi.efiSysMountPoint = "/boot";
+  boot.loader.systemd-boot.enable = true;
 
   boot.initrd.availableKernelModules = [ "ahci" "nvme" "xhci_pci" "thunderbolt" "sd_mod" "usbhid" "usb_storage" ];
   boot.initrd.kernelModules = [ ];
