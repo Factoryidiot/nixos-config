@@ -20,9 +20,9 @@ run "github:nix-community/disko" -- \
 ```
 ### Prepare for install
 1. Clone this repo to complete the installation:
-..a. Enter a temporary Nix Shell and install git and vim `nix-shell -p git vim`.
-..b. Clone this repo `git clone https://github.com/Factoryidiot/nixos-config.git`.
-..c. `cd` into `nixos-config`.
+   a. Enter a temporary Nix Shell and install git and vim `nix-shell -p git vim`.
+   b. Clone this repo `git clone https://github.com/Factoryidiot/nixos-config.git`.
+   c. `cd` into `nixos-config`.
 
 2. Next we want to generate a `hardware-configuration.nix` to update the `UUID`s for the hardware-configuration.nix included in the repo we have just cloned.
 ```
