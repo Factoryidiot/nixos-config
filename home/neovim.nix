@@ -1,9 +1,9 @@
-{ 
+{
   pkgs,
   ...
 }: {
 
-  programs.git = {
+  programs.neovim = {
     enable = true;
   };
 
