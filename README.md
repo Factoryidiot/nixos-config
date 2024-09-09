@@ -11,7 +11,7 @@ These are in no particular order of priority
 
 ## Install
 ### Run disko
-1. Boot up the nixos minimal installation disk and run as `sudo`
+Boot up the nixos minimal installation disk and run as `sudo`
 ```
 nix --experimental-features "nix-command flakes" \
 run "github:nix-community/disko" -- \
@@ -19,12 +19,12 @@ run "github:nix-community/disko" -- \
 --flake "github:Factoryidiot/nixos-config#[host-name]"
 ```
 ### Prepare for install
-2. Clone this repo to complete the installation:
-    a. Enter a temporary Nix Shell and install git and vim `nix-shell -p git vim`.
-    b. Clone this repo `git clone https://github.com/Factoryidiot/nixos-config.git`.
-    c. `cd` into `nixos-config`.
+1. Clone this repo to complete the installation:
+a. Enter a temporary Nix Shell and install git and vim `nix-shell -p git vim`.
+b. Clone this repo `git clone https://github.com/Factoryidiot/nixos-config.git`.
+c. `cd` into `nixos-config`.
 
-3. Next we want to generate a `hardware-configuration.nix` to update the `UUID`s for the hardware-configuration.nix included in the repo we have just cloned
+2. Next we want to generate a `hardware-configuration.nix` to update the `UUID`s for the hardware-configuration.nix included in the repo we have just cloned.
 ```
  nixos-generate-config --root /mnt
 ```
