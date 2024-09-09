@@ -28,8 +28,8 @@
     histSize = 10000;
 
     shellInit = "
-    echo ""
-    if [[ $(tty) == *"pts"* ]]; then
+    echo ''''
+    if [[ $(tty) == *'pts'* ]]; then
       fastfetch
     fi
     ";
