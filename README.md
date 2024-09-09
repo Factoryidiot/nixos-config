@@ -1,5 +1,8 @@
 # nixos-config
 
+## Hosts
+whio
+
 ## To do
 These are in no particular order of priority
 - [ ] Retest hardware-configuration with /dev/mapper paths replacing UUIDs on the subvolumes
@@ -27,20 +30,23 @@ run "github:nix-community/disko" -- \
 ```
  nixos-generate-config --root /mnt
 ```
-4. Use vim to update the UUIDs found in `/mnt/etc/nixos/hardware-configuration.nix` into the hosts hardware-configuration e.g. `hosts/whio/hardware-configuration.nix`
+3. Use vim to update the UUIDs found in `/mnt/etc/nixos/hardware-configuration.nix` into the hosts hardware-configuration e.g. `hosts/whio/hardware-configuration.nix`.
+4. Remove the contents of `/mnt/etc/nixos/`.
+5. From the Move `~/nixos-confg` to `/mnt/etc/nixos/`.
+```
+mv ../nixos-config /mnt/etc/nixos
+```
 
 ### Perform installation
 ```
-nixos-install --root /mnt --no-root-password --show-trace --verbose \
+nixos-install --root /mnt --no-root-password \
 --flake "github:Factoryidiot/nix-config#[host-name]" --no-write-lock-file
 ```
+> [!TIP]
+> To refresh the cache:
+> nix: `--no-eval-cache`
+> --flake: `--option eval-cache false`
 
-
-
----
-
-## Install home
-```
-nix run home-manager/master --accept-flake-config -- switch \
-    --flake "github:Factoryidiot/nix-config#[user-name]" --no-write-lock-file
-```
+> [!TIP]
+> For troubleshooting and extra logging use:
+> --show-trace --verbose
