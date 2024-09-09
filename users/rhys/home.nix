@@ -32,7 +32,7 @@
     if [[ $(tty) == *"pts"* ]]; then
       fastfetch
     fi
-    "
+    ";
 
   };
 
