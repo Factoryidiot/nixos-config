@@ -25,7 +25,7 @@
   user.user.rhys.shell = zsh;
 
   programs.zsh = {
-    histSize = 10000;i
+    histSize = 10000;
 
     shellInit = "
     echo ""
