@@ -22,13 +22,13 @@
     vimAlias = true;
   };
 
-  user.user.rhys.shell = zsh;
+  user.user.rhys.shell = pkgs.zsh;
 
   programs.zsh = {
     histSize = 10000;
 
     shellInit = "
-    echo ''''
+    echo ''
     if [[ $(tty) == *'pts'* ]]; then
       fastfetch
     fi
