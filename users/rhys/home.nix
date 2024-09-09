@@ -22,4 +22,18 @@
     vimAlias = true;
   };
 
+  user.user.rhys.shell = zsh;
+
+  programs.zsh = {
+    histSize = 10000;i
+
+    shellInit = "
+    echo ""
+    if [[ $(tty) == *"pts"* ]]; then
+      fastfetch
+    fi
+    "
+
+  };
+
 }
