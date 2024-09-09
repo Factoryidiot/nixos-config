@@ -6,6 +6,7 @@ whio
 ## To do
 These are in no particular order of priority
 - [ ] Retest hardware-configuration with /dev/mapper paths replacing UUIDs on the subvolumes
+- [ ] Implement Securebot
 - [ ] Install zsh, neovim, tmux and kitty
 - [ ] Install nvidia drivers
 - [ ] Install hyprland
@@ -50,3 +51,10 @@ nixos-install --root /mnt --no-root-password \
 > [!TIP]
 > For troubleshooting and extra logging use:
 > --show-trace --verbose
+
+### Post install
+Move any essential files to their `/persistent` location
+`mv /etc/machine-id /persistent/etc`
+`mv /etc/ssh /persistent/etc`
+
+
