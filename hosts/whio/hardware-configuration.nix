@@ -14,7 +14,7 @@
   boot.loader.efi.efiSysMountPoint = "/boot";
   boot.loader.systemd-boot.enable = true;
 
-  boot.initrd.availableKernelModules = [ "ahci" "nvme" "xhci_pci" "thunderbolt" "sd_mod" "usbhid" "usb_storage" ];
+  boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "thunderbolt" "sd_mod" "usbhid" "usb_storage" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
@@ -29,18 +29,18 @@
     "exfat"
   ];
 
-  boot.initrd.luks.devices."crypted".device = "/dev/disk/by-uuid/2da9265d-94a4-485e-8690-eccf82ab5566";
+  boot.initrd.luks.devices."crypted".device = "/dev/disk/by-uuid/65c23503-6f3d-4a28-84d9-73e8bb817770";
   boot.initrd.luks.devices."crypted".allowDiscards = true;
   boot.initrd.luks.devices."crypted".bypassWorkqueues = true;
 
   fileSystems."/boot" = lib.mkDefault
-    { device = "/dev/disk/by-uuid/433D-31E1";
+    { device = "/dev/disk/by-uuid/48E5-EB7B";
       fsType = "vfat";
       options = [ "fmask=0022" "dmask=0022" ];
     };
 
   fileSystems."/btr_pool" = lib.mkDefault
-    { device = "/dev/disk/by-uuid/766d2f04-c7ed-4f8e-b1da-aeff8570e4af";
+    { device = "/dev/disk/by-uuid/ae315978-8578-4e22-8860-edd70b4d439b";
       fsType = "btrfs"; 
       options = [ "subvolid=5" ];
     };
@@ -52,32 +52,32 @@
     };
 
   fileSystems."/gnu" = lib.mkDefault
-    { device = "/dev/disk/by-uuid/766d2f04-c7ed-4f8e-b1da-aeff8570e4af";
+    { device = "/dev/mapper/crypted";
       fsType = "btrfs";
       options = [ "subvol=@guix" "noatime" "compress-force=zstd:1" ];
     };
 
   fileSystems."/nix" = lib.mkDefault
-    { device = "/dev/disk/by-uuid/766d2f04-c7ed-4f8e-b1da-aeff8570e4af";
+    { device = "/dev/disk/by-uuid/ae315978-8578-4e22-8860-edd70b4d439b";
       fsType = "btrfs";
       options = [ "subvol=@nix" "noatime" "compress-force=zstd:1" ];
     };
 
   fileSystems."/persistent" = lib.mkDefault
-    { device = "/dev/disk/by-uuid/766d2f04-c7ed-4f8e-b1da-aeff8570e4af";
+    { device = "/dev/disk/by-uuid/ae315978-8578-4e22-8860-edd70b4d439b";
       fsType = "btrfs";
       options = [ "subvol=@persistent" "compress-force=zstd:1" ];
       neededForBoot = true;
     };
 
   fileSystems."/snapshots" = lib.mkDefault
-    { device = "/dev/disk/by-uuid/766d2f04-c7ed-4f8e-b1da-aeff8570e4af";
+    { device = "/dev/disk/by-uuid/ae315978-8578-4e22-8860-edd70b4d439b";
       fsType = "btrfs";
       options = [ "subvol=@snapshots" "compress-force=zstd:1" ];
     };
 
   fileSystems."/swap" = lib.mkDefault
-    { device = "/dev/disk/by-uuid/766d2f04-c7ed-4f8e-b1da-aeff8570e4af";
+    { device = "/dev/disk/by-uuid/ae315978-8578-4e22-8860-edd70b4d439b";
       fsType = "btrfs";
       options = [ "subvol=@swap" "ro" ];
     };
@@ -90,7 +90,7 @@
     };
 
   fileSystems."/tmp" = lib.mkDefault
-    { device = "/dev/disk/by-uuid/766d2f04-c7ed-4f8e-b1da-aeff8570e4af";
+    { device = "/dev/disk/by-uuid/ae315978-8578-4e22-8860-edd70b4d439b";
       fsType = "btrfs";
       options = [ "subvol=@tmp" "compress-force=zstd:1" ];
     };

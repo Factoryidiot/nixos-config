@@ -25,7 +25,9 @@
   user.user.rhys.shell = pkgs.zsh;
 
   programs.zsh = {
-    histSize = 10000;
+    history = {
+      size = 10000;
+    };
 
     shellInit = "
     echo ''
