@@ -29,12 +29,12 @@
       size = 10000;
     };
 
-    shellInit = ''
-    echo ""
-    if [[ $(tty) == *"pts"* ]]; then
-      fastfetch
-    fi
-    '';
+    #shellInit = ''
+    #echo ""
+    #if [[ $(tty) == *"pts"* ]]; then
+    #  fastfetch
+    #fi
+    #'';
 
   };
 
