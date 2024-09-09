@@ -57,4 +57,6 @@ Move any essential files to their `/persistent` location
 `mv /etc/machine-id /persistent/etc`
 `mv /etc/ssh /persistent/etc`
 
+### Reboot
+`reboot`
 
