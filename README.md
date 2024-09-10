@@ -6,7 +6,7 @@ whio
 ## To do
 These are in no particular order of priority
 - [ ] Retest hardware-configuration with /dev/mapper paths replacing UUIDs on the subvolumes
-- [ ] Implement Securebot
+- [X] Implement Secureboot
 - [ ] Install zsh, neovim, tmux and kitty
 - [ ] Install nvidia drivers
 - [ ] Install hyprland
@@ -60,3 +60,76 @@ Move any essential files to their `/persistent` location
 ### Reboot
 `reboot`
 
+## Secureboot
+
+1. Confirm the functional requirements are met
+
+```
+bootctl status
+```
+Output:
+```
+System:
+     Firmware: UEFI 2.80 (American Megatrends 5.29)
+Firmware Arch: x64
+  Secure Boot: enabled (setup)
+ TPM2 Support: yes
+ Measured UKI: yes
+ Boot into FW: supported
+
+Current Boot Loader:
+      Product: systemd-boot 256.4 
+
+...
+
+```
+2. Create Secure Boot keys
+```
+sudo sbctl create-keys
+```
+Output:
+```
+[sudo] password for rhys:
+Created Owner UUID 8ec4b2c3-dc7f-4362-b9a3-0cc17e5a34cd
+Creating secure boot keys...✓
+Secure boot keys created!
+```
+3. Configure NixOS and rebuild
+4. Verify rebuilt systemd-boot
+```
+[to complete]
+```
+5. Enable Secure Boot in the bios
+
+6. Enroll keys
+```
+sudo sbctl enroll-keys --microsoft
+
+```
+Output:
+```
+Enrolling keys to EFI variables...
+With vendor keys from microsoft...✓
+Enrolled keys to the EFI variables!
+```
+7. Confirm Secure Boot
+```
+System:
+     Firmware: UEFI 2.80 (American Megatrends 5.29)
+Firmware Arch: x64
+  Secure Boot: enabled (user)
+ TPM2 Support: yes
+ Measured UKI: yes
+ Boot into FW: supported
+
+Current Boot Loader:
+      Product: systemd-boot 256.4 
+
+...
+
+```
+
+---
+## References
+https://github.com/ryan4yin/nix-config
+https://github.com/nix-community/lanzaboote/blob/master/docs/QUICK_START.md
