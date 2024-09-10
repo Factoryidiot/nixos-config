@@ -14,7 +14,7 @@
 
   programs.fzf = {
     enable = true;
-    enableZshIntergration = true;
+    enableZshIntegration = true;
   };
 
   programs.git = {
