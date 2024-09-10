@@ -114,7 +114,7 @@
         ".config/github-copilot"
       ];
       files = [
-        .zsh_history
+        ".zsh_history"
       ];
     };
   };
