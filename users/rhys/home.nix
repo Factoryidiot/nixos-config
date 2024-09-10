@@ -32,6 +32,10 @@
     vimAlias = true;
   };
 
+  programs.tmux = {
+    enable = true;
+  };
+
   programs.yazi = {
     enable = true;
   };
