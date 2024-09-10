@@ -34,7 +34,7 @@
 
   programs.yazi = {
     enable = true;
-  }
+  };
 
   programs.zsh = {
     oh-my-zsh = {
