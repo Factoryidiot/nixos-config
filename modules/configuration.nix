@@ -99,6 +99,7 @@
   time.timeZone = "Australia/Brisbane";
 
   users = {
+    defaultUserShell = pkgs.zsh;
     mutableUsers = true;
 
     groups = {};
@@ -109,8 +110,8 @@
     users.${username} = {
       isNormalUser = true;
       description = username;
-      initialHashedPassword = "$7$CU..../....XaFP2ISgvPZc.mYeUHWQx.$V1f6AYOWu77klTUZb.9nmwshOLBiE7cFxMjIrXPvrE7";
       extraGroups = [ "audio" "networkmanager" "video" "wheel" ];
+      initialHashedPassword = "$7$CU..../....XaFP2ISgvPZc.mYeUHWQx.$V1f6AYOWu77klTUZb.9nmwshOLBiE7cFxMjIrXPvrE7";
      };
 
   };
