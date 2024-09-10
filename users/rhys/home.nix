@@ -9,6 +9,7 @@
     ../../home/fastfetch.nix
     ../../home/git.nix
     ../../home/neovim.nix
+    ../../home/zsh.nix
   ];
 
   programs.git = {
@@ -22,11 +23,9 @@
     vimAlias = true;
   };
 
-  user.user.rhys.shell = pkgs.zsh;
-
   programs.zsh = {
     history = {
-      size = 10000;
+      size = 1000;
     };
 
     #shellInit = ''
