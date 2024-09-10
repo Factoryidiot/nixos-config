@@ -131,5 +131,5 @@ Current Boot Loader:
 
 ---
 ## References
-https://github.com/ryan4yin/nix-config
-https://github.com/nix-community/lanzaboote/blob/master/docs/QUICK_START.md
+- https://github.com/ryan4yin/nix-config
+- https://github.com/nix-community/lanzaboote/blob/master/docs/QUICK_START.md
