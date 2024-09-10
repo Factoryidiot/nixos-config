@@ -7,7 +7,7 @@ whio
 These are in no particular order of priority
 - [ ] Retest hardware-configuration with /dev/mapper paths replacing UUIDs on the subvolumes
 - [X] Implement Secureboot
-- [ ] Install zsh, neovim, tmux and kitty
+- [ ] Install zsh, neovim, tmux, kitty, and fonts
 - [ ] Install nvidia drivers
 - [ ] Install hyprland
 - [ ] Install Steam

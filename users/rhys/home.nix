@@ -12,9 +12,18 @@
     ../../home/zsh.nix
   ];
 
+  programs.fzf = {
+    enable = true;
+    enableZshIntergration = true;
+  };
+
   programs.git = {
     userName = "Factoryidiot";
     userEmail = "rhys.scandlyn@gmail.com";
+  };
+
+  programs.kitty = {
+    enable = true;
   };
 
   programs.neovim = {
@@ -23,11 +32,19 @@
     vimAlias = true;
   };
 
+  programs.yazi = {
+    enable = true;
+  }
+
   programs.zsh = {
-    history = {
-      size = 1000;
+    oh-my-zsh = {
+      enable = true;
+      #theme = "nord-extended/nord"
     };
 
+    plugins = [
+    
+    ];
     #shellInit = ''
     #echo ""
     #if [[ $(tty) == *"pts"* ]]; then

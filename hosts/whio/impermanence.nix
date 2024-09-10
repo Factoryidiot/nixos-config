@@ -31,8 +31,7 @@
     directories = [
       "/etc/NetworkManager/system-connections"
       "/etc/ssh"
-      #"/etc/nix/inputs"
-      "/etc/nix/"
+      "/etc/nix/inputs"
       "/etc/secureboot" # lanzaboote - secure boot
       # my secrets
       # "/etc/agenix/"
@@ -114,7 +113,9 @@
         # neovim plugins(copilot)
         ".config/github-copilot"
       ];
-      # files = [ ];
+      files = [
+        .zsh_history
+      ];
     };
   };
 }
