@@ -37,7 +37,7 @@
   environment = {
     systemPackages = with pkgs; [
       curl
-      git
+      git # required for flakes
       vim
       wget
     ]; 

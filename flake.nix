@@ -25,15 +25,15 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     impermanence.url = "github:nix-community/impermanence";
-    #lanzaboote = {
-    #  url = "github:nix-community/lanzaboote/v0.4.1";
-    #  inputs.nixpkgs.follows = "nixpkgs";
-    #};
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote/v0.4.1";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
   };
 
   # outputs = inputs@{ agenix, disko, home-manager, lanzaboote, nixpkgs, self, ... }:
-  outputs = inputs@{ disko, home-manager, impermanence, nixos-hardware, nixpkgs, self, ... }:
+  outputs = inputs@{ disko, home-manager, impermanence, lanzaboote, nixos-hardware, nixpkgs, self, ... }:
     let
       username = "rhys";
       specialArgs =
@@ -73,10 +73,12 @@
           modules = [
             disko.nixosModules.disko
             impermanence.nixosModules.impermanence
+            lanzaboote.nixosModules.lanzaboote
 
             ./hosts/whio/default.nix
             ./hosts/whio/disko.nix
             ./hosts/whio/impermanence.nix
+            ./hosts/whio/secureboot.nix
 
             home-manager.nixosModules.home-manager
             {
