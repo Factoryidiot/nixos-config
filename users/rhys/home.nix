@@ -43,12 +43,14 @@
   programs.zsh = {
     oh-my-zsh = {
       enable = true;
+      plugins = [ "git" "sudo" ]
       #theme = "nord-extended/nord"
     };
 
     plugins = [
     
     ];
+    promptInit = "source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
     #shellInit = ''
     #echo ""
     #if [[ $(tty) == *"pts"* ]]; then
