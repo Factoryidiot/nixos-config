@@ -44,8 +44,8 @@
     oh-my-zsh = {
       enable = true;
       plugins = [ "git" "sudo" ];
-      # theme = "nord-extended/nord"
-      theme = "agnoster"
+      # theme = "nord-extended/nord";
+      theme = "agnoster";
     };
 
     plugins = [
