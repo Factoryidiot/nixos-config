@@ -43,7 +43,7 @@
   programs.zsh = {
     oh-my-zsh = {
       enable = true;
-      plugins = [ "git" "sudo" ]
+      plugins = [ "git" "sudo" ];
       #theme = "nord-extended/nord"
     };
 
