@@ -9,7 +9,7 @@
     autosuggestion.enable = true;
     enableCompletion = true;
     history = {
-      ignoreAllDups = true
+      ignoreAllDups = true;
     };
     syntaxHighlighting.enable = true;
   };
