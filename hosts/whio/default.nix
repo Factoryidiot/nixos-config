@@ -5,6 +5,7 @@
 }: { 
   imports = [
     ../../modules/configuration.nix
+    ../../modules/fonts.nix
     ../../modules/nvidia.nix
 
     ./hardware-configuration.nix
