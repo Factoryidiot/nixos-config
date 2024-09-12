@@ -6,6 +6,7 @@
 }: {
 
   hardware = {
+
     graphics = {
       enable = true;
       # enable32Bit = true; # needed by nvidia-docker
@@ -37,7 +38,19 @@
 	    # accessible via `nvidia-settings`.
       nvidiaSettings = true;
     };
-    nvidia-container-toolkit.enable = true;
+
+    # nvidia-container-toolkit.enable = true;
+
+    prime = {
+      reverseSync.enable = true;
+      allowExternalGpu = false;
+
+      # Make sure to use the correct Bus ID values for your system!
+      nvidiaBusId = "PCI:01:0:0";
+      amdgpuBusId = "PCI:101:0:0";
+
+    };
+
   };
 
   # for Nvidia GPU
