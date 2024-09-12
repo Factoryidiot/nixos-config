@@ -15,13 +15,13 @@
         nerdfonts.override {
           fonts = [
             "NerdFontsSymbolsOnly"
-            "JetBrainMono"
+            "JetBrainsMono"
           ];
        }
       )
     ];
     fontconfig.defaultFonts = {
-      monospace = [ "JetBrainMono Nerd Font" ];
+      monospace = [ "JetBrainsMono Nerd Font" ];
     };
   };
 
