@@ -14,7 +14,7 @@
       (
         nerdfonts.override {
           fonts = [
-            "nerdFontsSymbolsOnly"
+            "NerdFontsSymbolsOnly"
             "JetBrainMono"
           ];
        }
