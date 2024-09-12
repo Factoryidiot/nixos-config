@@ -7,6 +7,7 @@
     ../../home/core.nix
 
     ../../home/fastfetch.nix
+    ../../home/fonts.nix
     ../../home/git.nix
     ../../home/neovim.nix
     ../../home/zsh.nix
