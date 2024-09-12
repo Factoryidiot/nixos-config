@@ -1,28 +1,48 @@
+#{
+#  pkgs,
+#  ...
+#}: {
+#
+#  fonts = {
+#    enableDefaultPackages = false;
+#    fontDir.enable = true;
+#
+#    packages = with pkgs; [
+#      material-design-icons
+#      font-awesome
+#
+#      (
+#        nerdfonts.overide {
+#          fonts = [
+#            "nerdFontsSymbolsOnly"
+#            "JetBrainMono"
+#          ];
+#        }
+#      )
+#    ];
+#    fontconfig.defaultFonts = {
+#      monospace = [ "JetBrainMono Nerd Font" ];
+#    };
+#  };
 {
-  pkgs,
-  ...
-}: {
 
-  fonts = {
-    enableDefaultPackages = false;
-    fontDir.enable = true;
+  fonts.fontconfig.enable = true;
+  home.packages = [
+    material-design-icons
+    font-awesome
 
-    packages = with pkgs; [
-      material-design-icons
-      font-awesome
-
-      (
-        nerdfonts.overide {
-          fonts = [
-            "nerdFontsSymbolsOnly"
-            "JetBrainMono"
-          ];
-        }
-      )
-    ];
-    fontconfig.defaultFonts = {
-      monospace = [ "JetBrainMono Nerd Font" ];
-    };
+    (
+      nerdfonts.overide {
+        fonts = [
+          "nerdFontsSymbolsOnly"
+          "JetBrainMono"
+        ];
+      }
+    )
+  
+  ];
+  fontconfig.defaultFonts = {
+    monospace = [ "JetBrainMono Nerd Font" ];
   };
 
 }
