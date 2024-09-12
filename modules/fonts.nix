@@ -20,7 +20,7 @@
        }
       )
       powerline-fonts
-      powerline-sysmbols
+      powerline-symbols
     ];
     fontconfig.defaultFonts = {
       monospace = [ "JetBrainsMono Nerd Font" ];
