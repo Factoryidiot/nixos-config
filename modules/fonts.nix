@@ -8,8 +8,8 @@
     fontDir.enable = true;
 
     packages = with pkgs; [
-      material-design-icons
       font-awesome
+      material-design-icons
 
       (
         nerdfonts.override {
@@ -19,6 +19,8 @@
           ];
        }
       )
+      powerline-fonts
+      powerline-sysmbols
     ];
     fontconfig.defaultFonts = {
       monospace = [ "JetBrainsMono Nerd Font" ];
