@@ -12,7 +12,7 @@
       font-awesome
 
       (
-        nerdfonts.overide {
+        nerdfonts.override {
           fonts = [
             "nerdFontsSymbolsOnly"
             "JetBrainMono"
