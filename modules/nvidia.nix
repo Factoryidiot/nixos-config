@@ -33,6 +33,15 @@
       # up from sleep. This fixes it by saving the entire VRAM memory to /tmp/ instead 
       # of just the bare essentials.
       powerManagement.enable = false;
+      prime = {
+        reverseSync.enable = true;
+        allowExternalGpu = false;
+
+        # Make sure to use the correct Bus ID values for your system!
+        nvidiaBusId = "PCI:01:0:0";
+        amdgpuBusId = "PCI:101:0:0";
+      };
+
 
       # Enable the Nvidia settings menu,
 	    # accessible via `nvidia-settings`.
@@ -40,16 +49,6 @@
     };
 
     # nvidia-container-toolkit.enable = true;
-
-    prime = {
-      reverseSync.enable = true;
-      allowExternalGpu = false;
-
-      # Make sure to use the correct Bus ID values for your system!
-      nvidiaBusId = "PCI:01:0:0";
-      amdgpuBusId = "PCI:101:0:0";
-
-    };
 
   };
 
