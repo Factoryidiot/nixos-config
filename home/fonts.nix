@@ -28,8 +28,8 @@
 
   fonts.fontconfig.enable = true;
   home.packages = [
-    material-design-icons
-    font-awesome
+#    material-design-icons
+#    font-awesome
 
     (
       nerdfonts.overide {
