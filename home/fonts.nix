@@ -17,7 +17,7 @@
             "nerdFontsSymbolsOnly"
             "JetBrainMono"
           ];
-        };
+        }
       )
     ];
     fontconfig.defaultFonts = {
