@@ -10,6 +10,10 @@
     ../../home/git.nix
     ../../home/neovim.nix
     ../../home/zsh.nix
+
+    ../../home/hyprland.nix
+    ../../home/steam.nix
+    ../../home/waybar.nix
   ];
 
   programs.fzf = {
