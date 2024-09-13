@@ -28,7 +28,7 @@
 
   programs.kitty = {
     enable = true;
-    background_opacity = "0.96";
+    # background_opacity = "0.96";
     font = {
       name = "JetBrainsMono";
     };
