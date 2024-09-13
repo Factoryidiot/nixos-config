@@ -1,9 +1,11 @@
 {
+  config,
+  lib,
   pkgs,
   ...
 }: {
 
-  programs.waybar = {
+  programs.hyprland = {
     enable = true;
   };
 
