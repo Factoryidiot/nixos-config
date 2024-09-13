@@ -40,6 +40,9 @@
       git # required for flakes
       vim
       wget
+
+      steam
+
     ]; 
     variables.EDITOR = "vim";
   };
