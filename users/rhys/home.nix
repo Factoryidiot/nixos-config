@@ -12,7 +12,6 @@
     ../../home/zsh.nix
 
     ../../home/hyprland.nix
-    ../../home/steam.nix
     ../../home/waybar.nix
   ];
 
