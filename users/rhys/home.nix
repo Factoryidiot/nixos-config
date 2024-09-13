@@ -31,7 +31,7 @@
     font = {
       name = "JetBrainsMono";
     };
-    theme = "nord";
+    # theme = "nord";
   };
 
   programs.neovim = {
