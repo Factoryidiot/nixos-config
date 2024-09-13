@@ -30,7 +30,7 @@
     enable = true;
     background_opacity = "0.96";
     font = {
-      name = "JetBrainsMono"
+      name = "JetBrainsMono";
     };
     theme = "nord";
   };
