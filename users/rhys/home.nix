@@ -24,6 +24,11 @@
 
   programs.kitty = {
     enable = true;
+    background_opacity = "0.96";
+    font = {
+      name = "JetBrainsMono"
+    };
+    theme = "nord";
   };
 
   programs.neovim = {
