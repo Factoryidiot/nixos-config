@@ -1,12 +1,12 @@
 {
-  config,
-  lib,
+  # config,
+  # lib,
   pkgs,
   ...
 }: {
 
-  programs.hyprland = {
-    enable = true;
-  };
+  # programs.hyprland = {
+  #  enable = true;
+  # };
 
 }
