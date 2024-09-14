@@ -37,21 +37,21 @@
 
       };
 
-      style = ''
-
-        #clock {
-          padding-left: 16px;
-          padding-right: 16px;
-          border-radius: 10px 0px 0px 10px;
-          transition: none;
-          color: #ffffff;
-          background: #383c4a;
-        }
-
-      '';
-
-
     };
+    style = ''
+
+      #clock {
+        padding-left: 16px;
+        padding-right: 16px;
+        border-radius: 10px 0px 0px 10px;
+        transition: none;
+        color: #ffffff;
+        background: #383c4a;
+      }
+
+    '';
+
+
   };
 
   services = {
