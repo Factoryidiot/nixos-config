@@ -12,7 +12,7 @@
     ../../home/zsh.nix
 
     ../../home/hyprland.nix
-    ../../home/waybar.nix
+    # ../../home/waybar.nix
   ];
 
   programs.fzf = {
