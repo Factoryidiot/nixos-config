@@ -27,6 +27,14 @@
         position = "top";
         height = 30;
       };
+    
+      "clock" = {
+        format = "{:%b %d}";
+      }
+
+
+
+
     };
   };
 
@@ -45,6 +53,7 @@
       exec-once = [
         "hyprpaper"
         "mako"
+        "waybar"
       ];
       monitor = ",1920x1080,auto,1";
       bind = [
@@ -52,6 +61,7 @@
         "$mod, Q, killactive"
       ];
     };
+    xwayland = true;
   };
 
 }
