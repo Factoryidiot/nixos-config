@@ -35,9 +35,22 @@
   };
 
   wayland.windowManager.hyprland = {
+     debug = {
+      disable_logs = false;
+      enable_stdout_logs = true;
+    };
     enable = true;
-    settings = {
+    exec-once = [
+      "hyprpaper"
+      "mako"
+    ];
+   settings = {
+      monitor = ",1920x1080,auto,1";
       "$mod" = "SUPER";
+      bind = [
+        "$mod, Return, exec, kitty"
+        "$mod, Q, killactive"
+      ];
     };
     # package = pkgs.hyprland;
   };
