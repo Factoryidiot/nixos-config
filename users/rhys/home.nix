@@ -12,8 +12,11 @@
     ../../home/zsh.nix
 
     ../../home/hyprland.nix
+    ./hyprland.nix
     # ../../home/waybar.nix
   ];
+
+  
 
   programs.fzf = {
     enable = true;

@@ -32,7 +32,6 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
   };
 
-  # outputs = inputs@{ agenix, disko, home-manager, lanzaboote, nixpkgs, self, ... }:
   outputs = inputs@{ disko, home-manager, impermanence, lanzaboote, nixos-hardware, nixpkgs, self, ... }:
     let
       username = "rhys";
