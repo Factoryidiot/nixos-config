@@ -10,12 +10,24 @@
     mako
     rofi
     waybar
+    wayland
     xdg-desktop-portal-hyprland
 
   ];
 
+  programs.rofi = {
+    enable = true;
+  };
+
   programs.waybar = {
     enable = true;
+    settings = {
+      mainBar = {
+        layer = "top";
+        position = "top";
+        height = 30;
+      };
+    };
   };
 
   services = {
