@@ -32,7 +32,7 @@
         modules-right = [];
 
         "clock" = {
-          format = "{:%b %d}";
+          format = "{:%b %d %R}";
         };
 
       };
@@ -43,7 +43,7 @@
       #clock {
         padding-left: 16px;
         padding-right: 16px;
-        border-radius: 10px 0px 0px 10px;
+        border-radius: 0px 0px 0px 0px;
         transition: none;
         color: #ffffff;
         background: #383c4a;
