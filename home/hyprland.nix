@@ -37,7 +37,8 @@
 
       };
 
-      style = ``
+      style = ''
+
         #clock {
           padding-left: 16px;
           padding-right: 16px;
@@ -47,7 +48,7 @@
           background: #383c4a;
         }
 
-      ``;
+      '';
 
 
     };
