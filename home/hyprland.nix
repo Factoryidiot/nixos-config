@@ -26,13 +26,13 @@
         layer = "top";
         position = "top";
         height = 30;
-      };
     
       "clock" = {
         format = "{:%b %d}";
       }
 
 
+      };
 
 
     };
