@@ -26,10 +26,14 @@
         layer = "top";
         position = "top";
         height = 30;
-    
-      "clock" = {
-        format = "{:%b %d}";
-      }
+   
+        modules-left = [];
+        modules-center = [ "clock" ];
+        modules-right = [];
+
+        "clock" = {
+          format = "{:%b %d}";
+        }
 
 
       };
