@@ -27,7 +27,7 @@
         position = "top";
         height = 30;
    
-        modules-left = [];
+        modules-left = [ "hyprland/workspaces" ];
         modules-center = [ "clock" ];
         modules-right = [];
 
