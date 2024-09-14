@@ -77,7 +77,7 @@
         "$mod, Q, killactive"
       ];
     };
-    xwayland = true;
+    xwayland.enable = true;
   };
 
 }
