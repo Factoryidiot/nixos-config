@@ -19,7 +19,7 @@
   };
 
   services = {
-    hypridle.enable = true;
+    # hypridle.enable = true;
   };
 
   wayland.windowManager.hyprland = {
