@@ -5,6 +5,12 @@
   ...
 }: {
 
+  environment = {
+    systemPackages = with pkgs; [
+      anyrun
+    ];
+  };
+
   home.packages = with pkgs; [
     #ags
     chromium
