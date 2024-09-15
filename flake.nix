@@ -75,7 +75,7 @@
 
         whio = nixpkgs.lib.nixosSystem {
           inherit specialArgs;
-          environment.systemPackages = [ anyrun.packages.${system}.anyrun ];
+          # environment.systemPackages = [ anyrun.packages.${system}.anyrun ];
 
           modules = [
             disko.nixosModules.disko

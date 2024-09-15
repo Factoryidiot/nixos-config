@@ -7,7 +7,7 @@
 
   home.packages = with pkgs; [
     ags
-    # anyrun
+    anyrun
     chromium
     fuzzel
     hyprland
