@@ -24,9 +24,9 @@
   #};
 
   # https://github.com/anyrun-org/anyrun
-  programs.anyrun = {
-    enable = true;
-  };
+  #programs.anyrun = {
+  #  enable = true;
+  #};
 
   # https://codeberg.org/dnkl/fuzzel
   # https://mark.stosberg.com/fuzzel-a-great-dmenu-and-rofi-altenrative-for-wayland/
