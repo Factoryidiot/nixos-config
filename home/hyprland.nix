@@ -3,11 +3,10 @@
   inputs,
   pkgs,
   ...
-}: {
-
-  imports = [
-    inputs.anyrun.homeManagerModules.default
-  ];
+}:
+let
+  pkgs = import <nixpkgs-unstable> {};
+in {
 
   home.packages = with pkgs; [
     #ags

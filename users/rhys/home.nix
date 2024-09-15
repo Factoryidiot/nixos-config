@@ -15,10 +15,6 @@
     # ../../home/waybar.nix
   ];
 
-  #programs.anyrun = {
-  #  enable = true;
-  #};  
-
   programs.fzf = {
     enable = true;
     enableZshIntegration = true;
