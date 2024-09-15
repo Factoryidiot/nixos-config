@@ -5,6 +5,10 @@
   ...
 }: {
 
+  imports = [
+    inputs.anyrun.homeManagerModules.default
+  ];
+
   home.packages = with pkgs; [
     #ags
     chromium
