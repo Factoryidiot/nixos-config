@@ -31,12 +31,17 @@
   };
 
   # https://codeberg.org/dnkl/fuzzel
+  # https://mark.stosberg.com/fuzzel-a-great-dmenu-and-rofi-altenrative-for-wayland/
   programs.fuzzel = {
     enable = true;
     settings = {
-      
-    }
-
+      main = {
+        terminal = "${pkgs.kitty}/bin/sh";
+        layer = "overlay";
+      };
+      colors.background = "ffffffff";
+    };
+  
   };
 
   #programs.rofi = {
