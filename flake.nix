@@ -15,7 +15,8 @@
     agenix = {
       url = "github:ryan4yin/ragenix";
       inputs.nixpkgs.follows = "nixpkgs";
-    };  
+    };
+    #ags.url = "github:Aylur/ags";
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
