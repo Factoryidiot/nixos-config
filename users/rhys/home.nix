@@ -22,6 +22,8 @@
     enableZshIntegration = true;
   };
 
+  programs.gh.enable = true;
+
   programs.git = {
     userName = "Factoryidiot";
     userEmail = "rhys.scandlyn@gmail.com";
