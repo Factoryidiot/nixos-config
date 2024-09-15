@@ -36,7 +36,7 @@
 
   environment = {
     systemPackages = with pkgs; [
-      # anyrun
+      anyrun
       curl
       git # required for flakes
       vim
