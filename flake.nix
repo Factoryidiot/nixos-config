@@ -77,7 +77,6 @@
           inherit specialArgs;
 
           modules = [
-            anyrun.nixosModules.anyrun
             disko.nixosModules.disko
             impermanence.nixosModules.impermanence
             lanzaboote.nixosModules.lanzaboote
@@ -86,6 +85,8 @@
             ./hosts/whio/disko.nix
             ./hosts/whio/impermanence.nix
             ./hosts/whio/secureboot.nix
+
+            environment.systemPackages = [ anyrun.packages.${system}.anyrun ];
 
             home-manager.nixosModules.home-manager
             {
