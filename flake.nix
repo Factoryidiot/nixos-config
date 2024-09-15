@@ -75,6 +75,7 @@
 
         whio = nixpkgs.lib.nixosSystem {
           inherit specialArgs;
+          environment.systemPackages = [ anyrun.packages.${system}.anyrun ];
 
           modules = [
             disko.nixosModules.disko
@@ -85,8 +86,6 @@
             ./hosts/whio/disko.nix
             ./hosts/whio/impermanence.nix
             ./hosts/whio/secureboot.nix
-
-            environment.systemPackages = [ anyrun.packages.${system}.anyrun ];
 
             home-manager.nixosModules.home-manager
             {
