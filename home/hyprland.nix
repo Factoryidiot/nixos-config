@@ -7,7 +7,9 @@
 
   home.packages = with pkgs; [
     ags
+    anyrun
     chromium
+    fuzzel
     hyprland
     mako
     #rofi
@@ -16,6 +18,26 @@
     xdg-desktop-portal-hyprland
 
   ];
+
+  # https://github.com/Aylur/ags
+  programs.ags = {
+    enable = true;
+
+  };
+
+  # https://github.com/anyrun-org/anyrun
+  programs.anyrun = {
+    enable = true;
+  };
+
+  # https://codeberg.org/dnkl/fuzzel
+  programs.fuzzel = {
+    enable = true;
+    settings = {
+      
+    }
+
+  };
 
   #programs.rofi = {
   #  enable = true;
