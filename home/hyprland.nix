@@ -6,7 +6,7 @@
 }: {
 
   home.packages = with pkgs; [
-    ags
+    #ags
     anyrun
     chromium
     fuzzel
@@ -20,10 +20,9 @@
   ];
 
   # https://github.com/Aylur/ags
-  programs.ags = {
-    enable = true;
-  
-  };
+  #programs.ags = {
+  #  enable = true;
+  #};
 
   # https://github.com/anyrun-org/anyrun
   programs.anyrun = {
