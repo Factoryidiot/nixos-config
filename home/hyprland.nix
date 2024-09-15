@@ -7,7 +7,7 @@
 
   home.packages = with pkgs; [
     ags
-    anyrun
+    # anyrun
     chromium
     fuzzel
     hyprland
@@ -20,28 +20,20 @@
   ];
 
   # https://github.com/Aylur/ags
-  #programs.ags = {
-  #  enable = true;
-  #
-  #};
+  programs.ags = {
+    enable = true;
+  
+  };
 
   # https://github.com/anyrun-org/anyrun
-  #programs.anyrun = {
-  #  enable = true;
-  #};
+  programs.anyrun = {
+    enable = true;
+  };
 
   # https://codeberg.org/dnkl/fuzzel
   # https://mark.stosberg.com/fuzzel-a-great-dmenu-and-rofi-altenrative-for-wayland/
   programs.fuzzel = {
     enable = true;
-    settings = {
-      main = {
-        terminal = "${pkgs.kitty}/bin/sh";
-        layer = "overlay";
-      };
-      colors.background = "ffffffff";
-    };
-  
   };
 
   #programs.rofi = {
