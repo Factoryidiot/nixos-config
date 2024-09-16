@@ -1,12 +1,13 @@
 {
   config,
   inputs,
+  lib,
   pkgs,
   ...
 }:
-let
-  pkgs = import <nixpkgs-unstable> {};
-in {
+{
+
+  import = [ inputs.ags.homeManagerModules.default ];
 
   home.packages = with pkgs; [
     #ags
