@@ -1,4 +1,5 @@
 {
+  
   config,
   inputs,
   lib,
@@ -7,7 +8,7 @@
 }:
 {
 
-  imports = [ inputs.ags.homeManagerModules.default ];
+  imports = [ inputs.anyrun.homeManagerModules.default ];
 
   home.packages = with pkgs; [
     #ags

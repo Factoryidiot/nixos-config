@@ -87,8 +87,6 @@
             ./hosts/whio/impermanence.nix
             ./hosts/whio/secureboot.nix
 
-            inputs.home-manager.nixosModules.default
-
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
