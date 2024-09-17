@@ -80,6 +80,7 @@
             disko.nixosModules.disko
             impermanence.nixosModules.impermanence
             lanzaboote.nixosModules.lanzaboote
+            anyrun.nixosModules.anyrun
 
             ./hosts/whio/default.nix
             ./hosts/whio/disko.nix
