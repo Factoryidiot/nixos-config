@@ -8,7 +8,7 @@
 }:
 {
 
-  imports = [ inputs.ags.homeManagerModules.default ];
+#  imports = [ inputs.ags.homeManagerModules.default ];
 
   home.packages = with pkgs; [
     ags
