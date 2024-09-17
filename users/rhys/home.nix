@@ -1,5 +1,4 @@
 {
-  inputs,
   pkgs,
   ...
 }: {
@@ -14,7 +13,6 @@
 
     ../../home/hyprland.nix
     # ../../home/waybar.nix
-    home-manager.nixosModules.default
   ];
 
   programs.fzf = {
