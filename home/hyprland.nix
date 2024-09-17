@@ -7,10 +7,12 @@
   ...
 }:
 {
-  imports = [ ags.homeManagerModules.ags ];
+  imports = [
+    ags.homeManagerModules.ags ];
 
   home.packages = with pkgs; [
     #ags
+    anyrun
     chromium
     fuzzel
     hyprland
