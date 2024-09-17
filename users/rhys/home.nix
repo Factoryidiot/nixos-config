@@ -16,7 +16,7 @@
 
     ../../home/hyprland.nix
     # ../../home/waybar.nix
-    inputs.ags.homeManagerModules.default
+    ags.homeManagerModules.ags
   ];
 
   programs.fzf = {
