@@ -1,11 +1,10 @@
 {
-  inputs,
   config,
   pkgs,
   username,
   ...
 }: {
-imports = [ inputs.ags.homeManagerModules.default ];
+
   home = {
     inherit username;
     homeDirectory = "/home/${username}";
