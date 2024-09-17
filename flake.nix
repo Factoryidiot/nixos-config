@@ -39,7 +39,7 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
   };
 
-  outputs = inputs@{ disko, home-manager, impermanence, lanzaboote, nixos-hardware, nixpkgs, self, ... }:
+  outputs = inputs@{ anyrun, disko, home-manager, impermanence, lanzaboote, nixos-hardware, nixpkgs, self, ... }:
     let
       username = "rhys";
       specialArgs =
@@ -75,7 +75,6 @@
 
         whio = nixpkgs.lib.nixosSystem {
           inherit specialArgs;
-          # environment.systemPackages = [ anyrun.packages.${system}.anyrun ];
 
           modules = [
             disko.nixosModules.disko

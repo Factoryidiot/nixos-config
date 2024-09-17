@@ -3,10 +3,6 @@
   ...
 }: {
 
-  #home.packages = with pkgs; [
-  #  any
-  #];
-
   imports = [
     ../../home/core.nix
 
