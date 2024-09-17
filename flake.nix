@@ -18,14 +18,7 @@
       url = "github:ryan4yin/ragenix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    ags = {
-      url = "github:Aylur/ags";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    anyrun = {
-      url = "github:anyrun-org/anyrun";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    ags.url = "github:Aylur/ags";
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -42,7 +35,7 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
   };
 
-  outputs = inputs@{ ags, anyrun, disko, home-manager, impermanence, lanzaboote, nixos-hardware, nixpkgs, self, ... }:
+  outputs = inputs@{ disko, home-manager, impermanence, lanzaboote, nixos-hardware, nixpkgs, self, ... }:
     let
       username = "rhys";
       specialArgs =
@@ -80,11 +73,9 @@
           inherit specialArgs;
 
           modules = [
-            ags.nixosModules.ags
             disko.nixosModules.disko
             impermanence.nixosModules.impermanence
             lanzaboote.nixosModules.lanzaboote
-            anyrun.nixosModules.anyrun
 
             ./hosts/whio/default.nix
             ./hosts/whio/disko.nix

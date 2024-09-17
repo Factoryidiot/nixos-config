@@ -1,15 +1,17 @@
 {
   
-  # config,
+  config,
   lib,
   pkgs,
+  inputs,
   ...
 }:
 {
 
+  imports = [ inputs.ags.homeManagerModules.default ];
+
   home.packages = with pkgs; [
-    #ags
-    anyrun
+    ags
     chromium
     fuzzel
     hyprland
@@ -22,12 +24,7 @@
   ];
 
   # https://github.com/Aylur/ags
-  #programs.ags = {
-  #  enable = true;
-  #};
-
-  # https://github.com/anyrun-org/anyrun
-  programs.anyrun = {
+  programs.ags = {
     enable = true;
   };
 
