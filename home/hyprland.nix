@@ -27,6 +27,11 @@
     enable = true;
   };
 
+  # https://github.com/kirottu/anyrun
+  programs.anyrun = {
+    enable = true;
+  };
+
   # https://codeberg.org/dnkl/fuzzel
   # https://mark.stosberg.com/fuzzel-a-great-dmenu-and-rofi-altenrative-for-wayland/
   programs.fuzzel = {
