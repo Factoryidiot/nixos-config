@@ -1,5 +1,4 @@
 {
-  inputs,
   pkgs,
   ...
 }: {
@@ -16,7 +15,6 @@
 
     ../../home/hyprland.nix
     # ../../home/waybar.nix
-    ags.homeManagerModules.ags
   ];
 
   programs.fzf = {

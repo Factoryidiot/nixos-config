@@ -4,7 +4,7 @@
   username,
   ...
 }: {
-
+imports = [ ags.homeManagerModules.ags ];
   home = {
     inherit username;
     homeDirectory = "/home/${username}";
