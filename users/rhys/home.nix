@@ -1,11 +1,18 @@
 {
+  config,
+  lib,
   pkgs,
+  inputs,
   ...
 }: {
 
 
+  
 
   imports = [
+
+    inputs.ags.homeManagerModules.ags
+
     ../../home/core.nix
 
     ../../home/fastfetch.nix

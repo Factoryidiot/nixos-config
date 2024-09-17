@@ -1,5 +1,5 @@
 {
-  
+  ags,  
   config,
   lib,
   pkgs,
@@ -8,10 +8,9 @@
 }:
 {
 
-#  imports = [ inputs.ags.homeManagerModules.default ];
 
   home.packages = with pkgs; [
-    ags
+    #ags
     chromium
     fuzzel
     hyprland
