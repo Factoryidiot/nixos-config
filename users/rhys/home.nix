@@ -1,10 +1,10 @@
 {
+  inputs,
   pkgs,
   ...
 }: {
 
 
-  imports = [ inputs.ags.homeManagerModules.default ];
 
   imports = [
     ../../home/core.nix
@@ -16,6 +16,7 @@
 
     ../../home/hyprland.nix
     # ../../home/waybar.nix
+    inputs.ags.homeManagerModules.default
   ];
 
   programs.fzf = {
