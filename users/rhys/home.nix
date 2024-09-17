@@ -3,6 +3,9 @@
   ...
 }: {
 
+
+  imports = [ inputs.ags.homeManagerModules.default ];
+
   imports = [
     ../../home/core.nix
 
