@@ -1,9 +1,9 @@
 {
-  ags,  
-  config,
-  lib,
+  ags,
+  anyrun,
+  # config,
+  #lib,
   pkgs,
-  inputs,
   ...
 }:
 {
