@@ -7,7 +7,7 @@
   ...
 }:
 {
-
+  imports = [ ags.homeManagerModules.ags ];
 
   home.packages = with pkgs; [
     #ags

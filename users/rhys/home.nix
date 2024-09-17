@@ -1,9 +1,7 @@
 {
-  ags,
   config,
   lib,
   pkgs,
-  # inputs,
   ...
 }: {
 
@@ -11,8 +9,6 @@
   
 
   imports = [
-
-    ags.homeManagerModules.ags
 
     ../../home/core.nix
 
