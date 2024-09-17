@@ -8,10 +8,9 @@
 }:
 {
 
-  imports = [ inputs.anyrun.homeManagerModules.default ];
-
   home.packages = with pkgs; [
-    #ags
+    ags
+    anyrun
     chromium
     fuzzel
     hyprland
