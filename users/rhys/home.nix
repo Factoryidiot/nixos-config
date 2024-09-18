@@ -8,12 +8,10 @@
     ../../home/core.nix
 
     ../../home/fastfetch.nix
-    ../../home/git.nix
     ../../home/neovim.nix
     ../../home/zsh.nix
 
     ../../home/hyprland.nix
-    # ../../home/waybar.nix
   ];
 
   programs.fzf = {
