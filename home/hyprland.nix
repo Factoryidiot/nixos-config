@@ -1,8 +1,6 @@
 {
   ags,
   anyrun,
-  # config,
-  #lib,
   pkgs,
   ...
 }:

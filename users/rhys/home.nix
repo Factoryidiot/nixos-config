@@ -1,12 +1,7 @@
 {
-  #config,
-  #lib,
   pkgs,
   ...
 }: {
-
-
-  
 
   imports = [
 
