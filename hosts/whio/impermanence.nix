@@ -7,8 +7,6 @@
     # impermanence.nixosModules.impermanence
   ];
 
-  # environment.systemPackages = [ ];
-
   # There are two ways to clear the root filesystem on every boot:
   ##  1. use tmpfs for /
   ##  2. (btrfs/zfs only)take a blank snapshot of the root filesystem and revert to it on every boot via:
@@ -71,6 +69,7 @@
         }
 
         # misc
+	".config/fuzzel"
         ".config/pulse"
         ".pki"
         ".steam" # steam games
