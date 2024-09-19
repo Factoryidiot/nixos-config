@@ -12,6 +12,7 @@ These are in no particular order of priority
 - [ ] Install hyprland
 - [ ] Install Steam
 - [ ] Install kvm-qemu and Looking Glass
+- [ ] Implement Secrets
 
 ## Install
 ### Run disko
