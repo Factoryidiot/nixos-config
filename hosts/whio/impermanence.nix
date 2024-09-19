@@ -69,7 +69,6 @@
         }
 
         # misc
-	".config/fuzzel"
         ".config/pulse"
         ".pki"
         ".steam" # steam games

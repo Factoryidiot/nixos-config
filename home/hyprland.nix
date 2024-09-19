@@ -38,8 +38,8 @@
     enable = true;
     settings = {
       main = {
-        font=JetBrainsMono:size=10
-        prompt="❯   "
+        font=JetBrainsMono:size=10;
+        prompt="❯   ";
         width=25;
       };
       border.radius=17;
