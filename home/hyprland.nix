@@ -14,7 +14,7 @@
     chromium
     fuzzel
     hyprland
-    mako
+    #mako
     #rofi
     #waybar
     wayland
@@ -36,6 +36,20 @@
   # https://mark.stosberg.com/fuzzel-a-great-dmenu-and-rofi-altenrative-for-wayland/
   programs.fuzzel = {
     enable = true;
+    settings = {
+      main = {
+        font=JetBrainsMono:size=10
+        prompt="❯   "
+        width=25;
+      };
+      border.radius=17;
+      border.width=1;
+      colors.bacrbround=1D1011F;
+      colors.match=FFB2BCFF;
+      colors.selection=574144FF;
+      colors.text=F7DCDEFF;
+      dmenu.exit-immediatly-if-empty=true;
+    };
   };
 
   #programs.rofi = {
@@ -82,9 +96,9 @@
         enable_stdout_logs = true;
       };
       exec-once = [
+        "ags"
         "hyprpaper"
-        "mako"
-        "waybar"
+        
       ];
       monitor = ",1920x1080,auto,1";
       bind = [
