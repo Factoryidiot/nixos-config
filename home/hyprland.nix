@@ -38,16 +38,17 @@
     enable = true;
     settings = {
       main = {
-        font=JetBrainsMono:size=10;
+        font="JetBrainsMono:size=10";
+        layer="overlay";
         prompt="❯   ";
         width=25;
       };
       border.radius=17;
       border.width=1;
-      colors.bacrbround=1D1011F;
-      colors.match=FFB2BCFF;
-      colors.selection=574144FF;
-      colors.text=F7DCDEFF;
+      colors.bacrbround="1D1011F";
+      colors.match="FFB2BCFF";
+      colors.selection="574144FF";
+      colors.text="F7DCDEFF";
       dmenu.exit-immediatly-if-empty=true;
     };
   };
