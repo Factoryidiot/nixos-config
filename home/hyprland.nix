@@ -49,7 +49,7 @@
       colors.match="FFB2BCFF";
       colors.selection="574144FF";
       colors.text="F7DCDEFF";
-      dmenu.exit-immediatly-if-empty=true;
+      dmenu.exit-immediately-if-empty=true;
     };
   };
 
