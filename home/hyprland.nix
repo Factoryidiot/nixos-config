@@ -45,7 +45,7 @@
       };
       border.radius=17;
       border.width=1;
-      colors.bacrbround="1D1011F";
+      colors.background="1D1011F";
       colors.match="FFB2BCFF";
       colors.selection="574144FF";
       colors.text="F7DCDEFF";
