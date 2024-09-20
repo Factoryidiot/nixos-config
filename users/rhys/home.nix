@@ -8,6 +8,7 @@
     ../../home/core.nix
 
     ../../home/fastfetch.nix
+    ../../home/gaming.nix
     ../../home/neovim.nix
     ../../home/zsh.nix
 
