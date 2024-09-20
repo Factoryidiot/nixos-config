@@ -4,7 +4,7 @@
 }: {
 
   imports = [
-    # impermanence.nixosModules.impermanence
+    impermanence.nixosModules.impermanence
   ];
 
   # There are two ways to clear the root filesystem on every boot:

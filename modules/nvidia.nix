@@ -42,12 +42,10 @@
         amdgpuBusId = "PCI:65:0:0";
       };
 
-
       # Enable the Nvidia settings menu,
 	    # accessible via `nvidia-settings`.
       nvidiaSettings = true;
     };
-    opengl.enable = true;
 
   };
 
