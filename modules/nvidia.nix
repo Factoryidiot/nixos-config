@@ -47,8 +47,7 @@
 	    # accessible via `nvidia-settings`.
       nvidiaSettings = true;
     };
-
-    # nvidia-container-toolkit.enable = true;
+    opengl.enable = true;
 
   };
 
