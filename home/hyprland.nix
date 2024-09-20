@@ -105,6 +105,7 @@
       bind = [
         "$mod, Return, exec, kitty"
         "$mod, Q, killactive"
+        "$mod, W, exec, killall fuzzel || fuzzel"
       ];
     };
     xwayland.enable = true;
