@@ -20,11 +20,8 @@
           xorg.libXinerama
           xorg.libXScrnSaver
 
-          # fix CJK fonts
           source-sans
           source-serif
-          source-han-sans
-          source-han-serif
         ];
     };
   };
