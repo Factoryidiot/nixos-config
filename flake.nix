@@ -82,7 +82,7 @@
           modules = [
             disko.nixosModules.disko
             impermanence.nixosModules.impermanence
-            lanzaboote.nixosModules.lanzaboote
+            # lanzaboote.nixosModules.lanzaboote
 
             ./hosts/whio/default.nix
             ./hosts/whio/disko.nix
