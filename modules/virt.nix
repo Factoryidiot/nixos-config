@@ -14,7 +14,7 @@
         ovmf.enable = true;
         ovmf.packages = [ pkgs.OVMFFull.fd ];
         swtpm.enable = true;
-        swtpm.packages = pkgs.swtpm;
+        swtpm.package = pkgs.swtpm;
       };
     };
     spiceUSBRedirection.enable = true;
