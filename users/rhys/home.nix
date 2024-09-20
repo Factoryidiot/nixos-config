@@ -20,7 +20,14 @@
     enableZshIntegration = true;
   };
 
-  programs.gh.enable = true;
+  programs.gh = {
+    enable = true;
+    settings = {
+      editor = "nvim";
+      git_protocol = "ssh";
+      prompt = "enabled";
+    };
+  };
 
   programs.git = {
     enable = true;

@@ -39,7 +39,7 @@
 
         # Make sure to use the correct Bus ID values for your system!
         nvidiaBusId = "PCI:01:0:0";
-        amdgpuBusId = "PCI:101:0:0";
+        amdgpuBusId = "PCI:65:0:0";
       };
 
 
