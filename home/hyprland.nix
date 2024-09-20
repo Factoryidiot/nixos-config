@@ -6,7 +6,7 @@
 }:
 {
   imports = [
-    # ags.homeManagerModules.ags
+    ags.homeManagerModules.ags
     # anyrun.homeManagerModules.anyrun
   ];
 
