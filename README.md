@@ -23,6 +23,13 @@ run "github:nix-community/disko" -- \
 --mode disko \
 --flake "github:Factoryidiot/nixos-config#[host-name]"
 ```
+
+`btrfs filesystem mkswapfile --size 24g --uuid clear /mnt/swap/swapfile`
+
+`lsattr /mnt/swap`
+
+`swapon /mnt/swap/swapfile`
+
 ### Prepare for install
 1. Clone this repo to complete the installation:
    1. Enter a temporary Nix Shell and install git and vim `nix-shell -p git vim`.
