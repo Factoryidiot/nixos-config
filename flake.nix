@@ -81,12 +81,11 @@
 
           modules = [
             disko.nixosModules.disko
-            # impermanence.nixosModules.impermanence
 
             ./hosts/whio/default.nix
             ./hosts/whio/disko.nix
-            ./hosts/whio/impermanence.nix
-            ./hosts/whio/secureboot.nix
+            # ./hosts/whio/impermanence.nix
+            # ./hosts/whio/secureboot.nix
 
             home-manager.nixosModules.home-manager
             {
