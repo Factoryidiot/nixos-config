@@ -42,7 +42,7 @@ mv ../nixos-config /mnt/etc/nixos
 ### Perform installation
 ```
 nixos-install --root /mnt --no-root-password \
---flake "github:Factoryidiot/nixos-config#[host-name]" --no-write-lock-file
+--flake .#[host-name] --no-write-lock-file
 ```
 > [!TIP]
 > To refresh the cache:
