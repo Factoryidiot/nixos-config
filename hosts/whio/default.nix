@@ -9,8 +9,7 @@
     ../../modules/nvidia.nix
 
     ../../modules/steam.nix
-    #../../modules/hyprland.nix
-    ../../modules/virt.nix
+    # ../../modules/virt.nix
     ./hardware-configuration.nix
   ];
 
