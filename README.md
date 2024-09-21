@@ -25,9 +25,9 @@ run "github:nix-community/disko" -- \
 --flake "github:Factoryidiot/nixos-config#[host-name]"
 ```
 Confirm swap, `lsattr` should output:
-`---------------C------ /swap/swapfile`
-
+`---------------C------ /mnt/swap/swapfile`
 `lsattr /mnt/swap`
+
 if not, run:
 `btrfs filesystem mkswapfile --size 24g --uuid clear /mnt/swap/swapfile`
 
