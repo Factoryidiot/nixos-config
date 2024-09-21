@@ -7,6 +7,7 @@ whio
 These are in no particular order of priority
 - [ ] Retest hardware-configuration with /dev/mapper paths replacing UUIDs on the subvolumes
 - [X] Implement Secureboot
+- [ ] https://blastrock.github.io/fde-tpm-sb.html
 - [ ] Install zsh, neovim, tmux, kitty, and fonts
 - [ ] Install nvidia drivers
 - [ ] Install hyprland
