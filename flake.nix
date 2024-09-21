@@ -84,7 +84,7 @@
 
             ./hosts/whio/default.nix
             ./hosts/whio/disko.nix
-            ./hosts/whio/persistence.nix
+            # ./hosts/whio/persistence.nix
             # ./hosts/whio/secureboot.nix
 
             home-manager.nixosModules.home-manager
