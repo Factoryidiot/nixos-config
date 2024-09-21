@@ -58,26 +58,26 @@
     };
 
   fileSystems."/nix" = lib.mkDefault
-    { device = "/dev/disk/by-uuid/ae315978-8578-4e22-8860-edd70b4d439b";
+    { device = "/dev/mapper/crypted";
       fsType = "btrfs";
       options = [ "subvol=@nix" "noatime" "compress-force=zstd:1" ];
     };
 
   fileSystems."/persistent" = lib.mkDefault
-    { device = "/dev/disk/by-uuid/ae315978-8578-4e22-8860-edd70b4d439b";
+    { device = "/dev/mapper/crypted";
       fsType = "btrfs";
       options = [ "subvol=@persistent" "compress-force=zstd:1" ];
       neededForBoot = true;
     };
 
   fileSystems."/snapshots" = lib.mkDefault
-    { device = "/dev/disk/by-uuid/ae315978-8578-4e22-8860-edd70b4d439b";
+    { device = "/dev/mapper/crypted";
       fsType = "btrfs";
       options = [ "subvol=@snapshots" "compress-force=zstd:1" ];
     };
 
   fileSystems."/swap" = lib.mkDefault
-    { device = "/dev/disk/by-uuid/ae315978-8578-4e22-8860-edd70b4d439b";
+    { device = "/dev/mapper/crypted";
       fsType = "btrfs";
       options = [ "subvol=@swap" "ro" ];
     };
@@ -90,7 +90,7 @@
     };
 
   fileSystems."/tmp" = lib.mkDefault
-    { device = "/dev/disk/by-uuid/ae315978-8578-4e22-8860-edd70b4d439b";
+    { device = "/dev/mapper/crypted";
       fsType = "btrfs";
       options = [ "subvol=@tmp" "compress-force=zstd:1" ];
     };
