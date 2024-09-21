@@ -24,12 +24,13 @@ run "github:nix-community/disko" -- \
 --mode disko \
 --flake "github:Factoryidiot/nixos-config#[host-name]"
 ```
-
+Confirm swap, `lsattr` should output:
+#    ---------------C------ /swap/swapfile
+`lsattr /mnt/swap`
+if not, run:
 `btrfs filesystem mkswapfile --size 24g --uuid clear /mnt/swap/swapfile`
 
-`lsattr /mnt/swap`
-
-`swapon /mnt/swap/swapfile`
+Run `swapon /mnt/swap/swapfile` and confim `swapon -s`
 
 ### Prepare for install
 1. Clone this repo to complete the installation:
