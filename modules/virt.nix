@@ -69,15 +69,6 @@ in {
       };
     };
     spiceUSBRedirection.enable = true;
-    vfio = {
-      enable = true;
-      IOMMUType = "amd";
-      # devices = [ "10de:1b80" "10de:10f0" ];
-      blacklistNvidia = true;
-      disableEFIfb = false;
-      ignoreMSRs = true;
-      applyACSpatch = false;
-    };
-  };
+ };
 
 }
