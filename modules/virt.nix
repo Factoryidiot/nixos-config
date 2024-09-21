@@ -28,7 +28,7 @@ in {
     kernelParams = [
       "amd.iommu=on"
       ("vfio-pci.ids=" + lib.concatStringsSep "," gpuIDs)
-    ] # ++ lib.optional cfg.enable ("vfio-pci.ids=" + lib.concatStringsSep "," gpuIDs);
+    ]; # ++ lib.optional cfg.enable ("vfio-pci.ids=" + lib.concatStringsSep "," gpuIDs);
   };
 
   environment.systemPackages = with pkgs; [
