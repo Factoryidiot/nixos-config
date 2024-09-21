@@ -12,7 +12,7 @@
           partitions = {
             ESP = { 
               start = "1MiB";
-              end = "128MiB";
+              end = "250MiB";
               priority = 1;
               type = "EF00";
               content = {
