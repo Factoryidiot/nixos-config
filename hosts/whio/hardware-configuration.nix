@@ -29,18 +29,18 @@
     "exfat"
   ];
 
-  boot.initrd.luks.devices."crypted".device = "/dev/disk/by-uuid/65c23503-6f3d-4a28-84d9-73e8bb817770";
+  boot.initrd.luks.devices."crypted".device = "/dev/disk/by-uuid/6bcc5446-1526-4d73-adc6-3a12cb682306";
   boot.initrd.luks.devices."crypted".allowDiscards = true;
   boot.initrd.luks.devices."crypted".bypassWorkqueues = true;
 
   fileSystems."/boot" = lib.mkDefault
-    { device = "/dev/disk/by-uuid/48E5-EB7B";
+    { device = "/dev/disk/by-uuid/4B13-7768";
       fsType = "vfat";
       options = [ "fmask=0022" "dmask=0022" ];
     };
 
   fileSystems."/btr_pool" = lib.mkDefault
-    { device = "/dev/disk/by-uuid/ae315978-8578-4e22-8860-edd70b4d439b";
+    { device = "/dev/disk/by-uuid/5bd6770d-94a0-4c24-b33a-7e329fb0f03c";
       fsType = "btrfs"; 
       options = [ "subvolid=5" ];
     };
