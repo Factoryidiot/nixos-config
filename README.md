@@ -5,7 +5,7 @@ whio
 
 ## To do
 These are in no particular order of priority
-- [ ] Retest hardware-configuration with /dev/mapper paths replacing UUIDs on the subvolumes
+- [X] Retest hardware-configuration with /dev/mapper paths replacing UUIDs on the subvolumes
 - [ ] Implement Secureboot https://www.reddit.com/r/NixOS/comments/xrgszw/nixos_full_disk_encryption_with_tpm_and_secure/
 - [ ] Install zsh, neovim, tmux, kitty, and fonts
 - [ ] Install nvidia drivers

@@ -36,14 +36,10 @@
 
   environment = {
     systemPackages = with pkgs; [
-      #:anyrun
       curl
       git # required for flakes
       vim
       wget
-
-      steam
-
     ]; 
     variables.EDITOR = "vim";
   };
