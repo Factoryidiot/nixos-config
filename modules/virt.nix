@@ -54,7 +54,7 @@ in {
 
   systemd.services."libvirtd".reloadIfChanged = true; # reload vm configs from //services/*/libvirt/guests.nix
 
-  users.users.${username}.extraGroups = [ "libvirt" ];
+  users.users.${username}.extraGroups = [ "libvirtd" ];
 
   virtualisation = {
     libvirtd = {
