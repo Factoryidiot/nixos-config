@@ -11,15 +11,16 @@
   ];
 
   home.packages = with pkgs; [
+    bitwarden
     chromium
     fuzzel
     hyprland
+    obsidian
     #mako
     #rofi
     #waybar
     wayland
     xdg-desktop-portal-hyprland
-
   ];
 
   # https://github.com/Aylur/ags
