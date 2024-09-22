@@ -66,6 +66,7 @@ nixos-install --root /mnt --no-root-password \
 Move any essential files to their `/persistent` location
 - `mv /mnt/etc/machine-id /mnt/persistent/etc`
 - `mv /mnt/etc/ssh /mnt/persistent/etc`
+- `mv ../nixos-config /mnt/persistent/home/{user}/`
 
 ### Reboot
 `reboot`
