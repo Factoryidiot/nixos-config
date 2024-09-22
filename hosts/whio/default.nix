@@ -8,7 +8,7 @@
     ../../modules/fonts.nix
     ../../modules/nvidia.nix
 
-    #../../modules/steam.nix
+    ../../modules/steam.nix
     ../../modules/virt.nix
     ./hardware-configuration.nix
   ];
