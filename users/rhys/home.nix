@@ -82,13 +82,17 @@
     
     ];
     # promptInit = "source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
-    #shellInit = ''
-    #echo ""
-    #if [[ $(tty) == *"pts"* ]]; then
-    #  fastfetch
-    #fi
-    #'';
+    shellInit = ''
+# Check if the TERM is a terminal emulator (e.g., xterm, iterm2)
+if [[ -n "${TERM}" && "${TERM}" != "dumb" ]]; then
+    # Terminal prompt (customize as needed)
+    PS1='%n@%m:%c %~ %# '
+else
+    # TTY prompt (customize as needed)
+    PS1='%n@%m:%c %# '
+fi
+'';
 
   };
-
 }
+
