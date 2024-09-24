@@ -114,9 +114,37 @@
       ];
       monitor = ",1920x1080,auto,1";
       bind = [
-        "$mod, Return, exec, kitty"
+        # Actions
+        "$mod, W, exec, killall fuzzel || fuzzel" # application menu
+        # Applications
+        "$mod, Return, exec, kitty"               # Terminal
+        # Windows
         "$mod, Q, killactive"
-        "$mod, W, exec, killall fuzzel || fuzzel"
+
+        "$mod, H, movefocus, l"                   # move focus left
+        "$mod, J, movefocus, d"                   # move focus down
+        "$mod, K, movefocus, u"                   # move focus up
+        "$mod, L, movefocus, l"                   # move focus right
+
+        "$mod SHIFT, H, resizeactive, -100 0"     # Decrease window width
+        "$mod SHIFT, J, resizeactive, 0 100"      # Increase window height
+        "$mod SHIFT, K, resizeactive, 0 -100"     # Decrease window height
+        "$mod SHIFT, L, resizeactive, 100 0"      # Increase window width
+        # Workspaces
+        "$mod, 1, workspace, 1"                   # Open workspace 1
+        "$mod, 2, workspace, 2"                   # Open workspace 2
+        "$mod, 3, workspace, 3"                   # Open workspace 3
+        "$mod, 4, workspace, 4"                   # Open workspace 4
+        "$mod, 5, workspace, 5"                   # Open workspace 5
+
+        "$mod SHIFT, 1, movetoworkspace, 1"       # Move active window to workspace 1
+        "$mod SHIFT, 2, movetoworkspace, 2"       # Move active window to workspace 2
+        "$mod SHIFT, 3, movetoworkspace, 3"       # Move active window to workspace 3
+        "$mod SHIFT, 4, movetoworkspace, 4"       # Move active window to workspace 4
+        "$mod SHIFT, 5, movetoworkspace, 5"       # Move active window to workspace 5
+
+        "$mod, Tab, workspace, m+1"               # Open the next workspace
+        "$mod SHIFT, Tab, workspace, m-1"         # Open the previous workspace
       ];
     };
     xwayland.enable = true;
