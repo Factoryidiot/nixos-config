@@ -72,6 +72,7 @@
   programs.zsh = {
     enable = true;
     oh-my-zsh = {
+      custom = 
       enable = true;
       plugins = [ "git" "sudo" ];
       # theme = "nord-extended/nord";
@@ -81,17 +82,6 @@
     plugins = [
     
     ];
-    # promptInit = "source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
-    shellInit = ''
-# Check if the TERM is a terminal emulator (e.g., xterm, iterm2)
-if [[ -n "${TERM}" && "${TERM}" != "dumb" ]]; then
-    # Terminal prompt (customize as needed)
-    PS1='%n@%m:%c %~ %# '
-else
-    # TTY prompt (customize as needed)
-    PS1='%n@%m:%c %# '
-fi
-'';
 
   };
 }
