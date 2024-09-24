@@ -25,12 +25,12 @@
 
   # https://github.com/Aylur/ags
   programs.ags = {
-    enable = true;
+    # enable = true;
   };
 
   # https://github.com/kirottu/anyrun
   programs.anyrun = {
-    enable = true;
+    # enable = true;
   };
 
   # https://codeberg.org/dnkl/fuzzel
@@ -97,10 +97,20 @@
         disable_logs = false;
         enable_stdout_logs = true;
       };
+      env = [
+        "NIXOS_OZONE_WL,1" # for any ozone-based browser & electron apps to run on wayland
+        "MOZ_ENABLE_WAYLAND,1" # for firefox to run on wayland
+        "MOZ_WEBRENDER,1"
+        # misc
+        "_JAVA_AWT_WM_NONREPARENTING,1"
+        "QT_WAYLAND_DISABLE_WINDOWDECORATION,1"
+        "QT_QPA_PLATFORM,wayland"
+        "SDL_VIDEODRIVER,wayland"
+        "GDK_BACKEND,wayland"
+      ];
       exec-once = [
-        "ags"
-        "hyprpaper"
-        
+        # "ags"
+        # "hyprpaper"
       ];
       monitor = ",1920x1080,auto,1";
       bind = [
