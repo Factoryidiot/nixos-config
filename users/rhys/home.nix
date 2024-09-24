@@ -72,7 +72,6 @@
   programs.zsh = {
     enable = true;
     oh-my-zsh = {
-      custom = 
       enable = true;
       plugins = [ "git" "sudo" ];
       # theme = "nord-extended/nord";
