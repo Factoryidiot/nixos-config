@@ -3,14 +3,18 @@
   pkgs,
   ...
 }: { 
-  imports = [
+ imports = [
+    # Hardware first
+    ./hardware-configuration.nix
+    ../../modules/virt.nix        # insert virt before nvidia
+    ../../modules/nvidia.nix      
+
+
     ../../modules/configuration.nix
     ../../modules/fonts.nix
-    ../../modules/nvidia.nix
 
     ../../modules/steam.nix
-    ../../modules/virt.nix
-    ./hardware-configuration.nix
+
   ];
 
   networking = {
