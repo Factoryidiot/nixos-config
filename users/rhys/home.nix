@@ -74,9 +74,16 @@
     oh-my-zsh = {
       enable = true;
       plugins = [ "git" "sudo" ];
-      # theme = "nord-extended/nord";
-      theme = "agnoster";
+      # theme = "agnoster";
     };
+    shellInit = 
+''
+if [ "$TERM" = "linux" ]; then
+  ZSH_THEME="robbyrussell"
+else
+  ZSH_THEME="agnoster"
+fi
+'';
 
     plugins = [
     
