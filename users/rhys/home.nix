@@ -76,14 +76,6 @@
       plugins = [ "git" "sudo" ];
       # theme = "agnoster";
     };
-    shellInit = 
-''
-if [ "$TERM" = "linux" ]; then
-  ZSH_THEME="robbyrussell"
-else
-  ZSH_THEME="agnoster"
-fi
-'';
 
     plugins = [
     

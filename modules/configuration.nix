@@ -69,7 +69,18 @@
       enableExtraSocket = true;
       enableSSHSupport = true;
     }; 
-    zsh.enable = true;
+    zsh = {
+      enable = true;
+      shellInit = 
+''
+if [ "$TERM" = "linux" ]; then
+  ZSH_THEME="robbyrussell"
+else
+  ZSH_THEME="agnoster"
+fi
+'';
+
+    };
   };
 
   services = {
