@@ -64,7 +64,7 @@ in {
       };
     };
     spiceUSBRedirection.enable = true;
-    waydroid.enable;
+    # waydroid.enable;
  };
 
 }
