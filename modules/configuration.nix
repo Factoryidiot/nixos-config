@@ -50,7 +50,7 @@
 
   networking = {
     firewall = {
-      allowedTCPPorts = [ 22 80 443 8080 ];
+      # allowedTCPPorts = [ 22 80 443 8080 ];
       # allowedUDPPorts = [ ... ];
       enable = false;
     };
