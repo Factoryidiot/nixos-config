@@ -71,6 +71,7 @@
     }; 
     zsh = {
       enable = true;
+      loginShellInit = "fastfetch";
       shellInit = 
 ''
 if [ "$TERM" = "linux" ]; then
