@@ -5,7 +5,7 @@
   ...
 }: {
   boot = {
-    initrd.kernelModules = [
+    initrd.kernelModules = mkAfter [
       "nvidia"
       "nvidia_modeset"
       "nvidia_uvm"
