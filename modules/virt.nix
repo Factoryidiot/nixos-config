@@ -14,14 +14,17 @@ let
 in {
 
   boot = {
+    blacklistedKernelMOdules = [ "nvidia" "nouveau" ];
+    extraModprobeConfig = "options vfio-pci ids 10de:2860 10de:22bd";
     initrd.kernelModules = [
+      # "vfio_virqfd" depricated and now included in vfio
       "vfio_pci"
       "vfio"
       "vfio_iommu_type1"
     ];
     kernelParams = [
-      "amd.iommu=on"
-      ("vfio-pci.ids=" + lib.concatStringsSep "," gpuIDs)
+      "amd.iommu=on" 
+      # ("vfio-pci.ids=" + lib.concatStringsSep "," gpuIDs)
     ]; # ++ lib.optional cfg.enable ("vfio-pci.ids=" + lib.concatStringsSep "," gpuIDs);
   };
 
