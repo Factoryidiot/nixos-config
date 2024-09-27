@@ -38,6 +38,7 @@
     systemPackages = with pkgs; [
       curl
       git # required for flakes
+      pciutils
       vim
       wget
     ]; 
