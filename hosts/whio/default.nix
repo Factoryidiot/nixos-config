@@ -6,7 +6,7 @@
  imports = [
     # Hardware first
     ./hardware-configuration.nix
-    ../../modules/virt.nix        # insert virt before nvidia
+    ../../modules/virt.nix
     ../../modules/nvidia.nix      
     ../../modules/zram.nix
 
