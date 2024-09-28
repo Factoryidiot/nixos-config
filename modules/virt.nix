@@ -61,7 +61,7 @@ in {
         package = pkgs.qemu_kvm;
         ovmf.enable = true;
         ovmf.packages = [ pkgs.OVMFFull.fd ];
-        runAsRoot = false;
+        runAsRoot = true;
         swtpm.enable = true;
         swtpm.package = pkgs.swtpm;
       };
