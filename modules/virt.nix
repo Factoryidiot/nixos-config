@@ -14,7 +14,7 @@ let
 in {
 
   boot = {
-    blacklistedKernelModules = [ "nvidia" "nouveau" ];
+    blacklistedKernelModules = [ "nvidia" "nouveau" "amdgpu" ];
     extraModprobeConfig = "options vfio-pci ids=10de:2860,10de:22bd";
     initrd.kernelModules = [
       # "vfio_virqfd" depricated and now included in vfio
