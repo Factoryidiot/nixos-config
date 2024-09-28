@@ -14,7 +14,6 @@ in {
 
   boot = {
     blacklistedKernelModules = [
-      "amdgpu"
       "nouveau"
       "nvidia"
       "nvidia_drm"
