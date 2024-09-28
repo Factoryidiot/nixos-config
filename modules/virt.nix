@@ -6,25 +6,37 @@
   ...
 }:
 let
-  # Geforce RX 4070 Max-Q / Mobile
-  gpuIDs = [
-    "10de:2860"
-    "10de:22bd"
+  grpIDs = [
+    "10de:2860" # Geforce RX 4070 Max-Q / Mobile
+    "10de:22bd" # Audio Controller
   ];
 in {
 
   boot = {
-    blacklistedKernelModules = [ "nvidia" "nouveau" "amdgpu" ];
-    extraModprobeConfig = "options vfio-pci ids=10de:2860,10de:22bd";
+    blacklistedKernelModules = [
+      "amdgpu"
+      "nouveau"
+      "nvidia"
+      "nvidia_drm"
+      "nvidia_modeset"
+      "i2c_nvidia_gpu"
+    ];
+    extraModprobeConfig = ''
+      softdep amdgpu pre: vfio-pci
+      softdep drm pre: vfio-pci
+      softdep nouveau pre: vfio-pci
+      softdep nvidia pre: vfio-pci
+    '';
+
     initrd.kernelModules = [
-      # "vfio_virqfd" depricated and now included in vfio
+    #  "vfio_virqfd" depricated and now included in vfio
       "vfio_pci"
       "vfio"
       "vfio_iommu_type1"
     ];
     kernelParams = [
       "amd.iommu=on" 
-      # ("vfio-pci.ids=" + lib.concatStringsSep "," gpuIDs)
+      "vfio-pci.ids=${lib.concatStringsSep "," grpIDs}"
     ]; # ++ lib.optional cfg.enable ("vfio-pci.ids=" + lib.concatStringsSep "," gpuIDs);
   };
 
@@ -57,6 +69,8 @@ in {
   virtualisation = {
     libvirtd = {
       enable = true;
+      onBoot = "ignore";
+      onShutdown = "shutdown";
       qemu = {
         package = pkgs.qemu_kvm;
         ovmf.enable = true;
