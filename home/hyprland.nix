@@ -93,7 +93,7 @@
     enable = true;
     settings = {
       "$mod" = "SUPER";
-      cursor {
+      cursor = {
         no_hardware_cursors = true;
       };
       debug = {
