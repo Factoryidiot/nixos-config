@@ -49,7 +49,7 @@
     # the following directories will be passed to /persistent/home/$USER
     users.rhys = {
       directories = [
-        "nixos-config"
+        #"nixos-config"
         "tmp"
 
         "Documents"
@@ -93,13 +93,13 @@
         #".config/freerdp"
 
         # vscode
-        ".vscode"
-        ".config/Code/User"
-        ".config/Code - Insiders/User"
+        #".vscode"
+        #".config/Code/User"
+        #".config/Code - Insiders/User"
 
         # browsers
-        ".mozilla"
-        ".config/google-chrome"
+        #".mozilla"
+        #".config/google-chrome"
 
         # neovim / remmina / flatpak / ...
         ".local/share"
