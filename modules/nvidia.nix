@@ -67,9 +67,5 @@
 
   # for Nvidia GPU
   services.xserver.videoDrivers = [ "nvidia" ]; # will install nvidia-vaapi-driver by default
-  settings.nix.unfree = [
-    "nvidia-x11"
-    "nvidia-settings"
-    "nvidia-persistenced"
-  ];
+
 }
