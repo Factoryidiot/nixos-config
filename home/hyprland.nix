@@ -16,7 +16,7 @@
     fuzzel
     hyprland
     obsidian
-    #mako
+    mako
     #rofi
     #waybar
     wayland
@@ -93,6 +93,9 @@
     enable = true;
     settings = {
       "$mod" = "SUPER";
+      cursor {
+        no_hardware_cursors = true;
+      }
       debug = {
         disable_logs = false;
         enable_stdout_logs = true;
@@ -107,12 +110,16 @@
         "QT_QPA_PLATFORM,wayland"
         "SDL_VIDEODRIVER,wayland"
         "GDK_BACKEND,wayland"
+        "LIBVA_DRIVER_NAME,nvidia"
+        "XDG_SESSION_TYPE,wayland"
+        "GBM_BACKEND,nvidia-drm"
+        "__GLX_VENDOR_LIBRARY_NAME,nvidia"
       ];
       exec-once = [
         # "ags"
         # "hyprpaper"
       ];
-      monitor = "HDMI-A-1,1920x1080,auto,1";
+      #monitor = "HDMI-A-1,1920x1080,auto,1";
       bind = [
         # Actions
         "$mod, W, exec, killall fuzzel || fuzzel" # application menu
