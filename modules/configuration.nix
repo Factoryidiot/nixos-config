@@ -36,6 +36,7 @@
 
   environment = {
     systemPackages = with pkgs; [
+      clinfo
       curl
       git # required for flakes
       pciutils

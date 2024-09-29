@@ -4,19 +4,26 @@
   pkgs,
   ...
 }: {
-  #boot = {
+  boot = {
+    kernelParams = [
+      "video=DP-1:2560x1440@144"
+      "video=DP-2:2560x1440@144"
+    ];
   #  initrd.kernelModules = lib.mkAfter [
   #    "nvidia"
   #    "nvidia_modeset"
   #    "nvidia_uvm"
   #    "nvidia_drm"
   #  ];
-  #};
+  };
  
   hardware = {
 
     graphics = {
       enable = true;
+      driSupport32Bit = true;
+      extraPackages = with pkgs; [ amdvlk ];
+      extraPackages32 = with pkgs; [ driverssi686Linux.amdvlk ];
       # enable32Bit = true; # needed by nvidia-docker
     };
 
