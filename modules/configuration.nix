@@ -39,6 +39,8 @@
       curl
       git # required for flakes
       pciutils
+      usbutils
+      lshw
       vim
       wget
     ]; 
@@ -69,7 +71,8 @@
       enableBrowserSocket = true;
       enableExtraSocket = true;
       enableSSHSupport = true;
-    }; 
+    };
+    nano.enable = false;
     zsh = {
       enable = true;
       loginShellInit = "fastfetch";
