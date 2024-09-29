@@ -6,8 +6,8 @@
 }: {
   boot = {
     kernelParams = [
-      "video=DP-1:2560x1440@144"
-      "video=DP-2:2560x1440@144"
+      "video=eDP-1:1920x1080@144"
+      "video=HDMI-A-1:1920x1080@144"
     ];
   #  initrd.kernelModules = lib.mkAfter [
   #    "nvidia"
