@@ -112,8 +112,8 @@
         # "ags"
         # "hyprpaper"
       ];
-      #monitor = "DP-1,1920x1080,auto,1";
-      monitor = ",preferred,auto,1";
+      monitor = "eDP-1,1920x1080,auto,1";
+      monitor = "HDMI-A-1,preferred,auto,1";
       bind = [
         # Actions
         "$mod, W, exec, killall fuzzel || fuzzel" # application menu
