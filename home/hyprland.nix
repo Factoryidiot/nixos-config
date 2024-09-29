@@ -95,7 +95,7 @@
       "$mod" = "SUPER";
       cursor {
         no_hardware_cursors = true;
-      }
+      };
       debug = {
         disable_logs = false;
         enable_stdout_logs = true;
