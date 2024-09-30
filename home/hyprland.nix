@@ -119,7 +119,7 @@
         # "ags"
         # "hyprpaper"
       ];
-      #monitor = "HDMI-A-1,1920x1080,auto,1";
+      monitor = ",1920x1080,auto,1";
       bind = [
         # Actions
         "$mod, W, exec, killall fuzzel || fuzzel" # application menu
