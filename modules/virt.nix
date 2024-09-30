@@ -21,7 +21,6 @@ in {
       #"i2c_nvidia_gpu"
     ];
     extraModprobeConfig = ''
-      # softdep amdgpu pre: vfio-pci
       softdep drm pre: vfio-pci
       softdep nouveau pre: vfio-pci
       softdep nvidia pre: vfio-pci
