@@ -119,7 +119,11 @@
         # "ags"
         # "hyprpaper"
       ];
+<<<<<<< HEAD
       monitor = ",1920x1080,auto,1";
+=======
+      monitor = "eDP,1920x1080,auto,1";
+>>>>>>> origin/main
       bind = [
         # Actions
         "$mod, W, exec, killall fuzzel || fuzzel" # application menu

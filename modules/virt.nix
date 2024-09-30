@@ -16,12 +16,12 @@ in {
     blacklistedKernelModules = [
       "nouveau"
       "nvidia"
-      "nvidia_drm"
-      "nvidia_modeset"
-      "i2c_nvidia_gpu"
+      #"nvidia_drm"
+      #"nvidia_modeset"
+      #"i2c_nvidia_gpu"
     ];
     extraModprobeConfig = ''
-      softdep amdgpu pre: vfio-pci
+      # softdep amdgpu pre: vfio-pci
       softdep drm pre: vfio-pci
       softdep nouveau pre: vfio-pci
       softdep nvidia pre: vfio-pci
@@ -72,11 +72,16 @@ in {
       onShutdown = "shutdown";
       qemu = {
         package = pkgs.qemu_kvm;
-        ovmf.enable = true;
-        ovmf.packages = [ pkgs.OVMFFull.fd ];
+        ovmf = {
+	  enable = true;
+          packages = [ (pkgs.OVMF.override {
+	    secureBoot = true;
+	    tpmSupport = true;
+	  }).fd ];
+	};
         runAsRoot = true;
         swtpm.enable = true;
-        swtpm.package = pkgs.swtpm;
+
       };
     };
     spiceUSBRedirection.enable = true;
