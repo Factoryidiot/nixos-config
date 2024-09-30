@@ -4,18 +4,6 @@
   pkgs,
   ...
 }: {
-  boot = {
-    kernelParams = [
-      "video=eDP-1:1920x1080@144"
-      "video=HDMI-A-1:1920x1080@144"
-    ];
-  #  initrd.kernelModules = lib.mkAfter [
-  #    "nvidia"
-  #    "nvidia_modeset"
-  #    "nvidia_uvm"
-  #    "nvidia_drm"
-  #  ];
-  };
  
   hardware = {
 
@@ -53,19 +41,19 @@
       # Enable this if you have graphical corruption issues or application crashes after waking
       # up from sleep. This fixes it by saving the entire VRAM memory to /tmp/ instead 
       # of just the bare essentials.
-      powerManagement.enable = true;
-      powerManagement.finegrained = true;
+      powerManagement.enable = false;
+      powerManagement.finegrained = false;
 
       prime = {
         # Make sure to use the correct Bus ID values for your system!
         amdgpuBusId = "PCI:65:0:0";
         nvidiaBusId = "PCI:01:0:0";
  
-        offload = {
-          enable = true;
-          enableOffloadCmd =  true; # command: nvidia-offload 
-        };
-        # reverseSync.enable = true;
+        #offload = {
+        #  enable = true;
+        #  enableOffloadCmd =  true; # command: nvidia-offload 
+        #};
+        reverseSync.enable = true;
       };
 
    };
