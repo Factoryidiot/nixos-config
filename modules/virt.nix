@@ -79,7 +79,7 @@ in {
 	        }).fd ];
 	      };
         runAsRoot = true;
-        #swtpm.enable = true;
+        swtpm.enable = true;
       };
     };
     spiceUSBRedirection.enable = true;
