@@ -72,15 +72,14 @@ in {
       qemu = {
         package = pkgs.qemu_kvm;
         ovmf = {
-	  enable = true;
+	        enable = true;
           packages = [ (pkgs.OVMF.override {
-	    secureBoot = true;
-	    tpmSupport = true;
-	  }).fd ];
-	};
+	          secureBoot = true;
+	          tpmSupport = true;
+	        }).fd ];
+	      };
         runAsRoot = true;
-        swtpm.enable = true;
-
+        #swtpm.enable = true;
       };
     };
     spiceUSBRedirection.enable = true;
