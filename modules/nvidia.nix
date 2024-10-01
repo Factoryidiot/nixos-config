@@ -42,17 +42,17 @@
       # up from sleep. This fixes it by saving the entire VRAM memory to /tmp/ instead 
       # of just the bare essentials.
       powerManagement.enable = false;
-      powerManagement.finegrained = false;
+      powerManagement.finegrained = true;
 
       prime = {
         # Make sure to use the correct Bus ID values for your system!
         amdgpuBusId = "PCI:65:0:0";
         nvidiaBusId = "PCI:01:0:0";
  
-        #offload = {
-        #  enable = true;
-        #  enableOffloadCmd =  true; # command: nvidia-offload 
-        #};
+        offload = {
+          enable = true;
+          enableOffloadCmd =  true; # command: nvidia-offload 
+        };
         reverseSync.enable = true;
       };
 
