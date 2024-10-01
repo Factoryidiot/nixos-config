@@ -41,8 +41,10 @@
       # Enable this if you have graphical corruption issues or application crashes after waking
       # up from sleep. This fixes it by saving the entire VRAM memory to /tmp/ instead 
       # of just the bare essentials.
-      powerManagement.enable = false;
-      powerManagement.finegrained = true;
+      powerManagement = {
+        enable = true;
+        finegrained = true;
+      };
 
       prime = {
         # Make sure to use the correct Bus ID values for your system!
