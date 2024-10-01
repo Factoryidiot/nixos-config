@@ -7,18 +7,20 @@
 }:
 let
   grpIDs = [
-    "10de:2860" # Geforce RX 4070 Max-Q / Mobile
-    "10de:22bd" # Audio Controller
+    # "10de:2860" # Geforce RX 4070 Max-Q / Mobile
+    # "10de:22bd" # Audio Controller
+    "1002:1900"
+    "1002:1640"
   ];
 in {
 
   boot = {
     blacklistedKernelModules = [
       "nouveau"
-      #"nvidia"
-      #"nvidia_drm"
-      #"nvidia_modeset"
-      #"i2c_nvidia_gpu"
+      "nvidia"
+      "nvidia_drm"
+      "nvidia_modeset"
+      "i2c_nvidia_gpu"
     ];
     extraModprobeConfig = ''
       softdep drm pre: vfio-pci
