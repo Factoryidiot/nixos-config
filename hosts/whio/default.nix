@@ -7,8 +7,8 @@
     # Hardware first
     ./hardware-configuration.nix
     ../../modules/virt.nix
-    #../../modules/nvidia.nix      
-    ../../modules/zram.nix
+    ../../modules/nvidia.nix      
+    # ../../modules/zram.nix
 
     ../../modules/configuration.nix
     ../../modules/fonts.nix
