@@ -41,9 +41,6 @@ in {
 
     graphics = {
       enable = true;
-      # driSupport32Bit = true;
-      # extraPackages = with pkgs; [ amdvlk ];
-      # extraPackages32 = with pkgs; [ driversi686Linux.amdvlk ];
       enable32Bit = true; # needed by nvidia-docker
     };
 
