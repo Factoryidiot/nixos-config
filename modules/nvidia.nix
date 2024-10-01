@@ -14,7 +14,10 @@ let
   '';
 in {
  
-  boot.kernelParams = ["nvidia.NVreg_PreserveVideoMemoryAllocations=1"];
+  boot.kernelParams = [
+    "nvidia-drm.fbdev=1"
+    "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
+  ];
 
   hardware = {
 
