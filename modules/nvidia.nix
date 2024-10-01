@@ -1,5 +1,6 @@
 {
   config,
+  inputs,
   lib,
   pkgs,
   ...
@@ -13,6 +14,15 @@ let
     exec -a "$0" "$@"
   '';
 in {
+
+  imports = [
+    inputs.nixos-hardware.nixosModules.common-gpu-nvidia
+
+    # TODO: why do I get the below error?
+    # error: The option `hardware.intelgpu.loadInInitrd' in `/nix/store/4mgg9mrh8g0qj4g3z9zvqhrniig10bsn-source/systems/evo/hardware/gpus.nix' is already declared in `/nix/store/75hvhrfigcnckibdlg877157bpwjmy85-source/common/gpu/intel'.
+    # Where is the other coming from?g
+    # inputs.nixos-hardware.nixosModules.common-gpu-intel
+  ];
  
   boot.kernelParams = [
     "nvidia-drm.fbdev=1"
