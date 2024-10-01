@@ -27,14 +27,14 @@ in {
   boot = {
     kernelParams = [
       "nvidia-drm.fbdev=1"
-      "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
+      # "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
     ];
-    initrd.kernelModules = [
-      "nvidia"
-      "nvidia_drm"
-      "nvidia_modeset"
-      "i2c_nvidia_gpu"
-    ];
+    # initrd.kernelModules = [
+    #  "nvidia"
+    #  "nvidia_drm"
+    #  "nvidia_modeset"
+    #  "i2c_nvidia_gpu"
+    # ];
   };
  
   hardware = {
