@@ -10,10 +10,12 @@
     # Additional hardware specific configuration
     # https://github.com/NixOS/nixos-hardware
     nixos-hardware.nixosModules.asus-battery
-    nixos-hardware.nixosModules.common.cpu.amd.pstate
-    nixos-hardware.nixosModules.common.gpu.amd
-    nixos-hardware.nixosModules.common.pc.laptop
-    nixos-hardware.nixosModules.common.pc.ssd
+    nixos-hardware.nixosModules.common-cpu-amd
+    nixos-hardware.nixosModules.common-cpu-amd-pstate
+    nixos-hardware.nixosModules.common-gpu-amd
+    nixos-hardware.nixosModules.common-pc-laptop
+    nixos-hardware.nixosModules.common-pc-laptop-acpi_call
+    nixos-hardware.nixosModules.common-pc-laptop-ssd
   ];
 
   hardware.cpu.amd.updateMicrocode = true;
