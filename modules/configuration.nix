@@ -1,11 +1,20 @@
 {
-  pkgs,
+  nixos-hardware,
   lib,
+  pkgs,
   username,
   ...
 }: {
 
-  imports = [];
+  imports = [
+    # Additional hardware specific configuration
+    # https://github.com/NixOS/nixos-hardware
+    nixos-hardware.nixosModules.asus.battery
+    nixos-hardware.nixosModules.common.cpu.amd.pstate
+    nixos-hardware.nixosModules.common.gpu.amd
+    nixos-hardware.nixosModules.common.pc.laptop
+    nixos-hardware.nixosModules.common.pc.ssd
+  ];
 
   hardware.cpu.amd.updateMicrocode = true;
 
@@ -92,6 +101,9 @@ fi
   };
 
   services = {
+    asusd = {
+      enable = true;
+    };
     openssh = {
       enable = true;
       settings = {
