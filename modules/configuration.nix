@@ -9,7 +9,7 @@
   imports = [
     # Additional hardware specific configuration
     # https://github.com/NixOS/nixos-hardware
-    nixos-hardware.nixosModules.asus.battery
+    nixos-hardware.nixosModules.asus-battery
     nixos-hardware.nixosModules.common.cpu.amd.pstate
     nixos-hardware.nixosModules.common.gpu.amd
     nixos-hardware.nixosModules.common.pc.laptop
