@@ -74,19 +74,20 @@
           sources = [
             { name ="nvim_lsp"; }
             { name = "luasnip"; }
-          {
-            name = "buffer";
-            option.get_bufnrs.__raw = "vim.api.nvim_list_bufs";
-          }
-          { name = "nvim_lua"; }
-          { name = "path"; }
-          { name = "copilot"; }
-        ];
+            {
+              name = "buffer";
+              option.get_bufnrs.__raw = "vim.api.nvim_list_bufs";
+            }
+            { name = "nvim_lua"; }
+            { name = "path"; }
+            { name = "copilot"; }
+          ];
         };
       };
       luasnip.enable = true;
       lualine.enable = true;
       nix.enable = true;
+      nord.enable = true;
     };
   };
 
