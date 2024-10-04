@@ -10,7 +10,7 @@
 
   programs.nixvim = {
     enable = true;
-    colorscheme.nord.enable = true;
+    colorschemes.nord.enable = true;
     opts = {
       ## Context
       # colorcolumn = '80'      # str: Show col for max line length
