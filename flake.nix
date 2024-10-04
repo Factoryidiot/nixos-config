@@ -46,7 +46,7 @@
     };
   };
 
-  outputs = inputs@{ disko, home-manager, impermanence, lanzaboote, nixos-hardware, nixpkgs, self, ... }:
+  outputs = inputs@{ disko, home-manager, impermanence, lanzaboote, nixos-hardware, nixpkgs, nixvim, self, ... }:
     let
       username = "rhys";
       specialArgs =
