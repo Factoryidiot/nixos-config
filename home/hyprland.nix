@@ -2,8 +2,13 @@
   ags,
   anyrun,
   pkgs,
+  username,
   ...
 }:
+let 
+ home = config.home.homeDirectory;
+ hyprland_root = "${home}/.config/hypr"
+in
 {
   imports = [
     ags.homeManagerModules.ags
@@ -84,9 +89,11 @@
   #    }
   #  '';
   #};
+  programs.hyprlock.enable = true;
 
   services = {
-    # hypridle.enable = true;
+    hypridle.enable = true;
+    hyprpaper.enable = true;
   };
 
   wayland.windowManager.hyprland = {
@@ -101,6 +108,8 @@
         enable_stdout_logs = true;
       };
       env = [
+        "HYPRLAND_ROOT, ${hyprland_root}"
+        "AGS_CONFIG, ${hyprland_root}/ags/config.js"
         "NIXOS_OZONE_WL,1" # for any ozone-based browser & electron apps to run on wayland
         "MOZ_ENABLE_WAYLAND,1" # for firefox to run on wayland
         "MOZ_WEBRENDER,1"
