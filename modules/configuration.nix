@@ -65,7 +65,6 @@
   hardware.graphics.enable = true;
 
   hardware.bluetooth.enable = true;
-  services.blueman.enable = true;
 
   i18n.defaultLocale = "en_AU.UTF-8";
 
@@ -110,6 +109,7 @@ fi
     asusd = {
       enable = true;
     };
+    blueman.enable = true;
     openssh = {
       enable = true;
       settings = {
