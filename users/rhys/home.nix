@@ -65,6 +65,11 @@
 
   programs.tmux = {
     enable = true;
+    plugins = with pkgs.tmuxPlugins; [
+      {
+        plugin = nord;
+      }
+    ];
   };
 
   programs.yazi = {
