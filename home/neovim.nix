@@ -36,14 +36,14 @@
       # hlsearch = true;          # bool: Highlight search matches
 
       ## Whitespace
-      expandtab = true;         # bool: Use spaces instead of tabs
-      shiftwidth = 2;           # num: Size of an indent
-      softtabstop = 2;          # num: Number of spaces tabs count for in insert mode
-      tabstop = 2;              # num: Number of spaces tab count for
+      # expandtab = true;         # bool: Use spaces instead of tabs
+      # shiftwidth = 2;           # num: Size of an indent
+      # softtabstop = 2;          # num: Number of spaces tabs count for in insert mode
+      # tabstop = 2;              # num: Number of spaces tab count for
 
       ## Splits
-      splitright = true;        # bool: Place new window to the right of the current window
-      splitbelow = true;        # bool: Place new window below the current window
+      # splitright = true;        # bool: Place new window to the right of the current window
+      # splitbelow = true;        # bool: Place new window below the current window
 
       ##Set complete opt to have a better completion experience
       ## :help complete opt
