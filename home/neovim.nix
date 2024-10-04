@@ -21,8 +21,8 @@
       signcolumn = "yes";       # str: Show the sign column
 
       ## Filetypes
-      # encoding = 'utf8';      # str: String encoding to use
-      fileencoding = 'utf8';    # str: File encoding to use
+      encoding = "utf8";      # str: String encoding to use
+      fileencoding = "utf8";    # str: File encoding to use
 
       ## Theme
       # syntax = 'on';          # str: Allow syntax higlighting
@@ -52,8 +52,8 @@
       ## noselect: Do not select, force to select one from the menu
       ## shortness: avoid showing extra messages when using completion
       ## updatetime: set updatetime for CursorHold
-      completeopt = {'menuone', 'noselect', 'noinsert'}l
-      shortmess = vim.shortmess + { c = true};
+      # completeopt = { "menuone', 'noselect', 'noinsert'};
+      # shortmess = vim.shortmess + { c = true};
     };
 
     plugins = {
