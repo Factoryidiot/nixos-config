@@ -1,6 +1,7 @@
 {
   ags,
   anyrun,
+  config,
   pkgs,
   username,
   ...
