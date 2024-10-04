@@ -175,7 +175,7 @@ in
     };
     configFile = {
       "hypr/hypridle.conf" = {
-        source = ../hyprland/hypridle.conf;
+        source = ./hyprland/hypridle.conf;
       };
     };
   };
