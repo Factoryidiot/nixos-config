@@ -87,7 +87,6 @@
       luasnip.enable = true;
       lualine.enable = true;
       nix.enable = true;
-      nord.enable = true;
     };
   };
 
