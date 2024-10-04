@@ -67,7 +67,7 @@
     enable = true;
     plugins = with pkgs.tmuxPlugins; [
       {
-        plugin = nord;
+        plugin = "nord";
       }
     ];
   };
