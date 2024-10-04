@@ -93,14 +93,14 @@
     zsh = {
       enable = true;
       loginShellInit = "fastfetch";
-      shellInit = 
-''
-if [ "$TERM" = "linux" ]; then
-  ZSH_THEME="robbyrussell"
-else
-  ZSH_THEME="agnoster"
-fi
-'';
+      promptInit = "source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
+      shellInit = ''
+        if [ "$TERM" = "linux" ]; then
+          ZSH_THEME="robbyrussell"
+        else
+          ZSH_THEME="agnoster"
+        fi
+      '';
 
     };
   };
