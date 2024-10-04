@@ -1,4 +1,4 @@
-
+{
   ags,
   anyrun,
   pkgs,
