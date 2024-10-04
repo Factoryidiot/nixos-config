@@ -62,9 +62,10 @@
     variables.EDITOR = "vim";
   };
 
-  hardware.graphics.enable = true;
-
-  hardware.bluetooth.enable = true;
+  hardware = {
+    graphics.enable = true;
+    bluetooth.enable = true;
+  };
 
   i18n.defaultLocale = "en_AU.UTF-8";
 
@@ -93,7 +94,7 @@
     zsh = {
       enable = true;
       loginShellInit = "fastfetch";
-      promptInit = "source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
+      # promptInit = "source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
       shellInit = ''
         if [ "$TERM" = "linux" ]; then
           ZSH_THEME="robbyrussell"
