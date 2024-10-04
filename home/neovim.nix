@@ -10,7 +10,7 @@
 
   programs.nixvim = {
     enable = true;
-    plugins {
+    plugins = {
       lualine.enable = true;
     };
   };
