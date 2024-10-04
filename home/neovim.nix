@@ -13,37 +13,37 @@
 
     opts = {
       ## Context
-      # colorcolumn = '80' # str: Show col for max line length
+      # colorcolumn = '80'      # str: Show col for max line length
 
-      number = true           # bool: Show line numbers
-      relativenumber = true   # bool: Show relative line numbers
-      scrolloff = 4           # int: Min num lines of context
-      signcolumn = "yes"      # str: Show the sign column
+      number = true;            # bool: Show line numbers
+      relativenumber = true;    # bool: Show relative line numbers
+      scrolloff = 4;            # int: Min num lines of context
+      signcolumn = "yes";       # str: Show the sign column
 
       ## Filetypes
-      encoding = 'utf8'       # str: String encoding to use
-      fileencoding = 'utf8'   # str: File encoding to use
+      encoding = 'utf8';        # str: String encoding to use
+      fileencoding = 'utf8';    # str: File encoding to use
 
       ## Theme
-      syntax = 'on'           # str: Allow syntax higlighting
-      termguicolors = true    # bool: If term supports ui colors the enable
-      cmd('colorscheme nord') # cmd: Set the colorscheme
+      syntax = 'on';            # str: Allow syntax higlighting
+      termguicolors = true;     # bool: If term supports ui colors the enable
+      #cmd('colorscheme nord')  # cmd: Set the colorscheme
 
       ## Search
-      ignorecase = true      # bool: Ignore case in search patterns
-      smartcase = true       # bool: Overide ignorecase if search contains capitals
-      incsearch = true       # bool: Use incremental search
-      hlsearch = true        # bool: Highlight search matches
+      ignorecase = true;        # bool: Ignore case in search patterns
+      smartcase = true;         # bool: Overide ignorecase if search contains capitals
+      incsearch = true;         # bool: Use incremental search
+      hlsearch = true;          # bool: Highlight search matches
 
       ## Whitespace
-      expandtab = true       # bool: Use spaces instead of tabs
-      shiftwidth = 2         # num: Size of an indent
-      softtabstop = 2        # num: Number of spaces tabs count for in insert mode
-      tabstop = 2            # num: Number of spaces tab count for
+      expandtab = true;         # bool: Use spaces instead of tabs
+      shiftwidth = 2;           # num: Size of an indent
+      softtabstop = 2;          # num: Number of spaces tabs count for in insert mode
+      tabstop = 2;              # num: Number of spaces tab count for
 
       ## Splits
-      splitright = true      # bool: Place new window to the right of the current window
-      splitbelow = true      # bool: Place new window below the current window
+      splitright = true;        # bool: Place new window to the right of the current window
+      splitbelow = true;        # bool: Place new window below the current window
 
       ##Set complete opt to have a better completion experience
       ## :help complete opt
@@ -52,8 +52,8 @@
       ## noselect: Do not select, force to select one from the menu
       ## shortness: avoid showing extra messages when using completion
       ## updatetime: set updatetime for CursorHold
-      completeopt = {'menuone', 'noselect', 'noinsert'}
-      shortmess = vim.shortmess + { c = true}
+      completeopt = {'menuone', 'noselect', 'noinsert'}l
+      shortmess = vim.shortmess + { c = true};
     };
 
     plugins = {
