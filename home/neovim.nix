@@ -30,8 +30,8 @@
       colorscheme = "nord"      # str: Set the colorscheme
 
       ## Search
-      ignorecase = true;        # bool: Ignore case in search patterns
-      smartcase = true;         # bool: Overide ignorecase if search contains capitals
+      # ignorecase = true;        # bool: Ignore case in search patterns
+      # smartcase = true;         # bool: Overide ignorecase if search contains capitals
       incsearch = true;         # bool: Use incremental search
       hlsearch = true;          # bool: Highlight search matches
 
