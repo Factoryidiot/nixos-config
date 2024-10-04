@@ -72,7 +72,7 @@
             end
           '';
           sources = [
-            "nvim_lsp"
+            { name ="nvim_lsp"; }
             { name = "luasnip"; }
           {
             name = "buffer";
