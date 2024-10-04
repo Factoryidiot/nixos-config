@@ -43,7 +43,7 @@
     settings = {
       background_opacity = "0.96";
     };
-    themeFile = "nord";
+    themeFile = "Nord";
   };
 
   programs.nixvim = {
