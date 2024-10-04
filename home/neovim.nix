@@ -1,10 +1,12 @@
 {
+  nixvim,
   pkgs,
   ...
 }: {
 
-  programs.neovim = {
+  programs.nixvim = {
     enable = true;
+
   };
 
 }
