@@ -7,8 +7,8 @@
   ...
 }:
 let 
- home = config.home.homeDirectory;
- hyprland_root = "${home}/.config/hypr";
+  home = config.home.homeDirectory;
+  hyprland_root = "${home}/.config/hypr";
 in
 {
   imports = [
