@@ -21,13 +21,13 @@
       signcolumn = "yes";       # str: Show the sign column
 
       ## Filetypes
-      # encoding = 'utf8';        # str: String encoding to use
-      # fileencoding = 'utf8';    # str: File encoding to use
+      # encoding = 'utf8';      # str: String encoding to use
+      fileencoding = 'utf8';    # str: File encoding to use
 
       ## Theme
-      syntax = 'on';            # str: Allow syntax higlighting
+      # syntax = 'on';          # str: Allow syntax higlighting
       termguicolors = true;     # bool: If term supports ui colors the enable
-      #cmd('colorscheme nord')  # cmd: Set the colorscheme
+      colorscheme = "nord"      # str: Set the colorscheme
 
       ## Search
       ignorecase = true;        # bool: Ignore case in search patterns
