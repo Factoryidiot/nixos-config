@@ -66,9 +66,18 @@
 
   programs.tmux = {
     enable = true;
+    extraConfig = ''
+      set-option -g status-position top
+      bind-key h select-pane -L
+      bind-key j select-pane -D
+      bind-key k select-pane -U
+      bind-key l select-pane -R
+    '';
+    mouse = true;
     plugins = with pkgs.tmuxPlugins; [
       nord
     ];
+    terminal = "tmux-256color";
   };
 
   programs.yazi = {
@@ -86,7 +95,7 @@
     plugins = [
     
     ];
-
+    programs.zsh.promptInit = "source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
   };
 }
 
