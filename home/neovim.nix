@@ -21,8 +21,8 @@
       signcolumn = "yes";       # str: Show the sign column
 
       ## Filetypes
-      encoding = 'utf8';        # str: String encoding to use
-      fileencoding = 'utf8';    # str: File encoding to use
+      # encoding = 'utf8';        # str: String encoding to use
+      # fileencoding = 'utf8';    # str: File encoding to use
 
       ## Theme
       syntax = 'on';            # str: Allow syntax higlighting
