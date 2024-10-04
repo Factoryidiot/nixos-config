@@ -42,8 +42,8 @@
     };
     settings = {
       background_opacity = "0.90";
+      tab_bar_edge = "top";
     };
-    tab_bar_edge = "top";
     theme = "Nord";
   };
 
