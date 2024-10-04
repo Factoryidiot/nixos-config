@@ -64,6 +64,9 @@
 
   hardware.graphics.enable = true;
 
+  hardware.bluetooth.enable = true;
+  services.blueman.enable = true;
+
   i18n.defaultLocale = "en_AU.UTF-8";
 
   networking = {
