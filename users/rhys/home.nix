@@ -37,11 +37,13 @@
 
   programs.kitty = {
     enable = true;
-    # background_opacity = "0.96";
     font = {
       name = "JetBrainsMono";
     };
-    # theme = "nord";
+    settings = {
+      background_opacity = "0.96";
+    };
+    theme = "nord";
   };
 
   programs.nixvim = {
