@@ -177,6 +177,9 @@ in
       "hypr/hypridle.conf" = {
         source = ./hyprland/hypridle.conf;
       };
+      "hypr/hyprlock.conf" = {
+        source = ./hyprland/hyprlock.conf;
+      };
       "hypr/hyprpaper.conf" = {
         source = ./hyprland/hyprpaper.conf;
       };
