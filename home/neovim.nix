@@ -27,7 +27,7 @@
       ## Theme
       # syntax = 'on';          # str: Allow syntax higlighting
       termguicolors = true;     # bool: If term supports ui colors the enable
-      colorscheme = "nord"      # str: Set the colorscheme
+      colorscheme = "nord";     # str: Set the colorscheme
 
       ## Search
       # ignorecase = true;        # bool: Ignore case in search patterns
