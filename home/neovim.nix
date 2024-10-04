@@ -10,7 +10,7 @@
 
   programs.nixvim = {
     enable = true;
-
+    colorscheme.nord.enable = true;
     opts = {
       ## Context
       # colorcolumn = '80'      # str: Show col for max line length
@@ -28,7 +28,6 @@
       # syntax = 'on';          # str: Allow syntax higlighting
       termguicolors = true;     # bool: If term supports ui colors the enable
       # colorscheme = "nord";     # str: Set the colorscheme
-      colorscheme.nord.enable = true;
       ## Search
       # ignorecase = true;        # bool: Ignore case in search patterns
       # smartcase = true;         # bool: Overide ignorecase if search contains capitals
@@ -52,7 +51,7 @@
       ## noselect: Do not select, force to select one from the menu
       ## shortness: avoid showing extra messages when using completion
       ## updatetime: set updatetime for CursorHold
-      # completeopt = { "menuone', 'noselect', 'noinsert'};
+      completeopt = [ "menuone" "noselect" "noinsert" ];
       # shortmess = vim.shortmess + { c = true};
     };
 
@@ -65,6 +64,15 @@
       cmp = {
         enable = true;
         settings = {
+          mapping = {
+            "<C-d>" = "cmp.mapping.scroll_docs(-4)";
+            "<C-f>" = "cmp.mapping.scroll_docs(4)";
+            "<C-Space>" = "cmp.mapping.complete()";
+            "<C-e>" = "cmp.mapping.close()";
+            "<Tab>" = "cmp.mapping(cmp.mapping.select_next_item(), {'i', 's'})";
+            "<S-Tab>" = "cmp.mapping(cmp.mapping.select_prev_item(), {'i', 's'})";
+            "<CR>" = "cmp.mapping.confirm({ select = true })";        
+          };
           experimental.ghost_text = true;
           snippet.expand = ''
             function(args)
@@ -72,15 +80,15 @@
             end
           '';
           sources = [
-            { name ="nvim_lsp"; }
-            { name = "luasnip"; }
             {
               name = "buffer";
               option.get_bufnrs.__raw = "vim.api.nvim_list_bufs";
             }
+            { name = "copilot"; }
+            { name = "luasnip"; }
+            { name = "nvim_lsp"; }
             { name = "nvim_lua"; }
             { name = "path"; }
-            { name = "copilot"; }
           ];
         };
       };

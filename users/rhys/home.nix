@@ -38,11 +38,12 @@
   programs.kitty = {
     enable = true;
     font = {
-      name = "JetBrainsMono Nerd Font Mono";
+      name = "JetBrainsMono Nerd Font";
     };
     settings = {
-      background_opacity = "0.96";
+      background_opacity = "0.90";
     };
+    tab_bar_edge = "top";
     theme = "Nord";
   };
 
@@ -66,9 +67,7 @@
   programs.tmux = {
     enable = true;
     plugins = with pkgs.tmuxPlugins; [
-      {
-        plugin = nord;
-      }
+      nord;
     ];
   };
 
