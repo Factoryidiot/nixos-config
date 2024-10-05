@@ -97,18 +97,10 @@
       shellInit = ''
 
     if ! zmodload zsh/langinfo zsh/terminfo ||
-       [[ $langinfo[CODESET] != (utf|UTF)(-|)8 || $TERM == (dumb|linux) ]] ||
-       (( terminfo[colors] < 256 )); then
-        # Don't use the powerline config. It won't work on this terminal.
-        local USE_POWERLINE=false
-        # Define alias `x` if our parent process is `login`.
-        #local parent
-        #if { parent=$(</proc/$PPID/comm) } && [[ ${parent:t} == login ]]; then
-        #  alias x='startx ~/.xinitrc'
-        #fi
-    fi
-
-    if [[ $USE_POWERLINE == false ]]; then
+      [[ $langinfo[CODESET] != (utf|UTF)(-|)8 || $TERM == (dumb|linux) ]] ||
+      (( terminfo[colors] < 256 )); then
+      # Don't use the powerline config. It won't work on this terminal.
+ 
       # Use 8 colors and ASCII.
       #source /usr/share/zsh/p10k-portable.zsh
       source ~/.p10k-portable.zsh
@@ -116,7 +108,7 @@
     else
       # Use 256 colors and UNICODE.
       #source /usr/share/zsh/p10k.zsh
-      source ~/.zsh/p10k.zsh
+      source ~/.p10k.zsh
       ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=244'
     fi
 
