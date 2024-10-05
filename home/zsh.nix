@@ -9,6 +9,12 @@
     executable = true;
   };
 
+  home.file.".p10k-portable.zsh" = {
+    source = ./zsh/p10k-portable.zsh;
+    executable = true;
+  };
+
+
   programs.zsh = {
     enable = true;
 
