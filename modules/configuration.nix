@@ -97,9 +97,9 @@
 
         if [ "$TERM" = "linux" ]; then
           # Use 8 colors and ASCII.
+          fastfetch
           source ~/.p10k-portable.zsh
           ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=black,bold'
-          fastfetch
         else
           # Use 256 colors and UNICODE.
           source ~/.p10k.zsh
