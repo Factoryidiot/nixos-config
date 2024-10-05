@@ -97,7 +97,8 @@
       shellInit = ''
 
     if ! zmodload zsh/langinfo zsh/terminfo ||
-      [[ $langinfo[CODESET] != (utf|UTF)(-|)8 || $TERM == (dumb|linux) ]] ||
+      [[ $langinfo[CODESET] != (utf|UTF)(-|)8 ||
+      $TERM == (dumb|linux) ]] ||
       (( terminfo[colors] < 256 )); then
       # Don't use the powerline config. It won't work on this terminal.
  
