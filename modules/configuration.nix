@@ -96,14 +96,13 @@
       loginShellInit = "fastfetch";
       promptInit = ''
         if [ "$TERM" = "linux" ]; then
-          # Use 256 colors and UNICODE.
-          #source /usr/share/zsh/p10k.zsh
-          source ~/.p10k.zsh
-          ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=244'
-        else
-          # Use 8 colors and ASCII.
+           # Use 8 colors and ASCII.
           source ~/.p10k-portable.zsh
           ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=black,bold'
+        else
+          # Use 256 colors and UNICODE.
+          source ~/.p10k.zsh
+          ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=244'
         fi
       '';
     };
