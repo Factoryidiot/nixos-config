@@ -17,6 +17,9 @@
     history = {
       ignoreAllDups = true;
     };
+    initExtra = ''
+      [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+    '';
     oh-my-zsh = {
       enable = true;
       plugins = [ "git" "sudo" ];
