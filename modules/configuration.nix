@@ -113,7 +113,7 @@
  #     ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=244'
   #  fi
 
-      '';
+#      '';
 
       shellInit = ''
         if [ "$TERM" = "linux" ]; then
