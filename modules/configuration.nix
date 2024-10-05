@@ -93,17 +93,19 @@
     nano.enable = false;
     zsh = {
       enable = true;
-      loginShellInit = "fastfetch";
-      promptInit = ''
+      loginShellInit = ''
+
         if [ "$TERM" = "linux" ]; then
-           # Use 8 colors and ASCII.
+          # Use 8 colors and ASCII.
           source ~/.p10k-portable.zsh
           ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=black,bold'
+          fastfetch
         else
           # Use 256 colors and UNICODE.
           source ~/.p10k.zsh
           ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=244'
         fi
+
       '';
     };
   };
