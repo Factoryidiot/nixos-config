@@ -94,28 +94,7 @@
     zsh = {
       enable = true;
       loginShellInit = "fastfetch";
-  #    shellInit = ''
-#
- #   if ! zmodload zsh/langinfo zsh/terminfo ||
-  #    [[ $langinfo[CODESET] != (utf|UTF)(-|)8 ||
-   #   $TERM == (dumb|linux) ]] ||
-    #  (( terminfo[colors] < 256 )); then
-      # Don't use the powerline config. It won't work on this terminal.
- 
-      # Use 8 colors and ASCII.
-      #source /usr/share/zsh/p10k-portable.zsh
-  #    source ~/.p10k-portable.zsh
-   #   ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=black,bold'
-   # else
-      # Use 256 colors and UNICODE.
-      #source /usr/share/zsh/p10k.zsh
-#      source ~/.p10k.zsh
- #     ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=244'
-  #  fi
-
-#      '';
-
-      shellInit = ''
+      promptInit = ''
         if [ "$TERM" = "linux" ]; then
           # Use 256 colors and UNICODE.
           #source /usr/share/zsh/p10k.zsh
@@ -127,16 +106,6 @@
           ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=black,bold'
         fi
       '';
-
-
-      #shellInit = ''
-      #  if [ "$TERM" = "linux" ]; then
-      #    ZSH_THEME="robbyrussell"
-      #  else
-      #    ZSH_THEME="agnoster"
-      #  fi
-      #'';
-
     };
   };
 
