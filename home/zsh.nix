@@ -5,7 +5,7 @@
 }: {
 
   home.file.".p10k.zsh" = {
-    source = ./zsh/.p10k.zsh;
+    source = ./zsh/p10k.zsh;
     executable = true;
   };
 
@@ -26,14 +26,6 @@
     };
     syntaxHighlighting.enable = true;
 
-    #zplug = {
-    #  enable = true;
-    #  plugins = [{
-    #    name = "romkatv/powerlevel10k";
-    #    tags = [ "as:theme" "depth:1" ];
-    #  }];
-    #};
-
     plugins = [
       {
         name = "powerlevel10k";
@@ -43,7 +35,7 @@
       {
         name = "powerlevel10k-config";
         src = ./zsh;
-        file = ".p10k.zsh";
+        file = "p10k.zsh";
       }
     ];
   };
