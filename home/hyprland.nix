@@ -151,9 +151,10 @@ in
       env = [
         "HYPRLAND_ROOT, ${hyprland_root}"
         "AGS_CONFIG, ${hyprland_root}/ags/config.js"
-        "NIXOS_OZONE_WL,1" # for any ozone-based browser & electron apps to run on wayland
-        "MOZ_ENABLE_WAYLAND,1" # for firefox to run on wayland
+        "NIXOS_OZONE_WL,1"                              # for any ozone-based browser & electron apps to run on wayland
+        "MOZ_ENABLE_WAYLAND,1"                          # for firefox to run on wayland
         "MOZ_WEBRENDER,1"
+        "AQ_DRM_DEVICES,/dev/dri/card0:/dev/dri/card1"  # Use GPU0 before GPU1
         # misc
         "_JAVA_AWT_WM_NONREPARENTING,1"
         "QT_WAYLAND_DISABLE_WINDOWDECORATION,1"
