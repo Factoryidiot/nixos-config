@@ -132,15 +132,18 @@ in
       bind = [
         # Actions
         "$mod, W, exec, killall fuzzel || fuzzel" # application menu
+
         # Applications
         "$mod, Return, exec, kitty"               # Terminal
         # Windows
         "$mod, Q, killactive"
+        "$mod, T, togglefloating"
+        "$mod, Q, killactive"
 
-        "$mod, H, movefocus, l"                   # move focus left
-        "$mod, J, movefocus, d"                   # move focus down
-        "$mod, K, movefocus, u"                   # move focus up
-        "$mod, L, movefocus, l"                   # move focus right
+        "$mod, H, movefocus, l"                   # Move focus left
+        "$mod, J, movefocus, d"                   # Move focus down
+        "$mod, K, movefocus, u"                   # Move focus up
+        "$mod, L, movefocus, l"                   # Move focus right
 
         "$mod SHIFT, H, resizeactive, -100 0"     # Decrease window width
         "$mod SHIFT, J, resizeactive, 0 100"      # Increase window height
