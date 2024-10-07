@@ -22,7 +22,7 @@ in
     fuzzel
     hyprland
     obsidian
-    mako
+    #mako
     #rofi
     #waybar
     wayland
@@ -109,7 +109,7 @@ in
         ## Windows
         "$mod, Q, killactive"
         "$mod, T, togglefloating" 
-        "$mod, F, killactive"
+        "$mod, F, fullscreen"
 
         "$mod, H, movefocus, l"                   # Move focus left
         "$mod, J, movefocus, d"                   # Move focus down
@@ -140,12 +140,21 @@ in
         ## Laptop lid switch suspend
         ", switch:Lid Switch, exec, systemctl suspend"
       ];
+      binds = {
+        workspace_back_and_forth = true;
+        allow_workspace_cycles = true;
+        pass+mouse_when_bound = true;
+      };
       cursor = {
         no_hardware_cursors = true;
       };
       debug = {
         disable_logs = false;
         enable_stdout_logs = true;
+      };
+      dwindle = {
+        pseudotile = true;
+        preserve_split = true;
       };
       env = [
         "HYPRLAND_ROOT, ${hyprland_root}"
@@ -154,21 +163,33 @@ in
         "MOZ_ENABLE_WAYLAND,1"                          # for firefox to run on wayland
         "MOZ_WEBRENDER,1"
         "WLR_DRM_DEVICES,/dev/dri/card1:/dev/dri/card0"  # Use GPU0 before GPU1
-        # misc
+        ## Misc
         "_JAVA_AWT_WM_NONREPARENTING,1"
         "QT_WAYLAND_DISABLE_WINDOWDECORATION,1"
+        ## Nvidia
+        "__GLX_VENDOR_LIBRARY_NAME,nvidia"
+        "GBM_BACKEND,nvidia-drm"
+        "LIBVA_DRIVER_NAME,nvidia"
+        ## Wayland
+        "GDK_BACKEND,wayland"
         "QT_QPA_PLATFORM,wayland"
         "SDL_VIDEODRIVER,wayland"
-        "GDK_BACKEND,wayland"
-        "LIBVA_DRIVER_NAME,nvidia"
         "XDG_SESSION_TYPE,wayland"
-        "GBM_BACKEND,nvidia-drm"
-        "__GLX_VENDOR_LIBRARY_NAME,nvidia"
       ];
       exec-once = [
         # "ags"
         # "hyprpaper"
       ];
+      gestures = {
+        workspace_swipe = true;
+        workspace_swipe_fingers = 3;
+        workspace_swipe_distance = 500;
+        workspace_swipe_invert = true;
+        workspace_swipe_min_speed_to_force = 30;
+        workspace_swipe_cancel_ratio = 0.5;
+        workspace_swipe_create_new = true;
+        workspace_swipe_forever = true;
+      };
       # monitor = ",1920x1080,auto,1";
       monitor = ",preferred,auto,1";
     };
