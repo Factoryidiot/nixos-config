@@ -100,6 +100,47 @@ in
     enable = true;
     settings = {
       "$mod" = "SUPER";
+      bind = [
+        ## Actions
+        "$mod, W, exec, killall fuzzel || fuzzel" # application menu
+        "CTRL ALT, DEL, exec, systemctl suspend"
+
+        ## Applications
+        "$mod, Return, exec, kitty"               # Terminal
+        ## Windows
+        "$mod, Q, killactive"
+        "$mod, T, togglefloating" 
+        "$mod, Q, killactive"
+
+        "$mod, H, movefocus, l"                   # Move focus left
+        "$mod, J, movefocus, d"                   # Move focus down
+        "$mod, K, movefocus, u"                   # Move focus up
+        "$mod, L, movefocus, l"                   # Move focus right
+
+        "$mod SHIFT, H, resizeactive, -100 0"     # Decrease window width
+        "$mod SHIFT, J, resizeactive, 0 100"      # Increase window height
+        "$mod SHIFT, K, resizeactive, 0 -100"     # Decrease window height
+        "$mod SHIFT, L, resizeactive, 100 0"      # Increase window width
+        ## Workspaces
+        "$mod, 1, workspace, 1"                   # Open workspace 1
+        "$mod, 2, workspace, 2"                   # Open workspace 2
+        "$mod, 3, workspace, 3"                   # Open workspace 3
+        "$mod, 4, workspace, 4"                   # Open workspace 4
+        "$mod, 5, workspace, 5"                   # Open workspace 5
+
+        "$mod SHIFT, 1, movetoworkspace, 1"       # Move active window to workspace 1
+        "$mod SHIFT, 2, movetoworkspace, 2"       # Move active window to workspace 2
+        "$mod SHIFT, 3, movetoworkspace, 3"       # Move active window to workspace 3
+        "$mod SHIFT, 4, movetoworkspace, 4"       # Move active window to workspace 4
+        "$mod SHIFT, 5, movetoworkspace, 5"       # Move active window to workspace 5
+
+        "$mod, Tab, workspace, m+1"               # Open the next workspace
+        "$mod SHIFT, Tab, workspace, m-1"         # Open the previous workspace
+      ];
+      bindl = [
+        ## Laptop lid switch suspend
+        ", switch:Lid Switch, exec, systemctl suspend"
+      ];
       cursor = {
         no_hardware_cursors = true;
       };
@@ -110,9 +151,10 @@ in
       env = [
         "HYPRLAND_ROOT, ${hyprland_root}"
         "AGS_CONFIG, ${hyprland_root}/ags/config.js"
-        "NIXOS_OZONE_WL,1" # for any ozone-based browser & electron apps to run on wayland
-        "MOZ_ENABLE_WAYLAND,1" # for firefox to run on wayland
+        "NIXOS_OZONE_WL,1"                              # for any ozone-based browser & electron apps to run on wayland
+        "MOZ_ENABLE_WAYLAND,1"                          # for firefox to run on wayland
         "MOZ_WEBRENDER,1"
+        "AQ_DRM_DEVICES,/dev/dri/card0:/dev/dri/card1"  # Use GPU0 before GPU1
         # misc
         "_JAVA_AWT_WM_NONREPARENTING,1"
         "QT_WAYLAND_DISABLE_WINDOWDECORATION,1"
@@ -129,39 +171,6 @@ in
         # "hyprpaper"
       ];
       monitor = ",1920x1080,auto,1";
-      bind = [
-        # Actions
-        "$mod, W, exec, killall fuzzel || fuzzel" # application menu
-        # Applications
-        "$mod, Return, exec, kitty"               # Terminal
-        # Windows
-        "$mod, Q, killactive"
-
-        "$mod, H, movefocus, l"                   # move focus left
-        "$mod, J, movefocus, d"                   # move focus down
-        "$mod, K, movefocus, u"                   # move focus up
-        "$mod, L, movefocus, l"                   # move focus right
-
-        "$mod SHIFT, H, resizeactive, -100 0"     # Decrease window width
-        "$mod SHIFT, J, resizeactive, 0 100"      # Increase window height
-        "$mod SHIFT, K, resizeactive, 0 -100"     # Decrease window height
-        "$mod SHIFT, L, resizeactive, 100 0"      # Increase window width
-        # Workspaces
-        "$mod, 1, workspace, 1"                   # Open workspace 1
-        "$mod, 2, workspace, 2"                   # Open workspace 2
-        "$mod, 3, workspace, 3"                   # Open workspace 3
-        "$mod, 4, workspace, 4"                   # Open workspace 4
-        "$mod, 5, workspace, 5"                   # Open workspace 5
-
-        "$mod SHIFT, 1, movetoworkspace, 1"       # Move active window to workspace 1
-        "$mod SHIFT, 2, movetoworkspace, 2"       # Move active window to workspace 2
-        "$mod SHIFT, 3, movetoworkspace, 3"       # Move active window to workspace 3
-        "$mod SHIFT, 4, movetoworkspace, 4"       # Move active window to workspace 4
-        "$mod SHIFT, 5, movetoworkspace, 5"       # Move active window to workspace 5
-
-        "$mod, Tab, workspace, m+1"               # Open the next workspace
-        "$mod SHIFT, Tab, workspace, m-1"         # Open the previous workspace
-      ];
     };
     xwayland.enable = true;
   };
