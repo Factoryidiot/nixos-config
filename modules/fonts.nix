@@ -11,7 +11,6 @@
       bibata-cursors
       font-awesome
       material-design-icons
-
       (
         nerdfonts.override {
           fonts = [
