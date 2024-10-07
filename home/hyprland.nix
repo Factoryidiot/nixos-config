@@ -103,7 +103,6 @@ in
       bind = [
         ## Actions
         "$mod, W, exec, killall fuzzel || fuzzel" # application menu
-        "CTRL ALT, DEL, exec, systemctl suspend"
 
         ## Applications
         "$mod, Return, exec, kitty"               # Terminal
@@ -154,7 +153,7 @@ in
         "NIXOS_OZONE_WL,1"                              # for any ozone-based browser & electron apps to run on wayland
         "MOZ_ENABLE_WAYLAND,1"                          # for firefox to run on wayland
         "MOZ_WEBRENDER,1"
-        "AQ_DRM_DEVICES,/dev/dri/card1:/dev/dri/card0"  # Use GPU0 before GPU1
+        #"AQ_DRM_DEVICES,/dev/dri/card1:/dev/dri/card0"  # Use GPU0 before GPU1
         # misc
         "_JAVA_AWT_WM_NONREPARENTING,1"
         "QT_WAYLAND_DISABLE_WINDOWDECORATION,1"
