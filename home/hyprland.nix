@@ -109,7 +109,7 @@ in
         ## Windows
         "$mod, Q, killactive"
         "$mod, T, togglefloating" 
-        "$mod, Q, killactive"
+        "$mod, F, killactive"
 
         "$mod, H, movefocus, l"                   # Move focus left
         "$mod, J, movefocus, d"                   # Move focus down
@@ -153,7 +153,7 @@ in
         "NIXOS_OZONE_WL,1"                              # for any ozone-based browser & electron apps to run on wayland
         "MOZ_ENABLE_WAYLAND,1"                          # for firefox to run on wayland
         "MOZ_WEBRENDER,1"
-        #"AQ_DRM_DEVICES,/dev/dri/card1:/dev/dri/card0"  # Use GPU0 before GPU1
+        "WLR_DRM_DEVICES,/dev/dri/card1:/dev/dri/card0"  # Use GPU0 before GPU1
         # misc
         "_JAVA_AWT_WM_NONREPARENTING,1"
         "QT_WAYLAND_DISABLE_WINDOWDECORATION,1"
@@ -169,7 +169,8 @@ in
         # "ags"
         # "hyprpaper"
       ];
-      monitor = ",1920x1080,auto,1";
+      # monitor = ",1920x1080,auto,1";
+      monitor = ",preferred,auto,1";
     };
     xwayland.enable = true;
   };
