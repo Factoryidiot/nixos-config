@@ -8,6 +8,7 @@
     fontDir.enable = true;
 
     packages = with pkgs; [
+      bibata-cursors
       font-awesome
       material-design-icons
 
