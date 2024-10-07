@@ -100,10 +100,6 @@
           fastfetch
           source ~/.p10k-portable.zsh
           ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=black,bold'
-        else
-          # Use 256 colors and UNICODE.
-          source ~/.p10k.zsh
-          ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=244'
         fi
 
       '';
