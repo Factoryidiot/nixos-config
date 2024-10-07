@@ -191,7 +191,6 @@ in
         workspace_swipe_create_new = true;
         workspace_swipe_forever = true;
       };
-      # monitor = ",1920x1080,auto,1";
       monitor = ",preferred,auto,1";
     };
     xwayland.enable = true;
