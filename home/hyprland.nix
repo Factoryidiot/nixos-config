@@ -143,7 +143,7 @@ in
       binds = {
         workspace_back_and_forth = true;
         allow_workspace_cycles = true;
-        pass+mouse_when_bound = true;
+        pass_mouse_when_bound = true;
       };
       cursor = {
         no_hardware_cursors = true;
