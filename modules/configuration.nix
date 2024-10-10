@@ -76,7 +76,7 @@
       enable = false;
     };
     # networking.wireless.enable = true;
-    networking.wireless.iwd.enable = true;
+    wireless.iwd.enable = true;
     networkmanager.enable = true;
     # proxy = {
     #   default = "http://user:password@proxy:port/";
