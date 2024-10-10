@@ -13,7 +13,7 @@ let
 in {
 
   imports = [
-    ./vfio
+    ./vfio.nix
   ];
 
   boot = {
