@@ -7,46 +7,48 @@
 }:
 let
   grpIDs = [
-    # "10de:2860" # Geforce RX 4070 Max-Q / Mobile
-    # "10de:22bd" # Audio Controller
+    "10de:2860" # Geforce RX 4070 Max-Q / Mobile
+    "10de:22bd" # Audio Controller
   ];
 in {
 
-#  boot = {
-#    blacklistedKernelModules = [
-#      "nouveau"
-#      "nvidia"
+  imports = [
+    ./vfio
+  ];
+
+  boot = {
+    blacklistedKernelModules = [
+      "nouveau"
+      "nvidia"
 #      "nvidia_drm"
 #      "nvidia_modeset"
 #      "i2c_nvidia_gpu"
-#    ];
+    ];
 #   extraModprobeConfig = ''
 #      softdep drm pre: vfio-pci
 #      softdep nouveau pre: vfio-pci
 #      softdep nvidia pre: vfio-pci
 #    '';
 #
-#    initrd.kernelModules = [
+    initrd.kernelModules = [
 #    #  "vfio_virqfd" depricated and now included in vfio
-#      "vfio_pci"
-#      "vfio"
-#      "vfio_iommu_type1"
-#    ];
-#    kernelParams = [
-#      "amd.iommu=on" 
-#      "vfio-pci.ids=${lib.concatStringsSep "," grpIDs}"
+      "vfio_pci"
+      "vfio"
+      "vfio_iommu_type1"
+    ];
+    kernelParams = [
+      "amd.iommu=on" 
+      "vfio-pci.ids=${lib.concatStringsSep "," grpIDs}"
 #    ]; # ++ lib.optional cfg.enable ("vfio-pci.ids=" + lib.concatStringsSep "," gpuIDs);
-#  };
+  };
 
   environment.systemPackages = with pkgs; [
-    libguestfs
-    spice
-    spice-gtk
-    spice-protocol
+    config.virtualisation.libvirtd.qemu.package
+    libguestfs-with.appliance
+    looking-glass-client
     virt-manager
     virt-viewer
-    virtio-win
-    win-spice
+    virtiofsd
   ];
 
   home-manager.users.${username} = {
@@ -60,7 +62,39 @@ in {
 
   programs.virt-manager.enable = true;
 
-  systemd.services."libvirtd".reloadIfChanged = true; # reload vm configs from //services/*/libvirt/guests.nix
+#  systemd.services."libvirtd".reloadIfChanged = true; # reload vm configs from //services/*/libvirt/guests.nix
+
+  system.activationScripts.libvirt-hooks.text = ''
+    ln -Tfs /etc/libvirt/hooks /var/lib/libvirt/hooks/
+  '';
+
+  systemd.services.libvirtd = {
+    path = 
+      let
+        env = pkgs.buildEnv {
+          name = "qemu-hook-env";
+          paths = with pkgs; [
+            bash
+            libvirt
+            kmod
+            systemd
+            ripgrep
+            sd
+            coreutils
+            sudo 
+            su 
+            killall
+            procps
+            util-linux
+            bindfs
+            qemu-utils
+            psmisc
+            procps
+          ];
+        };
+      in
+        [ env ];
+  };
 
   users.users.${username}.extraGroups = [ "libvirtd" ];
 
@@ -70,20 +104,20 @@ in {
       onBoot = "ignore";
       onShutdown = "shutdown";
       qemu = {
-        package = pkgs.qemu_kvm;
+        package = pkgs.qemu_full;
+        # package = pkgs.qemu_kvm;
         ovmf = {
-	        enable = true;
+	  enable = true;
           packages = [ (pkgs.OVMF.override {
-	          secureBoot = true;
-	          tpmSupport = true;
-	        }).fd ];
-	      };
+	    secureBoot = true;
+	    tpmSupport = true;
+	  }).fd ];
+	};
         runAsRoot = true;
         swtpm.enable = true;
       };
     };
     spiceUSBRedirection.enable = true;
-    # waydroid.enable;
  };
 
 }
