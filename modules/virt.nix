@@ -44,7 +44,7 @@ in {
 
   environment.systemPackages = with pkgs; [
     config.virtualisation.libvirtd.qemu.package
-    libguestfs-with.appliance
+    libguestfs-with-appliance
     looking-glass-client
     virt-manager
     virt-viewer
