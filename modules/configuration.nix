@@ -132,7 +132,7 @@
       wireplumber.enable = true;
      };
      upower.enable = true;
-    # pulseaudio.enable = true;
+     pulseaudio.enable = true;
     # printing.enable = true
   }; 
 
