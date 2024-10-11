@@ -1,7 +1,7 @@
 {
-  pkgs,
-  nix-gaming,
-  ...
+  pkgs
+  , nix-gaming
+  , ...
 }: {
 
   home.packages = with pkgs; [

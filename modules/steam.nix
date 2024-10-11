@@ -1,28 +1,38 @@
 {
-  pkgs,
-  ...
+  pkgs
+  , ...
 }: {
 
-  programs.steam = {
-    enable = true;
+  hardware = {
+    graphics.enable32bit = true;
+    pulseaudio.support32bit = true;
+  };
 
-    package = pkgs.steam.override {
-      extraPkgs = pkgs:
-        with pkgs; [
-          keyutils
-          libkrb5
-          libpng
-          libpulseaudio
-          libvorbis
-          stdenv.cc.cc.lib
-          xorg.libXcursor
-          xorg.libXi
-          xorg.libXinerama
-          xorg.libXScrnSaver
+  programs = {
+    gamemode.enable = true;
+    steam = {
+      enable = true;
 
-          source-sans
-          source-serif
-        ];
+      package = pkgs.steam.override {
+        extraPkgs = pkgs:
+          with pkgs; [
+            keyutils
+            libkrb5
+            libpng
+            libpulseaudio
+            libvorbis
+            stdenv.cc.cc.lib
+            xorg.libXcursor
+            xorg.libXi
+            xorg.libXinerama
+            xorg.libXScrnSaver
+
+            source-sans
+            source-serif
+          ];
+        };
+      remotePlay.openFirewall = true;
+      depricatedServer.openFirewall = true;
     };
   };
 

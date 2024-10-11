@@ -63,8 +63,8 @@
   };
 
   hardware = {
-    graphics.enable = true;
     bluetooth.enable = true;
+    graphics.enable = true;
   };
 
   i18n.defaultLocale = "en_AU.UTF-8";
