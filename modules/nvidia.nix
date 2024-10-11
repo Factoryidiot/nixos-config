@@ -1,9 +1,9 @@
 {
-  config,
-  lib,
-  nixos-hardware,
-  pkgs,
-  ...
+  config
+  , lib
+  , nixos-hardware
+  , pkgs
+  , ...
 }:
 let
   nvidia-offload = pkgs.writeShellScriptBin "nvidia-offload" ''

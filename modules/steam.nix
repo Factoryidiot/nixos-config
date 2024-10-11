@@ -4,7 +4,6 @@
 }: {
 
   hardware = {
-    graphics.enable32bit = true;
     pulseaudio.support32bit = true;
   };
 
