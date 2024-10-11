@@ -3,10 +3,6 @@
   , ...
 }: {
 
-  hardware = {
-    pulseaudio.support32bit = true;
-  };
-
   programs = {
     gamemode.enable = true;
     steam = {
