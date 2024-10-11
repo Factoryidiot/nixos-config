@@ -123,7 +123,7 @@
     };
     pipewire = {
       enable = true;
-       alsa = {
+      alsa = {
         enable = true;
         support32Bit = true;
       };
@@ -132,7 +132,6 @@
       wireplumber.enable = true;
      };
      upower.enable = true;
-     pulseaudio.enable = true;
     # printing.enable = true
   }; 
 
