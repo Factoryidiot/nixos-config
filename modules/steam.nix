@@ -27,7 +27,7 @@
           ];
         };
       remotePlay.openFirewall = true;
-      depricatedServer.openFirewall = true;
+      dedicatedServer.openFirewall = true;
     };
   };
 
