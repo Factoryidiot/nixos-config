@@ -145,8 +145,8 @@ in
 
   virtualisation.libvirtd.hooks.qemu = {
     "windows-vfio" = pkgs.writeShellScript "windows.sh" ''
-      VIRSH_GPU_VIDEO="0000:03:00.0"
-      VIRSH_GPU_AUDIO="0000:03:00.1"
+      VIRSH_GPU_VIDEO="0000:01:00.0"
+      VIRSH_GPU_AUDIO="0000:01:00.1"
       VIRSH_USB1="0000:10:00.0"
 
       if [ ''$1 = "windows-vfio" ]; then
