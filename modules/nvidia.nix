@@ -18,6 +18,11 @@
 
   hardware = {
 
+    graphics = {
+      enable = true;
+      enable32Bit = true;
+    };
+ 
     nvidia = {
       # Optionally, you may need to select the appropriate driver version for your specific GPU.
       # https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/os-specific/linux/nvidia-x11/default.nix
