@@ -19,11 +19,10 @@
     nixos-hardware.nixosModules.common-pc-laptop-ssd
   ];
 
-
-  hardware = {
- };
+  hardware.cpu.amd.updateMicrocode = true;
 
   nix = {
+
     settings = {
       accept-flake-config = true;
       experimental-features = [ "nix-command" "flakes" ];
@@ -38,6 +37,7 @@
       dates = lib.mkDefault "weekly";
       options = lib.mkDefault "--delete-older-than 7d";
     };
+
   };
 
   nixpkgs.config.allowUnfree = true;
@@ -64,11 +64,7 @@
 
   hardware = {
     bluetooth.enable = true;
-    cpu.amd.updateMicrocode = true;
-    graphics = {
-      enable = true;
-      enable32Bit = true; # needed by nvidia-docker
-    };
+    graphics.enable = true;
   };
 
   i18n.defaultLocale = "en_AU.UTF-8";
