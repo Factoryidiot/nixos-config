@@ -16,7 +16,7 @@
     ## Programs
     ../../programs/gh.nix
     ../../programs/git.nix
-
+    ../../programs/steam.nix
   ];
 
   programs.fzf = {

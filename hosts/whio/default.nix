@@ -12,8 +12,6 @@
 
     ../../modules/configuration.nix
     ../../modules/fonts.nix
-
-    ../../programs/steam.nix
   ];
 
   networking = {
