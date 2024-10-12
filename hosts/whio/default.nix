@@ -1,7 +1,7 @@
 {
-  config,
-  pkgs,
-  ...
+  config
+  , pkgs
+  , ...
 }: { 
  imports = [
     # Hardware first
@@ -13,7 +13,7 @@
     ../../modules/configuration.nix
     ../../modules/fonts.nix
 
-    ../../modules/steam.nix
+    ../../programs/steam.nix
   ];
 
   networking = {

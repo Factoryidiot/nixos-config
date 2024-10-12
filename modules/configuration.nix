@@ -1,9 +1,9 @@
 {
-  nixos-hardware,
-  lib,
-  pkgs,
-  username,
-  ...
+  nixos-hardware
+  , lib
+  , pkgs
+  , username
+  , ...
 }: {
 
   imports = [
@@ -19,10 +19,11 @@
     nixos-hardware.nixosModules.common-pc-laptop-ssd
   ];
 
-  hardware.cpu.amd.updateMicrocode = true;
+
+  hardware = {
+ };
 
   nix = {
-
     settings = {
       accept-flake-config = true;
       experimental-features = [ "nix-command" "flakes" ];
@@ -37,7 +38,6 @@
       dates = lib.mkDefault "weekly";
       options = lib.mkDefault "--delete-older-than 7d";
     };
-
   };
 
   nixpkgs.config.allowUnfree = true;
@@ -64,7 +64,11 @@
 
   hardware = {
     bluetooth.enable = true;
-    graphics.enable = true;
+    cpu.amd.updateMicrocode = true;
+    graphics = {
+      enable = true;
+      enable32Bit = true; # needed by nvidia-docker
+    };
   };
 
   i18n.defaultLocale = "en_AU.UTF-8";
@@ -91,7 +95,6 @@
       enableExtraSocket = true;
       enableSSHSupport = true;
     };
-    nano.enable = false;
     zsh = {
       enable = true;
       loginShellInit = ''
@@ -123,7 +126,7 @@
     };
     pipewire = {
       enable = true;
-      alsa = {
+       alsa = {
         enable = true;
         support32Bit = true;
       };
@@ -132,6 +135,7 @@
       wireplumber.enable = true;
      };
      upower.enable = true;
+    # pulseaudio.enable = true;
     # printing.enable = true
   }; 
 

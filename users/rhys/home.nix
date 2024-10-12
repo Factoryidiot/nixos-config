@@ -1,6 +1,6 @@
 {
-  pkgs,
-  ...
+  pkgs
+  , ...
 }: {
 
   imports = [
@@ -12,26 +12,16 @@
     ../../home/zsh.nix
 
     ../../home/hyprland.nix
+
+    ## Programs
+    ../../programs/gh.nix
+    ../../programs/git.nix
+
   ];
 
   programs.fzf = {
     enable = true;
     enableZshIntegration = true;
-  };
-
-  programs.gh = {
-    enable = true;
-    settings = {
-      editor = "nvim";
-      git_protocol = "ssh";
-      prompt = "enabled";
-    };
-  };
-
-  programs.git = {
-    enable = true;
-    userName = "Factoryidiot";
-    userEmail = "rhys.scandlyn@gmail.com";
   };
 
   programs.kitty = {
@@ -45,6 +35,8 @@
     };
     theme = "Nord";
   };
+
+  programs.nano.enable = false;
 
   programs.nixvim = {
     defaultEditor = true;

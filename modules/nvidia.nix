@@ -17,11 +17,6 @@ in {
 
   hardware = {
 
-    graphics = {
-      enable = true;
-      enable32Bit = true; # needed by nvidia-docker
-    };
-
     nvidia = {
       # Optionally, you may need to select the appropriate driver version for your specific GPU.
       # https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/os-specific/linux/nvidia-x11/default.nix
@@ -42,7 +37,7 @@ in {
       # Currently alpha-quality/buggy, so false is currently the recommended setting.
       open = false;
 
-      #package = config.boot.kernelPackages.nvidiaPackages.stable;
+      # package = config.boot.kernelPackages.nvidiaPackages.stable;
       package = config.boot.kernelPackages.nvidiaPackages.beta;
 
       # Nvidia power management. Experimental, and can cause sleep/suspend to fail.
@@ -65,9 +60,7 @@ in {
         };
         reverseSync.enable = true;
       };
-
    };
-
   };
 
   # for Nvidia GPU
