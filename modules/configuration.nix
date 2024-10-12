@@ -95,6 +95,7 @@
       enableExtraSocket = true;
       enableSSHSupport = true;
     };
+    nano.enable = false;
     zsh = {
       enable = true;
       loginShellInit = ''

@@ -36,8 +36,6 @@
     theme = "Nord";
   };
 
-  programs.nano.enable = false;
-
   programs.nixvim = {
     defaultEditor = true;
     viAlias = true;
