@@ -1,9 +1,9 @@
 {
-  config,
-  lib,
-  pkgs,
-  username,
-  ...
+  config
+  , lib
+  , pkgs
+  , username
+  , ...
 }:
 let
   grpIDs = [
@@ -20,26 +20,28 @@ in {
     blacklistedKernelModules = [
       "nouveau"
       "nvidia"
-#      "nvidia_drm"
-#      "nvidia_modeset"
-#      "i2c_nvidia_gpu"
     ];
-#   extraModprobeConfig = ''
-#      softdep drm pre: vfio-pci
-#      softdep nouveau pre: vfio-pci
-#      softdep nvidia pre: vfio-pci
-#    '';
-#
+
     initrd.kernelModules = [
-#    #  "vfio_virqfd" depricated and now included in vfio
-      "vfio_pci"
       "vfio"
+      "vfio_pci"
       "vfio_iommu_type1"
+     # "vfio_virqfd" depricated and now included in vfio
     ];
     kernelParams = [
       "amd.iommu=on" 
       "vfio-pci.ids=${lib.concatStringsSep "," grpIDs}"
     ]; # ++ lib.optional cfg.enable ("vfio-pci.ids=" + lib.concatStringsSep "," gpuIDs);
+
+    postBootCommands = ''
+      DEVS="0000:01:00.0 0000:01:00.1"
+
+      for DEV in $DEVS; do
+        echo "vfio-pci" > /sys/bus/pci/devices/$DEV/driver_override
+      done
+      modprobe -i vfio-pci
+    '';
+
   };
 
   environment.systemPackages = with pkgs; [
