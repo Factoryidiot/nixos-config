@@ -33,15 +33,6 @@ in {
       "vfio-pci.ids=${lib.concatStringsSep "," grpIDs}"
     ]; # ++ lib.optional cfg.enable ("vfio-pci.ids=" + lib.concatStringsSep "," gpuIDs);
 
-    postBootCommands = ''
-      DEVS="0000:01:00.0 0000:01:00.1"
-
-      for DEV in $DEVS; do
-        echo "vfio-pci" > /sys/bus/pci/devices/$DEV/driver_override
-      done
-      modprobe -i vfio-pci
-    '';
-
   };
 
   environment.systemPackages = with pkgs; [
@@ -66,9 +57,9 @@ in {
 
 #  systemd.services."libvirtd".reloadIfChanged = true; # reload vm configs from //services/*/libvirt/guests.nix
 
-  system.activationScripts.libvirt-hooks.text = ''
-    ln -Tfs /etc/libvirt/hooks /var/lib/libvirt/hooks/
-  '';
+  #system.activationScripts.libvirt-hooks.text = ''
+  #  ln -Tfs /etc/libvirt/hooks /var/lib/libvirt/hooks/
+  #'';
 
   systemd.services.libvirtd = {
     path = 

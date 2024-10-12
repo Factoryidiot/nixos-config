@@ -38,7 +38,8 @@ in {
       open = false;
 
       # package = config.boot.kernelPackages.nvidiaPackages.stable;
-      package = config.boot.kernelPackages.nvidiaPackages.beta;
+      # package = config.boot.kernelPackages.nvidiaPackages.beta;
+      package = config.boot.kernelPackages.nvidiaPackages.latest;
 
       # Nvidia power management. Experimental, and can cause sleep/suspend to fail.
       # Enable this if you have graphical corruption issues or application crashes after waking
