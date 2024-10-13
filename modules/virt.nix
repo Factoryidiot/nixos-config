@@ -12,20 +12,16 @@ let
   ];
 in {
 
-  imports = [
-    ./vfio.nix
-  ];
-
   boot = {
     blacklistedKernelModules = [
-      "nouveau"
-      "nvidia"
+      #"nouveau"
+      #"nvidia"
     ];
 
     initrd.kernelModules = [
-      "vfio"
+      #"vfio"
       "vfio_pci"
-      "vfio_iommu_type1"
+      #"vfio_iommu_type1"
      # "vfio_virqfd" depricated and now included in vfio
     ];
     kernelParams = [
@@ -40,7 +36,7 @@ in {
     libguestfs-with-appliance
     looking-glass-client
     virt-manager
-    virt-viewer
+    #virt-viewer
     virtiofsd
   ];
 
