@@ -34,12 +34,9 @@
 
         # Bind EFI Framebuffer
         echo efi-framebuffer.0 > /sys/bus/platform/drivers/efi-framebuffer/bind
-
       '';
       mode = "0755";
     };
-
-
 
   };
 

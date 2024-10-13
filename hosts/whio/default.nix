@@ -7,7 +7,7 @@
     # Hardware first
     ./hardware-configuration.nix
     ../../modules/virt.nix
-    ../../modules.vfio.nix
+    ../../modules/vfio.nix
     ../../modules/nvidia.nix      
     ../../modules/zram.nix
 
