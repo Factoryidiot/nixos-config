@@ -15,13 +15,13 @@ in {
   boot = {
     blacklistedKernelModules = [
       "nouveau"
-      # "nvidia"
+      "nvidia"
     ];
 
     initrd.kernelModules = [
-      #"vfio"
       "vfio_pci"
-      #"vfio_iommu_type1"
+      "vfio"
+      "vfio_iommu_type1"
      # "vfio_virqfd" depricated and now included in vfio
     ];
     kernelParams = [
