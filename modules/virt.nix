@@ -7,15 +7,15 @@
 }:
 let
   grpIDs = [
-    "10de:2860" # Geforce RX 4070 Max-Q / Mobile
-    "10de:22bd" # Audio Controller
+    "10de:2860" # Geforce RX 4070 Max-Q / Mobile  0000:01:00.0
+    "10de:22bd" # Audio Controller                0000:01:00.1
   ];
 in {
 
   boot = {
     blacklistedKernelModules = [
-      #"nouveau"
-      #"nvidia"
+      "nouveau"
+      # "nvidia"
     ];
 
     initrd.kernelModules = [

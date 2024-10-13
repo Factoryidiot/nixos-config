@@ -31,7 +31,7 @@
       modesetting.enable = true;
 
       # Enable the Nvidia settings menu,
-	    # accessible via `nvidia-settings`.
+      # accessible via `nvidia-settings`.
       nvidiaSettings = true;
  
       # Use the NVidia open source kernel module (not to be confused with the
@@ -43,9 +43,9 @@
       # Currently alpha-quality/buggy, so false is currently the recommended setting.
       open = false;
 
-      # package = config.boot.kernelPackages.nvidiaPackages.stable;
+      package = config.boot.kernelPackages.nvidiaPackages.stable;
       # package = config.boot.kernelPackages.nvidiaPackages.beta;
-      package = config.boot.kernelPackages.nvidiaPackages.latest;
+      # package = config.boot.kernelPackages.nvidiaPackages.latest;
 
       # Nvidia power management. Experimental, and can cause sleep/suspend to fail.
       # Enable this if you have graphical corruption issues or application crashes after waking
@@ -67,7 +67,7 @@
         };
         reverseSync.enable = true;
       };
-   };
+    };
   };
 
   # for Nvidia GPU
