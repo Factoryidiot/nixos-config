@@ -107,9 +107,6 @@
   };
 
   services = {
-    asusd = {
-      enable = true;
-    };
     blueman.enable = true;
     openssh = {
       enable = true;
