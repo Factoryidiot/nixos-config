@@ -17,6 +17,12 @@
     ../../programs/steam.nix
   ];
 
+  environment = {
+    systemPackages = with pkgs; [
+      supergfxclt
+    ];
+  };
+
   networking = {
     hostName = "whio";
   };
