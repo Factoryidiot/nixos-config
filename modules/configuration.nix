@@ -132,7 +132,8 @@
     # printing.enable = true
   }; 
 
-  time.timeZone = "Australia/Brisbane";
+  # time.timeZone = "Australia/Brisbane";
+  time.timeZone = "Pacific/Auckland";
 
   users = {
     defaultUserShell = pkgs.zsh;
