@@ -20,11 +20,9 @@
   environment = {
     systemPackages = with pkgs; [
       brightnessctl
-      pulseaudioFull
       playerctl
       supergfxctl
-      wpctl
-    ];
+   ];
   };
 
   networking = {

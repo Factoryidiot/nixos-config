@@ -53,9 +53,11 @@
       clinfo
       curl
       git # required for flakes
-      pciutils
-      usbutils
       lshw
+      pciutils
+      pulseaudioFull
+      wireplumber
+      usbutils
       vim
       wget
     ]; 
