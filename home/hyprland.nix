@@ -106,6 +106,7 @@ in
 
         ## Applications
         "$mod, Return, exec, kitty"               # Terminal
+
         ## Windows
         "$mod, Q, killactive"
         "$mod, T, togglefloating" 
@@ -116,10 +117,16 @@ in
         "$mod, K, movefocus, u"                   # Move focus up
         "$mod, L, movefocus, l"                   # Move focus right
 
+        "$mod CTRL, H, movewindow, l"                   # Move focus left
+        "$mod CTRL, J, movewindow, d"                   # Move focus down
+        "$mod CTRL, K, movewindow, u"                   # Move focus up
+        "$mod CTRL, L, movewindow, l"                   # Move focus right
+
         "$mod SHIFT, H, resizeactive, -100 0"     # Decrease window width
         "$mod SHIFT, J, resizeactive, 0 100"      # Increase window height
         "$mod SHIFT, K, resizeactive, 0 -100"     # Decrease window height
         "$mod SHIFT, L, resizeactive, 100 0"      # Increase window width
+
         ## Workspaces
         "$mod, 1, workspace, 1"                   # Open workspace 1
         "$mod, 2, workspace, 2"                   # Open workspace 2
@@ -135,6 +142,22 @@ in
 
         "$mod, Tab, workspace, m+1"               # Open the next workspace
         "$mod SHIFT, Tab, workspace, m-1"         # Open the previous workspace
+
+        ## Fn keys
+        "XF86MonBrightnessDown, exec, brightnessctl -q s 10%" # Reduce brightness by 10%
+        "XF86AudioRaiseVolume, exec, pactl set-sink-volume @DEFAULT_SINK@ +5%" # Increase volume by 5%
+        "XF86AudioLowerVolume, exec, pactl set-sink-volume @DEFAULT_SINK@ -5%" # Reduce volume by 5%
+        "XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle" # Toggle mute
+        "XF86AudioPlay, exec, playerctl play-pause" # Audio play pause
+        "XF86AudioPause, exec, playerctl pause" # Audio pause
+        "XF86AudioNext, exec, playerctl next" # Audio next
+        "XF86AudioPrev, exec, playerctl previous" # Audio previous
+        "XF86AudioMicMute, exec, pactl set-source-mute @DEFAULT_SOURCE@ toggle" # Toggle microphone
+        #"XF86Calculator, exec, ~/.config/ml4w/settings/calculator.sh # Open calculator
+        "XF86Lock, exec, hyprlock" # Open screenlock
+        #"XF86Tools, exec, alacritty --class dotfiles-floating -e ~/.config/ml4w/apps/ML4W_Dotfiles_Settings-x86_64.AppImage" # Open ML4W Dotfiles Settings app
+
+
       ];
       bindl = [
         ## Laptop lid switch suspend
@@ -177,7 +200,7 @@ in
         "XDG_SESSION_TYPE,wayland"
       ];
       exec-once = [
-        "hyprctl setcursor Bibata-Modern-Ice 24"
+        "hyprctl setcursor Bibata-Modern_Ice 24"
         # "ags"
         # "hyprpaper"
       ];
@@ -191,6 +214,7 @@ in
         workspace_swipe_create_new = true;
         workspace_swipe_forever = true;
       };
+      # monitor = ",1920x1080,auto,1";
       monitor = ",preferred,auto,1";
     };
     xwayland.enable = true;

@@ -19,7 +19,11 @@
 
   environment = {
     systemPackages = with pkgs; [
+      brightnessctl
+      pactl
+      playerctl
       supergfxctl
+      wpctl
     ];
   };
 
