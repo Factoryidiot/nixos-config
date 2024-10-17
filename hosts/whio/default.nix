@@ -20,7 +20,7 @@
   environment = {
     systemPackages = with pkgs; [
       brightnessctl
-      pactl
+      pulseaudioFull
       playerctl
       supergfxctl
       wpctl
