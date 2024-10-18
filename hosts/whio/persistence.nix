@@ -100,6 +100,10 @@
         # browsers
         #".mozilla"
         #".config/google-chrome"
+        ".config/Bitwarden"
+        ".config/chromium"
+
+
 
         # neovim / remmina / flatpak / ...
         ".local/share"
