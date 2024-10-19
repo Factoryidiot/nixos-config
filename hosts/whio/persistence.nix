@@ -92,18 +92,13 @@
         #".config/remmina"
         #".config/freerdp"
 
-        # vscode
-        #".vscode"
-        #".config/Code/User"
-        #".config/Code - Insiders/User"
-
         # browsers
         #".mozilla"
         #".config/google-chrome"
-        ".config/Bitwarden"
         ".config/chromium"
 
-
+        # Vaults
+        ".config/Bitwarden"
 
         # neovim / remmina / flatpak / ...
         ".local/share"
@@ -113,7 +108,7 @@
         ".npm"
 
         # neovim plugins(copilot)
-        ".config/github-copilot"
+        #".config/github-copilot"
       ];
       files = [
         ".zsh_history"
