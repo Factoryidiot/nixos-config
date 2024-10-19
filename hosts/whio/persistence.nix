@@ -94,8 +94,7 @@
 
         # browsers
         #".mozilla"
-        #".config/google-chrome"
-        ".config/chromium"
+        ".config/google-chrome"
 
         # Vaults
         ".config/Bitwarden"

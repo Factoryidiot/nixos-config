@@ -50,7 +50,6 @@
 
   environment = {
     systemPackages = with pkgs; [
-      (chromium.override { enableWideVine = true;})
       clinfo
       curl
       git # required for flakes

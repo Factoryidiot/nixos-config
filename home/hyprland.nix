@@ -18,8 +18,8 @@ in
 
   home.packages = with pkgs; [
     bitwarden
-    chromium
     fuzzel
+    google-chrome
     hyprland
     obsidian
     #mako
