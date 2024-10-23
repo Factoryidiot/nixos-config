@@ -95,6 +95,7 @@
         # .config
         ".config/Bitwarden"
         ".config/google-chrome"
+        ".config/obsidian"
         #".config/remmina"      # remote desktop
         #".config/freerdp"      # remote desktop
 
