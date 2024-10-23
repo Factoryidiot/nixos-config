@@ -89,15 +89,15 @@
         #}
 
         # remote desktop
-        #".config/remmina"
-        #".config/freerdp"
-
         # browsers
         #".mozilla"
-        ".config/google-chrome"
 
-        # Vaults
+        # .config
         ".config/Bitwarden"
+        ".config/google-chrome"
+        #".config/remmina"      # remote desktop
+        #".config/freerdp"      # remote desktop
+
 
         # neovim / remmina / flatpak / ...
         ".local/share"
