@@ -50,6 +50,7 @@
 
   environment = {
     systemPackages = with pkgs; [
+      awscli2
       clinfo
       curl
       git # required for flakes
