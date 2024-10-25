@@ -6,6 +6,9 @@
  imports = [
     # Hardware first
     ./hardware-configuration.nix
+
+    ./tlp.nix
+
     ../../modules/nvidia.nix      
     #../../modules/vfio.nix
     ../../modules/virt.nix

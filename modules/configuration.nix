@@ -129,8 +129,9 @@
       jack.enable = true;
       pulse.enable = true;
       wireplumber.enable = true;
-     };
-     upower.enable = true;
+    };
+    tlp.enable = true;
+    upower.enable = true;
     # pulseaudio.enable = true;
     # printing.enable = true
   }; 
