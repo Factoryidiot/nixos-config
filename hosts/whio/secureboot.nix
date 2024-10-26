@@ -1,23 +1,28 @@
 {
-  lanzaboote,
-  lib,
-  pkgs,
-  ...
+  lanzaboote
+  , lib
+  , pkgs
+  , ...
 }: {
 
   imports = [
     lanzaboote.nixosModules.lanzaboote
   ];
 
-  environment.systemPackages = [
-    pkgs.sbctl
+  environment.systemPackages = with pkgs; [
+    sbctl
+    tpm2-tss
   ];
 
-  boot.loader.systemd-boot.enable = lib.mkForce false;
+  boot = {
+    bootspec.enable = true;
 
-  boot.lanzaboote = {
-    enable = true;
-    pkiBundle = "/etc/secureboot";
+    lanzaboote = {
+      enable = true;
+      pkiBundle = "/etc/secureboot";
+    };
+
+    loader.systemd-boot.enable = lib.mkForce false;
   };
 
 }

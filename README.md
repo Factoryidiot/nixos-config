@@ -2,17 +2,32 @@
 
 ## Hosts
 whio
+```
+Host: ASUS TUF Gaming A15 FA507UI_FA507UI (1.0)
+CPU: AMD Ryzen 9 8945H w/ Radeon 780M Graphics (16) @ 6.23 GHz
+GPU 1: NVIDIA GeForce RTX 4070 Max-Q / Mobile [Discrete]
+GPU 2: AMD Phoenix3 [Integrated]
+Display (NE156FHM-NX6): 1920x1080 @ 144 Hz in 15″ [Built-in]
+Memory: 16 GiB
+
+OS: NixOS 24.11.20240906.574d1ea (Vicuna) x86_64
+Kernel: Linux 6.6.49
+Shell: zsh 5.9
+WM: Hyprland (Wayland)
+Terminal: kitty 0.36.1
+```
 
 ## To do
 These are in no particular order of priority
 - [X] Retest hardware-configuration with /dev/mapper paths replacing UUIDs on the subvolumes
-- [ ] Implement Secureboot https://www.reddit.com/r/NixOS/comments/xrgszw/nixos_full_disk_encryption_with_tpm_and_secure/
-- [ ] Install zsh, neovim, tmux, kitty, and fonts
-- [ ] Install nvidia drivers
-- [ ] Install hyprland
-- [ ] Install Steam
-- [ ] Install kvm-qemu and Looking Glass
+- [X] Implement Secureboot
 - [ ] Implement Secrets
+- [/] Install zsh, neovim, tmux, kitty, and fonts
+- [/] Install nvidia drivers
+- [/] Install hyprland
+- [/] Install Steam
+- [/] Install kvm-qemu and Looking Glass
+- [ ] Tidy up and restructure
 
 ## Install
 ### Run disko
@@ -73,6 +88,13 @@ Move any essential files to their `/persistent` location
 
 ## Secureboot
 
+To Implement Secure Book with LUKS and TPM2, to avoid having to manually enter the pass-phrase each time we reboot.
+
+Prerequsite:
+- tpm2-txx
+- boot.initrd.systemd.enable = true;
+
+### Configure and enable Secure Boot
 1. Confirm the functional requirements are met
 
 ```
@@ -96,26 +118,35 @@ Current Boot Loader:
 ```
 2. Create Secure Boot keys
 ```
-sudo sbctl create-keys
+sudo nix run nixpkgs#sbctl create-keys
 ```
 Output:
 ```
-[sudo] password for rhys:
 Created Owner UUID 8ec4b2c3-dc7f-4362-b9a3-0cc17e5a34cd
 Creating secure boot keys...✓
 Secure boot keys created!
 ```
-3. Configure NixOS and rebuild
-4. Verify rebuilt systemd-boot
+3. Configure NixOS and rebuild switch, and reboot 
+4. Verify that the set up is ready for Secure Boot
 ```
-[to complete]
+sudo nix run nixpkgs#sbctl verify
 ```
-5. Enable Secure Boot in the bios
-
-6. Enroll keys
+Output
 ```
-sudo sbctl enroll-keys --microsoft
-
+Verifying file database and EFI images in /boot...
+✓ /boot/EFI/BOOT/BOOTX64.EFI is signed
+✓ /boot/EFI/Linux/nixos-generation-100-kr26liccc5utoga5un626z7whlcja5iisqjgwihjecl4bi7ycwsq.efi is signed
+✓ /boot/EFI/Linux/nixos-generation-101-u2aurkraw74u7cd42zqy6abhki3vc6gzaqe2532hp2ulzukxzqca.efi is signed
+✓ /boot/EFI/Linux/nixos-generation-102-hktgabnyiy7xawxxxvkvwg46nsjd547hkjdy7yhw5t463tkhjama.efi is signed
+✓ /boot/EFI/Linux/nixos-generation-98-nlo7qbolb6jhjpgo76v7ltyrg3paysjsk5za5cy3cgd5mh5gp3ia.efi is signed
+✓ /boot/EFI/Linux/nixos-generation-99-e35bimscug7ak2bcbnmvuf46gsxagcp23aouv55ou63qgxc3ljqa.efi is signed
+✗ /boot/EFI/nixos/kernel-6.6.49-k5dr55klogwvuwfxubqzcoinicnx5as73xwvwy2p6oweso7riv3a.efi is not signed
+✓ /boot/EFI/systemd/systemd-bootx64.efi is signed
+```
+5. Reboot and enable Secure Boot in the bios, if it has not been enabled already
+6. Enroll boot keys
+```
+sudo nix run nixpkgs#sbctl enroll-keys -- --microsoft
 ```
 Output:
 ```
@@ -123,7 +154,12 @@ Enrolling keys to EFI variables...
 With vendor keys from microsoft...✓
 Enrolled keys to the EFI variables!
 ```
-7. Confirm Secure Boot
+7. Reboot
+8. Confirm Secure Boot
+```
+bootctl status
+```
+Output:
 ```
 System:
      Firmware: UEFI 2.80 (American Megatrends 5.29)
@@ -139,8 +175,23 @@ Current Boot Loader:
 ...
 
 ```
+### TPM LUKS unlock
+1. Crypt Enroll
+```
+sudo systemd-cryptenroll --tpm2-device auto --tpm2-pcrs "0+2+7+12" --wipe-slot tpm2 /dev/nvme0n1p2
+
+```
+2. Recovery Key Enrollment
+This will create another key partition called recovery and a recovery key, store this somewhere safe.
+```
+sudo systemd-cryptenroll --recovery-key /dev/nvme0n1p2
+
+```
 
 ---
 ## References
 - https://github.com/ryan4yin/nix-config
 - https://github.com/nix-community/lanzaboote/blob/master/docs/QUICK_START.md
+- https://jnsgr.uk/2024/04/nixos-secure-boot-tpm-fde/
+- https://wiki.archlinux.org/title/Systemd-cryptenroll
+- https://0pointer.net/blog/unlocking-luks2-volumes-with-tpm2-fido2-pkcs11-security-hardware-on-systemd-248.html
