@@ -1,10 +1,10 @@
 {
-  ags,
-  anyrun,
-  config,
-  pkgs,
-  username,
-  ...
+  ags
+  , anyrun
+  , config
+  , pkgs
+  , username
+  , ...
 }:
 let 
   home = config.home.homeDirectory;
@@ -22,7 +22,7 @@ in
     google-chrome
     hyprland
     obsidian
-    #mako
+    mako
     #rofi
     #waybar
     wayland
@@ -94,6 +94,20 @@ in
   services = {
     hypridle.enable = true;
     hyprpaper.enable = true;
+    mako = {
+      enable = true;
+      actions = true;
+      borderRadius = 8;
+      borderSize = 1;
+      defaultTimeout = 10000;
+      # font = "";
+      # iconPath = "";
+      icons = true;
+      layer = "overlay";
+      maxVisible = 3;
+      padding = "10";
+      width = 300;
+    };
   };
 
   wayland.windowManager.hyprland = {

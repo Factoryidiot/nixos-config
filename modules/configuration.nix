@@ -96,16 +96,6 @@
     nano.enable = false;
     zsh = {
       enable = true;
-      loginShellInit = ''
-
-        if [ "$TERM" = "linux" ]; then
-          # Use 8 colors and ASCII.
-          fastfetch
-          source ~/.p10k-portable.zsh
-          ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=black,bold'
-        fi
-
-      '';
     };
   };
 

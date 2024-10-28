@@ -79,9 +79,9 @@ nixos-install --root /mnt --no-root-password \
 
 ### Post install
 Move any essential files to their `/persistent` location
-- `mv /mnt/etc/machine-id /mnt/persistent/etc`
-- `mv /mnt/etc/ssh /mnt/persistent/etc`
-- `mv ../nixos-config /mnt/persistent/home/{user}/`
+    `mv /mnt/etc/machine-id /mnt/persistent/etc`
+    `mv /mnt/etc/ssh /mnt/persistent/etc`
+    `mv ../nixos-config /mnt/persistent/home/{user}/`
 
 ### Reboot
 `reboot`
@@ -91,7 +91,7 @@ Move any essential files to their `/persistent` location
 To Implement Secure Book with LUKS and TPM2, to avoid having to manually enter the pass-phrase each time we reboot.
 
 Prerequsite:
-- tpm2-txx
+- tpm2-tss
 - boot.initrd.systemd.enable = true;
 
 ### Configure and enable Secure Boot
@@ -103,9 +103,9 @@ bootctl status
 Output:
 ```
 System:
-     Firmware: UEFI 2.80 (American Megatrends 5.29)
-Firmware Arch: x64
-  Secure Boot: enabled (setup)
+    Firmware: UEFI 2.80 (American Megatrends 5.29)
+ Firmware Arch: x64
+ Secure Boot: enabled (setup)
  TPM2 Support: yes
  Measured UKI: yes
  Boot into FW: supported
