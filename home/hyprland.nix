@@ -18,6 +18,7 @@ in
 
   home.packages = with pkgs; [
     bitwarden
+    firefox
     fuzzel
     google-chrome
     hyprland
