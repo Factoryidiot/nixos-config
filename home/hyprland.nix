@@ -157,6 +157,23 @@ in
         "$mod, Tab, workspace, m+1"               # Open the next workspace
         "$mod SHIFT, Tab, workspace, m-1"         # Open the previous workspace
 
+        # Function keys
+        ", XF86MonBrightnessUp, exec, brightnessctl -q s +10%"                    # Increase brightness by 10%
+        ", XF86MonBrightnessDown, exec, brightnessctl -q s 10%-"                  # Reduce brightness by 10%
+        ", XF86AudioRaiseVolume, exec, pactl set-sink-volume @DEFAULT_SINK@ +5%"  # Increase volume by 5%
+        ", XF86AudioLowerVolume, exec, pactl set-sink-volume @DEFAULT_SINK@ -5%"  # Reduce volume by 5%
+        ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"       # Toggle mute
+        ", XF86AudioPlay, exec, playerctl play-pause"                             # Audio play pause
+        ", XF86AudioPause, exec, playerctl pause"                                 # Audio pause
+        ", XF86AudioNext, exec, playerctl next"                                   # Audio next
+        ", XF86AudioPrev, exec, playerctl previous"                               # Audio previous
+        ", XF86AudioMicMute, exec, pactl set-source-mute @DEFAULT_SOURCE@ toggle" # Toggle microphone
+        ", XF86Calculator, exec, ~/.config/ml4w/settings/calculator.sh"           # Open calculator
+        ", XF86Lock, exec, hyprlock"                                              # Open screenlock
+
+        ", code:238, exec, brightnessctl -d smc::kbd_backlight s +10"
+        ", code:237, exec, brightnessctl -d smc::kbd_backlight s 10-"
+
       ];
       bindl = [
         ## Laptop lid switch suspend
