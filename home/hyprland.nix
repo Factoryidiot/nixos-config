@@ -23,6 +23,7 @@ in
     gnome-calculator
     google-chrome
     hyprland
+    hyprshot
     obsidian
     mako
     #rofi
@@ -182,11 +183,14 @@ in
         # ", XF86AudioNext, exec, playerctl next"                                   # Audio next
         # ", XF86AudioPrev, exec, playerctl previous"                               # Audio previous
         ## Misc
+        ", XF86Calculator, exec, gnome-calculator"                                  # Calculator
+        ", code:39, exec, hyprshot -m region"                                       # Snipping tool
+        ", code:107, exec, hyprshot -m active"                                      # Screenshot: active window
+        "CTRL, code:107, exec, hyprshot -m output"                                  # Screenshot: entire window
         ", XF86Lock, exec, hyprlock"                                                # Lock screen
         ", XF86Sleep, exec, systemctl suspend"                                      # Sleep / suspend device
         # ", XF86Rfkill, exec,  "                                                   # todo: Flight mode
         # ", XF86TouchpadToggle, exec, "                                            # todo: Touchpad lock
-        # ", XF86Calculator, exec, gnome-calculator"                                # Calculator
       ];
       bindl = [
         ## Laptop lid switch suspend
