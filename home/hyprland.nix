@@ -23,7 +23,7 @@ in
     gnome-calculator
     google-chrome
     hyprland
-    hyprshot
+    # hyprshot
     obsidian
     mako
     #rofi
@@ -163,12 +163,10 @@ in
         # Function keys
         ## Monitor brightness
         ", XF86MonBrightnessDown, exec, brightnessctl -q s 10%-"                    # Reduce brightness by 10%
-        ", XF86MonBrightnessUp, exec, brightnessctl -q s +10%"                      # Increase brightness by 10%
+        ", XF86MonBrightnessUp, exec, brightnessctl -q s 10%+"                      # Increase brightness by 10%
         ## Keyboard brightness
         ", XF86KbdBrightnessDown, exec, brightnessctl -d smc::kbd_backlight s 10-"  # Decrease brightness by 10%
         ", XF86KbdBrightnessUp, exec, brightnessctl -d smc::kbd_backlight s 10+"    # Increase brightness by 10%
-        # ", code:237, exec, brightnessctl -d smc::kbd_backlight s 10-" # Decrease keyboard brightness
-        # ", code:238, exec, brightnessctl -d smc::kbd_backlight s 10-" # Increase keyboard brightness
         ## Audio (speaker)
         ", XF86AudioLowerVolume, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ 0 && wpctl set-volume -l 1.4 @DEFAULT_AUDIO_SINK@ 5%-"  
                                                                                     # Unmute and reduce volume by 5%
@@ -180,13 +178,13 @@ in
         ## Player controls 
         # ", XF86AudioPlay, exec, playerctl play-pause"                             # Audio play pause
         # ", XF86AudioPause, exec, playerctl pause"                                 # Audio pause
-        # ", XF86AudioNext, exec, playerctl next"                                   # Audio next
+        # ", XF86AudioNext, exec, playerctl next"                                   # Audio next 
         # ", XF86AudioPrev, exec, playerctl previous"                               # Audio previous
         ## Misc
         ", XF86Calculator, exec, gnome-calculator"                                  # Calculator
-        ", code:39, exec, hyprshot -m region"                                       # Snipping tool
-        ", code:107, exec, hyprshot -m active"                                      # Screenshot: active window
-        "CTRL, code:107, exec, hyprshot -m output"                                  # Screenshot: entire window
+        #", code:62, exec, hyprshot -m region"                                       # Snipping tool
+        #", print, exec, hyprshot -m active"                                         # Screenshot: active window
+        #"CTRL, print, exec, hyprshot -m output"                                     # Screenshot: entire window
         ", XF86Lock, exec, hyprlock"                                                # Lock screen
         ", XF86Sleep, exec, systemctl suspend"                                      # Sleep / suspend device
         # ", XF86Rfkill, exec,  "                                                   # todo: Flight mode
