@@ -22,8 +22,8 @@ in
     fuzzel
     gnome-calculator
     google-chrome
+    grimblast
     hyprland
-    # hyprshot
     obsidian
     mako
     #rofi
@@ -33,7 +33,7 @@ in
 
   # https://github.com/Aylur/ags
   programs.ags = {
-    # enable = true;
+    enable = true;
   };
 
   # https://github.com/kirottu/anyrun
@@ -124,6 +124,9 @@ in
         ## Applications
         "$mod, Return, exec, kitty"               # Terminal
 
+        ## Layouts
+
+
         ## Windows
         "$mod, Q, killactive"
         "$mod, T, togglefloating" 
@@ -161,34 +164,41 @@ in
         "$mod SHIFT, Tab, workspace, m-1"         # Open the previous workspace
 
         # Function keys
+
         ## Monitor brightness
         ", XF86MonBrightnessDown, exec, brightnessctl -q s 10%-"                    # Reduce brightness by 10%
         ", XF86MonBrightnessUp, exec, brightnessctl -q s 10%+"                      # Increase brightness by 10%
+
         ## Keyboard brightness
         ", XF86KbdBrightnessDown, exec, brightnessctl -d smc::kbd_backlight s 10-"  # Decrease brightness by 10%
         ", XF86KbdBrightnessUp, exec, brightnessctl -d smc::kbd_backlight s 10+"    # Increase brightness by 10%
+
         ## Audio (speaker)
         ", XF86AudioLowerVolume, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ 0 && wpctl set-volume -l 1.4 @DEFAULT_AUDIO_SINK@ 5%-"  
                                                                                     # Unmute and reduce volume by 5%
         ", XF86AudioRaiseVolume, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ 0 && wpctl set-volume -l 1.4 @DEFAULT_AUDIO_SINK@ 5%+"  
                                                                                     # Unmute and increase volume by 5% 
         ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"         # Toggle mute
+
         ## Audio (microphone)
         ", XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"    # Toggle microphone
+
         ## Player controls 
         # ", XF86AudioPlay, exec, playerctl play-pause"                             # Audio play pause
         # ", XF86AudioPause, exec, playerctl pause"                                 # Audio pause
         # ", XF86AudioNext, exec, playerctl next"                                   # Audio next 
         # ", XF86AudioPrev, exec, playerctl previous"                               # Audio previous
+
         ## Misc
         ", XF86Calculator, exec, gnome-calculator"                                  # Calculator
         #", code:62, exec, hyprshot -m region"                                       # Snipping tool
-        #", print, exec, hyprshot -m active"                                         # Screenshot: active window
-        #"CTRL, print, exec, hyprshot -m output"                                     # Screenshot: entire window
+        ", print, exec, hyprshot -m active"                                         # Screenshot: active window
+        "CTRL, print, exec, hyprshot -m output"                                     # Screenshot: entire window
         ", XF86Lock, exec, hyprlock"                                                # Lock screen
         ", XF86Sleep, exec, systemctl suspend"                                      # Sleep / suspend device
         # ", XF86Rfkill, exec,  "                                                   # todo: Flight mode
         # ", XF86TouchpadToggle, exec, "                                            # todo: Touchpad lock
+
       ];
       bindl = [
         ## Laptop lid switch suspend
@@ -244,6 +254,11 @@ in
         workspace_swipe_cancel_ratio = 0.5;
         workspace_swipe_create_new = true;
         workspace_swipe_forever = true;
+      };
+      master = {
+        new_status = "master";  # master / slave
+        new_on_top = false;
+        mfact = 0.5;
       };
       # monitor = ",1920x1080,auto,1";
       monitor = ",preferred,auto,1";
