@@ -60,4 +60,28 @@ nvme0n1     259:0    0 953.9G  0 disk
                                        /persistent
 ```
 ```
+❯ df -Th
+Filesystem          Type      Size  Used Avail Use% Mounted on
+tmpfs               tmpfs     7.5G  226M  7.3G   3% /
+/dev/mapper/crypted btrfs     954G  161G  791G  17% /persistent
+/dev/mapper/crypted btrfs     954G  161G  791G  17% /nix
+tmpfs               tmpfs     3.8G  6.2M  3.8G   1% /run
+devtmpfs            devtmpfs  764M     0  764M   0% /dev
+tmpfs               tmpfs     7.5G  212M  7.3G   3% /dev/shm
+efivarfs            efivarfs  128K   41K   83K  34% /sys/firmware/efi/efivars
+tmpfs               tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-journald.service
+tmpfs               tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-sysctl.service
+tmpfs               tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-tmpfiles-setup-dev-early.service
+tmpfs               tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-tmpfiles-setup-dev.service
+tmpfs               tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-vconsole-setup.service
+/dev/mapper/crypted btrfs     954G  161G  791G  17% /btr_pool
+/dev/mapper/crypted btrfs     954G  161G  791G  17% /gnu
+/dev/nvme0n1p1      vfat      499M   96M  404M  20% /boot
+/dev/mapper/crypted btrfs     954G  161G  791G  17% /snapshots
+/dev/mapper/crypted btrfs     954G  161G  791G  17% /swap
+/dev/mapper/crypted btrfs     954G  161G  791G  17% /tmp
+tmpfs               tmpfs     7.5G  1.3M  7.5G   1% /run/wrappers
+tmpfs               tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-tmpfiles-setup.service
+tmpfs               tmpfs     1.0M     0  1.0M   0% /run/credentials/getty@tty1.service
+tmpfs               tmpfs     1.5G  2.8M  1.5G   1% /run/user/1000
 ```
