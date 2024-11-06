@@ -49,14 +49,13 @@
     # the following directories will be passed to /persistent/home/$USER
     users.rhys = {
       directories = [
-        #"nixos-config"
         "tmp"
 
         "Documents"
         "Downloads"
         "Music"
         "Pictures"
-        "Projects"
+        "Projects/Nixos/nixos-config"
         "Videos"
 
         {
@@ -79,10 +78,10 @@
         #  directory = ".pulumi";
         #  mode = "0700";
         #}
-        #{
-        #  directory = ".aws";
-        #  mode = "0700";
-        #}
+        {
+          directory = ".aws";
+          mode = "0700";
+        }
         #{
         #  directory = ".docker";
         #  mode = "0700";
@@ -90,7 +89,7 @@
 
         # remote desktop
         # browsers
-        #".mozilla"
+        ".mozilla"
 
         # .config
         ".config/Bitwarden"
