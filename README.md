@@ -32,17 +32,22 @@ These are in no particular order of priority
 ## Install
 ### Run disko
 Boot up the nixos minimal installation disk and run as `sudo`
+
 ```
 nix --experimental-features "nix-command flakes" \
 run "github:nix-community/disko" -- \
 --mode disko \
 --flake "github:Factoryidiot/nixos-config#[host-name]"
 ```
+
 Confirm swap, `lsattr` should output:
+
 `---------------C------ /mnt/swap/swapfile`
+
 `lsattr /mnt/swap`
 
 if not, run:
+
 `btrfs filesystem mkswapfile --size 24g --uuid clear /mnt/swap/swapfile`
 
 Run `swapon /mnt/swap/swapfile` and confim `swapon -s`
