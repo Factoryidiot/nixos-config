@@ -1,6 +1,6 @@
 {
-  impermanence,
-  ...
+  impermanence
+  , ...
 }: {
 
   imports = [
@@ -32,7 +32,7 @@
       "/etc/nix/inputs"
       "/etc/secureboot" # lanzaboote - secure boot
       # my secrets
-      # "/etc/agenix/"
+      "/etc/agenix/"
 
       "/var/log"
       "/var/lib"
@@ -49,13 +49,12 @@
     # the following directories will be passed to /persistent/home/$USER
     users.rhys = {
       directories = [
-        "tmp"
-
         "Documents"
         "Downloads"
         "Music"
         "Pictures"
         "Projects/Nixos/nixos-config"
+        "tmp"
         "Videos"
 
         {
@@ -87,10 +86,6 @@
         #  mode = "0700";
         #}
 
-        # remote desktop
-        # browsers
-        ".mozilla"
-
         # .config
         ".config/Bitwarden"
         ".config/google-chrome"
@@ -103,6 +98,7 @@
         ".local/share"
         ".local/state"
 
+        ".mozilla"
         # language package managers
         ".npm"
 
