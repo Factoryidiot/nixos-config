@@ -5,15 +5,6 @@
   , pkgs
   , ...
 }:
-#let
-#  nvidia-offload = pkgs.writeShellScriptBin "nvidia-offload" ''
-#    export __NV_PRIME_RENDER_OFFLOAD=1
-#    export __NV_PRIME_RENDER_OFFLOAD_PROVIDER=NVIDIA-G0
-#    export __GLX_VENDOR_LIBRARY_NAME=nvidia
-#    export __VK_LAYER_NV_optimus=NVIDIA_only
-#    exec -a "$0" "$@"
-#  '';
-#in 
 {
 
   hardware = {
@@ -45,7 +36,7 @@
 
       package = config.boot.kernelPackages.nvidiaPackages.stable;
       # package = config.boot.kernelPackages.nvidiaPackages.beta;
-      # package = config.boot.kernelPackages.nvidiaPackages.latest;
+      # package = config.boot.kernelPackages.nvidiaPackages.production;
 
       # Nvidia power management. Experimental, and can cause sleep/suspend to fail.
       # Enable this if you have graphical corruption issues or application crashes after waking
@@ -71,7 +62,6 @@
   };
 
   # for Nvidia GPU
-  #services.xserver.videoDrivers = [ "nvidia" ]; # will install nvidia-vaapi-driver by default
-  services.xserver.videoDrivers = [ "amdgpu" "nvidia" ]; # will install nvidia-vaapi-driver by default
+  services.xserver.videoDrivers = [ "nvidia" ]; # will install nvidia-vaapi-driver by default
 
 }
