@@ -112,7 +112,7 @@ Output:
 System:
      Firmware: UEFI 2.80 (American Megatrends 5.29)
 Firmware Arch: x64
-  Secure Boot: enabled (setup)
+  Secure Boot: disabled (setup)
  TPM2 Support: yes
  Measured UKI: yes
  Boot into FW: supported
