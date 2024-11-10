@@ -132,56 +132,62 @@ in
         "$mod, T, togglefloating" 
         "$mod, F, fullscreen"
 
-        "$mod, H, movefocus, l"                   # Move focus left
-        "$mod, J, movefocus, d"                   # Move focus down
-        "$mod, K, movefocus, u"                   # Move focus up
-        "$mod, L, movefocus, l"                   # Move focus right
+        "$mod, H, movefocus, l"               # Move focus left
+        "$mod, J, movefocus, d"               # Move focus down
+        "$mod, K, movefocus, u"               # Move focus up
+        "$mod, L, movefocus, l"               # Move focus right
 
-        "$mod CTRL, H, movewindow, l"                   # Move focus left
-        "$mod CTRL, J, movewindow, d"                   # Move focus down
-        "$mod CTRL, K, movewindow, u"                   # Move focus up
-        "$mod CTRL, L, movewindow, l"                   # Move focus right
+        "$mod CTRL, H, movewindow, l"         # Move focus left
+        "$mod CTRL, J, movewindow, d"         # Move focus down
+        "$mod CTRL, K, movewindow, u"         # Move focus up
+        "$mod CTRL, L, movewindow, l"         # Move focus right
 
-        "$mod SHIFT, H, resizeactive, -100 0"     # Decrease window width
-        "$mod SHIFT, J, resizeactive, 0 100"      # Increase window height
-        "$mod SHIFT, K, resizeactive, 0 -100"     # Decrease window height
-        "$mod SHIFT, L, resizeactive, 100 0"      # Increase window width
+        "$mod SHIFT, H, resizeactive, -100 0" # Decrease window width
+        "$mod SHIFT, J, resizeactive, 0 100"  # Increase window height
+        "$mod SHIFT, K, resizeactive, 0 -100" # Decrease window height
+        "$mod SHIFT, L, resizeactive, 100 0"  # Increase window width
 
         ## Workspaces
-        "$mod, 1, workspace, 1"                   # Open workspace 1
-        "$mod, 2, workspace, 2"                   # Open workspace 2
-        "$mod, 3, workspace, 3"                   # Open workspace 3
-        "$mod, 4, workspace, 4"                   # Open workspace 4
-        "$mod, 5, workspace, 5"                   # Open workspace 5
+        "$mod, 1, workspace, 1"               # Open workspace 1
+        "$mod, 2, workspace, 2"               # Open workspace 2
+        "$mod, 3, workspace, 3"               # Open workspace 3
+        "$mod, 4, workspace, 4"               # Open workspace 4
+        "$mod, 5, workspace, 5"               # Open workspace 5
 
-        "$mod SHIFT, 1, movetoworkspace, 1"       # Move active window to workspace 1
-        "$mod SHIFT, 2, movetoworkspace, 2"       # Move active window to workspace 2
-        "$mod SHIFT, 3, movetoworkspace, 3"       # Move active window to workspace 3
-        "$mod SHIFT, 4, movetoworkspace, 4"       # Move active window to workspace 4
-        "$mod SHIFT, 5, movetoworkspace, 5"       # Move active window to workspace 5
+        "$mod SHIFT, 1, movetoworkspace, 1"   # Move active window to workspace 1
+        "$mod SHIFT, 2, movetoworkspace, 2"   # Move active window to workspace 2
+        "$mod SHIFT, 3, movetoworkspace, 3"   # Move active window to workspace 3
+        "$mod SHIFT, 4, movetoworkspace, 4"   # Move active window to workspace 4
+        "$mod SHIFT, 5, movetoworkspace, 5"   # Move active window to workspace 5
 
-        "$mod, Tab, workspace, m+1"               # Open the next workspace
-        "$mod SHIFT, Tab, workspace, m-1"         # Open the previous workspace
+        "$mod, Tab, workspace, m+1"           # Open the next workspace
+        "$mod SHIFT, Tab, workspace, m-1"     # Open the previous workspace
 
         # Function keys
 
         ## Monitor brightness
-        ", XF86MonBrightnessDown, exec, brightnessctl -q s 10%-"                    # Reduce brightness by 10%
-        ", XF86MonBrightnessUp, exec, brightnessctl -q s 10%+"                      # Increase brightness by 10%
+        ", XF86MonBrightnessDown, exec, brightnessctl -q s 10%-"
+                                              # Reduce brightness by 10%
+        ", XF86MonBrightnessUp, exec, brightnessctl -q s 10%+"
+                                              # Increase brightness by 10%
 
         ## Keyboard brightness
-        ", XF86KbdBrightnessDown, exec, brightnessctl -d smc::kbd_backlight s 10-"  # Decrease brightness by 10%
-        ", XF86KbdBrightnessUp, exec, brightnessctl -d smc::kbd_backlight s 10+"    # Increase brightness by 10%
+        ", XF86KbdBrightnessDown, exec, brightnessctl -d smc::kbd_backlight s 10-"
+                                              # Decrease brightness by 10%
+        ", XF86KbdBrightnessUp, exec, brightnessctl -d smc::kbd_backlight s 10+"
+                                              # Increase brightness by 10%
 
         ## Audio (speaker)
         ", XF86AudioLowerVolume, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ 0 && wpctl set-volume -l 1.4 @DEFAULT_AUDIO_SINK@ 5%-"  
-                                                                                    # Unmute and reduce volume by 5%
+                                              # Unmute and reduce volume by 5%
         ", XF86AudioRaiseVolume, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ 0 && wpctl set-volume -l 1.4 @DEFAULT_AUDIO_SINK@ 5%+"  
-                                                                                    # Unmute and increase volume by 5% 
-        ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"         # Toggle mute
+                                              # Unmute and increase volume by 5% 
+        ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+                                              # Toggle mute
 
         ## Audio (microphone)
-        ", XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"    # Toggle microphone
+        ", XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
+                                              # Toggle microphone
 
         ## Player controls 
         # ", XF86AudioPlay, exec, playerctl play-pause"                             # Audio play pause
@@ -190,12 +196,15 @@ in
         # ", XF86AudioPrev, exec, playerctl previous"                               # Audio previous
 
         ## Misc
-        ", XF86Calculator, exec, gnome-calculator"                                  # Calculator
-        #", code:62, exec, hyprshot -m region"                                       # Snipping tool
-        ", print, exec, hyprshot -m active"                                         # Screenshot: active window
-        "CTRL, print, exec, hyprshot -m output"                                     # Screenshot: entire window
-        ", XF86Lock, exec, hyprlock"                                                # Lock screen
-        ", XF86Sleep, exec, systemctl suspend"                                      # Sleep / suspend device
+        ", XF86Calculator, exec, gnome-calculator"
+                                              # Calculator
+        #", code:62, exec, hyprshot -m region"
+                                              # Snipping tool
+        ", print, exec, hyprshot -m active"   # Screenshot: active window
+        "CTRL, print, exec, hyprshot -m output"
+                                              # Screenshot: entire window
+        ", XF86Lock, exec, hyprlock"          # Lock screen
+        ", XF86Sleep, exec, systemctl suspend"# Sleep / suspend device
         # ", XF86Rfkill, exec,  "                                                   # todo: Flight mode
         # ", XF86TouchpadToggle, exec, "                                            # todo: Touchpad lock
 
