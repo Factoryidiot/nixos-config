@@ -7,7 +7,7 @@
     # Hardware first
     ./hardware-configuration.nix
 
-    ./modules/tlp.nix
+    ../../modules/tlp.nix
 
     ../../modules/nvidia.nix      
     #../../modules/vfio.nix
