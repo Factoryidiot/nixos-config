@@ -89,7 +89,7 @@
             ./hosts/whio/default.nix
             ./hosts/whio/disko.nix
             ./hosts/whio/persistence.nix
-#            ./hosts/whio/secureboot.nix
+            ./hosts/whio/secureboot.nix
 
 #            ./secrets/default.nix
 
