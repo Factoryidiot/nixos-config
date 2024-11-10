@@ -9,9 +9,12 @@
 
     packages = with pkgs; [
       bibata-cursors
+      fira-code
+      fira-code-symbols
       font-awesome
       liberation_ttf
       noto-fonts
+      noto-fonts-cjk
       noto-fonts-emoji
       material-design-icons
       (
