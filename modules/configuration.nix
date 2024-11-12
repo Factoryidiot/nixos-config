@@ -54,6 +54,7 @@
       clinfo
       curl
       git # required for flakes
+      hyprcursor
       lshw
       pciutils
       pulseaudioFull
