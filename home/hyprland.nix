@@ -255,7 +255,7 @@ in
         "XDG_SESSION_TYPE,wayland"
       ];
       exec-once = [
-        # "hyprctl setcursor Bibata-Modern-Ice 24"
+        "hyprctl setcursor Bibata-Modern-Ice 24"
         # "ags"
         # "hyprpaper"
       ];
