@@ -119,10 +119,11 @@ in
       "$mod" = "SUPER";
       bind = [
         ## Actions
-        "$mod, W, exec, killall fuzzel || fuzzel" # application menu
+        "$mod, W, exec, killall fuzzel || fuzzel"
+                                              # application menu
 
         ## Applications
-        "$mod, Return, exec, kitty"               # Terminal
+        "$mod, Return, exec, kitty"           # Terminal
 
         ## Layouts
 
@@ -205,8 +206,8 @@ in
                                               # Screenshot: entire window
         ", XF86Lock, exec, hyprlock"          # Lock screen
         ", XF86Sleep, exec, systemctl suspend"# Sleep / suspend device
-        # ", XF86Rfkill, exec,  "                                                   # todo: Flight mode
-        # ", XF86TouchpadToggle, exec, "                                            # todo: Touchpad lock
+        # ", XF86Rfkill, exec,  "             # todo: Flight mode
+        # ", XF86TouchpadToggle, exec, "      # todo: Touchpad lock
 
       ];
       bindl = [
@@ -232,17 +233,21 @@ in
       env = [
         "HYPRLAND_ROOT, ${hyprland_root}"
         "AGS_CONFIG, ${hyprland_root}/ags/config.js"
-        "NIXOS_OZONE_WL,1"                              # for any ozone-based browser & electron apps to run on wayland
-        "MOZ_ENABLE_WAYLAND,1"                          # for firefox to run on wayland
+        "NIXOS_OZONE_WL,1"                    # for any ozone-based browser & electron apps to run on wayland
+        "MOZ_ENABLE_WAYLAND,1"                # for firefox to run on wayland
         "MOZ_WEBRENDER,1"
-        "WLR_DRM_DEVICES,/dev/dri/card1:/dev/dri/card0"  # Use GPU0 before GPU1
+        "WLR_DRM_DEVICES,/dev/dri/card1:/dev/dri/card0"
+                                              # Use GPU0 before GPU1
+        ## cursor
+        "HYPRCURSOR_THEME,Bibata-Modern-Ice"
+        "HYPRCURSOR_SIZE,24"
         ## Misc
         "_JAVA_AWT_WM_NONREPARENTING,1"
         "QT_WAYLAND_DISABLE_WINDOWDECORATION,1"
         ## Nvidia
-        "__GLX_VENDOR_LIBRARY_NAME,nvidia"
-        "GBM_BACKEND,nvidia-drm"
-        "LIBVA_DRIVER_NAME,nvidia"
+        #"__GLX_VENDOR_LIBRARY_NAME,nvidia"
+        #"GBM_BACKEND,nvidia-drm"
+        #"LIBVA_DRIVER_NAME,nvidia"
         ## Wayland
         "GDK_BACKEND,wayland"
         "QT_QPA_PLATFORM,wayland"
@@ -250,7 +255,7 @@ in
         "XDG_SESSION_TYPE,wayland"
       ];
       exec-once = [
-        "hyprctl setcursor Bibata-Modern_Ice 24"
+        # "hyprctl setcursor Bibata-Modern-Ice 24"
         # "ags"
         # "hyprpaper"
       ];
