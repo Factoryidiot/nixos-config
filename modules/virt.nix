@@ -6,14 +6,16 @@
   , ...
 }: {
 
-  environment.systemPackages = with pkgs; [
-    config.virtualisation.libvirtd.qemu.package
-    libguestfs-with-appliance
-    looking-glass-client
-    virt-manager
-    #virt-viewer
-    virtiofsd
-  ];
+  environment = {
+    systemPackages = with pkgs; [
+      config.virtualisation.libvirtd.qemu.package
+      libguestfs-with-appliance
+      looking-glass-client
+      virt-manager
+      #virt-viewer
+      virtiofsd
+    ];
+  };
 
   home-manager.users.${username} = {
     dconf.settings = {
@@ -25,8 +27,6 @@
   };
 
   programs.virt-manager.enable = true;
-
-#  systemd.services."libvirtd".reloadIfChanged = true; # reload vm configs from //services/*/libvirt/guests.nix
 
   users.users.${username}.extraGroups = [ "libvirtd" ];
 

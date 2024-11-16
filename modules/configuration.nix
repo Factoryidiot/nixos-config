@@ -55,11 +55,10 @@
       git # required for flakes
       lshw
       pciutils
-      pulseaudioFull
-      wireplumber
       usbutils
       vim
       wget
+      wireplumber
     ]; 
     variables.EDITOR = "vim";
   };
@@ -67,8 +66,6 @@
   hardware = {
     bluetooth.enable = true;
   };
-
-  i18n.defaultLocale = "en_NZ.UTF-8";
 
   networking = {
     firewall = {
@@ -124,9 +121,6 @@
     # pulseaudio.enable = true;
     # printing.enable = true
   }; 
-
-  time.timeZone = "Australia/Brisbane";
-  # time.timeZone = "Pacific/Auckland";
 
   users = {
     defaultUserShell = pkgs.zsh;
