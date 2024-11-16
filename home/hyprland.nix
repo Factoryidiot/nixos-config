@@ -231,13 +231,16 @@ in
         preserve_split = true;
       };
       env = [
+        ## Aquamarine
+        "AQ_DRM_DEVICES,/dev/dri/card1"
         "HYPRLAND_ROOT, ${hyprland_root}"
         "AGS_CONFIG, ${hyprland_root}/ags/config.js"
         "NIXOS_OZONE_WL,1"                    # for any ozone-based browser & electron apps to run on wayland
         "MOZ_ENABLE_WAYLAND,1"                # for firefox to run on wayland
         "MOZ_WEBRENDER,1"
-        "WLR_DRM_DEVICES,/dev/dri/card1:/dev/dri/card0"
-                                              # Use GPU0 before GPU1
+        #"WLR_DRM_DEVICES,/dev/dri/card1:/dev/dri/card0"
+        "WLR_DRM_DEVICES,/dev/dri/card1"
+                                              # Use AMD before nvidia
         ## cursor
         "HYPRCURSOR_THEME,Bibata-Modern-Ice"
         "HYPRCURSOR_SIZE,24"
