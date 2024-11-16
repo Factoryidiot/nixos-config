@@ -71,7 +71,7 @@
     bluetooth.enable = true;
   };
 
-  i18n.defaultLocale = "en_AU.UTF-8";
+  i18n.defaultLocale = "en_NZ.UTF-8";
 
   networking = {
     firewall = {
