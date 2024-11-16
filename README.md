@@ -91,6 +91,8 @@ Move any essential files to their `/persistent` location
 ### Reboot
 `reboot`
 
+---
+
 ## Secureboot
 
 To Implement Secure Book with LUKS and TPM2, to avoid having to manually enter the pass-phrase each time we reboot.
@@ -108,16 +110,15 @@ bootctl status
 Output:
 ```
 System:
-    Firmware: UEFI 2.80 (American Megatrends 5.29)
- Firmware Arch: x64
- Secure Boot: enabled (setup)
+     Firmware: UEFI 2.80 (American Megatrends 5.29)
+Firmware Arch: x64
+  Secure Boot: disabled (setup)
  TPM2 Support: yes
  Measured UKI: yes
  Boot into FW: supported
 
 Current Boot Loader:
       Product: systemd-boot 256.4 
-
 ...
 
 ```
@@ -131,8 +132,9 @@ Created Owner UUID 8ec4b2c3-dc7f-4362-b9a3-0cc17e5a34cd
 Creating secure boot keys...✓
 Secure boot keys created!
 ```
-3. Configure NixOS and rebuild switch, and reboot 
-4. Verify that the set up is ready for Secure Boot
+3. Configure NixOS
+4. Rebuild switch, and reboot 
+5. Verify that the set up is ready for Secure Boot
 ```
 sudo nix run nixpkgs#sbctl verify
 ```
