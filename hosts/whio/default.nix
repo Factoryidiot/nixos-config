@@ -22,6 +22,9 @@
 
   environment = {
     systemPackages = with pkgs; [
+      awscli2
+      bibata-cursors
+      hyprcursor # needs to be removed from base config
       brightnessctl
       playerctl
       supergfxctl

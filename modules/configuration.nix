@@ -50,12 +50,9 @@
 
   environment = {
     systemPackages = with pkgs; [
-      awscli2
-      bibata-cursors
       clinfo
       curl
       git # required for flakes
-      hyprcursor # needs to be removed from base config
       lshw
       pciutils
       pulseaudioFull
