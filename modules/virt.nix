@@ -36,14 +36,17 @@
       onBoot = "ignore";
       onShutdown = "shutdown";
       qemu = {
-        package = pkgs.qemu_full;
-        # package = pkgs.qemu_kvm;
+        # package = pkgs.qemu_full;
+        package = pkgs.qemu_kvm;
         ovmf = {
 	  enable = true;
-          packages = [ (pkgs.OVMF.override {
-	    secureBoot = true;
-	    tpmSupport = true;
-	  }).fd ];
+          packages = [
+            (pkgs.OVMF.override {
+              msVarsTemplate = true;
+	      secureBoot = true;
+	      tpmSupport = true;
+	    }).fd
+          ];
 	};
         runAsRoot = true;
         swtpm.enable = true;
