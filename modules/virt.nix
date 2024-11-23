@@ -11,6 +11,7 @@
       config.virtualisation.libvirtd.qemu.package
       libguestfs-with-appliance
       looking-glass-client
+      OVMF
       virt-manager
       #virt-viewer
       virtiofsd
@@ -39,13 +40,14 @@
         # package = pkgs.qemu_full;
         package = pkgs.qemu_kvm;
         ovmf = {
-	  enable = true;
-          packages = [
-            (pkgs.OVMF.override {
-              msVarsTemplate = true;
-	      secureBoot = true;
-	      tpmSupport = true;
-	    }).fd
+          enable = true;
+          packages = with pkgs; [ OVMFFull.fd ];
+#          packages = with pkgs; [
+#            (OVMF.override {
+#              msVarsTemplate = true;
+#	      secureBoot = true;
+#	      tpmSupport = true;
+#	    }).fd
           ];
 	};
         runAsRoot = true;
