@@ -48,7 +48,7 @@
 #	      secureBoot = true;
 #	      tpmSupport = true;
 #	    }).fd
-          ];
+#          ];
 	};
         runAsRoot = true;
         swtpm.enable = true;
