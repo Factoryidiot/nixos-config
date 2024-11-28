@@ -1,20 +1,15 @@
 {
-  config
-  , lib
-  , pkgs
+  pkgs 
   , username
   , ...
 }: {
 
   environment = {
     systemPackages = with pkgs; [
-      config.virtualisation.libvirtd.qemu.package
-      libguestfs-with-appliance
-      looking-glass-client
-      OVMF
+      spice 
+      spice-gtk
+      spice-protocol
       virt-manager
-      #virt-viewer
-      virtiofsd
     ];
   };
 
@@ -37,17 +32,18 @@
       onBoot = "ignore";
       onShutdown = "shutdown";
       qemu = {
-        # package = pkgs.qemu_full;
         package = pkgs.qemu_kvm;
         ovmf = {
           enable = true;
-          packages = with pkgs; [ OVMFFull.fd ];
+          packages = with pkgs; [ OVMFFull ];
+#          packages = with pkgs; [ (OVMFFull.override {
 #          packages = with pkgs; [
 #            (OVMF.override {
 #              msVarsTemplate = true;
 #	      secureBoot = true;
-#	      tpmSupport = true;
-#	    }).fd
+#              tpmSupport = true;
+#            })
+#            }).fd
 #          ];
 	};
         runAsRoot = true;
@@ -55,6 +51,16 @@
       };
     };
     spiceUSBRedirection.enable = true;
- };
+  };
+
+  environment.etc = {
+    "/run/libvirt/nix-ovmf/OVMF_CODE.4M.secboot.fd" = {
+      source = "./secureboot/OVMF_CODE.4M.secboot.fd";
+  };
+
+  "/run/libvirt/nix-ovmf/OVMF_VARS.4M.ms.fd" = {
+    source = "./secureboot/OVMF_CODE.4M.ms.fd";
+  };
+}; 
 
 }

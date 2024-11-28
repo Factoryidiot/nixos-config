@@ -26,6 +26,8 @@
       awscli2
       bibata-cursors
       brightnessctl
+      adwaita-icon-theme
+      # gnome.adwaita-icon-theme
       hyprcursor # needs to be removed from base config
       playerctl
       pulseaudioFull
