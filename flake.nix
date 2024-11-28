@@ -16,6 +16,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.11";
     agenix = {
       url = "github:ryan4yin/ragenix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -53,6 +54,7 @@
     , lanzaboote
     , nixos-hardware
     , nixpkgs
+    , nixpkgs-stable
     , nixvim
     , self
     , ... 
@@ -90,7 +92,7 @@
           ];
         };
 
-        whio = nixpkgs.lib.nixosSystem {
+        whio = nixpkgs-stable.lib.nixosSystem {
           inherit specialArgs;
 
           modules = [
