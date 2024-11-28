@@ -53,14 +53,4 @@
     spiceUSBRedirection.enable = true;
   };
 
-  environment.etc = {
-    "/run/libvirt/nix-ovmf/OVMF_CODE.4M.secboot.fd" = {
-      source = "./secureboot/OVMF_CODE.4M.secboot.fd";
-  };
-
-  "/run/libvirt/nix-ovmf/OVMF_VARS.4M.ms.fd" = {
-    source = "./secureboot/OVMF_CODE.4M.ms.fd";
-  };
-}; 
-
 }
