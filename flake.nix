@@ -15,8 +15,8 @@
   };
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     agenix = {
       url = "github:ryan4yin/ragenix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -54,7 +54,7 @@
     , lanzaboote
     , nixos-hardware
     , nixpkgs
-    , nixpkgs-unstable
+    , nixpkgs-stable
     , nixvim
     , self
     , ... 
