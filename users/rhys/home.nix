@@ -31,7 +31,7 @@
       background_opacity = "0.90";
       tab_bar_edge = "top";
     };
-    theme = "Nord";
+    themeFile = "Nord";
   };
 
   programs.nixvim = {

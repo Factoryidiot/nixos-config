@@ -1,5 +1,7 @@
 {
-  ... 
+  lib
+  , pkgs
+  , ... 
 }:
 let
   grpIDs = [
