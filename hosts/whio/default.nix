@@ -10,7 +10,7 @@
     ../../modules/tlp.nix
 
     ../../modules/nvidia.nix      
-    #../../modules/vfio.nix
+    ../../modules/vfio.nix
     ../../modules/virt.nix
     ../../modules/zram.nix
 
@@ -31,6 +31,7 @@
       playerctl
       pulseaudioFull
       supergfxctl
+      teams
    ];
   };
 
