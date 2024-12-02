@@ -9,8 +9,8 @@
 
     ../../modules/tlp.nix
 
-    #../../modules/nvidia.nix      
-    ../../modules/vfio.nix
+    ../../modules/nvidia.nix      
+    #../../modules/vfio.nix
     ../../modules/virt.nix
     ../../modules/zram.nix
 
@@ -27,13 +27,17 @@
       bibata-cursors
       brightnessctl
       adwaita-icon-theme
-      # gnome.adwaita-icon-theme
       hyprcursor # needs to be removed from base config
       playerctl
       pulseaudioFull
       supergfxctl
    ];
   };
+
+  hardware = {
+    bluetooth.enable = true;
+  };
+
 
   i18n.defaultLocale = "en_NZ.UTF-8";
 

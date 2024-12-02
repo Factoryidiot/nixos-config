@@ -63,10 +63,6 @@
     variables.EDITOR = "vim";
   };
 
-  hardware = {
-    bluetooth.enable = true;
-  };
-
   networking = {
     firewall = {
       # allowedTCPPorts = [ 22 80 443 8080 ];
