@@ -43,7 +43,7 @@ in {
         echo 0 > /sys/class/vtconsole/vtcon1/bind
 
         # Unbind EFI Framebuffer
-        echo efi-framebuffer.0 > /sys/bus/platform/drivers/efi-framebuffer/unbind
+        # echo efi-framebuffer.0 > /sys/bus/platform/drivers/efi-framebuffer/unbind
 
         # Detach GPU devices from host
         rmmod nvidia_modeset nvidia_uvm nvidia
@@ -65,7 +65,7 @@ in {
         echo 1 > /sys/class/vtconsole/vtcon1/bind
 
         # Bind EFI Framebuffer
-        echo efi-framebuffer.0 > /sys/bus/platform/drivers/efi-framebuffer/bind
+        # echo efi-framebuffer.0 > /sys/bus/platform/drivers/efi-framebuffer/bind
 
         virsh nodedev-reattach $VIRSH_GPU_VIDEO
         virsh nodedev-reattach $VIRSH_GPU_AUDIO
