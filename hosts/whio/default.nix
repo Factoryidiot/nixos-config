@@ -31,7 +31,7 @@
       playerctl
       pulseaudioFull
       supergfxctl
-      teams
+#      teams
    ];
   };
 
