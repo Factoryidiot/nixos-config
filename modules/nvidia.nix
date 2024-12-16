@@ -1,7 +1,7 @@
 {
   config
   , lib
-  , nixos-hardware
+#  , nixos-hardware
   , pkgs
   , ...
 }:

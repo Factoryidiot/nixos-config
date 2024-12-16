@@ -15,8 +15,8 @@
   };
 
   inputs = {
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.11";
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     agenix = {
       url = "github:ryan4yin/ragenix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -31,7 +31,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager = {
-      url = "github:nix-community/home-manager";
+      url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     impermanence.url = "github:nix-community/impermanence";
@@ -54,7 +54,7 @@
     , lanzaboote
     , nixos-hardware
     , nixpkgs
-    , nixpkgs-stable
+    , nixpkgs-unstable
     , nixvim
     , self
     , ... 

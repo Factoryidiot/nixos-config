@@ -10,7 +10,7 @@
     ../../modules/tlp.nix
 
     ../../modules/nvidia.nix      
-    ../../modules/vfio.nix
+    #../../modules/vfio.nix
     ../../modules/virt.nix
     ../../modules/zram.nix
 
@@ -19,6 +19,29 @@
 
     ../../programs/steam.nix
   ];
+
+  boot = {
+    blacklistedKernelModules = [
+      "nouveau"
+      "nvidia"
+      "nvidia_drm"
+      "nvidia_uvm"
+      "nvidia_modeset"
+    ];
+    kernelPackages = pkgs.linuxPackagesFor (pkgs.linux_6_6.override {
+      argsOverride = rec {
+        src = pkgs.fetchurl {
+                url = "mirror://kernel/linux/kernel/v6.x/linux-${version}.tar.xz";
+                sha256 = "2c56dac2b70859c16b4ef651befb0d28c227498bd3eee08e8a45a357f22dd3b7";
+              };
+        version = "6.6.49";
+        modDirVersion = "6.6.49";
+      };
+    });
+    kernelParams = [
+      "amd.iommu=on" 
+    ];
+  };
 
   environment = {
     systemPackages = with pkgs; [
@@ -31,7 +54,6 @@
       playerctl
       pulseaudioFull
       supergfxctl
-#      teams
    ];
   };
 
@@ -39,15 +61,14 @@
     bluetooth.enable = true;
   };
 
-
   i18n.defaultLocale = "en_NZ.UTF-8";
 
   networking = {
     hostName = "whio";
   };
 
-  time.timeZone = "Australia/Brisbane";
-  # time.timeZone = "Pacific/Auckland";
+  # time.timeZone = "Australia/Brisbane";
+  time.timeZone = "Pacific/Auckland";
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
