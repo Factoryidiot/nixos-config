@@ -21,12 +21,13 @@
         source = ./secureboot/OVMF_VARS_4M.ms.fd; 
         mode = "0755";
       };
-#      "tmpfiles.d/10-looking-glass.conf" = {
-#        text = {
-#          # Type Path              Mode UID  GID Age Argument
-#          f /dev/shm/looking-glass 0660 rhys qemu -
-#        };
-#     };
+      "/tmpfiles.d/10-looking-glass.conf" = {
+        text = ''
+          # Type Path              Mode UID  GID Age Argument
+          f /dev/shm/looking-glass 0660 rhys libvirtd -
+        '';
+        mode = "0755";
+      };
     };
   };
 
