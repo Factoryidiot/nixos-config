@@ -61,13 +61,14 @@
     bluetooth.enable = true;
   };
 
+  #i18n.defaultLocale = "en_AU.UTF-8";
   i18n.defaultLocale = "en_NZ.UTF-8";
 
   networking = {
     hostName = "whio";
   };
 
-  # time.timeZone = "Australia/Brisbane";
+  #time.timeZone = "Australia/Brisbane";
   time.timeZone = "Pacific/Auckland";
 
   # This value determines the NixOS release from which the default
