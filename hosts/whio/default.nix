@@ -45,11 +45,12 @@
 
   environment = {
     systemPackages = with pkgs; [
+      adwaita-icon-theme
       asusctl
       awscli2
       bibata-cursors
       brightnessctl
-      adwaita-icon-theme
+      firefox
       hyprcursor # needs to be removed from base config
       playerctl
       pulseaudioFull

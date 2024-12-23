@@ -33,6 +33,7 @@
       monospace = [ "JetBrainsMono Nerd Font" "Noto Color Emoji" "Noto Sans Mono" ];
       sansSerif = [ "Noto Color Emoji"  "Noto Sans" ];
       serif = [ "Noto Color Emoji" "Noto Serif" ];
+      useEmbeddedBitmaps = true;
     };
   };
 
