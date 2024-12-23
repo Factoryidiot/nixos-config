@@ -6,7 +6,7 @@
 
   environment = {
     systemPackages = with pkgs; [
-      looking-glass-client
+      # looking-glass-client
       spice 
       spice-gtk
       spice-protocol
@@ -27,6 +27,30 @@
           f /dev/shm/looking-glass 0660 rhys libvirtd -
         '';
         mode = "0755";
+      };
+    };
+  };
+
+  home-manager.programs.looking-glass-client = {
+    enable = true;
+    package = pkgs.looking-glass-client;
+    settings = {
+      app = {
+        allowDMA = true;
+        shmFile = "/dev/shm/looking-glass";
+      };
+      input = {
+        rawMouse = true;
+        escapeKey = "56";
+      };
+      spice = {
+        enable = true;
+        audio = true;
+      };
+      win = {
+        autoResize = true;
+        borderless = true;
+        quickSplash = true;
       };
     };
   };
@@ -65,15 +89,6 @@
         ovmf = {
           enable = true;
           packages = with pkgs; [ OVMFFull ];
-#          packages = with pkgs; [ (OVMFFull.override {
-#          packages = with pkgs; [
-#            (OVMF.override {
-#              msVarsTemplate = true;
-#	      secureBoot = true;
-#              tpmSupport = true;
-#            })
-#            }).fd
-#          ];
 	};
         runAsRoot = true;
         swtpm.enable = true;
