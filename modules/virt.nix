@@ -6,7 +6,6 @@
 
   environment = {
     systemPackages = with pkgs; [
-      # looking-glass-client
       spice 
       spice-gtk
       spice-protocol
