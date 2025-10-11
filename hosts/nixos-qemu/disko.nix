@@ -44,26 +44,6 @@
           };
         };
       };
-      vdb = {
-        type = "disk";
-        device = builtins.elemAt disks 1;
-        content = {
-          type = "gpt";
-          partitions = {
-            HOME = {
-              # name = "HOME";
-              # start = "1MiB";
-              # end = "100%";
-              size = "100%";
-              content = {
-                type = "btrfs";
-                mountOptions = [ "compress=zstd" ];
-                mountpoint = "/home";
-              };
-            };
-          };
-        };
-      };
     };
   };
 }
