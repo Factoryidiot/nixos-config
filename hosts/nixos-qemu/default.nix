@@ -14,7 +14,7 @@
     hostName = "nixos-qemu";
   };
 
-  time.timeZone = "Pacific/Auckland"
+  time.timeZone = "Pacific/Auckland";
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
