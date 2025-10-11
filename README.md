@@ -31,7 +31,7 @@ These are in no particular order of priority
 
 ## Install
 ### Run disko
-Boot up the nixos minimal installation disk and run as `sudo`
+Boot up the nixos minimal installation disk and run as `sudo -i`
 
 ```
 nix --experimental-features "nix-command flakes" \
