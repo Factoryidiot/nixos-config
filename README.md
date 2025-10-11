@@ -54,9 +54,9 @@ Run `swapon /mnt/swap/swapfile` and confim `swapon -s`
 
 ### Prepare for install
 1. Clone this repo to complete the installation:
-   1. Enter a temporary Nix Shell and install git and vim `nix-shell -p git vim`.
-   2. Clone this repo `git clone https://github.com/Factoryidiot/nixos-config.git`.
-   3. `cd` into `nixos-config`.
+   a. Enter a temporary Nix Shell and install git and vim `nix-shell -p git vim`.
+   b. Clone this repo `git clone https://github.com/Factoryidiot/nixos-config.git`.
+   c. `cd` into `nixos-config`.
 2. Next we want to generate a `hardware-configuration.nix` to update the `UUID`s for the hardware-configuration.nix included in the repo we have just cloned.
 ```
  nixos-generate-config --root /mnt
