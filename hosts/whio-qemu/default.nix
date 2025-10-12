@@ -9,9 +9,8 @@
 
     ../../modules/tlp.nix
 
-    ../../modules/nvidia.nix      
-    #../../modules/vfio.nix
-    ../../modules/virt.nix
+    # ../../modules/nvidia.nix      
+    # ../../modules/virt.nix
     ../../modules/zram.nix
 
     ../../modules/configuration.nix
@@ -66,7 +65,7 @@
   i18n.defaultLocale = "en_NZ.UTF-8";
 
   networking = {
-    hostName = "whio";
+    hostName = "whio-qemu";
   };
 
   #time.timeZone = "Australia/Brisbane";

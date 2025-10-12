@@ -29,14 +29,14 @@
                 type = "luks";
                 name = "crypted";
                 settings = {
+                  allowDiscards = true;
+                  fallbackToPassword = true;
                   # keyFile = "/dev/disk/by-label/CRYPT"; # The keyfile is stored on a USB stick
                   # The maximum size of the keyfile is 8192 KiB
                   # type `cryptsetup --help` to see the compiled-in key and passphrase maximum sizes
                   passwordFile = "/tmp/secret.key";
                   # keyFileSize = 512 * 64; # match the `bs * count` of the `dd` command
                   # keyFileOffset = 512 * 128; # match the `bs * skip` of the `dd` command
-                  fallbackToPassword = true;
-                  allowDiscards = true;
                 };
                 initrdUnlock = false;
                 # additionalKeyFiles = [];
@@ -69,17 +69,13 @@
                       mountOptions = [ "compress-force=zstd:1" "noatime" ];
                       mountpoint = "/nix";
                     };
-                   "@persistent" = {
+                    "@persistent" = {
                       mountOptions = [ "compress-force=zstd:1" ];
                       mountpoint = "/persistent";
                     };
                     "@snapshots" = {
                       mountOptions = [ "compress-force=zstd:1" ];
                       mountpoint = "/snapshots";
-                    };
-                    "@swap" = {
-                      mountpoint = "/swap";
-                      swap.swapfile.size = "24G";
                     };
                     "@tmp" = {
                       mountOptions = [ "compress-force=zstd:1" ];
