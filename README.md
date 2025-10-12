@@ -34,9 +34,10 @@ These are in no particular order of priority
 Boot up the nixos minimal installation disk and run as `sudo -i`
 
 ```
-```
-nix --experimental-features "nix-command flakes" run github:nix-community/disko/latest -- --mode destroy,format,mount /tmp/disk-config.nix
-```
+nix --experimental-features "nix-command flakes" \
+run github:nix-community/disko/latest -- \
+--mode destroy,format,mount \
+--flake "github:Factoryidiot/nixos-config#[host-name]"
 ```
 
 ```
