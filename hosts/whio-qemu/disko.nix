@@ -1,5 +1,3 @@
-{ disks ? [ "/dev/vda" ], ... }:
-
 {
 
   fileSystems."/persistent".neededForBoot = true;

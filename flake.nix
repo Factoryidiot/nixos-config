@@ -115,6 +115,29 @@
           ];
         };
 
+        whio-qemu = nixpkgs.lib.nixosSystem {
+          inherit specialArgs;
+
+          modules = [
+            disko.nixosModules.disko
+
+            ./hosts/whio-qemu/default.nix
+            ./hosts/whio-qemu/disko.nix
+            ./hosts/whio-qemu/persistence.nix
+            ./hosts/whio-qemu/secureboot.nix
+
+#            ./secrets/default.nix
+
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.extraSpecialArgs = inputs // specialArgs;
+              home-manager.users.${username} = import ./users/${username}/home.nix;
+            }
+          ];
+        };
+
       }; # nixosConfigurations
     };
 
