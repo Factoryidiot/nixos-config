@@ -63,7 +63,7 @@
       username = "rhys";
       specialArgs =
         inputs
-        // { 
+        { 
          inherit username;
         };
       system = "x86_64-linux";
@@ -124,9 +124,7 @@
             ./hosts/whio-qemu/default.nix
             ./hosts/whio-qemu/disko.nix
             ./hosts/whio-qemu/persistence.nix
-            ./hosts/whio-qemu/secureboot.nix
-
-#            ./secrets/default.nix
+            # ./hosts/whio-qemu/secureboot.nix
 
             home-manager.nixosModules.home-manager
             {
