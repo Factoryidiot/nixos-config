@@ -23,7 +23,6 @@
       url = "github:ryan4yin/ragenix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    ags.url = "github:aylur/ags";
     anyrun = {
       url = "github:anyrun-org/anyrun";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -43,10 +42,6 @@
     };
     nix-gaming.url = "github:fufexan/nix-gaming";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
-    nixvim = {
-      url = "github:nix-community/nixvim";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs = inputs@{
