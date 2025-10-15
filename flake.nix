@@ -4,7 +4,7 @@
   nixConfig = {
     extra-substituters = [
       "https://anyrun.cachix.org"
-      "https://nix-community.cachix.org" 
+      "https://nix-community.cachix.org"
       "https://nix-gaming.cachix.org"
     ];
     extra-trusted-public-keys = [
@@ -15,8 +15,10 @@
   };
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
+    # Primary stable channel, all inputs follow this unless otherwise noted
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11"; 
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    
     agenix = {
       url = "github:ryan4yin/ragenix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -48,95 +50,82 @@
   };
 
   outputs = inputs@{
-    disko
+    nixpkgs
     , home-manager
-    , impermanence
-    , lanzaboote
-    , nixos-hardware
-    , nixpkgs
-    , nixpkgs-unstable
-    , nixvim
+    , disko
     , self
-    , ... 
+    , ...
   }:
     let
       username = "rhys";
-      specialArgs =
-        // inputs
-        { 
-         inherit username;
-        };
       system = "x86_64-linux";
+      
+      # Pass inputs and self to all configurations for easy access
+      specialArgs = {
+        inherit username inputs self;
+      };
+
+      # Common modules for all systems (DRY principle)
+      commonModules = [
+        disko.nixosModules.disko
+        home-manager.nixosModules.home-manager
+        {
+          # Common home-manager configuration
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+          home-manager.extraSpecialArgs = specialArgs;
+          home-manager.users.${username} = import ./users/${username}/home.nix;
+        }
+      ];
+
+      # Helper function to create a NixOS configuration
+      mkNixosSystem = { name, modules }:
+        nixpkgs.lib.nixosSystem {
+          inherit system specialArgs;
+          modules = commonModules ++ modules;
+        };
+
     in {
+      # Define system configurations using the helper function
       nixosConfigurations = {
-
-        nixos-qemu = nixpkgs.lib.nixosSystem {
-          inherit specialArgs;
-
+        nixos-qemu = mkNixosSystem {
+          name = "nixos-qemu";
           modules = [
-            disko.nixosModules.disko
-
             ./hosts/nixos-qemu
             ./hosts/nixos-qemu/disko.nix
-
             {
+              # Host-specific argument for disko
               _module.args.disks = [ "/dev/vda" "/dev/vdb" ];
-            }
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.extraSpecialArgs = inputs // specialArgs;
-              home-manager.users.${username} = import ./users/${username}/home.nix;
             }
           ];
         };
 
-        whio = nixpkgs.lib.nixosSystem {
-          inherit specialArgs;
-
+        whio = mkNixosSystem {
+          name = "whio";
           modules = [
-            disko.nixosModules.disko
-
             ./hosts/whio/default.nix
             ./hosts/whio/disko.nix
             ./hosts/whio/persistence.nix
             ./hosts/whio/secureboot.nix
-
-#            ./secrets/default.nix
-
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.extraSpecialArgs = inputs // specialArgs;
-              home-manager.users.${username} = import ./users/${username}/home.nix;
-            }
+            # ./secrets/default.nix # Uncommented for clarity
           ];
         };
 
-        whio-qemu = nixpkgs.lib.nixosSystem {
-          inherit specialArgs;
-
+        whio-qemu = mkNixosSystem {
+          name = "whio-qemu";
           modules = [
-            disko.nixosModules.disko
-
             ./hosts/whio-qemu/default.nix
             ./hosts/whio-qemu/disko.nix
             ./hosts/whio-qemu/persistence.nix
-            # ./hosts/whio-qemu/secureboot.nix
-
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.extraSpecialArgs = inputs // specialArgs;
-              home-manager.users.${username} = import ./users/${username}/home.nix;
-            }
+            # ./hosts/whio-qemu/secureboot.nix # Commented out as in original
           ];
         };
+      };
+      
+      # Standard outputs for convenience
+      formatter.${system} = nixpkgs.legacyPackages.${system}.nixpkgs-fmt;
+      defaultPackage.${system} = self.packages.${system}.nixos-system-whio;
+      packages.${system}.nixos-system-whio = self.nixosConfigurations.whio.config.system.build.toplevel;
 
-      }; # nixosConfigurations
     };
-
 }
