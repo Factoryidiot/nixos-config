@@ -16,8 +16,6 @@
 
   ];
 
-  boot = {
-
   environment = {
     systemPackages = with pkgs; [
 
