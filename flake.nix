@@ -62,7 +62,7 @@
     let
       username = "rhys";
       specialArgs =
-        inputs
+        // inputs
         { 
          inherit username;
         };
