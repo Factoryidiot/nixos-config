@@ -7,7 +7,7 @@
     # Hardware first
     ./hardware-configuration.nix
 
-    ../../modules/tlp.nix
+    #../../modules/tlp.nix
 
     ../../modules/zram.nix
 
@@ -18,12 +18,12 @@
 
   environment = {
     systemPackages = with pkgs; [
-
+      qemu
     ];
   };
 
   hardware = {
-    bluetooth.enable = true;
+    # bluetooth.enable = true;
   };
 
   #i18n.defaultLocale = "en_AU.UTF-8";
