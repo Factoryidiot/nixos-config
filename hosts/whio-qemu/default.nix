@@ -1,47 +1,83 @@
+# hosts/whio-qemu/default.nix
 {
   config
   , pkgs
+  , specialArgs
   , ...
-}: { 
- imports = [
-    # Hardware first
+}:
+  let
+  # Destructure 'username' from the specialArgs passed from flake.nix
+  inherit (specialArgs) username;
+in
+{
+  imports = [
+    # 1. Host-specific disk and security setup
     ./hardware-configuration.nix
+    ./disko.nix        # Disk partitioning and Btrfs setup
+    ./persistence.nix  # Impermanence configuration (to be defined)
+    ./secureboot.nix   # Lanzaboote/Secure Boot setup (to be defined)
 
-    #../../modules/tlp.nix
-
+    # 2. Global modules (assuming these paths are correct relative to default.nix)
+    ../../modules/configuration.nix # Core system packages, services, etc.
+    #../../modules/tlp.nix # TLP is for laptops; often excluded in QEMU
     ../../modules/zram.nix
-
-    ../../modules/configuration.nix
-    ../../modules/fonts.nix
-
   ];
 
-  environment = {
-    systemPackages = with pkgs; [
-      qemu
-    ];
-  };
-
-  hardware = {
-    # bluetooth.enable = true;
-  };
-
-  #i18n.defaultLocale = "en_AU.UTF-8";
-  i18n.defaultLocale = "en_NZ.UTF-8";
+  # -------------------------------------------------------------------------
+  # CORE SYSTEM SETUP
+  # -------------------------------------------------------------------------
 
   networking = {
     hostName = "whio-qemu";
+    networkmanager.enable = true; # Enable graphical/standard networking
   };
 
-  #time.timeZone = "Australia/Brisbane";
+  # Essential for TPM LUKS unlock and Secure Boot (systemd-boot UKI)
+  boot.initrd.systemd.enable = true;
+  security.tpm2.enable = true;
+  security.tpm2.abrmd.enable = true;
+
   time.timeZone = "Pacific/Auckland";
+  i18n.defaultLocale = "en_NZ.UTF-8";
+
+  # -------------------------------------------------------------------------
+  # USER & SECURITY
+  # -------------------------------------------------------------------------
+
+  # Define the core system user (Home Manager handles the environment)
+  users.users.${username} = {
+    isNormalUser = true;
+    extraGroups = [ "wheel" "networkmanager" ]; # Grant sudo and networking access
+    # IMPORTANT: Set a password for initial login
+    # For a temporary VM, a clear password might be acceptable:
+    # initialHashedPassword = ""; 
+    # Or, use a properly generated hash:
+    hashedPassword = "$6$salt$xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
+  };
+  # Allow members of 'wheel' to use sudo without a password (common for single-user systems)
+  security.sudo.wheelNeedsPassword = false;
+
+
+  # -------------------------------------------------------------------------
+  # ENVIRONMENT & HARDWARE
+  # -------------------------------------------------------------------------
+  
+  environment.systemPackages = with pkgs; [
+    # qemu is useful if you plan to run VMs *inside* the VM, otherwise remove it
+    # qemu
+    git # Essential for post-install setup and management
+    vim # Or your preferred editor for post-install config
+  ];
+
+  # hardware = {
+  #   bluetooth.enable = true; # Keep commented out for VM, unless specifically needed
+  # };
+
+  # -------------------------------------------------------------------------
+  # NIXOS RELEASE
+  # -------------------------------------------------------------------------
 
   # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "25.05"; # Did you read the comment?
-
+  # settings for stateful data were taken.
+  system.stateVersion = "25.05";
 }

@@ -1,26 +1,40 @@
+# hosts/whio-qemu/disko.nix
+# Configures the disk layout for the QEMU host /dev/vda
 {
-
-  fileSystems."/persistent".neededForBoot = true;
-
+  config
+  , pkgs
+  , disks
+  , ...
+}:
+  let
+  # Determine the disk device from the 'disks' argument passed from the flake
+  diskDevice = (builtins.elemAt disks 0);
+in
+{
+  # This sets the BTRFS volume itself as the root of the volume to be mounted at /mnt.
+  # The actual root of the OS is the @root subvolume mounted at /
   disko.devices = {
     disk = {
-      main = {
+      vda = {
         type = "disk";
-        device = "/dev/vda";
+        device = diskDevice;
         content = {
           type = "gpt";
           partitions = {
-            ESP = { 
+            # 1. EFI System Partition (ESP)
+            ESP = {
               start = "1MiB";
               end = "500MiB";
-              priority = 1;
               type = "EF00";
               content = {
                 type = "filesystem";
                 format = "vfat";
                 mountpoint = "/boot";
+                mountOptions = [ "umask=0077" ];
               };
             };
+
+            # 2. LUKS Encrypted Partition (Uses the rest of the disk)
             luks = {
               size = "100%";
               content = {
@@ -29,15 +43,13 @@
                 settings = {
                   allowDiscards = true;
                   fallbackToPassword = true;
-                  # keyFile = "/dev/disk/by-label/CRYPT"; # The keyfile is stored on a USB stick
-                  # The maximum size of the keyfile is 8192 KiB
-                  # type `cryptsetup --help` to see the compiled-in key and passphrase maximum sizes
+                  # NOTE: passwordFile is typically only used by 'disko --mode format'
+                  # to set the initial password, not for unlocking during boot.
+                  # It will be ignored after the initial install.
                   passwordFile = "/tmp/secret.key";
-                  # keyFileSize = 512 * 64; # match the `bs * count` of the `dd` command
-                  # keyFileOffset = 512 * 128; # match the `bs * skip` of the `dd` command
                 };
-                initrdUnlock = false;
-                # additionalKeyFiles = [];
+                # Setting this to true is required for TPM/Passphrase unlock in the initrd
+                initrdUnlock = true;
                 extraFormatArgs = [
                   "--type luks2"
                   "--cipher aes-xts-plain64"
@@ -45,41 +57,58 @@
                   "--iter-time 5000"
                   "--key-size 256"
                   "--pbkdf argon2id"
-                  "--use-random" # use true random data from /dev/random, will block until enough entropy is available
+                  # '--use-random' will block; remove it if installation hangs
+                  # "--use-random"
                   "--verify-passphrase"
                 ];
+                # 'extraOpenArgs' is for opening the volume (e.g., in initrd)
                 extraOpenArgs = [
-                  "--timeout 10"
+                   "--allow-discards"
                 ];
+
                 content = {
                   type = "btrfs";
+                  # -f to force formatting
                   extraArgs = [ "-f" ];
+                  
+                  # The main Btrfs volume is mounted at /mnt (disko default) 
+                  # and contains all the subvolumes.
+                  # We define the root (/) and /nix mountpoints here.
                   subvolumes = {
-                    "/" = {
-                      mountOptions = [ "subvolid=5" ];
-                      mountpoint = "/btr_pool";
-                    };
-                    "@guix" = {
+                    # The actual NixOS root partition
+                    "@root" = {
                       mountOptions = [ "compress-force=zstd:1" "noatime" ];
-                      mountpoint = "/gnu";
+                      mountpoint = "/";
                     };
+                    # The Nix store
                     "@nix" = {
                       mountOptions = [ "compress-force=zstd:1" "noatime" ];
                       mountpoint = "/nix";
                     };
+                    # The home directory
+                    "@home" = {
+                      mountOptions = [ "compress-force=zstd:1" "noatime" ];
+                      mountpoint = "/home";
+                    };
+                    # The persistent data subvolume
                     "@persistent" = {
-                      mountOptions = [ "compress-force=zstd:1" ];
+                      mountOptions = [ "compress-force=zstd:1" "noatime" ];
                       mountpoint = "/persistent";
                     };
-                    "@snapshots" = {
-                      mountOptions = [ "compress-force=zstd:1" ];
-                      mountpoint = "/snapshots";
-                    };
+                    # Other standard subvolumes
                     "@tmp" = {
-                      mountOptions = [ "compress-force=zstd:1" ];
+                      mountOptions = [ "compress-force=zstd:1" "noatime" ];
                       mountpoint = "/tmp";
                     };
- 
+                    "@var_log" = {
+                      mountOptions = [ "compress-force=zstd:1" "noatime" ];
+                      mountpoint = "/var/log";
+                    };
+                    # Snapshots volume (unmounted, for use with tools like Btrfs-assist)
+                    "@snapshots" = {
+                      mountOptions = [ ];
+                      mountpoint = null; # Unmounted
+                    };
                   };
                 };
               };
@@ -90,4 +119,11 @@
     };
   };
 
+  # Disko manages creating and activating the swapfile
+  # Note: Swapfiles on Btrfs cannot use Copy-on-Write (CoW).
+  disko.devices.filesystems."/".swapfile = {
+    file = "swap/swapfile";
+    size = "8G";
+    btrfs.compress = "no";
+  };
 }

@@ -3,12 +3,10 @@
 
   nixConfig = {
     extra-substituters = [
-      "https://anyrun.cachix.org"
       "https://nix-community.cachix.org"
       "https://nix-gaming.cachix.org"
     ];
     extra-trusted-public-keys = [
-      "anyrun.cachix.org-1:pqBobmOjI7nKlsUMV25u9QHa9btJK65/C8vnO3p346s="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4="
     ];
@@ -21,10 +19,6 @@
     
     agenix = {
       url = "github:ryan4yin/ragenix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    anyrun = {
-      url = "github:anyrun-org/anyrun";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     disko = {
@@ -112,15 +106,22 @@
             ./hosts/whio-qemu/default.nix
             ./hosts/whio-qemu/disko.nix
             ./hosts/whio-qemu/persistence.nix
+            ./hosts/whio/secureboot.nix
             # ./hosts/whio-qemu/secureboot.nix # Commented out as in original
+            {
+              # QEMU disk is always /dev/vda
+              _module.args.disks = [ "/dev/vda" ];
+              # Ensure the system state version is set
+              system.stateVersion = "25.05";
+            }
+            
           ];
         };
       };
       
       # Standard outputs for convenience
       formatter.${system} = nixpkgs.legacyPackages.${system}.nixpkgs-fmt;
-      defaultPackage.${system} = self.packages.${system}.nixos-system-whio;
-      packages.${system}.nixos-system-whio = self.nixosConfigurations.whio.config.system.build.toplevel;
-
+      defaultPackage.${system} = self.packages.${system}.nixos-system-whio-qemu;
+      packages.${system}.nixos-system-whio-qemu = self.nixosConfigurations.whio-qemu.config.system.build.toplevel;
     };
 }

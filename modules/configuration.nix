@@ -1,3 +1,4 @@
+# modules/configuration.nix
 {
   nixos-hardware
   , lib
@@ -6,30 +7,28 @@
   , ...
 }: {
 
- # imports = [
- #   # Additional hardware specific configuration
- #   # https://github.com/NixOS/nixos-hardware
- #   nixos-hardware.nixosModules.asus-battery
- #   nixos-hardware.nixosModules.common-cpu-amd
- #   nixos-hardware.nixosModules.common-cpu-amd-pstate
- #   nixos-hardware.nixosModules.common-gpu-amd
- #   # nixos-hardware.nixosModules.common-hidpi
- #   nixos-hardware.nixosModules.common-pc-laptop
- #   nixos-hardware.nixosModules.common-pc-laptop-acpi_call
- #   nixos-hardware.nixosModules.common-pc-laptop-ssd
- # ];
+  # NOTE: Hardware modules are commented out as they are often best placed 
+  # in the specific host's default.nix, or if necessary, here.
+  # imports = [
+  #   nixos-hardware.nixosModules.common-pc-laptop
+  #   ...
+  # ];
 
   hardware.cpu.amd.updateMicrocode = true;
 
-  nix = {
+  # -------------------------------------------------------------------------
+  # NIX CONFIGURATION
+  # -------------------------------------------------------------------------
 
+  nix = {
     settings = {
       accept-flake-config = true;
       experimental-features = [ "nix-command" "flakes" ];
-      trusted-users = [ username ];
+      # Add the user to the trusted list for better performance
+      trusted-users = [ username "@wheel" ]; 
       substituters = [
         "https://cache.nixos.org"
-      ]; 
+      ];
     };
 
     gc = {
@@ -37,15 +36,16 @@
       dates = lib.mkDefault "weekly";
       options = lib.mkDefault "--delete-older-than 7d";
     };
-
   };
 
   nixpkgs.config.allowUnfree = true;
 
+  # -------------------------------------------------------------------------
+  # CORE ENVIRONMENT
+  # -------------------------------------------------------------------------
+
   console  = {
-    # font = ;
     keyMap = "us";
-    # useXkbConfig = true;
   };
 
   environment = {
@@ -58,24 +58,18 @@
       usbutils
       vim
       wget
-      wireplumber
-    ]; 
+    ];
     variables.EDITOR = "vim";
   };
 
+  # -------------------------------------------------------------------------
+  # NETWORKING & SERVICES
+  # -------------------------------------------------------------------------
+
   networking = {
-    firewall = {
-      # allowedTCPPorts = [ 22 80 443 8080 ];
-      # allowedUDPPorts = [ ... ];
-      enable = false;
-    };
-    # networking.wireless.enable = true;
+    firewall.enable = true; # Enabled for security (must be true for OpenSSH rule to work)
     wireless.iwd.enable = true;
-    networkmanager.enable = true;
-    # proxy = {
-    #   default = "http://user:password@proxy:port/";
-    #   noProxy = "127.0.0.1,localhost,internal.domain";
-    # };
+    # networking.networkmanager.enable removed as it's defined in host's default.nix
   };
 
   programs = {
@@ -86,9 +80,7 @@
       enableSSHSupport = true;
     };
     nano.enable = false;
-    zsh = {
-      enable = true;
-    };
+    zsh.enable = true;
   };
 
   services = {
@@ -99,12 +91,13 @@
         X11Forwarding = true;
         PermitRootLogin = "no";
         PasswordAuthentication = false;
-       };
+      };
       openFirewall = true;
     };
+
     pipewire = {
       enable = true;
-       alsa = {
+      alsa = {
         enable = true;
         support32Bit = true;
       };
@@ -112,27 +105,21 @@
       pulse.enable = true;
       wireplumber.enable = true;
     };
-    tlp.enable = true;
+
+    # tlp.enable removed as it is host-specific (laptop only)
+
     upower.enable = true;
-    # pulseaudio.enable = true;
-    # printing.enable = true
-  }; 
+  };
+
+  # -------------------------------------------------------------------------
+  # USER & SHELL
+  # -------------------------------------------------------------------------
 
   users = {
     defaultUserShell = pkgs.zsh;
     mutableUsers = true;
 
-    groups = {};
-
-    users.root = {
-       initialHashedPassword = "$7$CU..../....XaFP2ISgvPZc.mYeUHWQx.$V1f6AYOWu77klTUZb.9nmwshOLBiE7cFxMjIrXPvrE7";
-    };
-    users.${username} = {
-      isNormalUser = true;
-      description = username;
-      extraGroups = [ "audio" "networkmanager" "video" "wheel" ];
-      initialHashedPassword = "$7$CU..../....XaFP2ISgvPZc.mYeUHWQx.$V1f6AYOWu77klTUZb.9nmwshOLBiE7cFxMjIrXPvrE7";
-     };
-
+    # User definitions (root, ${username}) removed as they are HOST-SPECIFIC 
+    # and belong in hosts/whio-qemu/default.nix (or hosts/whio/default.nix).
   };
 }

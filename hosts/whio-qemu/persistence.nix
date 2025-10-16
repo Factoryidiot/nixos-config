@@ -7,40 +7,21 @@
     impermanence.nixosModules.impermanence
   ];
 
-  # There are two ways to clear the root filesystem on every boot:
-  ##  1. use tmpfs for /
-  ##  2. (btrfs/zfs only)take a blank snapshot of the root filesystem and revert to it on every boot via:
-  ##     boot.initrd.postDeviceCommands = ''
-  ##       mkdir -p /run/mymount
-  ##       mount -o subvol=/ /dev/disk/by-uuid/UUID /run/mymount
-  ##       btrfs subvolume delete /run/mymount
-  ##       btrfs subvolume snapshot / /run/mymount
-  ##     '';
-  #
-  #  See also https://grahamc.com/blog/erase-your-darlings/
-
-  # NOTE: impermanence only mounts the directory/file list below to /persistent
-  # If the directory/file already exists in the root filesystem, you should
-  # move those files/directories to /persistent first!
+  # NOTE: The Btrfs subvolumes /var/log and /var/lib are already
+  # defined in disko.nix as separate mountpoints, which makes them persistent
+  # relative to the / subvolume. We do not need to list them here.
   environment.persistence."/persistent" = {
     # sets the mount option x-gvfs-hide on all the bind mounts
-    # to hide them from the file manager
     hideMounts = true;
     directories = [
       "/etc/NetworkManager/system-connections"
       "/etc/ssh"
       "/etc/nix/inputs"
       "/etc/secureboot" # lanzaboote - secure boot
-      # my secrets
-      "/etc/agenix/"
+      "/etc/agenix/"    # my secrets
 
-      "/var/log"
-      "/var/lib"
-
-      # created by modules/nixos/misc/fhs-fonts.nix
-      # for flatpak apps
-      # "/usr/share/fonts"
-      # "/usr/share/icons"
+      # Removed /var/log and /var/lib as they should be defined as
+      # separate Btrfs subvolumes in disko.nix for persistence.
     ];
     files = [
       "/etc/machine-id"
@@ -69,30 +50,20 @@
         # misc
         ".config/pulse"
         ".pki"
-        ".steam" # steam games
+        ".steam"
 
         # cloud native
-        #{
-        #  # pulumi - infrastructure as code
-        #  directory = ".pulumi";
-        #  mode = "0700";
-        #}
         {
           directory = ".aws";
           mode = "0700";
         }
-        #{
-        #  directory = ".docker";
-        #  mode = "0700";
-        #}
 
         # .config
         ".config/Bitwarden"
         ".config/google-chrome"
         ".config/obsidian"
-        #".config/remmina"      # remote desktop
-        #".config/freerdp"      # remote desktop
-
+        #".config/remmina"
+        #".config/freerdp"
 
         # neovim / remmina / flatpak / ...
         ".local/share"

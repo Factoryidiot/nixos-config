@@ -22,7 +22,6 @@
       pkiBundle = "/etc/secureboot";
     };
 
-    loader.systemd-boot.enable = lib.mkForce false;
   };
 
 }
