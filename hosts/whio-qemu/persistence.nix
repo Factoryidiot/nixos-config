@@ -1,18 +1,22 @@
 {
-  impermanence
+  preservation
   , ...
 }: {
 
   imports = [
-    impermanence.nixosModules.impermanence
+    preservation.nixosModules.default
   ];
+
+  preservation.enable = true;
+
+  boot.initrd.systemd.enable = true;
+
 
   # NOTE: The Btrfs subvolumes /var/log and /var/lib are already
   # defined in disko.nix as separate mountpoints, which makes them persistent
   # relative to the / subvolume. We do not need to list them here.
-  environment.persistence."/persistent" = {
+  preservation.preserveAt."/persistent" = {
     # sets the mount option x-gvfs-hide on all the bind mounts
-    hideMounts = true;
     directories = [
       "/etc/NetworkManager/system-connections"
       "/etc/ssh"
@@ -20,11 +24,27 @@
       "/etc/secureboot" # lanzaboote - secure boot
       "/etc/agenix/"    # my secrets
 
-      # Removed /var/log and /var/lib as they should be defined as
-      # separate Btrfs subvolumes in disko.nix for persistence.
+      "/var/log"
+
+      "/var/lib/nixos"
+      "/var/lib/systemd"
+      {
+        directory = "/var/lib/private";
+        mode = "0700";
+      }
+
+      "/var/flatpak"
+
+      # network
+      #"/var/lib/tailscale"
+      "/var/lib/bluetooth"
+      "/var/lib/NetworkManager"
+      "/var/lib/iwd"
     ];
-    files = [
-      "/etc/machine-id"
+
+    file = [
+      files = "/etc/machine-id"
+      initrd = true;
     ];
 
     # the following directories will be passed to /persistent/home/$USER
@@ -34,14 +54,17 @@
         "Downloads"
         "Music"
         "Pictures"
+        "Videos"
+
+        # Work
         "Projects/Nixos/nixos-config"
         "tmp"
-        "Videos"
 
         {
           directory = ".gnupg";
           mode = "0700";
         }
+
         {
           directory = ".ssh";
           mode = "0700";
@@ -50,7 +73,10 @@
         # misc
         ".config/pulse"
         ".pki"
+
+        # Games
         ".steam"
+        ".local/share/Steam"
 
         # cloud native
         {
@@ -66,7 +92,7 @@
         #".config/freerdp"
 
         # neovim / remmina / flatpak / ...
-        ".local/share"
+        ".local/share/flatpak"
         ".local/state"
 
         ".mozilla"
