@@ -44,7 +44,7 @@
 
     file = [
       {
-        files = "/etc/machine-id"
+        files = "/etc/machine-id";
         inInitrd = true;
       }
     ];
