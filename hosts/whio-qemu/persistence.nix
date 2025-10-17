@@ -43,8 +43,10 @@
     ];
 
     file = [
-      files = "/etc/machine-id"
-      initrd = true;
+      {
+        files = "/etc/machine-id"
+        inInitrd = true;
+      }
     ];
 
     # the following directories will be passed to /persistent/home/$USER
