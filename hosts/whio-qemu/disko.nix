@@ -109,6 +109,10 @@ in
                       mountOptions = [ ];
                       mountpoint = null; # Unmounted
                     };
+                    "@swap" = {
+                      mountpoint = "/swap";
+                      swap.swapfile.size = "8G";
+                    };
                   };
                 };
               };
@@ -119,11 +123,4 @@ in
     };
   };
 
-  # Disko manages creating and activating the swapfile
-  # Note: Swapfiles on Btrfs cannot use Copy-on-Write (CoW).
-  disko.devices.filesystems."/".swapfile = {
-    file = "swap/swapfile";
-    size = "8G";
-    btrfs.compress = "no";
-  };
 }
