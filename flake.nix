@@ -42,6 +42,7 @@
     nixpkgs
     , home-manager
     , disko
+    , lanzaboote
     , preservation
     , self
     , ...
