@@ -52,7 +52,7 @@
       
       # Pass inputs and self to all configurations for easy access
       specialArgs = {
-        inherit username inputs preservation self;
+        inherit username inputs lanzaboote preservation self;
       };
 
       # Common modules for all systems (DRY principle)
