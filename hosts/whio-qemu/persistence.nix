@@ -85,9 +85,9 @@
         }
 
         # .config
-        ".config/Bitwarden"
+        #".config/Bitwarden"
         ".config/google-chrome"
-        ".config/obsidian"
+        #".config/obsidian"
         #".config/remmina"
         #".config/freerdp"
 
