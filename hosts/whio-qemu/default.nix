@@ -52,7 +52,7 @@ in
     # For a temporary VM, a clear password might be acceptable:
     # initialHashedPassword = ""; 
     # Or, use a properly generated hash:
-    hashedPassword = "$6$salt$xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
+    hashedPassword = "$6$tz.Q5qBoM24gmIhB$S/wR6A7KIzwqBQG55VwduBSuKutS3Bd45ypzD0nPoXis6qszRhoN1aJG6hXFY/K6tYsIwJyfNvYXBt.1mCoH10";
   };
   # Allow members of 'wheel' to use sudo without a password (common for single-user systems)
   security.sudo.wheelNeedsPassword = false;

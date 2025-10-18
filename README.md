@@ -42,9 +42,9 @@ run github:nix-community/disko/latest -- \
 
 ```sh
 nix --experimental-features "nix-command flakes" \
-run "github:nix-community/disko" -- \
+run github:nix-community/disko -- \
 --mode disko \
---flake "github:Factoryidiot/nixos-config#[host-name]"
+--flake github:Factoryidiot/nixos-config#[host-name]
 ```
 
 > !TIP
