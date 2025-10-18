@@ -76,10 +76,12 @@ mv ../nixos-config/ /mnt/etc/nixos
 ```
 
 ### Perform installation
+From `/mnt/etc/nixos` run:
 ```
 nixos-install --root /mnt --no-root-password \
 --flake .#[host-name] --no-write-lock-file
 ```
+
 > [!TIP]
 > To refresh the cache:
 > nix: `--no-eval-cache`

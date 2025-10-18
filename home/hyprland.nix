@@ -23,7 +23,7 @@ in
     looking-glass-client
     obsidian
     #rofi
-    #waybar
+    waybar
     wayland
   ];
 
@@ -52,51 +52,37 @@ in
   #  enable = true;
   #};
 
-  #programs.waybar = {
-  #  enable = true;
-  #  settings = {
-  #    mainBar = {
-  #      layer = "top";
-  #      position = "top";
-  #      height = 30;
-  #      modules-left = [ "hyprland/workspaces" ];
-  #      modules-center = [ "clock" ];
-  #      modules-right = [];
-  #      "clock" = {
-  #        format = "{:%b %d %R}";
-  #      };
-  #    };
-  #  };
-  #  style = ''
-  #    #clock {
-  #      padding-left: 16px;
-  #      padding-right: 16px;
-  #      border-radius: 0px 0px 0px 0px;
-  #      transition: none;
-  #      color: #ffffff;
-  #      background: #383c4a;
-  #    }
-  #  '';
-  #};
+  programs.waybar = {
+    enable = true;
+    settings = {
+      mainBar = {
+        layer = "top";
+        position = "top";
+        height = 30;
+        modules-left = [ "hyprland/workspaces" ];
+        modules-center = [ "clock" ];
+        modules-right = [];
+        "clock" = {
+          format = "{:%b %d %R}";
+        };
+      };
+    };
+    style = ''
+      #clock {
+        padding-left: 16px;
+        padding-right: 16px;
+        border-radius: 0px 0px 0px 0px;
+        transition: none;
+        color: #ffffff;
+        background: #383c4a;
+      }
+    '';
+  };
   programs.hyprlock.enable = true;
 
   services = {
     hypridle.enable = true;
     hyprpaper.enable = true;
-    mako = {
-      enable = true;
-      actions = true;
-      borderRadius = 8;
-      borderSize = 1;
-      defaultTimeout = 10000;
-      # font = "";
-      # iconPath = "";
-      icons = true;
-      layer = "overlay";
-      maxVisible = 3;
-      padding = "10";
-      width = 300;
-    };
   };
 
   wayland.windowManager.hyprland = {

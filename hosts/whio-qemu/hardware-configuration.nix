@@ -7,18 +7,18 @@
 }: {
 
   imports = [
-    (modulesPath + "/installer/scan/not-detected.nix")
+    (modulesPath + "/profiles/qemu-guest.nix")
   ];
 
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot";
   boot.loader.systemd-boot.enable = true;
 
-  boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "thunderbolt" "sd_mod" "usbhid" "usb_storage" ];
+  boot.initrd.availableKernelModules = [ "virtio_pci" "uhci_hcd" "ehci_pci" "ahci" "sr_mod" "virtio_blk" ];
   boot.initrd.kernelModules = [ ];
   boot.initrd.systemd.enable = true;
-  boot.kernelModules = [ "amdgpu" "kvm-amd" ];
-  boot.kernelParams = [ "amd_pstate=active" ];
+  boot.kernelModules = [ "kvm-amd" ];
+  boot.kernelParams = [ ];
   boot.extraModulePackages = [ ];
   boot.tmp.cleanOnBoot = true; # clear /tmp on boot to get a stateless /tmp directory
   boot.supportedFilesystems = [
@@ -47,7 +47,7 @@
       options = [ "subvolid=5" ];
     };
 
-  fileSystems."/" =
+  fileSystems."/" = lib.mkDefault
     { device = "tmpfs";
       fsType = "tmpfs";
       options = [ "relatime" "mode=755" ];

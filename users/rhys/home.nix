@@ -33,12 +33,6 @@
     themeFile = "Nord";
   };
 
-  programs.nixvim = {
-    defaultEditor = true;
-    viAlias = true;
-    vimAlias = true;
-  };
-
   programs.ssh = {
     enable = true;
     extraConfig = ''
