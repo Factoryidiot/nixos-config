@@ -15,7 +15,7 @@ in
     ./hardware-configuration.nix
     ./disko.nix        # Disk partitioning and Btrfs setup
     ./persistence.nix  # Impermanence configuration (to be defined)
-    #./secureboot.nix   # Lanzaboote/Secure Boot setup (to be defined)
+    ./secureboot.nix   # Lanzaboote/Secure Boot setup (to be defined)
 
     # 2. Global modules (assuming these paths are correct relative to default.nix)
     ../../modules/configuration.nix # Core system packages, services, etc.
