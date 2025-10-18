@@ -18,7 +18,7 @@ in
 
     # 2. Global modules
     ../../modules/configuration.nix # Core system packages, services, etc.
-    ../../modules/secureboot.nix   # Lanzaboote/Secure Boot setup (to be defined)
+    #../../modules/secureboot.nix   # Lanzaboote/Secure Boot setup (to be defined)
     #../../modules/tlp.nix # TLP is for laptops; often excluded in QEMU
     ../../modules/zram.nix
   ];
