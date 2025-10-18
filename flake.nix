@@ -95,9 +95,6 @@
           name = "whio";
           modules = [
             ./hosts/whio/default.nix
-            ./hosts/whio/disko.nix
-            ./hosts/whio/persistence.nix
-            ./hosts/whio/secureboot.nix
             # ./secrets/default.nix # Uncommented for clarity
           ];
         };
@@ -106,9 +103,6 @@
           name = "whio-qemu";
           modules = [
             ./hosts/whio-qemu/default.nix
-            ./hosts/whio-qemu/disko.nix
-            ./hosts/whio-qemu/persistence.nix
-            # ./hosts/whio-qemu/secureboot.nix
             {
               # QEMU disk is always /dev/vda
               _module.args.disks = [ "/dev/vda" ];
