@@ -42,7 +42,7 @@ in
                 name = "crypted";
                 settings = {
                   allowDiscards = true;
-                  # fallbackToPassword = true;
+                  fallbackToPassword = true;
                 };
                 # NOTE: passwordFile is typically only used by 'disko --mode format'
                 # to set the initial password, not for unlocking during boot.
