@@ -14,6 +14,8 @@
     tpm2-tss
   ];
 
+  boot.loader.systemd-boot.enable = lib.mkForce false;
+
   boot = {
     bootspec.enable = true;
 

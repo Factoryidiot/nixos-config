@@ -31,9 +31,13 @@
     "exfat"
   ];
 
-  boot.initrd.luks.devices."crypted".device = "/dev/disk/by-uuid/4502f7bc-c44d-4e94-93e3-3ab75036c3f5";
-  boot.initrd.luks.devices."crypted".allowDiscards = true;
-  boot.initrd.luks.devices."crypted".bypassWorkqueues = true;
+  boot.initrd = {
+    luks.devices."crypted" = lib.mkDefault { 
+      device = "/dev/disk/by-uuid/4502f7bc-c44d-4e94-93e3-3ab75036c3f5";
+      allowDiscards = true;
+      bypassWorkqueues = true;
+    };
+  };
 
   fileSystems."/boot" = lib.mkDefault
     { device = "/dev/disk/by-uuid/EC53-3A42";
