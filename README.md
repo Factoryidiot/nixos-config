@@ -75,6 +75,11 @@ mv * ../nixos-config/ /mnt/etc/nixos
 ```
 
 ### Perform installation
+```sh
+systemd-machine-id-setup --root=/mnt
+```
+```
+```
 From `/mnt/etc/nixos` run:
 ```
 nixos-install --root /mnt --no-root-password \
