@@ -6,6 +6,8 @@
  imports = [
     # Hardware first
     ./hardware-configuration.nix
+    ./disko.nix
+    ./persistence.nix
 
     ../../modules/tlp.nix
 
@@ -16,7 +18,7 @@
 
     ../../modules/configuration.nix
     ../../modules/fonts.nix
-
+    ../../modules/secureboot.nix
     ../../programs/steam.nix
   ];
 
