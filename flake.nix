@@ -31,7 +31,7 @@
     };
     preservation.url = "github:nix-community/preservation";
     lanzaboote = {
-      url = "github:nix-community/lanzaboote/v0.4.1";
+      url = "github:nix-community/lanzaboote/v0.4.2";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-gaming.url = "github:fufexan/nix-gaming";
@@ -108,7 +108,7 @@
             ./hosts/whio-qemu/default.nix
             ./hosts/whio-qemu/disko.nix
             ./hosts/whio-qemu/persistence.nix
-            ./hosts/whio-qemu/secureboot.nix
+            # ./hosts/whio-qemu/secureboot.nix
             {
               # QEMU disk is always /dev/vda
               _module.args.disks = [ "/dev/vda" ];
