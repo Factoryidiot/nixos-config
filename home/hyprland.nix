@@ -1,7 +1,5 @@
 {
-  ags
-  , anyrun
-  , config
+  config
   , pkgs
   , username
   , ...
@@ -12,8 +10,6 @@ let
 in
 {
   imports = [
-    ags.homeManagerModules.ags
-    anyrun.homeManagerModules.anyrun
   ];
 
   home.packages = with pkgs; [
@@ -26,21 +22,10 @@ in
     hyprland
     looking-glass-client
     obsidian
-    mako
     #rofi
     #waybar
     wayland
   ];
-
-  # https://github.com/Aylur/ags
-  programs.ags = {
-    enable = true;
-  };
-
-  # https://github.com/kirottu/anyrun
-  programs.anyrun = {
-    # enable = true;
-  };
 
   # https://codeberg.org/dnkl/fuzzel
   # https://mark.stosberg.com/fuzzel-a-great-dmenu-and-rofi-altenrative-for-wayland/
