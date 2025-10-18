@@ -53,26 +53,26 @@ Confirm swap, `lsattr` should output:
 
 `lsattr /mnt/swap`
 
-if not, run:
-
-`btrfs filesystem mkswapfile --size 24g --uuid clear /mnt/swap/swapfile`
-
 Run `swapon /mnt/swap/swapfile` and confim `swapon -s`
+
+> !TIP
+> If a swap partition is not set up we can do this manually
+> `btrfs filesystem mkswapfile --size 24g --uuid clear /mnt/swap/swapfile`
+> Then run swapon
 
 ### Prepare for install
 1. Clone this repo to complete the installation:
-   a. Enter a temporary Nix Shell and install git and vim `nix-shell -p git vim`.
-   b. Clone this repo `git clone https://github.com/Factoryidiot/nixos-config.git`.
-   c. `cd` into `nixos-config`.
-2. Next we want to generate a `hardware-configuration.nix` to update the `UUID`s for the hardware-configuration.nix included in the repo we have just cloned.
+   a. Clone this repo `git clone https://github.com/Factoryidiot/nixos-config.git`.
+   b. `cd` into `nixos-config`.
+2. Generate a `hardware-configuration.nix` to update the `UUID`s for the hardware-configuration.nix included in the repo we have just cloned.
 ```
  nixos-generate-config --root /mnt
 ```
 3. Use vim to update the UUIDs found in `/mnt/etc/nixos/hardware-configuration.nix` into the hosts hardware-configuration e.g. `hosts/whio/hardware-configuration.nix`.
 4. Remove the contents of `/mnt/etc/nixos/`.
-5. From the Move `~/nixos-confg` to `/mnt/etc/nixos/`.
+5. Move the contents of  `~/nixos-confg` into `/mnt/etc/nixos/`.
 ```
-mv ../nixos-config /mnt/etc/nixos
+mv ../nixos-config/ /mnt/etc/nixos
 ```
 
 ### Perform installation
