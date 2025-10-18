@@ -42,9 +42,9 @@
       "/var/lib/iwd"
     ];
 
-    file = [
+    files = [
       {
-        files = "/etc/machine-id";
+        file = "/etc/machine-id";
         inInitrd = true;
       }
     ];

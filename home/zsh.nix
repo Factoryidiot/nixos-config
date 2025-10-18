@@ -22,7 +22,7 @@
     history = {
       ignoreAllDups = true;
     };
-    initExtra = ''
+    initContent = ''
 
         if [ "$TERM" = "linux" ]; then
           # Use 8 colors and ASCII.
