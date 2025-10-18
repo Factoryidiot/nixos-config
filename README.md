@@ -33,25 +33,24 @@ These are in no particular order of priority
 ### Run disko
 Boot up the nixos minimal installation disk and run as `sudo -i`
 
-```
+```sh
 nix --experimental-features "nix-command flakes" \
 run github:nix-community/disko/latest -- \
 --mode destroy,format,mount \
 --flake "github:Factoryidiot/nixos-config#[host-name]"
 ```
 
-```
+```sh
 nix --experimental-features "nix-command flakes" \
 run "github:nix-community/disko" -- \
 --mode disko \
 --flake "github:Factoryidiot/nixos-config#[host-name]"
 ```
 
-Confirm swap, `lsattr` should output:
+Confirm swap, `lsattr /mnt/swap` should output:
 
 `---------------C------ /mnt/swap/swapfile`
 
-`lsattr /mnt/swap`
 
 Run `swapon /mnt/swap/swapfile` and confim `swapon -s`
 
@@ -65,14 +64,14 @@ Run `swapon /mnt/swap/swapfile` and confim `swapon -s`
    a. Clone this repo `git clone https://github.com/Factoryidiot/nixos-config.git`.
    b. `cd` into `nixos-config`.
 2. Generate a `hardware-configuration.nix` to update the `UUID`s for the hardware-configuration.nix included in the repo we have just cloned.
-```
+```sh
  nixos-generate-config --root /mnt
 ```
 3. Use vim to update the UUIDs found in `/mnt/etc/nixos/hardware-configuration.nix` into the hosts hardware-configuration e.g. `hosts/whio/hardware-configuration.nix`.
-4. Remove the contents of `/mnt/etc/nixos/`.
+4. Remove the contents of `rm /mnt/etc/nixos/*`.
 5. Move the contents of  `~/nixos-confg` into `/mnt/etc/nixos/`.
 ```
-mv ../nixos-config/ /mnt/etc/nixos
+mv * ../nixos-config/ /mnt/etc/nixos
 ```
 
 ### Perform installation
