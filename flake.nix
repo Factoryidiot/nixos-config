@@ -108,8 +108,7 @@
             ./hosts/whio-qemu/default.nix
             ./hosts/whio-qemu/disko.nix
             ./hosts/whio-qemu/persistence.nix
-            ./hosts/whio/secureboot.nix
-            # ./hosts/whio-qemu/secureboot.nix # Commented out as in original
+            ./hosts/whio-qemu/secureboot.nix
             {
               # QEMU disk is always /dev/vda
               _module.args.disks = [ "/dev/vda" ];
