@@ -40,13 +40,13 @@ in
               content = {
                 type = "luks";
                 name = "crypted";
-                passwordFile = "/tmp/secret.key";
+                #passwordFile = "/tmp/secret.key";
                 # NOTE: passwordFile is typically only used by 'disko --mode format'
                 # to set the initial password, not for unlocking during boot.
                 # It will be ignored after the initial install.
                 settings = {
                   allowDiscards = true;
-                  # fallbackToPassword = true;
+                  fallbackToPassword = true;
                 };
                 # Setting this to true is required for TPM/Passphrase unlock in the initrd
                 initrdUnlock = true;
