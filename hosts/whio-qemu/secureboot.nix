@@ -17,7 +17,7 @@
   boot.loader.systemd-boot.enable = lib.mkForce false;
 
   boot = {
-    bootspec.enable = true;
+    #bootspec.enable = true;
 
     lanzaboote = {
       enable = true;

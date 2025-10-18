@@ -47,6 +47,9 @@ run "github:nix-community/disko" -- \
 --flake "github:Factoryidiot/nixos-config#[host-name]"
 ```
 
+> !TIP
+> if there are errors in the disko process, we can update the script push to git `rm -rf .cache` and rerun the line above.
+
 Confirm swap, `lsattr /mnt/swap` should output:
 
 `---------------C------ /mnt/swap/swapfile`
