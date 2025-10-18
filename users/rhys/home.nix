@@ -7,7 +7,6 @@
     ../../home/core.nix
 
     ../../home/fastfetch.nix
-    ../../home/neovim.nix
     ../../home/zsh.nix
 
     ../../home/hyprland.nix
