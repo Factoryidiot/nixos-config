@@ -118,8 +118,5 @@
   users = {
     defaultUserShell = pkgs.zsh;
     mutableUsers = true;
-
-    # User definitions (root, ${username}) removed as they are HOST-SPECIFIC 
-    # and belong in hosts/whio-qemu/default.nix (or hosts/whio/default.nix).
   };
 }
