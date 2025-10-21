@@ -30,8 +30,6 @@ in
       "/etc/secureboot" # lanzaboote - secure boot
       "/etc/agenix/"    # my secrets
 
-      "/var/log"
-
       "/var/lib/nixos"
       "/var/lib/systemd"
       {

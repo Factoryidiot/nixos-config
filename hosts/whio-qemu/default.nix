@@ -13,14 +13,7 @@ in
   imports = [
     # 1. Host-specific disk and security setup
     ./hardware-configuration.nix
-    ./disko.nix        # Disk partitioning and Btrfs setup
     ./persistence.nix  # Impermanence configuration (to be defined)
-
-    # 2. Global modules
-    ../../modules/configuration.nix # Core system packages, services, etc.
-    #../../modules/secureboot.nix   # Lanzaboote/Secure Boot setup (to be defined)
-    #../../modules/tlp.nix # TLP is for laptops; often excluded in QEMU
-    ../../modules/zram.nix
   ];
 
   # -------------------------------------------------------------------------
@@ -29,7 +22,6 @@ in
 
   networking = {
     hostName = "whio-qemu";
-    networkmanager.enable = true; # Enable graphical/standard networking
   };
 
   # Essential for TPM LUKS unlock and Secure Boot (systemd-boot UKI)
@@ -62,21 +54,6 @@ in
   # -------------------------------------------------------------------------
   
   environment.systemPackages = with pkgs; [
-    # qemu is useful if you plan to run VMs *inside* the VM, otherwise remove it
-    # qemu
-    git # Essential for post-install setup and management
-    vim # Or your preferred editor for post-install config
   ];
 
-  # hardware = {
-  #   bluetooth.enable = true; # Keep commented out for VM, unless specifically needed
-  # };
-
-  # -------------------------------------------------------------------------
-  # NIXOS RELEASE
-  # -------------------------------------------------------------------------
-
-  # This value determines the NixOS release from which the default
-  # settings for stateful data were taken.
-  system.stateVersion = "25.05";
 }
