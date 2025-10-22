@@ -21,10 +21,6 @@
       url = "github:ryan4yin/ragenix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    disko = {
-      url = "github:nix-community/disko";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     home-manager = {
       url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -41,7 +37,6 @@
   outputs = inputs@{
     nixpkgs
     , home-manager
-    , disko
     , lanzaboote
     , preservation
     , self
@@ -58,7 +53,6 @@
 
       # Common modules for all systems (DRY principle)
       commonModules = [
-        disko.nixosModules.disko
         # Common home-manager configuration
         home-manager.nixosModules.home-manager
         {
