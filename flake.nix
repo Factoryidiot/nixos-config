@@ -102,11 +102,12 @@
 
         ];
       };
-    };
 
-    # Standard outputs for convenience
-    formatter.${system} = nixpkgs.legacyPackages.${system}.nixpkgs-fmt;
-    defaultPackage.${system} = self.packages.${system}.nixos-system-whio-qemu;
-    packages.${system}.nixos-system-whio-qemu = self.nixosConfigurations.whio-qemu.config.system.build.toplevel;
+      # Standard outputs for convenience
+      formatter.${system} = nixpkgs.legacyPackages.${system}.nixpkgs-fmt;
+      defaultPackage.${system} = self.packages.${system}.nixos-system-whio-qemu;
+      packages.${system}.nixos-system-whio-qemu = self.nixosConfigurations.whio-qemu.config.system.build.toplevel;
+
+    };
 
 }
