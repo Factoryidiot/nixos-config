@@ -30,49 +30,39 @@ These are in no particular order of priority
 - [ ] Tidy up and restructure
 
 ## Install
-### Run disko
-Boot up the nixos minimal installation disk and run as `sudo -i`
-
+Clone the repo `git clone https://github.com/Factoryidiot/nixos-config.git`.
+### Prepare Disk
+1. Boot up the nixos minimal installation disk and run as `sudo -i`
+2. Configure disk with disko e.g., 
 ```sh
 nix --experimental-features "nix-command flakes" \
 run github:nix-community/disko/latest -- \
---mode destroy,format,mount \
---flake "github:Factoryidiot/nixos-config#[host-name]"
-```
-
-```sh
-nix --experimental-features "nix-command flakes" \
-run github:nix-community/disko -- \
 --mode disko \
---flake github:Factoryidiot/nixos-config#[host-name]
+./disko.nix
 ```
-
 > !TIP
 > if there are errors in the disko process, we can update the script push to git `rm -rf .cache` and rerun the line above.
+3. Run `swapon /mnt/swap/swapfile` and confim `swapon -s` if required
 
-Confirm swap, `lsattr /mnt/swap` should output:
-
-`---------------C------ /mnt/swap/swapfile`
-
-
-Run `swapon /mnt/swap/swapfile` and confim `swapon -s`
+> !TIP
+> Confirm swap, `lsattr /mnt/swap` should output:
+>
+> `---------------C------ /mnt/swap/swapfile`
 
 > !TIP
 > If a swap partition is not set up we can do this manually
 > `btrfs filesystem mkswapfile --size 24g --uuid clear /mnt/swap/swapfile`
-> Then run swapon
+> Then run swapon see step 3.
 
 ### Prepare for install
-1. Clone this repo to complete the installation:
-   a. Clone this repo `git clone https://github.com/Factoryidiot/nixos-config.git`.
-   b. `cd` into `nixos-config`.
-2. Generate a `hardware-configuration.nix` to update the `UUID`s for the hardware-configuration.nix included in the repo we have just cloned.
+Working now with `~/nixos-config`
+1. Generate a `hardware-configuration.nix` to update the `UUID`s for the hardware-configuration.nix included in the repo we have just cloned.
 ```sh
  nixos-generate-config --root /mnt
 ```
-3. Use vim to update the UUIDs found in `/mnt/etc/nixos/hardware-configuration.nix` into the hosts hardware-configuration e.g. `hosts/whio/hardware-configuration.nix`.
-4. Remove the contents of `rm /mnt/etc/nixos/*`.
-5. Move the contents of  `~/nixos-confg` into `/mnt/etc/nixos/`.
+2. Use vim to update the UUIDs found in `/mnt/etc/nixos/hardware-configuration.nix` into the hosts hardware-configuration e.g. `hosts/whio/hardware-configuration.nix`.
+3. Remove the contents of `rm /mnt/etc/nixos/*`.
+4. Move the contents of  `~/nixos-confg` into `/mnt/etc/nixos/`.
 ```
 mv * ../nixos-config/ /mnt/etc/nixos
 ```
