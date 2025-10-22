@@ -73,7 +73,7 @@
       mkNixosSystem = { name, modules }:
         let
           hostname = name;                                        # The hostname for this system is the same as its name in the flake
-          specialArgs = baseSpecialArgs // { inherit hostname; }; # Merge the global special arguments with the host-specific ones (hostname)
+          specialArgs = specialArgs // { inherit hostname; }; # Merge the global special arguments with the host-specific ones (hostname)
         in
           nixpkgs.lib.nixosSystem {
             inherit system specialArgs;
