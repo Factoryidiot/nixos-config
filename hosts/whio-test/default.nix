@@ -13,7 +13,6 @@ in
 
   imports = [
     ./hardware-configuration.nix
-    ./disko.nix                       # only required for install
     ./persistence.nix                 # Impermanence configuration (to be defined)
 
     ../../modules/configuration.nix

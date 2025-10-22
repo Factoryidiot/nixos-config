@@ -1,15 +1,4 @@
-# hosts/whio-qemu/disko.nix
-# Configures the disk layout for the QEMU host /dev/vda
-{
-  config
-  , pkgs
-  , disks
-  , ...
-}:
-  let
-  # Determine the disk device from the 'disks' argument passed from the flake
-  diskDevice = (builtins.elemAt disks 0);
-in
+# nix --experimental-features "nix-command flakes" run github:nix-community/disko/latest -- --mode disko ./disko.nix
 {
   # This sets the BTRFS volume itself as the root of the volume to be mounted at /mnt.
   # The actual root of the OS is the @root subvolume mounted at /
@@ -17,7 +6,7 @@ in
     disk = {
       vda = {
         type = "disk";
-        device = diskDevice;
+        device = "/dev/vda";
         content = {
           type = "gpt";
           partitions = {
