@@ -86,6 +86,9 @@
         modules = [
           ./hosts/whio/default.nix
           # ./secrets/default.nix # Uncommented for clarity
+          {
+            system.stateVersion = "25.05";
+          }
         ];
       };
 
