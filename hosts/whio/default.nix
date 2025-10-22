@@ -22,6 +22,13 @@
     ../../programs/steam.nix
   ];
 
+  # NOTE: Hardware modules are commented out as they are often best placed 
+  # in the specific host's default.nix, or if necessary, here.
+  # imports = [
+  #   nixos-hardware.nixosModules.common-pc-laptop
+  #   ...
+  # ];
+
   boot = {
     blacklistedKernelModules = [
       "nouveau"
@@ -62,6 +69,7 @@
 
   hardware = {
     bluetooth.enable = true;
+    cpu.amd.updateMicrocode = true;
   };
 
   #i18n.defaultLocale = "en_AU.UTF-8";

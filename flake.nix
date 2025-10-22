@@ -59,9 +59,9 @@
       # Common modules for all systems (DRY principle)
       commonModules = [
         disko.nixosModules.disko
+        # Common home-manager configuration
         home-manager.nixosModules.home-manager
         {
-          # Common home-manager configuration
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
           home-manager.extraSpecialArgs = specialArgs;
@@ -71,52 +71,42 @@
 
       # Helper function to create a NixOS configuration
       mkNixosSystem = { name, modules }:
-        nixpkgs.lib.nixosSystem {
-          inherit system specialArgs;
-          modules = commonModules ++ modules;
+        let
+          hostname = name;                                        # The hostname for this system is the same as its name in the flake
+          specialArgs = baseSpecialArgs // { inherit hostname; }; # Merge the global special arguments with the host-specific ones (hostname)
+        in
+          nixpkgs.lib.nixosSystem {
+            inherit system specialArgs;
+            modules = commonModules ++ modules;
         };
 
     in {
-      # Define system configurations using the helper function
-      nixosConfigurations = {
-        nixos-qemu = mkNixosSystem {
-          name = "nixos-qemu";
-          modules = [
-            ./hosts/nixos-qemu
-            ./hosts/nixos-qemu/disko.nix
-            {
-              # Host-specific argument for disko
-              _module.args.disks = [ "/dev/vda" "/dev/vdb" ];
-            }
-          ];
-        };
-
-        whio = mkNixosSystem {
-          name = "whio";
-          modules = [
-            ./hosts/whio/default.nix
-            # ./secrets/default.nix # Uncommented for clarity
-          ];
-        };
-
-        whio-qemu = mkNixosSystem {
-          name = "whio-qemu";
-          modules = [
-            ./hosts/whio-qemu/default.nix
-            {
-              # QEMU disk is always /dev/vda
-              _module.args.disks = [ "/dev/vda" ];
-              # Ensure the system state version is set
-              system.stateVersion = "25.05";
-            }
-            
-          ];
-        };
+      whio = mkNixosSystem {
+        name = "whio";
+        modules = [
+          ./hosts/whio/default.nix
+          # ./secrets/default.nix # Uncommented for clarity
+        ];
       };
+
+      whio-test = mkNixosSystem {
+        name = "whio-test";
+        modules = [
+          ./hosts/whio-test/default.nix
+          {
+            # QEMU disk is always /dev/vda
+            _module.args.disks = [ "/dev/vda" ];
+            # Ensure the system state version is set
+            system.stateVersion = "25.05";
+          }
+            
+        ];
+      };
+    };
       
       # Standard outputs for convenience
       formatter.${system} = nixpkgs.legacyPackages.${system}.nixpkgs-fmt;
       defaultPackage.${system} = self.packages.${system}.nixos-system-whio-qemu;
       packages.${system}.nixos-system-whio-qemu = self.nixosConfigurations.whio-qemu.config.system.build.toplevel;
-    };
+  };
 }
