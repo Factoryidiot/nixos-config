@@ -15,7 +15,7 @@
       accept-flake-config = true;
       experimental-features = [ "nix-command" "flakes" ];
       # Add the user to the trusted list for better performance
-      trusted-users = [ username "@wheel" ]; 
+      trusted-users = [ username "@wheel" ];
       substituters = [
         "https://cache.nixos.org"
       ];
@@ -35,7 +35,7 @@
 # -------------------------------------------------------------------------
 # Time and Locale settings moved to host-specific files
 
-  console  = {
+  console = {
     keyMap = "us";
   };
 
@@ -68,8 +68,8 @@
     gnupg.agent = {
       enable = true;
       enableBrowserSocket = true;
-       enableExtraSocket = true;
-        enableSSHSupport = true;
+      enableExtraSocket = true;
+      enableSSHSupport = true;
     };
 
     nano.enable = false;
