@@ -67,37 +67,39 @@
       mkNixosSystem = { name, modules }:
         let
           hostname = name;                                        # The hostname for this system is the same as its name in the flake
-          specialArgs = specialArgs // { inherit hostname; }; # Merge the global special arguments with the host-specific ones (hostname)
+          hostArgs = specialArgs // { inherit hostname; }; # Merge the global special arguments with the host-specific ones (hostname)
         in
           nixpkgs.lib.nixosSystem {
-            inherit system specialArgs;
+            inherit system;
+            specialArgs = hostArgs;
             modules = commonModules ++ modules;
         };
 
     in {
-      whio = mkNixosSystem {
-        name = "whio";
-        modules = [
-          ./hosts/whio/default.nix
-          # ./secrets/default.nix # Uncommented for clarity
-          {
-            system.stateVersion = "25.05";
-          }
-        ];
-      };
+      nixosConfigurations = {
+        whio = mkNixosSystem {
+          name = "whio";
+          modules = [
+            ./hosts/whio/default.nix
+            # ./secrets/default.nix # Uncommented for clarity
+            {
+              system.stateVersion = "25.05";
+            }
+          ];
+        };
 
-      whio-test = mkNixosSystem {
-        name = "whio-test";
-        modules = [
-          ./hosts/whio-test/default.nix
-          {
-            # QEMU disk is always /dev/vda
-            _module.args.disks = [ "/dev/vda" ];
-            # Ensure the system state version is set
-            system.stateVersion = "25.05";
-          }
-
-        ];
+        whio-test = mkNixosSystem {
+          name = "whio-test";
+          modules = [
+            ./hosts/whio-test/default.nix
+            {
+              # QEMU disk is always /dev/vda
+              _module.args.disks = [ "/dev/vda" ];
+              # Ensure the system state version is set
+              system.stateVersion = "25.05";
+            }
+          ];
+        };
       };
 
       # Standard outputs for convenience

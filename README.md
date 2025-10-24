@@ -32,7 +32,7 @@ These are in no particular order of priority
 ## Install
 Clone the repo `git clone https://github.com/Factoryidiot/nixos-config.git`.
 ### Prepare Disk
-1. Boot up the nixos minimal installation disk and run as `sudo -i`
+1. Boot up the nixos minimal installation disk
 2. Configure disk with disko e.g., 
 ```sh
 nix --experimental-features "nix-command flakes" \
