@@ -109,7 +109,7 @@
 # -------------------------------------------------------------------------
 
   users = {
-    defaultUserShell = pkgs.zsh;
+    #defaultUserShell = pkgs.zsh;
     mutableUsers = true;
 
     # Define the core, universal properties of the user.
