@@ -46,14 +46,6 @@
 
       # Common modules for all systems (DRY principle)
       commonModules = [
-        # Common home-manager configuration
-        home-manager.nixosModules.home-manager
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.extraSpecialArgs = specialArgs;
-          home-manager.users.${username} = import ./users/${username}/home.nix;
-        }
       ];
 
       # Helper function to create a NixOS configuration

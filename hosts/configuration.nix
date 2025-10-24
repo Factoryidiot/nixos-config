@@ -64,7 +64,7 @@
   };
 
   programs = {
-
+    bash.enable = true;
     gnupg.agent = {
       enable = true;
       enableBrowserSocket = true;
@@ -73,12 +73,10 @@
     };
 
     nano.enable = false;
-    zsh.enable = true;
 
   };
 
   services = {
-    blueman.enable = true;
 
     openssh = {
       enable = true;
@@ -109,7 +107,6 @@
 # -------------------------------------------------------------------------
 
   users = {
-    #defaultUserShell = pkgs.zsh;
     mutableUsers = true;
 
     # Define the core, universal properties of the user.
