@@ -1,14 +1,12 @@
 {
-  description = "NIXOS Configuration Flake";
+  description = "NIXOS Install Flake";
 
   nixConfig = {
     extra-substituters = [
       "https://nix-community.cachix.org"
-      "https://nix-gaming.cachix.org"
     ];
     extra-trusted-public-keys = [
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-      "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4="
     ];
   };
 
@@ -17,10 +15,6 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     
-    agenix = {
-      url = "github:ryan4yin/ragenix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     home-manager = {
       url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -30,7 +24,6 @@
       url = "github:nix-community/lanzaboote/v0.4.2";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nix-gaming.url = "github:fufexan/nix-gaming";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
   };
 
@@ -80,7 +73,7 @@
         whio = mkNixosSystem {
           name = "whio";
           modules = [
-            ./hosts/whio/default.nix
+            ./whio/default.nix
             # ./secrets/default.nix # Uncommented for clarity
             {
               system.stateVersion = "25.05";
@@ -91,7 +84,8 @@
         whio-test = mkNixosSystem {
           name = "whio-test";
           modules = [
-            ./hosts/whio-test/default.nix
+            ./whio-test/default.nix
+            ./configuration.nix
             {
               # QEMU disk is always /dev/vda
               _module.args.disks = [ "/dev/vda" ];

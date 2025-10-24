@@ -92,6 +92,7 @@
           name = "whio-test";
           modules = [
             ./hosts/whio-test/default.nix
+            ./modules/configuration.nix
             {
               # QEMU disk is always /dev/vda
               _module.args.disks = [ "/dev/vda" ];

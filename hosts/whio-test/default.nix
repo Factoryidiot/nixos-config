@@ -14,8 +14,6 @@ in
   imports = [
     ./hardware-configuration.nix
     ./persistence.nix                 # Impermanence configuration (to be defined)
-
-    ../../modules/configuration.nix
   ];
 
   # -------------------------------------------------------------------------
