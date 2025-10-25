@@ -17,10 +17,13 @@
   boot.initrd.availableKernelModules = [ "virtio_pci" "uhci_hcd" "ehci_pci" "ahci" "sr_mod" "virtio_blk" ];
   boot.initrd.kernelModules = [ ];
   boot.initrd.systemd.enable = true;
-  boot.kernelModules = [ "kvm-amd" ];
-  boot.kernelParams = [ ];
+
   boot.extraModulePackages = [ ];
-  boot.tmp.cleanOnBoot = true; # clear /tmp on boot to get a stateless /tmp directory
+
+  boot.kernelModules = [ "kvm-amd" ];
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelParams = [ ];
+
   boot.supportedFilesystems = [
     "ext4"
     "btrfs"
@@ -30,6 +33,8 @@
     "vfat"
     "exfat"
   ];
+
+  boot.tmp.cleanOnBoot = true; # clear /tmp on boot to get a stateless /tmp directory
 
   boot.initrd = {
     luks.devices."crypted" = lib.mkDefault { 
@@ -89,8 +94,8 @@
     };
 
   fileSystems."/swap/swapfile" =
-    { device = "/swap/swapfile";
-      depends = [ "/swap" ];
+    { depends = [ "/swap" ];
+      device = "/swap/swapfile";
       fsType = "none";
       options = [ "bind" "rw" ];
     };

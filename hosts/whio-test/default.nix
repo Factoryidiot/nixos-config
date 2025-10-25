@@ -30,10 +30,6 @@ in
     networkmanager.enable = true;
   };
 
-  # Essential for TPM LUKS unlock and Secure Boot (systemd-boot UKI)
-  boot.initrd.systemd.enable = true;
-  security.tpm2.enable = true;
-  security.tpm2.abrmd.enable = true;
 
   # -------------------------------------------------------------------------
   # USER & SECURITY (Host Specific Overrides)
@@ -41,12 +37,11 @@ in
 
   # Override or merge specific user settings from the common module (wheel is inherited/merged)
   users.users.${username} = {
+    isNormalUser = true;
     # Add host-specific groups. This list is merged with 'wheel' from configuration.nix.
-    extraGroups = [ "networkmanager" ]; 
+    extraGroups = [ "networkmanager" "wheel" ]; 
     # Define the host-specific password hash
     initialHashedPassword = "$7$GU..../....D9JHs.HM1v/Vf9EuyfDFS1$kWoMCdPjd1hv5myViGmPyb3.rJYKjiZ16MeaeyKSlE8";
-
-
   };
 
   # Allow members of 'wheel' to use sudo without a password (common for single-user systems)

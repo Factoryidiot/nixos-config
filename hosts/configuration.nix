@@ -1,34 +1,8 @@
 {
   nixpkgs
-  , lib
   , pkgs
-  , username
   , ...
 }: {
-
-# -------------------------------------------------------------------------
-# NIX CONFIGURATION
-# -------------------------------------------------------------------------
-
-  nix = {
-    settings = {
-      accept-flake-config = true;
-      experimental-features = [ "nix-command" "flakes" ];
-      # Add the user to the trusted list for better performance
-      trusted-users = [ username "@wheel" ];
-      substituters = [
-        "https://cache.nixos.org"
-      ];
-    };
-
-    gc = {
-      automatic = lib.mkDefault true;
-      dates = lib.mkDefault "weekly";
-      options = lib.mkDefault "--delete-older-than 7d";
-    };
-  };
-
-  nixpkgs.config.allowUnfree = true;
 
 # -------------------------------------------------------------------------
 # CORE ENVIRONMENT
@@ -53,68 +27,8 @@
     variables.EDITOR = "vim";
   };
 
-# -------------------------------------------------------------------------
-# NETWORKING & SERVICES
-# -------------------------------------------------------------------------
+  programs.nano.enable = false;
 
-  networking = {
-    firewall.enable = true; # Universal default firewall setting
-    wireless.iwd.enable = true; # IWD is often a core networking tool
-    # The network manager choice (like networkmanager.enable) is left to the host file
-  };
-
-  programs = {
-    bash.enable = true;
-    gnupg.agent = {
-      enable = true;
-      enableBrowserSocket = true;
-      enableExtraSocket = true;
-      enableSSHSupport = true;
-    };
-
-    nano.enable = false;
-
-  };
-
-  services = {
-
-    openssh = {
-      enable = true;
-      settings = {
-        X11Forwarding = true;
-        PermitRootLogin = "no";
-        PasswordAuthentication = false;
-      };
-      openFirewall = true;
-    };
-
-    pipewire = {
-      enable = true;
-      alsa = {
-        enable = true;
-        support32Bit = true;
-      };
-      jack.enable = true;
-      pulse.enable = true;
-      wireplumber.enable = true;
-    };
-
-    upower.enable = true;
-  };
-
-# -------------------------------------------------------------------------
-# USER & SHELL (COMMON DEFINITION)
-# -------------------------------------------------------------------------
-
-  users = {
-    mutableUsers = true;
-
-    # Define the core, universal properties of the user.
-    # # Password and host-specific groups are defined in the host's file.
-    users.${username} = {
-      isNormalUser = true;
-      extraGroups = [ "wheel" ]; # All users need 'wheel' for sudo access
-    };
-  };
+  users.mutableUsers = false;
 
 }

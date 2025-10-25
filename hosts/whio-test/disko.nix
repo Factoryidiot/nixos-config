@@ -74,6 +74,10 @@
                       mountOptions = [ "compress-force=zstd:1" "noatime" ];
                       mountpoint = "/nix";
                     };
+                    "@guix" = {
+                      mountOptions = [ "compress-force=zstd:1" "noatime" ];
+                      mountpoint = "/gnu";
+                    }
                     # The home directory
                     "@home" = {
                       mountOptions = [ "compress-force=zstd:1" "noatime" ];

@@ -48,7 +48,7 @@ in
           file = "/etc/machine-id";
           inInitrd = true;
           how = "symlink";
-          configurParent = true;
+          configureParent = true;
         }
       ];
 
