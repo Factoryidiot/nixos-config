@@ -40,8 +40,6 @@ in
     isNormalUser = true;
     # Add host-specific groups. This list is merged with 'wheel' from configuration.nix.
     extraGroups = [ "networkmanager" "wheel" ]; 
-    # Define the host-specific password hash
-    initialHashedPassword = "$7$GU..../....D9JHs.HM1v/Vf9EuyfDFS1$kWoMCdPjd1hv5myViGmPyb3.rJYKjiZ16MeaeyKSlE8";
   };
 
   # Allow members of 'wheel' to use sudo without a password (common for single-user systems)
