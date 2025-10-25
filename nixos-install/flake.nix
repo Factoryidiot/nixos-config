@@ -20,17 +20,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     preservation.url = "github:nix-community/preservation";
-    lanzaboote = {
-      url = "github:nix-community/lanzaboote/v0.4.2";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
   };
 
   outputs = inputs@{
     nixpkgs
     , home-manager
-    , lanzaboote
     , preservation
     , self
     , ...
@@ -41,7 +36,7 @@
       
       # Pass inputs and self to all configurations for easy access
       specialArgs = {
-        inherit username inputs lanzaboote preservation self;
+        inherit username inputs preservation self;
       };
 
       # Common modules for all systems (DRY principle)

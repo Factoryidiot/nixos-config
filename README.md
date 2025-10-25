@@ -30,10 +30,11 @@ These are in no particular order of priority
 - [ ] Tidy up and restructure
 
 ## Install
-Clone the repo `git clone https://github.com/Factoryidiot/nixos-config.git`.
+### Prerequsite
+1. `sudo -i`
+2. Clone the repo `git clone https://github.com/Factoryidiot/nixos-config.git`.
 ### Prepare Disk
-1. Boot up the nixos minimal installation disk
-2. Configure disk with disko e.g., 
+1. Navigate to the desired hosts disko configuration and execute: 
 ```sh
 nix --experimental-features "nix-command flakes" \
 run github:nix-community/disko/latest -- \
@@ -42,8 +43,7 @@ run github:nix-community/disko/latest -- \
 ```
 > !TIP
 > if there are errors in the disko process, we can update the script push to git `rm -rf .cache` and rerun the line above.
-3. Run `swapon /mnt/swap/swapfile` and confim `swapon -s` if required
-
+2. Enable swapfile `swapon /mnt/swap/swapfile` and confim `swapon -s` if required
 > !TIP
 > Confirm swap, `lsattr /mnt/swap` should output:
 >
@@ -54,22 +54,18 @@ run github:nix-community/disko/latest -- \
 > `btrfs filesystem mkswapfile --size 24g --uuid clear /mnt/swap/swapfile`
 > Then run swapon see step 3.
 
-### Prepare for install
-Working now with `~/nixos-config`
-1. Generate a `hardware-configuration.nix` to update the `UUID`s for the hardware-configuration.nix included in the repo we have just cloned.
+### Update `hardware-configuration`
+Generate a `hardware-configuration.nix` to update the `UUID`s for the hardware-configuration.nix included in the repo we have just cloned.
+1. Create `hardware-configuration.nix` for your current configuration:
 ```sh
  nixos-generate-config --root /mnt
 ```
-2. Use vim to update the UUIDs found in `/mnt/etc/nixos/hardware-configuration.nix` into the hosts hardware-configuration e.g. `hosts/whio/hardware-configuration.nix`.
+2. Use editor to update the UUIDs found in `/mnt/etc/nixos/hardware-configuration.nix` into the hosts hardware-configuration e.g. `hosts/whio/hardware-configuration.nix`.
 3. Remove the contents of `rm /mnt/etc/nixos/*`.
-4. Move the contents of  `~/nixos-confg` into `/mnt/etc/nixos/`.
-```
-mv * ../nixos-config/ /mnt/etc/nixos
-```
 
 ### Perform installation
-From `/mnt/etc/nixos` run:
-```
+From `nixos-install` run:
+```sh
 nixos-install --root /mnt --no-root-password \
 --flake .#[host-name] --no-write-lock-file
 ```
@@ -85,9 +81,8 @@ nixos-install --root /mnt --no-root-password \
 
 ### Post install
 Move any essential files to their `/persistent` location
-    `mv /mnt/etc/machine-id /mnt/persistent/etc`
-    `mv /mnt/etc/ssh /mnt/persistent/etc`
-    `mv ../nixos-config /mnt/persistent/home/{user}/`
+- `mv /mnt/etc/ssh /mnt/persistent/etc`
+- `mv ../nixos-config /mnt/persistent/home/{user}/Projects/Nixos/`
 
 ### Reboot
 `reboot`
