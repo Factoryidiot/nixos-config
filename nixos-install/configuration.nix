@@ -10,6 +10,21 @@ let
 in
 {
 
+  nix = {
+    settings = {
+      accept-flake-config = true;
+      experimental-features = [ "nix-command" "flakes" ];
+      # Add the user to the trusted list for better performance
+      trusted-users = [ username "@wheel" ];
+      substituters = [
+        "https://cache.nixos.org"
+      ];
+    };
+
+  };
+
+  nixpkgs.config.allowUnfree = true;
+
 # -------------------------------------------------------------------------
 # CORE ENVIRONMENT
 # -------------------------------------------------------------------------
