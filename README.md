@@ -52,7 +52,7 @@ run github:nix-community/disko/latest -- \
 > !TIP
 > If a swap partition is not set up we can do this manually
 > `btrfs filesystem mkswapfile --size 24g --uuid clear /mnt/swap/swapfile`
-> Then run swapon see step 3.
+> Then run swapon see step 2.
 
 ### Update `hardware-configuration`
 Generate a `hardware-configuration.nix` to update the `UUID`s for the hardware-configuration.nix included in the repo we have just cloned.
