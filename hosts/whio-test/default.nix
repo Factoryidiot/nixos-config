@@ -30,13 +30,14 @@ in
     networkmanager.enable = true;
   };
 
-
   # -------------------------------------------------------------------------
   # USER & SECURITY (Host Specific Overrides)
   # -------------------------------------------------------------------------
 
   # Override or merge specific user settings from the common module (wheel is inherited/merged)
   users.users.${username} = {
+    mutableUsers = true;
+
     isNormalUser = true;
     # Add host-specific groups. This list is merged with 'wheel' from configuration.nix.
     extraGroups = [ "networkmanager" "wheel" ]; 
@@ -44,12 +45,5 @@ in
 
   # Allow members of 'wheel' to use sudo without a password (common for single-user systems)
   security.sudo.wheelNeedsPassword = false;
-
-  # -------------------------------------------------------------------------
-  # ENVIRONMENT & HARDWARE
-  # -------------------------------------------------------------------------
-
-  environment.systemPackages = with pkgs; [
-  ];
 
 }

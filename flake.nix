@@ -43,8 +43,8 @@
     , ...
   }:
     let
-      username = "rhys";
-      system = "x86_64-linux";
+      username = "rhys";                                  # The username that we will use for all user.user.${username} declarations
+      system = "x86_64-linux";                            # The system type we will use x86_64-linux or aarch64-linux
       
       # Pass inputs and self to all configurations for easy access
       specialArgs = {
@@ -66,7 +66,7 @@
       # Helper function to create a NixOS configuration
       mkNixosSystem = { name, modules }:
         let
-          hostname = name;                                        # The hostname for this system is the same as its name in the flake
+          hostname = name;                                 # The hostname for this system is the same as its name in the flake
           hostArgs = specialArgs // { inherit hostname; }; # Merge the global special arguments with the host-specific ones (hostname)
         in
           nixpkgs.lib.nixosSystem {
@@ -95,7 +95,7 @@
             ./modules/configuration.nix
             {
               # QEMU disk is always /dev/vda
-              _module.args.disks = [ "/dev/vda" ];
+              #_module.args.disks = [ "/dev/vda" ];       # NOTE we probably don't need this line 28/10/25
               # Ensure the system state version is set
               system.stateVersion = "25.05";
             }

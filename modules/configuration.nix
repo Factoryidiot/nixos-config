@@ -21,6 +21,7 @@
       ];
     };
 
+    # Garbage Collection
     gc = {
       automatic = lib.mkDefault true;
       dates = lib.mkDefault "weekly";
@@ -58,8 +59,8 @@
 # -------------------------------------------------------------------------
 
   networking = {
-    firewall.enable = true; # Universal default firewall setting
-    wireless.iwd.enable = true; # IWD is often a core networking tool
+    firewall.enable = true;                                 # Universal default firewall setting
+    wireless.iwd.enable = true;                             # IWD is often a core networking tool
     # The network manager choice (like networkmanager.enable) is left to the host file
   };
 
@@ -109,15 +110,7 @@
 # -------------------------------------------------------------------------
 
   users = {
-    #defaultUserShell = pkgs.zsh;
-    mutableUsers = true;
-
-    # Define the core, universal properties of the user.
-    # # Password and host-specific groups are defined in the host's file.
-    users.${username} = {
-      isNormalUser = true;
-      extraGroups = [ "wheel" ]; # All users need 'wheel' for sudo access
-    };
+    defaultUserShell = pkgs.zsh;
   };
 
 }
