@@ -47,7 +47,6 @@ in
   programs.nano.enable = false;
 
   users = {
-    mutableUsers = false;
 
     users.${username} = {
       initialHashedPassword = hash;

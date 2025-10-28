@@ -35,12 +35,14 @@ in
   # -------------------------------------------------------------------------
 
   # Override or merge specific user settings from the common module (wheel is inherited/merged)
-  users.users.${username} = {
-    mutableUsers = true;
+  users = {
+    mutableUsers = false;
+    users.${username} = {
 
-    isNormalUser = true;
-    # Add host-specific groups. This list is merged with 'wheel' from configuration.nix.
-    extraGroups = [ "networkmanager" "wheel" ]; 
+      isNormalUser = true;
+      # Add host-specific groups. This list is merged with 'wheel' from configuration.nix.
+      extraGroups = [ "networkmanager" "wheel" ]; 
+    };
   };
 
   # Allow members of 'wheel' to use sudo without a password (common for single-user systems)
