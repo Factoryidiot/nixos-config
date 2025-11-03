@@ -66,8 +66,8 @@
       # Helper function to create a NixOS configuration
       mkNixosSystem = { name, modules }:
         let
-          hostname = name;                                 # The hostname for this system is the same as its name in the flake
-          hostArgs = specialArgs // { inherit hostname; }; # Merge the global special arguments with the host-specific ones (hostname)
+          hostname = name;                                  # The hostname for this system is the same as its name in the flake
+          hostArgs = specialArgs // { inherit hostname; };  # Merge the global special arguments with the host-specific ones (hostname)
         in
           nixpkgs.lib.nixosSystem {
             inherit system;
@@ -95,7 +95,7 @@
             ./modules/configuration.nix
             {
               # QEMU disk is always /dev/vda
-              #_module.args.disks = [ "/dev/vda" ];       # NOTE we probably don't need this line 28/10/25
+              #_module.args.disks = [ "/dev/vda" ];         # NOTE we probably don't need this line 28/10/25
               # Ensure the system state version is set
               system.stateVersion = "25.05";
             }

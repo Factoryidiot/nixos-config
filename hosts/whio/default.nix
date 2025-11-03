@@ -7,7 +7,7 @@
     # Hardware first
     ./hardware-configuration.nix
     ./disko.nix
-    ./persistence.nix
+    ./persistence.nix                                       
 
     ../../modules/tlp.nix
 
@@ -18,7 +18,7 @@
 
     ../../modules/configuration.nix
     ../../modules/fonts.nix
-    ../../modules/secureboot.nix
+    ../../modules/secureboot.nix                            # lanzaboote configuration
     ../../programs/steam.nix
   ];
 

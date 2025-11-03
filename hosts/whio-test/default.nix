@@ -13,7 +13,7 @@ in
 
   imports = [
     ./hardware-configuration.nix
-    ./persistence.nix                 # Impermanence configuration (to be defined)
+    ./persistence.nix                 # Preservation configuration 
   ];
 
   # -------------------------------------------------------------------------

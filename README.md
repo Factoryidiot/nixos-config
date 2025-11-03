@@ -70,6 +70,13 @@ nixos-install --root /mnt --no-root-password \
 --flake .#[host-name] --no-write-lock-file
 ```
 
+```sh
+nixos-install --root /mnt \
+--flake .#[host-name] --no-write-lock-file
+```
+
+`nixos-enter --root /mnt -c 'passwd {user}'`
+
 > [!TIP]
 > To refresh the cache:
 > nix: `--no-eval-cache`
@@ -82,10 +89,15 @@ nixos-install --root /mnt --no-root-password \
 ### Post install
 Move any essential files to their `/persistent` location
 - `mv /mnt/etc/ssh /mnt/persistent/etc`
+- shadow
+- `mv /mnt/var/lib/nixos/uid-map /mnt/persistent/var/lib/nixos/`      # probably don't need this
 - `mv ../nixos-config /mnt/persistent/home/{user}/Projects/Nixos/`
 
 ### Reboot
 `reboot`
+
+---
+
 
 ---
 
