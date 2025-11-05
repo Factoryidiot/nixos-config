@@ -21,7 +21,7 @@ in
   # -------------------------------------------------------------------------
 
   # Time and locale are specific to the physical location
-  time.timeZone = "Pacific/Auckland";
+  time.timeZone = "Pacific/Auckland"
   i18n.defaultLocale = "en_NZ.UTF-8";
   
   networking = {
@@ -32,11 +32,11 @@ in
 
   # -------------------------------------------------------------------------
   # USER & SECURITY (Host Specific Overrides)
-  # -------------------------------------------------------------------------
+  # --------------------------------f----------------------------------------
 
   # Override or merge specific user settings from the common module (wheel is inherited/merged)
   users = {
-    mutableUsers = false;
+    # mutableUsers = false;
     users.${username} = {
 
       isNormalUser = true;

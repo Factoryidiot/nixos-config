@@ -94,8 +94,6 @@
             ./hosts/whio-test/default.nix
             ./modules/configuration.nix
             {
-              # QEMU disk is always /dev/vda
-              #_module.args.disks = [ "/dev/vda" ];         # NOTE we probably don't need this line 28/10/25
               # Ensure the system state version is set
               system.stateVersion = "25.05";
             }
