@@ -36,7 +36,6 @@ in
 
   # Override or merge specific user settings from the common module (wheel is inherited/merged)
   users = {
-    # mutableUsers = false;
     users.${username} = {
 
       isNormalUser = true;
