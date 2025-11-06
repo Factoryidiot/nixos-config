@@ -27,7 +27,7 @@ in
         "/etc/secureboot" # lanzaboote - secure boot
         "/etc/agenix/"    # my secrets
 
-        { "/var/lib/nixos"; inInitrd = true; }
+        { directory = "/var/lib/nixos"; inInitrd = true; }
         "/var/lib/systemd"
         {
           directory = "/var/lib/private";

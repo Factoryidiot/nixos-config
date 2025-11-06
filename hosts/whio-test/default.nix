@@ -21,7 +21,7 @@ in
   # -------------------------------------------------------------------------
 
   # Time and locale are specific to the physical location
-  time.timeZone = "Pacific/Auckland"
+  time.timeZone = "Pacific/Auckland";
   i18n.defaultLocale = "en_NZ.UTF-8";
   
   networking = {
