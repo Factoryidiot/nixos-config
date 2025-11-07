@@ -25,9 +25,10 @@
       url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    preservation.url = "github:nix-community/preservation";
+    #preservation.url = "github:nix-community/preservation";
+    impermanence.url = "github:nix-community/impermanence";
     lanzaboote = {
-      url = "github:nix-community/lanzaboote/v0.4.2";
+      url = "github:nix-community/lanzaboote/v0.4.3";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-gaming.url = "github:fufexan/nix-gaming";
@@ -48,7 +49,8 @@
       
       # Pass inputs and self to all configurations for easy access
       specialArgs = {
-        inherit username inputs lanzaboote preservation self;
+        #inherit username inputs lanzaboote preservation self;
+        inherit username inputs lanzaboote impermanence self;
       };
 
       # Common modules for all systems (DRY principle)
