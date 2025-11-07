@@ -39,7 +39,7 @@
     nixpkgs
     , home-manager
     , lanzaboote
-    , preservation
+    , impermanence
     , self
     , ...
   }:

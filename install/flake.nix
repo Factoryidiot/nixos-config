@@ -15,13 +15,13 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     
-    preservation.url = "github:nix-community/preservation";
+    impermanence.url = "github:nix-community/impermanence";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
   };
 
   outputs = inputs@{
     nixpkgs
-    , preservation
+    , impermanence
     , self
     , ...
   }:
@@ -31,7 +31,7 @@
       
       # Pass inputs and self to all configurations for easy access
       specialArgs = {
-        inherit username inputs preservation self;
+        inherit username inputs impermanence self;
       };
 
       # Common modules for all systems (DRY principle)
