@@ -13,7 +13,11 @@ in
 
   imports = [
     ./hardware-configuration.nix
-    ./persistence.nix                 # Preservation configuration 
+    ./persistence.nix                 # Preservation configuration
+
+    ../../modules/configuration.nix
+    ../../modules/fonts.nix
+    ../../modules/zram.nix
   ];
 
   # -------------------------------------------------------------------------

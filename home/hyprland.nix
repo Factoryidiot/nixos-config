@@ -1,5 +1,7 @@
 {
   config
+  , inputs
+  , lib
   , pkgs
   , username
   , ...
@@ -12,10 +14,8 @@ in
   imports = [
   ];
 
-  programs.hyprland.enable = true;
-  programs.hyprland.withUWSM = true;
-
   programs.hyprlock.enable = true;
+
 
   services = {
     hypridle.enable = true;

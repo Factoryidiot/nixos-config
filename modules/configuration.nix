@@ -1,6 +1,7 @@
 {
-  nixpkgs
-  , lib
+  lib
+  , inputs
+  , nixpkgs
   , pkgs
   , username
   , ...

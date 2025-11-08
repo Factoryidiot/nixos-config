@@ -95,7 +95,6 @@
           name = "whio-test";
           modules = [
             ./hosts/whio-test/default.nix
-            ./modules/configuration.nix
             {
               # Ensure the system state version is set
               system.stateVersion = "25.05";

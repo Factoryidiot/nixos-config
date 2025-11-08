@@ -9,22 +9,28 @@
 
     packages = with pkgs; [
       bibata-cursors
-      fira-code
-      fira-code-symbols
-      font-awesome
-      liberation_ttf
+      cascadia-code
+      #fira-code
+      #fira-code-symbols
+      #font-awesome
+      ia-writer-duospace
+      ia-writer-quattro
+      #liberation_ttf
+      nerd-fonts.jetbrains-mono
       noto-fonts
       noto-fonts-cjk-sans
+      noto-fonts-cjk-se
       noto-fonts-emoji
-      material-design-icons
-      (
-        nerdfonts.override {
-          fonts = [
-            "NerdFontsSymbolsOnly"
-            "JetBrainsMono"
-          ];
-       }
-      )
+      noto-fonts-extra
+      #material-design-icons
+      #(
+      #  nerdfonts.override {
+      #    fonts = [
+      #      "NerdFontsSymbolsOnly"
+      #      "JetBrainsMono"
+      #    ];
+      # }
+      #)
       powerline-fonts
       powerline-symbols
     ];

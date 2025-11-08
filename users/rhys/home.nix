@@ -13,6 +13,7 @@
     ## Programs
     ../../programs/gh.nix
     ../../programs/git.nix
+    ../../programs/hyprland.nix
   ];
 
   programs.alacritty = {
