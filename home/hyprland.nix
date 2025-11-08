@@ -16,7 +16,6 @@ in
 
   programs.hyprlock.enable = true;
 
-
   services = {
     hypridle.enable = true;
     hyprpaper.enable = true;

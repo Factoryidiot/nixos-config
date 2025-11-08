@@ -1,4 +1,13 @@
 {
+  hyprland
+  , inputs
+  , pkgs
+  , ...
+}: {
+
+  imports = [
+    wayland.windowManager.hyprland
+  ];
 
   programs.hyprland = {
     enable = true;
