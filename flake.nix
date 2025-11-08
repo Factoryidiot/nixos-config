@@ -38,8 +38,9 @@
   outputs = inputs@{
     nixpkgs
     , home-manager
-    , lanzaboote
+    , hyprland
     , impermanence
+    , lanzaboote
     , self
     , ...
   }:

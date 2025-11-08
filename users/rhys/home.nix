@@ -4,7 +4,7 @@
 }: {
 
   imports = [
-    ../../home/core.nix
+    ../../home/home.nix
 
     ../../home/fastfetch.nix
     ../../home/zsh.nix
