@@ -4,17 +4,20 @@
 }: {
 
   imports = [
-    ../../home/home.nix
+    ../../home/default.nix
 
     ../../home/fastfetch.nix
-    ../../home/zsh.nix
-
     ../../home/hyprland.nix
+    ../../home/zsh.nix
 
     ## Programs
     ../../programs/gh.nix
     ../../programs/git.nix
   ];
+
+  programs.alacritty = {
+    enable = true;
+  };
 
   programs.fzf = {
     enable = true;
