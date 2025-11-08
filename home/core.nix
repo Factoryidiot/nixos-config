@@ -10,6 +10,7 @@
       firefox
       google-chrome
       hyprland
+      alacritty
       waybar
       wayland
     ];

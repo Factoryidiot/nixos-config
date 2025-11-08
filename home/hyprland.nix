@@ -25,11 +25,12 @@ in
       "$mod" = "SUPER";
       bind = [
         ## Actions
-        "$mod, W, exec, killall fuzzel || fuzzel"
+        #"$mod, W, exec, killall fuzzel || fuzzel"
                                               # application menu
 
         ## Applications
-        "$mod, Return, exec, kitty"           # Terminal
+        #"$mod, Return, exec, kitty"           # Terminal
+        "$mod, Return, exec, alacritty"           # Terminal
 
         ## Layouts
 
@@ -103,7 +104,7 @@ in
         # ", XF86AudioPrev, exec, playerctl previous"                               # Audio previous
 
         ## Misc
-        ", XF86Calculator, exec, gnome-calculator"
+        #", XF86Calculator, exec, gnome-calculator"
                                               # Calculator
         #", code:62, exec, hyprshot -m region"
                                               # Snipping tool
