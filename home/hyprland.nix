@@ -12,6 +12,9 @@ in
   imports = [
   ];
 
+  programs.hyprland.enable = true;
+  programs.hyprland.withUWSM = true;
+
   programs.hyprlock.enable = true;
 
   services = {
@@ -21,6 +24,7 @@ in
 
   wayland.windowManager.hyprland = {
     enable = true;
+    systemd.enable = false;
     settings = {
       "$mod" = "SUPER";
       bind = [
@@ -137,32 +141,32 @@ in
         pseudotile = true;
         preserve_split = true;
       };
-      env = [
-        ## Aquamarine
-        "AQ_DRM_DEVICES,/dev/dri/card1"       # use only AMDGPU
-
-        "HYPRLAND_ROOT, ${hyprland_root}"
-        "AGS_CONFIG, ${hyprland_root}/ags/config.js"
-        "NIXOS_OZONE_WL,1"                    # for any ozone-based browser & electron apps to run on wayland
-        ## Mozilla
-        "MOZ_ENABLE_WAYLAND,1"                # for firefox to run on wayland
-        "MOZ_WEBRENDER,1"
-        ## cursor
-        "HYPRCURSOR_THEME,Bibata-Modern-Ice"
-        "HYPRCURSOR_SIZE,24"
-        ## Misc
-        "_JAVA_AWT_WM_NONREPARENTING,1"
-        "QT_WAYLAND_DISABLE_WINDOWDECORATION,1"
-        ## Nvidia
-        #"__GLX_VENDOR_LIBRARY_NAME,nvidia"
-        #"GBM_BACKEND,nvidia-drm"
-        #"LIBVA_DRIVER_NAME,nvidia"
-        ## Wayland
-        "GDK_BACKEND,wayland"
-        "QT_QPA_PLATFORM,wayland"
-        "SDL_VIDEODRIVER,wayland"
-        "XDG_SESSION_TYPE,wayland"
-      ];
+      #env = [
+      #  ## Aquamarine
+      #  "AQ_DRM_DEVICES,/dev/dri/card1"       # use only AMDGPU
+      #
+      #  "HYPRLAND_ROOT, ${hyprland_root}"
+      #  "AGS_CONFIG, ${hyprland_root}/ags/config.js"
+      #  "NIXOS_OZONE_WL,1"                    # for any ozone-based browser & electron apps to run on wayland
+      #  ## Mozilla
+      #  "MOZ_ENABLE_WAYLAND,1"                # for firefox to run on wayland
+      #  "MOZ_WEBRENDER,1"
+      #  ## cursor
+      #  "HYPRCURSOR_THEME,Bibata-Modern-Ice"
+      #  "HYPRCURSOR_SIZE,24"
+      #  ## Misc
+      #  "_JAVA_AWT_WM_NONREPARENTING,1"
+      #  "QT_WAYLAND_DISABLE_WINDOWDECORATION,1"
+      #  ## Nvidia
+      #  #"__GLX_VENDOR_LIBRARY_NAME,nvidia"
+      #  #"GBM_BACKEND,nvidia-drm"
+      #  #"LIBVA_DRIVER_NAME,nvidia"
+      #  ## Wayland
+      #  "GDK_BACKEND,wayland"
+      #  "QT_QPA_PLATFORM,wayland"
+      #  "SDL_VIDEODRIVER,wayland"
+      #  "XDG_SESSION_TYPE,wayland"
+      #];
       exec-once = [
         "hyprctl setcursor Bibata-Modern-Ice 24"
         # "ags"
