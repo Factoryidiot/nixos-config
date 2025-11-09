@@ -1,8 +1,9 @@
 {
-  hyprland
-  , inputs
-  , pkgs
-  , ...
+  #hyprland
+  #, inputs
+  #, pkgs
+  #, ...
+  ...
 }: {
 
   imports = [

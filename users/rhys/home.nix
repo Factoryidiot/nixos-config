@@ -8,6 +8,7 @@
 
     ../../home/fastfetch.nix
     ../../home/hyprland.nix
+    ../../home/waybar.nix
     ../../home/zsh.nix
 
     ## Programs
