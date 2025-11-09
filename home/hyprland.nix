@@ -22,8 +22,10 @@ in
   };
 
   wayland.windowManager.hyprland = {
-    enable = true;
-    systemd.enable = false;
+    #enable = true;
+    #withUWSM = true;
+    #systemd.enable = false;
+
     settings = {
       "$mod" = "SUPER";
       bind = [
