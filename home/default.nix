@@ -11,9 +11,7 @@
     packages = with pkgs; [
       firefox
       google-chrome
-      hyprland
       alacritty
-      waybar
       wayland
     ];
 
@@ -30,5 +28,6 @@
   };
 
   # Let Home Manager install and manage itself.
+  programs.home-manager.enable = true;
 
 }

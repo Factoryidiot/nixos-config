@@ -6,9 +6,9 @@
   imports = [
     ../../home/default.nix
 
-    ../../home/fastfetch.nix
-    ../../home/hyprland.nix
-    ../../home/waybar.nix
+    ../../home/fastfetch/fastfetch.nix
+    ../../home/hyprland/hyprland.nix
+    ../../home/waybar/waybar.nix
     ../../home/zsh.nix
 
     ## Programs
@@ -46,22 +46,6 @@
           # required to prevent sending default identity files first.
           IdentitiesOnly yes
     '';
-  };
-
-  programs.tmux = {
-    enable = true;
-    extraConfig = ''
-      set-option -g status-position top
-      bind-key h select-pane -L
-      bind-key j select-pane -D
-      bind-key k select-pane -U
-      bind-key l select-pane -R
-    '';
-    mouse = true;
-    plugins = with pkgs.tmuxPlugins; [
-      nord
-    ];
-    terminal = "tmux-256color";
   };
 
   programs.yazi = {
