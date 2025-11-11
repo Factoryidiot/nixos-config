@@ -28,7 +28,7 @@
       #url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    hyprland.url = "github:hyprwm/Hyprland";
+    #hyprland.url = "github:hyprwm/Hyprland";
     impermanence.url = "github:nix-community/impermanence";
     lanzaboote = {
       url = "github:nix-community/lanzaboote/v0.4.3";
@@ -41,7 +41,7 @@
   outputs = inputs@{
     nixpkgs
     , home-manager
-    , hyprland
+    #, hyprland
     , impermanence
     , lanzaboote
     , self
@@ -53,8 +53,7 @@
       
       # Pass inputs and self to all configurations for easy access
       specialArgs = {
-        #inherit username inputs lanzaboote preservation self;
-        inherit username hyprland impermanence inputs lanzaboote self;
+        inherit username impermanence inputs lanzaboote self;
       };
 
       # Common modules for all systems (DRY principle)
