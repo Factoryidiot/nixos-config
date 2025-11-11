@@ -1,13 +1,13 @@
 {
   config
   , pkgs
-  ...
+  , ...
 }: {
 
   programs.tmux = {
     enable = true;
   };
 
-  xdg.configFile."tmux/".source = ./config.jsonc;
+  xdg.configFile."tmux/config.jsonc".source = ./config.jsonc;
 
 }
