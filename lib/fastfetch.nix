@@ -1,5 +1,6 @@
 {
   config
+  , input
   , pkgs
   , specialArgs
   , ...

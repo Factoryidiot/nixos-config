@@ -66,7 +66,7 @@
             extraSpecialArgs = specialArgs;
             useGlobalPkgs = true;
             useUserPackages = true;
-            users.${username} = import ./modules/home.nix;
+            users.${username} = import ./users/home.nix;
           };
         }
       ];
