@@ -9,6 +9,10 @@
 in
  {
 
+  environment.systemPackages = with pkgs; [
+    fastfetch
+  ];
+
   programs.fastfetch = {
     enable = true;
   };
