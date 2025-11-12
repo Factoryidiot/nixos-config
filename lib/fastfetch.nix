@@ -1,8 +1,13 @@
 {
   config
   , pkgs
+  , specialArgs
   , ...
-}: {
+}:
+  let
+  inherit (specialArgs) username;
+in
+ {
 
   programs.fastfetch = {
     enable = true;
