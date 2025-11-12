@@ -46,6 +46,8 @@ in
         "Pictures"
         "Videos"
 
+        ".dotfiles"
+
         # Work
         "Projects/Nixos/nixos-config"
         "tmp"

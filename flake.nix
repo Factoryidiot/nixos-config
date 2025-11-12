@@ -50,7 +50,7 @@
     let
       username = "rhys";                                  # The username that we will use for all user.user.${username} declarations
       system = "x86_64-linux";                            # The system type we will use x86_64-linux or aarch64-linux
-      
+ 
       # Pass inputs and self to all configurations for easy access
       specialArgs = {
         inherit username impermanence inputs lanzaboote self;
@@ -63,10 +63,10 @@
         {
           home-manager = {
             backupFileExtension = "backup";
+            extraSpecialArgs = specialArgs;
             useGlobalPkgs = true;
             useUserPackages = true;
-            extraSpecialArgs = specialArgs;
-            users.${username} = import ./users/${username}/home.nix;
+            users.${username} = import ./modules/home.nix
           };
         }
       ];

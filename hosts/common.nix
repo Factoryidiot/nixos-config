@@ -1,9 +1,9 @@
 {
   lib
-  #, inputs
+  , inputs
   , nixpkgs
   , pkgs
-  #, username
+  , username
   , ...
 }: {
 
