@@ -7,39 +7,9 @@
   , ...
 }: {
 
-# -------------------------------------------------------------------------
-# NIX CONFIGURATION
-# -------------------------------------------------------------------------
-
-  nix = {
-    settings = {
-      accept-flake-config = true;
-      experimental-features = [ "nix-command" "flakes" ];
-      # Add the user to the trusted list for better performance
-      trusted-users = [ username "@wheel" ];
-      substituters = [
-        "https://cache.nixos.org"
-      ];
-    };
-
-    # Garbage Collection
-    gc = {
-      automatic = lib.mkDefault true;
-      dates = lib.mkDefault "weekly";
-      options = lib.mkDefault "--delete-older-than 7d";
-    };
-  };
-
-  nixpkgs.config.allowUnfree = true;
-
-# -------------------------------------------------------------------------
-# CORE ENVIRONMENT
-# -------------------------------------------------------------------------
-# Time and Locale settings moved to host-specific files
-
-  console = {
-    keyMap = "us";
-  };
+  imports = [
+    ../lib/yazi.nix
+  ];
 
   environment = {
     systemPackages = with pkgs; [
@@ -48,6 +18,7 @@
       git
       lshw
       pciutils
+      stow
       usbutils
       vim
       wget
@@ -59,11 +30,6 @@
 # NETWORKING & SERVICES
 # -------------------------------------------------------------------------
 
-  networking = {
-    firewall.enable = true;                                 # Universal default firewall setting
-    wireless.iwd.enable = true;                             # IWD is often a core networking tool
-    # The network manager choice (like networkmanager.enable) is left to the host file
-  };
 
   programs = {
 
@@ -73,8 +39,6 @@
       enableExtraSocket = true;
       enableSSHSupport = true;
     };
-
-    nano.enable = false;
     zsh.enable = true;
 
   };
