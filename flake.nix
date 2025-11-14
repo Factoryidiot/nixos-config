@@ -18,9 +18,12 @@
     # Primary stable channel, all inputs follow this unless otherwise noted
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    
     agenix = {
       url = "github:ryan4yin/ragenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    home-manager = {
+      url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     #hyprland.url = "github:hyprwm/Hyprland";
@@ -38,6 +41,7 @@
     #, hyprland
     , impermanence
     , lanzaboote
+    , home-manager
     , self
     , ...
   }:
@@ -47,24 +51,40 @@
  
       # Pass inputs and self to all configurations for easy access
       specialArgs = {
-        inherit username impermanence inputs lanzaboote self;
+        inherit username home-manager impermanence inputs lanzaboote self;
       };
 
       # Common modules for all systems (DRY principle)
       commonModules = [
       ];
 
-      # Helper function to create a NixOS configuration
-      mkNixosSystem = { name, modules }:
+      mkHomeManagerConfiguration = { pkgs, modules }:
+        home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+          extraSpecialArgs = specialArgs; # Pass global specialArgs
+          modules = [
+            # Your base home.nix module (or a copy of it)
+            ./users/home.nix
+          ] ++ modules;
+        };
+
+        mkNixosSystem = { name, modules, homeModules ? [] }: # <--- Add homeModules
         let
-          hostname = name;                                  # The hostname for this system is the same as its name in the flake
-          hostArgs = specialArgs // { inherit hostname; };  # Merge the global special arguments with the host-specific ones (hostname)
+          hostname = name;
+          hostArgs = specialArgs // { inherit hostname; };
+          pkgs = nixpkgs.legacyPackages.${system}; # Use nixpkgs for Home Manager's pkgs
         in
           nixpkgs.lib.nixosSystem {
             inherit system;
             specialArgs = hostArgs;
-            modules = commonModules ++ modules;
-        };
+            modules = commonModules ++ modules ++ [
+              # Integrate Home Manager configuration
+              (mkHomeManagerConfiguration {
+                inherit pkgs;
+                modules = homeModules;
+              })
+            ];
+          };
 
     in {
       nixosConfigurations = {

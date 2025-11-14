@@ -1,5 +1,5 @@
 {
-  inputs
+  config
   , pkgs
   , username
   , ...
@@ -9,10 +9,6 @@
     inherit username;
 
     packages = with pkgs; [
-      firefox
-      google-chrome
-      alacritty
-      wayland
     ];
 
     # This value determines the Home Manager release that your
