@@ -21,7 +21,8 @@ in
     ../../hosts/common.nix
 
     # Additional configuration
-    ../lib/fastfetch.nix
+    ../../lib/fastfetch.nix
+    ../../lib/zsh/zsh.nix
   ];
 
   nix = {
