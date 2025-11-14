@@ -4,9 +4,10 @@
   , ...
 }: {
 
-  environment.systemPackages = with pkgs; [
-    yazi
-  ];
+  # not required.
+  #environment.systemPackages = with pkgs; [
+  #  yazi
+  #];
 
   programs.yazi.enable = true;
 

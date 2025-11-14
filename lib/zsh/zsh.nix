@@ -22,7 +22,7 @@
   programs = {
     zsh = {
       enable = true;                    # ok
-      autosuggestion.enable = true;     # ok
+      autosuggestions.enable = true;     # ok
       enableCompletion = true;          # ok
       syntaxHighlighting.enable = true; # ok
     #history = {
@@ -40,7 +40,7 @@
     #    fi
     #
     #'';
-      oh-my-zsh = {
+      ohMyZsh = {
         enable = true;
         plugins = [ "git" "sudo" ];
       };
