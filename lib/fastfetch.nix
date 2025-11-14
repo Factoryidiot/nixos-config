@@ -14,9 +14,7 @@ in
     fastfetch
   ];
 
-  programs.fastfetch = {
-    enable = true;
-  };
+  programs.fastfetch.enable = true;
 
   xdg.configFile."fastfetch/" = {
     source = config.lib.file.mkOutOfStoreSymlink "/home/${username}/.dotfiles/fastfetch/";

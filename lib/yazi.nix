@@ -7,6 +7,6 @@
     yazi
   ];
 
-  programs.yzai.enable;
+  programs.yazi.enable = true;
 
 }

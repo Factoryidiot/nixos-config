@@ -1,6 +1,7 @@
 # hosts/whio-test/default.nix
 {
   config
+  , lib
   , pkgs
   , specialArgs
   , ...
@@ -20,7 +21,7 @@ in
     ../../hosts/common.nix
 
     # Additional configuration
-
+    ../lib/fastfetch.nix
   ];
 
   nix = {
