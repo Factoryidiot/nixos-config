@@ -1,43 +1,56 @@
+# ./modules/home/zsh.nix (or integrated into cli.nix)
 {
-  lib
+  config
+  , lib
   , pkgs
-  , ...
-}: {
+  , ... 
+}:
+let
+  # Define the path to where your dotfiles will live on the target system
+  dotfilesDir = "${config.home.homeDirectory}/.dotfiles/zsh";
 
-  home.file.".p10k.zsh" = {
-    source = ./zsh/p10k.zsh;
-    executable = true;
+  # Define the path where the source config files live in your flake repository
+  # Assuming zsh-files directory is parallel to this module file.
+  sourceFilesDir = ./zsh-files;
+
+in
+{
+  # 1. Symlink Configuration Files to ~/.dotfiles/zsh
+  # We use home.file with an explicit target to place them in your custom directory.
+  home.file = {
+    # Symlink p10k.zsh into the custom dotfiles directory
+    "${dotfilesDir}/p10k.zsh" = {
+      source = "${sourceFilesDir}/p10k.zsh";
+      executable = true;
+      # Ensures the target directory exists before symlinking
+      # (Necessary since we are not using xdg.configFile)
+      target = "${dotfilesDir}/p10k.zsh";
+    };
+
+    # Symlink p10k-portable.zsh
+    "${dotfilesDir}/p10k-portable.zsh" = {
+      source = "${sourceFilesDir}/p10k-portable.zsh";
+      executable = true;
+      target = "${dotfilesDir}/p10k-portable.zsh";
+    };
   };
 
-  home.file.".p10k-portable.zsh" = {
-    source = ./zsh/p10k-portable.zsh;
-    executable = true;
-  };
-
+  # 2. Zsh Program Configuration
   programs.zsh = {
     enable = true;
-
     autosuggestion.enable = true;
     enableCompletion = true;
+    syntaxHighlighting.enable = true;
+
     history = {
       ignoreAllDups = true;
     };
-    initContent = ''
 
-        if [ "$TERM" = "linux" ]; then
-          # Use 8 colors and ASCII.
-          source ~/.p10k-portable.zsh
-          fastfetch
-          ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=black,bold'
-        else
-          source ~/.p10k.zsh
-        fi
-
-    '';
     oh-my-zsh = {
       enable = true;
       plugins = [ "git" "sudo" ];
     };
+
     plugins = [
       {
         name = "powerlevel10k";
@@ -45,7 +58,21 @@
         file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
       }
     ];
-    syntaxHighlighting.enable = true;
-  };
 
+    # 3. Zsh Initialisation Content
+    initContent = ''
+      # Source P10K from the new dotfiles directory
+      if [ "$TERM" = "linux" ]; then
+        source ${dotfilesDir}/p10k-portable.zsh
+        fastfetch
+        ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=black,bold'
+      else
+        source ${dotfilesDir}/p10k.zsh
+      fi
+
+      # To ensure Zsh knows where to find the source files
+      export ZDOTDIR="$HOME/.config/zsh" 
+      # You may not need this line depending on your other Zsh configuration
+    '';
+  };
 }
