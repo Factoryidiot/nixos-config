@@ -5,7 +5,7 @@
   imports = [
     ../../lib/home/fastfetch.nix
     ../../lib/home/yazi.nix
-    #../../lib/home/zsh/zsh.nix
+    ../../lib/home/zsh/zsh.nix
   ];
 
   home = {
