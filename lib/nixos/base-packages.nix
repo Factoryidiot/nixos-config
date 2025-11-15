@@ -5,7 +5,7 @@
   , pkgs
   , specialArgs
   , ...
-}
+}:
 let
   # Inherit username from specialArgs to configure trusted users
   inherit (specialArgs) username;

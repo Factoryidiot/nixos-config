@@ -2,12 +2,14 @@
   ...
 }: {
 
-  home = {
-    import = [
-      ../../modules/home/fastfetch.nix
-    ];
+  imports = [
+    ../../lib/home/fastfetch.nix
+    ../../lib/home/yazi.nix
+    ../../lib/home/zsh/zsh.nix
+  ];
 
-    # This value determines the Home Manager release that your
+  home = {
+   # This value determines the Home Manager release that your
     # configuration is compatible with. This helps avoid breakage
     # when a new Home Manager release introduces backwards
     # incompatible changes.

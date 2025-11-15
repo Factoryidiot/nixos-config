@@ -3,8 +3,10 @@
   , ...
 }: {
 
-  environment.systemPackages = with pkgs; [
+  home.packages = with pkgs; [
     fastfetch
   ];
+
+  #programs.fastfetch.enable = true;
 
 }

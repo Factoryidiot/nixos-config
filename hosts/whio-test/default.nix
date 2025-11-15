@@ -31,7 +31,6 @@ in
     networkmanager.enable = true;
   };
 
-
   users = {
     users.${username} = {
       home = "/home/${username}";
