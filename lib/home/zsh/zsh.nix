@@ -1,37 +1,37 @@
-# ./modules/home/zsh.nix (or integrated into cli.nix)
+# lib/home/zsh/zsh.nix
 {
   config
   , lib
   , pkgs
-  , ... 
+  , ...
 }:
 let
-  # Define the path to where your dotfiles will live on the target system
-  dotfilesDir = "${config.home.homeDirectory}/.dotfiles/zsh";
-
-  # Define the path where the source config files live in your flake repository
-  # Assuming zsh-files directory is parallel to this module file.
-  sourceFilesDir = ./zsh-files;
+  # Define the path to the human-managed directory
+  dotfilesSource = "${config.home.homeDirectory}/.dotfiles/zsh";
 
 in
 {
-  # 1. Symlink Configuration Files to ~/.dotfiles/zsh
-  # We use home.file with an explicit target to place them in your custom directory.
+  # 1. Symlink Configuration Files
+  # We use mkOutOfStoreSymlink to point Nix's configuration target to a 
+  # location that Nix *does not* manage, thus removing file management from Nix.
+
+  # NOTE: Since Zsh sources the p10k files directly, we will symlink them
+  # into the expected location *inside* the custom dotfiles directory.
+  # We use home.file as xdg.configFile generally manages things in ~/.config
+
   home.file = {
-    # Symlink p10k.zsh into the custom dotfiles directory
-    "${dotfilesDir}/p10k.zsh" = {
-      source = "${sourceFilesDir}/p10k.zsh";
+    # Create the symlink for p10k.zsh
+    "${dotfilesSource}/p10k.zsh" = {
+      # The source path points to the existing file in the home directory,
+      # but we use mkOutOfStoreSymlink to tell Nix it's external.
+      source = lib.mkOutOfStoreSymlink "${dotfilesSource}/p10k.zsh";
       executable = true;
-      # Ensures the target directory exists before symlinking
-      # (Necessary since we are not using xdg.configFile)
-      target = "${dotfilesDir}/p10k.zsh";
     };
 
-    # Symlink p10k-portable.zsh
-    "${dotfilesDir}/p10k-portable.zsh" = {
-      source = "${sourceFilesDir}/p10k-portable.zsh";
+    # Create the symlink for p10k-portable.zsh
+    "${dotfilesSource}/p10k-portable.zsh" = {
+      source = lib.mkOutOfStoreSymlink "${dotfilesSource}/p10k-portable.zsh";
       executable = true;
-      target = "${dotfilesDir}/p10k-portable.zsh";
     };
   };
 
@@ -61,18 +61,16 @@ in
 
     # 3. Zsh Initialisation Content
     initContent = ''
-      # Source P10K from the new dotfiles directory
+      # Source P10K from the human-managed dotfiles directory
       if [ "$TERM" = "linux" ]; then
-        source ${dotfilesDir}/p10k-portable.zsh
+        source ${dotfilesSource}/p10k-portable.zsh
         fastfetch
         ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=black,bold'
       else
-        source ${dotfilesDir}/p10k.zsh
+        source ${dotfilesSource}/p10k.zsh
       fi
-
-      # To ensure Zsh knows where to find the source files
-      export ZDOTDIR="$HOME/.config/zsh" 
-      # You may not need this line depending on your other Zsh configuration
+      
+      # NOTE: We keep ZDOTDIR unset unless specifically needed for other configs.
     '';
   };
 }
