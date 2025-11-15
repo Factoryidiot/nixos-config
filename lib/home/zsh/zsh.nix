@@ -6,6 +6,9 @@
   , ...
 }:
 let
+
+  inherit (config.lib.file) mkOutOfStoreSymlink;
+
   # Define the path to the human-managed directory
   dotfilesSource = "${config.home.homeDirectory}/.dotfiles/zsh";
 
