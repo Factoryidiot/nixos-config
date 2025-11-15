@@ -1,14 +1,10 @@
 {
-  config
-  , pkgs
-  , username
-  , ...
+  ...
 }: {
 
   home = {
-    inherit username;
-
-    packages = with pkgs; [
+    import = [
+      ../../modules/home/fastfetch.nix
     ];
 
     # This value determines the Home Manager release that your

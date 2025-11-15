@@ -18,15 +18,17 @@
     # Primary stable channel, all inputs follow this unless otherwise noted
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+
     agenix = {
       url = "github:ryan4yin/ragenix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager = {
+      # Updated to use the release branch from your second file
       url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    #hyprland.url = "github:hyprwm/Hyprland";
+    hyprland.url = "github:hyprwm/Hyprland";
     impermanence.url = "github:nix-community/impermanence";
     lanzaboote = {
       url = "github:nix-community/lanzaboote/v0.4.3";
@@ -38,58 +40,61 @@
 
   outputs = inputs@{
     nixpkgs
-    #, hyprland
+    , home-manager
+    , hyprland
     , impermanence
     , lanzaboote
-    , home-manager
     , self
     , ...
   }:
     let
-      username = "rhys";                                  # The username that we will use for all user.user.${username} declarations
-      system = "x86_64-linux";                            # The system type we will use x86_64-linux or aarch64-linux
- 
+      system = "x86_64-linux"; # The system type we will use
+
       # Pass inputs and self to all configurations for easy access
       specialArgs = {
-        inherit username home-manager impermanence inputs lanzaboote self;
+        inherit hyprland impermanence inputs lanzaboote self;
       };
 
       # Common modules for all systems (DRY principle)
       commonModules = [
+        # Common home-manager configuration
+        home-manager.nixosModules.home-manager
+        {
+          home-manager = {
+            backupFileExtension = "backup";
+            useGlobalPkgs = true;
+            useUserPackages = true;
+            extraSpecialArgs = specialArgs;
+          };
+        }
       ];
 
-      mkHomeManagerConfiguration = { pkgs, modules }:
-        home-manager.lib.homeManagerConfiguration {
-          inherit pkgs;
-          extraSpecialArgs = specialArgs; # Pass global specialArgs
-          modules = [
-            # Your base home.nix module (or a copy of it)
-            ./users/home.nix
-          ] ++ modules;
-        };
-
-        mkNixosSystem = { name, modules, homeModules ? [] }: # <--- Add homeModules
+      # Helper function to create a NixOS configuration
+      mkNixosSystem = { name, username, modules }:
         let
           hostname = name;
-          hostArgs = specialArgs // { inherit hostname; };
-          pkgs = nixpkgs.legacyPackages.${system}; # Use nixpkgs for Home Manager's pkgs
+          hostArgs = specialArgs // { inherit hostname username; };
         in
           nixpkgs.lib.nixosSystem {
             inherit system;
-            specialArgs = hostArgs;
-            modules = commonModules ++ modules ++ [
-              # Integrate Home Manager configuration
-              (mkHomeManagerConfiguration {
-                inherit pkgs;
-                modules = homeModules;
-              })
-            ];
+            specialArgs = hostArgs; # Pass the combined args
+            modules = commonModules
+              ++ modules
+              ++ [
+                # This connects Home Manager to the specified user.
+                # The user itself (password, groups) should be defined
+                # in the host's module (e.g., ./hosts/whio/default.nix)
+                ({ ... }: {
+                  home-manager.users.${username} = import ./users/${username}/home.nix;
+                })
+              ];
           };
 
     in {
       nixosConfigurations = {
         whio = mkNixosSystem {
           name = "whio";
+          username = "rhys"; # <-- Specify user for this host
           modules = [
             ./hosts/whio/default.nix
             # ./secrets/default.nix # Uncommented for clarity
@@ -101,6 +106,7 @@
 
         whio-test = mkNixosSystem {
           name = "whio-test";
+          username = "rhys"; # <-- Specify user for this host
           modules = [
             ./hosts/whio-test/default.nix
             {
@@ -109,6 +115,7 @@
             }
           ];
         };
+
       };
 
       # Standard outputs for convenience
@@ -117,5 +124,4 @@
       packages.${system}.nixos-system-whio-test = self.nixosConfigurations.whio-test.config.system.build.toplevel;
 
     };
-
 }

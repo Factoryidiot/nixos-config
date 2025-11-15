@@ -1,12 +1,9 @@
 # hosts/whio-test/default.nix
 {
-  config
-  , lib
-  , pkgs
-  , specialArgs
+  specialArgs
   , ...
 }:
-  let
+let
   # Destructure 'hostname' from the specialArgs passed from flake.nix
   inherit (specialArgs) hostname username;
 in
@@ -18,37 +15,12 @@ in
     ./persistence.nix                 # Preservation configuration
 
     # Basic configuration
-    ../../hosts/common.nix
+    ../../lib/nixos/base-packages.nix
+    ../../lib/nixos/base-security.nix
+    ../../lib/nixos/hardware-services.nix
+    ../../lib/nixos/multimedia.nix
 
-    # Additional configuration
-    ../../lib/fastfetch.nix
-    ../../lib/zsh/zsh.nix
   ];
-
-  nix = {
-    settings = {
-      accept-flake-config = true;
-      experimental-features = [ "nix-command" "flakes" ];
-      # Add the user to the trusted list for better performance
-      trusted-users = [ username "@wheel" ];
-      substituters = [
-        "https://cache.nixos.org"
-      ];
-    };
-
-    # Garbage Collection
-    gc = {
-      automatic = lib.mkDefault true;
-      dates = lib.mkDefault "weekly";
-      options = lib.mkDefault "--delete-older-than 7d";
-    };
-  };
-
-  nixpkgs.config.allowUnfree = true;
-
-  console = {
-    keyMap = "us";
-  };
 
   # Time and locale are specific to the physical location
   time.timeZone = "Pacific/Auckland";
@@ -56,14 +28,9 @@ in
   
   networking = {
     hostName = hostname;
-    # Network manager is host-specific, using it implies needing the 'networkmanager' group
     networkmanager.enable = true;
-    firewall.enable = true;                                 # Universal default firewall setting
-    wireless.iwd.enable = true;                             # IWD is often a core networking tool
-    # The network manager choice (like networkmanager.enable) is left to the host file
   };
 
-  programs.nano.enable = false;
 
   users = {
     users.${username} = {
@@ -77,6 +44,4 @@ in
     users.root.initialHashedPassword = "$7$GU..../....S9EPW0eEM5JL4uh1Bo1yr/$bDP2HRn7G8LV8jLV2yj3DQHJJPE0svzRh0Q2fEPePN9";
   };
 
-  # Allow members of 'wheel' to use sudo without a password (common for single-user systems)
-  security.sudo.wheelNeedsPassword = false;
 }
