@@ -7,11 +7,6 @@
 }:
 let
 
-  inherit (config.lib.file) mkOutOfStoreSymlink;
-
-  # Define the path to the human-managed directory
-  dotfilesSource = "${config.home.homeDirectory}/.dotfiles/zsh";
-
 in
 {
   # 1. Symlink Configuration Files
@@ -24,16 +19,16 @@ in
 
   home.file = {
     # Create the symlink for p10k.zsh
-    "${dotfilesSource}/p10k.zsh" = {
+    "./p10k.zsh" = {
       # The source path points to the existing file in the home directory,
       # but we use mkOutOfStoreSymlink to tell Nix it's external.
-      source = lib.mkOutOfStoreSymlink "${dotfilesSource}/p10k.zsh";
+      source = ./zsh/p10k.zsh";
       executable = true;
     };
 
     # Create the symlink for p10k-portable.zsh
-    "${dotfilesSource}/p10k-portable.zsh" = {
-      source = lib.mkOutOfStoreSymlink "${dotfilesSource}/p10k-portable.zsh";
+    "./p10k-portable.zsh" = {
+      source = ./zsh/p10k-portable.zsh";
       executable = true;
     };
   };
@@ -66,11 +61,11 @@ in
     initContent = ''
       # Source P10K from the human-managed dotfiles directory
       if [ "$TERM" = "linux" ]; then
-        source ${dotfilesSource}/p10k-portable.zsh
+        source ~/p10k-portable.zsh
         fastfetch
         ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=black,bold'
       else
-        source ${dotfilesSource}/p10k.zsh
+        source ~/p10k.zsh
       fi
       
       # NOTE: We keep ZDOTDIR unset unless specifically needed for other configs.
