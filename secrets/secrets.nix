@@ -1,5 +1,6 @@
 # secrets/secrets.nix
 { ... }: {
+
   # This is where you define your secrets
   age.secrets."my-test-secret" = {
     # This file will be created in the next step
@@ -17,4 +18,5 @@
 
   # By default, this secret will be decrypted and available at:
   # /run/agenix/my-test-secret
+
 }
