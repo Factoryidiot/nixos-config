@@ -52,11 +52,11 @@ in
     initContent = ''
       # Source P10K from the human-managed dotfiles directory
       if [ "$TERM" = "linux" ]; then
-        source ~/.dotfiles/zsh/p10k-portable.zsh
+        source ~/.dotfiles/zsh/.p10k.zsh
         fastfetch
         ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=black,bold'
       else
-        source ~/.dotfiles/zsh/p10k.zsh
+        source ~/.dotfiles/zsh/.p10k.zsh
       fi
  
       # NOTE: We keep ZDOTDIR unset unless specifically needed for other configs.
