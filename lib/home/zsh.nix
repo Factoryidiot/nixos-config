@@ -58,9 +58,13 @@ in
       else
         source ~/.dotfiles/zsh/p10k.zsh
       fi
-      
+ 
       # NOTE: We keep ZDOTDIR unset unless specifically needed for other configs.
     '';
+  };
+
+  ".p10k.zsh" = {
+    source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/sources/.p10k.zsh";
   };
 
 }
