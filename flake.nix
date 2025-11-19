@@ -109,7 +109,7 @@
           username = "rhys"; # <-- Specify user for this host
           modules = [
             ./hosts/whio-test/default.nix
-            ./secrets/default.nix
+            #./secrets/default.nix
             {
               # Ensure the system state version is set
               system.stateVersion = "25.05";
