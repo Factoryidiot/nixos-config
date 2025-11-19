@@ -28,6 +28,30 @@ in
   # 2. Zsh Program Configuration
   programs.zsh = {
     enable = true;
+    antidote = {
+      enable = true;
+      plugins = [
+        # Completions
+        "mattmc3/ez-compinit"
+        "zsh-users/zsh-completions kind:fpath path:src"
+        "aloxaf/fzf-tab"
+
+        # Prompt
+        "romkatv/powerlevel10k"
+
+        # Utilities
+        "zshzoo/macos conditional:is-macos"
+        "belak/zsh-utils path:utility"
+        "romkatv/zsh-bench kind:path"
+        "ohmyzsh/ohmyzsh path:plugins/extract"
+
+        # Other Fish-like features
+        "zdharma-continuum/fast-syntax-highlighting"  # Syntax highlighting
+        "zsh-users/zsh-autosuggestions"               # Auto-suggestions
+        "zsh-users/zsh-history-substring-search"      # Up/Down to search history
+      ];
+    };
+
     autosuggestion.enable = true;
     enableCompletion = true;
     syntaxHighlighting.enable = true;
@@ -41,13 +65,13 @@ in
       plugins = [ "git" "sudo" ];
     };
 
-    plugins = [
-      {
-        name = "powerlevel10k";
-        src = pkgs.zsh-powerlevel10k;
-        file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
-      }
-    ];
+    #plugins = [
+    #  {
+    #    name = "powerlevel10k";
+    #    src = pkgs.zsh-powerlevel10k;
+    #    file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
+    #  }
+    #];
 
     # 3. Zsh Initialisation Content
     initContent = ''
