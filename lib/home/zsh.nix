@@ -63,8 +63,10 @@ in
     '';
   };
 
-  ".p10k.zsh" = {
-    source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/sources/.p10k.zsh";
+  home.file = {
+    ".p10k.zsh" = {
+      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/zsh/.p10k.zsh";
+    };
   };
 
 }
