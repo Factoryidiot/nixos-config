@@ -42,6 +42,7 @@ in
 
     autosuggestion.enable = true;
     enableCompletion = true;
+    dotDir = 
     syntaxHighlighting.enable = true;
 
     history = {
@@ -60,7 +61,8 @@ in
     '';
   };
 
-  home.file = {
+#  home.file = {
+  xdg.configFile = {
     ".p10k.zsh" = {
       source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/zsh/.p10k.zsh";
     };
