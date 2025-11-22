@@ -1,9 +1,28 @@
- lib/nixos/hyprland-services.nix
-{ pkgs, ... }:
-
+# lib/nixos/hyprland-services.nix
 {
+  config
+  , inputs
+  , lib
+  , pkgs
+  , ...
+}:
+let
+  system = pkgs.stdenv.hostPlatform.system;
+  pkgs-unstable = inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
+in
+{
+
   # 1. Enable Hyprlock and Hypridle as system services
   # This makes them available system-wide and manages their daemon lifecycle.
+
+  programs.hyprland = {
+    enable = true;
+    withUSWM = true;
+    # Package is automatically provided by hyprland.nixosModules.default
+    # Currently provides: 0.51.0+date=2025-10-31_8e9add2
+    package = inputs.hyprland.packages.${system}.default;
+    portalPackage = inputs.hyprland.packages.${system}.xdg-desktop-portal-hyprland;
+  };
   programs.hyprlock.enable = true;
   services.hypridle.enable = true;
 
@@ -28,4 +47,5 @@
     hypridle
     hyprpaper
   ];
+
 }
