@@ -19,6 +19,7 @@ in
     ../../lib/nixos/base-security.nix
     ../../lib/nixos/hardware-services.nix
     ../../lib/nixos/multimedia.nix
+    ../../lib/nixos/hyprland-services.nix
 
   ];
 
