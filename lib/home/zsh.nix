@@ -1,18 +1,13 @@
-# lib/home/zsh/zsh.nix
 {
   config
   , lib
   , pkgs
   , ...
-}:
-let
+}: {
 
-in
-{
-
-  # Zsh Program Configuration
   programs.zsh = {
     enable = true;
+
     antidote = {
       enable = true;
       plugins = [
@@ -41,29 +36,29 @@ in
     };
 
     autosuggestion.enable = true;
+    dotDir = ".config/zsh";
     enableCompletion = true;
-    dotDir = 
-    syntaxHighlighting.enable = true;
 
     history = {
       ignoreAllDups = true;
+      path = "~/config/zsh/.zsh_history";
+      size = 10000;
     };
 
     # Zsh Initialisation Content
     initContent = ''
-      # Source P10K from the human-managed dotfiles directory
       if [ "$TERM" = "linux" ]; then
         fastfetch
         ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=black,bold'
       fi
- 
-      # NOTE: We keep ZDOTDIR unset unless specifically needed for other configs.
+      [[ ! -f ~/.config/zsh/.p10k.zsh ]] || source ~/.config/zsh/.p10k.zsh;
     '';
+
+    syntaxHighlighting.enable = true;
   };
 
-#  home.file = {
-  xdg.configFile = {
-    ".p10k.zsh" = {
+  home.file = {
+    ".config/zsh/.p10k.zsh" = {
       source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/zsh/.p10k.zsh";
     };
   };
