@@ -22,29 +22,20 @@ in
     package = pkgs-unstable.hypridle;
   };
 
-  #programs.wayland.enable = true;
+  programs.hyprland = {
+    enable = true;
+    withUWSM = true;
 
-  # 2. Set essential Wayland environment variables globally (Best Practice)
-  environment.sessionVariables = {
-    # Recommended for Chromium/Electron-based apps to use Wayland natively
-    NIXOS_OZONE_WL = "1";
-    # Sometimes necessary to prevent cursor issues on certain hardware
-    WLR_NO_HARDWARE_CURSORS = "1";
-    # CRITICAL for Java/AWT apps (like JetBrains IDEs) to display correctly
-    _JAVA_AWT_WM_NONREPARENTING = "1";
-    # Explicitly define the session type for applications that check XDG_SESSION_TYPE
-    XDG_SESSION_TYPE = "wayland";
+    package = inputs.hyprland.packages.${system}.default;
+    portalPackage = inputs.hyprland.packages.${system}.xdg-desktop-portal-hyprland;
+
   };
 
-  # 3. Install core Hyprland-related packages system-wide
-  # Only binaries required for system services or widely used are installed here.
+  environment.sessionVariables = {
+  };
+
+  # Install core Hyprland-related packages system-wide
   environment.systemPackages = with pkgs; [
-    kitty
-    hyprpicker
-    hyprcursor
-    hyprlock
-    hypridle
-    hyprpaper
   ];
 
 }
