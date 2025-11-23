@@ -22,7 +22,7 @@ in
     package = pkgs-unstable.hypridle;
   };
 
-  programs.wayland.enable = true;
+  #programs.wayland.enable = true;
 
   # 2. Set essential Wayland environment variables globally (Best Practice)
   environment.sessionVariables = {

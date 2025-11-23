@@ -28,8 +28,6 @@ in
   # 2. Configure XDG desktop portal for better application compatibility
   xdg.portal = {
     enable = true;
-    # Use the dedicated Hyprland portal implementation
-    wlr.enable = false; # Disable the default wlroots portal if it's enabled globally
     extraPortals = with pkgs; [
       (hyprlandInput.packages.${system}.xdg-desktop-portal-hyprland)
     ];
@@ -38,17 +36,15 @@ in
   # 3. Configure all required configuration files
   xdg.configFile = {
     # Main Hyprland configuration
-    "hypr/autostart.conf".source = ./dotfiles/hypr/autostart.conf;
-    "hypr/bindings.conf".source = ./dotfiles/hypr/bindings.conf;
-    "hypr/env.conf".source = ./dotfiles/hypr/env.conf;
-    "hypr/hypridle.conf".source = ./dotfiles/hypr/hypridle.conf;
-    "hypr/hyprland.conf".source = ./dotfiles/hypr/hyprland.conf;
-    "hypr/hyprlock.conf".source = ./dotfiles/hypr/hyprlock.conf;
-    "hypr/hyprsunset.conf".source = ./dotfiles/hypr/hyprsunset.conf;
-    "hypr/input.conf".source = ./dotfiles/hypr/input.conf;
-    "hypr/monitors.conf".source = ./dotfiles/hypr/monitors.conf;
-    
-
+    "hypr/autostart.conf".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/hypr/autostart.conf";
+    "hypr/bindings.conf".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/hypr/bindings.conf";
+    "hypr/env.conf".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/hypr/env.conf";
+    "hypr/hypridle.conf".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/hypr/hypridle.conf";
+    "hypr/hyprland.conf".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/hypr/hyprland.conf";
+    "hypr/hyprlock.conf".source = .config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/hypr/hyprlock.conf";
+    "hypr/hyprsunset.conf".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/hypr/hyprsunset.conf";
+    "hypr/input.conf".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/hypr/input.conf";
+    "hypr/monitors.conf".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/hypr/monitors.conf";
 
     # Wallpaper utility
     #"hypr/hyprpaper.conf".source = ./hypr/hyprpaper.conf;
