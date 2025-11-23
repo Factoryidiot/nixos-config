@@ -4,6 +4,7 @@
 
   imports = [
     ../../lib/home/fastfetch.nix
+    ../../lib/home/hyprland.nix
     ../../lib/home/yazi.nix
     ../../lib/home/zsh.nix
   ];

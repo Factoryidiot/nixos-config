@@ -20,7 +20,6 @@
         "romkatv/powerlevel10k"
 
         # Utilities
-        "zshzoo/macos conditional:is-macos"
         "belak/zsh-utils path:utility"
         "romkatv/zsh-bench kind:path"
 
@@ -35,13 +34,11 @@
       ];
     };
 
-    autosuggestion.enable = true;
     dotDir = ".config/zsh";
-    enableCompletion = true;
 
     history = {
       ignoreAllDups = true;
-      path = "~/config/zsh/.zsh_history";
+      path = "${config.home.homeDirectory}/.config/zsh/.zsh_history";
       size = 10000;
     };
 
@@ -54,7 +51,6 @@
       [[ ! -f ~/.config/zsh/.p10k.zsh ]] || source ~/.config/zsh/.p10k.zsh;
     '';
 
-    syntaxHighlighting.enable = true;
   };
 
   home.file = {

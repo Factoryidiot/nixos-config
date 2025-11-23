@@ -8,23 +8,21 @@
 }:
 let
   system = pkgs.stdenv.hostPlatform.system;
-  pkgs-unstable = inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
+  pkgs-unstable = inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system};
 in
 {
 
-  # 1. Enable Hyprlock and Hypridle as system services
-  # This makes them available system-wide and manages their daemon lifecycle.
-
-  programs.hyprland = {
+# This makes them available as system daemons managed by NixOS.
+  programs.hyprlock = {
     enable = true;
-    withUSWM = true;
-    # Package is automatically provided by hyprland.nixosModules.default
-    # Currently provides: 0.51.0+date=2025-10-31_8e9add2
-    package = inputs.hyprland.packages.${system}.default;
-    portalPackage = inputs.hyprland.packages.${system}.xdg-desktop-portal-hyprland;
+    package = pkgs-unstable.hyprlock;
   };
-  programs.hyprlock.enable = true;
-  services.hypridle.enable = true;
+  services.hypridle = {
+    enable = true;
+    package = pkgs-unstable.hypridle;
+  };
+
+  programs.wayland.enable = true;
 
   # 2. Set essential Wayland environment variables globally (Best Practice)
   environment.sessionVariables = {
@@ -41,6 +39,7 @@ in
   # 3. Install core Hyprland-related packages system-wide
   # Only binaries required for system services or widely used are installed here.
   environment.systemPackages = with pkgs; [
+    kitty
     hyprpicker
     hyprcursor
     hyprlock

@@ -51,6 +51,7 @@
     , hyprland
     , impermanence
     , lanzaboote
+    , nixpkgs-unstable
     , self
     , ...
   }:
@@ -59,7 +60,7 @@
 
       # Pass inputs and self to all configurations for easy access
       specialArgs = {
-        inherit hyprland impermanence inputs lanzaboote self;
+        inherit hyprland impermanence inputs lanzaboote nixpkgs-unstable self;
       };
 
       # Common modules for all systems (DRY principle)
