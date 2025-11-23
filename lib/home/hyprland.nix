@@ -11,7 +11,7 @@ let
 in
 {
   # 1. Enable Hyprland program using the correct Home Manager option
-  programs.hyprland = {
+  wayland.windowManager.hyprland = {
     enable = true;
     xwayland.enable = true; # Always a good idea for compatibility
 
@@ -19,10 +19,10 @@ in
     package = hyprlandInput.packages.${system}.hyprland;
 
     # Set the session type, usually the same as your system (x86_64-linux)
-    extraConfig = ''
-      # Source the main configuration file managed by home-manager
-      source = ~/.config/hypr/hyprland.conf
-    '';
+    #extraConfig = ''
+    #  # Source the main configuration file managed by home-manager
+    #  source = ~/.config/hypr/hyprland.conf
+    #'';
   };
 
   # 2. Configure XDG desktop portal for better application compatibility
@@ -38,16 +38,20 @@ in
   # 3. Configure all required configuration files
   xdg.configFile = {
     # Main Hyprland configuration
-    "hypr/hyprland.conf".source = ./hypr/hyprland.conf;
+    "hypr/autostart.conf".source = ./dotfiles/hypr/autostart.conf;
+    "hypr/bindings.conf".source = ./dotfiles/hypr/bindings.conf;
+    "hypr/env.conf".source = ./dotfiles/hypr/env.conf;
+    "hypr/hypridle.conf".source = ./dotfiles/hypr/hypridle.conf;
+    "hypr/hyprland.conf".source = ./dotfiles/hypr/hyprland.conf;
+    "hypr/hyprlock.conf".source = ./dotfiles/hypr/hyprlock.conf;
+    "hypr/hyprsunset.conf".source = ./dotfiles/hypr/hyprsunset.conf;
+    "hypr/input.conf".source = ./dotfiles/hypr/input.conf;
+    "hypr/monitors.conf".source = ./dotfiles/hypr/monitors.conf;
+    
 
-    # Idleness management (dimming, locking)
-    "hypr/hypridle.conf".source = ./hypr/hypridle.conf;
-
-    # Screen locking application
-    "hypr/hyprlock.conf".source = ./hypr/hyprlock.conf;
 
     # Wallpaper utility
-    "hypr/hyprpaper.conf".source = ./hypr/hyprpaper.conf;
+    #"hypr/hyprpaper.conf".source = ./hypr/hyprpaper.conf;
   };
 
   # 4. Install necessary packages for a working desktop environment
