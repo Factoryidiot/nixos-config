@@ -27,9 +27,6 @@ in
     enable32Bit = true;
   };
 
-  services.udev.packages = with pkgs; [
-  ];
-
   # Time and locale are specific to the physical location
   time.timeZone = "Pacific/Auckland";
   i18n.defaultLocale = "en_NZ.UTF-8";
