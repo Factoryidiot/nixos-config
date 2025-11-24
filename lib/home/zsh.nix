@@ -16,8 +16,17 @@
         "zsh-users/zsh-completions kind:fpath path:src"
         "aloxaf/fzf-tab"
 
+        # Completion styles
+        "belak/zsh-utils path:completion/functions kind:autoload post:compstyle_zshzoo_setup"
+
         # Prompt
         "romkatv/powerlevel10k"
+
+        # Keybindings
+        "belak/zsh-utils path:editor"
+
+        # History
+        "belak/zsh-utils path:history"
 
         # Utilities
         "belak/zsh-utils path:utility"

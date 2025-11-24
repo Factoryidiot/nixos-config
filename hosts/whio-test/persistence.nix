@@ -64,6 +64,7 @@ in
 
         # misc
         ".config/pulse"
+        ".local/share/antidote"
         ".pki"
 
         # Games
