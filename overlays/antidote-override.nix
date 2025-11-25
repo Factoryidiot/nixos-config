@@ -20,7 +20,7 @@ final: prev: {
     # 2. Since we changed the output of the package, the hash must be updated.
     # This placeholder will cause a build error, allowing you to update the hash.
     # WARNING: You must replace this hash after the first build failure!
-    outputHash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="; 
+    outputHash = "sha256-+tpAKbwDr0cX+XRr46VxHtMbxrnKgAzwAJCIbFkuUeM=";
     outputHashMode = "recursive"; 
   });
 }

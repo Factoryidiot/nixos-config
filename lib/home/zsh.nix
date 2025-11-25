@@ -64,8 +64,7 @@ in
     # Zsh Initialisation Content
     initContent = ''
       source "${zshConfigDir}/.antidote/antidote.zsh"
-      antidote load ${(qq)${lib.concatStringsSep "\n" antidotePlugins}}
-
+      antidote load ${lib.escapeShellArgs antidotePlugins}
       if [ "$TERM" = "linux" ]; then
         fastfetch
         ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=black,bold'

@@ -64,7 +64,7 @@
       };
 
       customOverlays = [
-        # Import the new antidote override
+        # Import the antidote override
         (import ./overlays/antidote-override.nix)
       ];
  
@@ -88,17 +88,16 @@
           hostname = name;
           hostArgs = specialArgs // { inherit hostname username; };
 
-          pkgsWithOverlays = import nixpkgs {
+          pkgs = import nixpkgs {
             inherit system;
             config.allowUnfree = true;
             overlays = customOverlays;
           };
 
         in
-          #nixpkgs.lib.nixosSystem {
-          pkgsWithOverlays.lib.nixosSystem {
+          nixpkgs.lib.nixosSystem {
             inherit system;
-            specialArgs = hostArgs; # Pass the combined args
+            specialArgs = hostArgs // { inherit pkgs; }; # Pass the combined args
             modules = commonModules
               ++ modules
               ++ [
