@@ -63,6 +63,11 @@
         inherit hyprland impermanence inputs lanzaboote nixpkgs-unstable self;
       };
 
+      customOverlays = [
+        # Import the new antidote override
+        (import ./overlays/antidote-override.nix)
+      ];
+ 
       # Common modules for all systems (DRY principle)
       commonModules = [
         # Common home-manager configuration
@@ -82,8 +87,16 @@
         let
           hostname = name;
           hostArgs = specialArgs // { inherit hostname username; };
+
+          pkgsWithOverlays = import nixpkgs {
+            inherit system;
+            config.allowUnfree = true;
+            overlays = customOverlays;
+          };
+
         in
-          nixpkgs.lib.nixosSystem {
+          #nixpkgs.lib.nixosSystem {
+          pkgsWithOverlays.lib.nixosSystem {
             inherit system;
             specialArgs = hostArgs; # Pass the combined args
             modules = commonModules
