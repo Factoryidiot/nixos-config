@@ -3,20 +3,15 @@
   , lib
   , pkgs
   , ...
-}:
-let
-
-  antidotePlugins = [
-  ];
-
-  zshConfigDir = "${config.home.homeDirectory}/${config.programs.zsh.dotDir}";
-
-in
-{
+}: {
 
   programs.zsh = {
     enable = true;
 
+    autosuggestion.enable = lib.mkForce false;
+    enableCompletion = lib.mkForce false;
+    syntaxHighlighting.enable = lib.mkForce false;
+ 
     antidote = {
       enable = true;
       plugins = [
@@ -50,13 +45,14 @@ in
         "zsh-users/zsh-autosuggestions"               # Auto-suggestions
         "zsh-users/zsh-history-substring-search"      # Up/Down to search history
       ];
+      useFriendlyNames = true;
     };
 
     dotDir = ".config/zsh";
 
     history = {
       ignoreAllDups = true;
-      path = "${config.programs.zsh.dotDir}/.config/zsh/.zsh_history";
+      path = "${config.programs.zsh.dotDir}/.zsh_history";
       size = 10000;
     };
 
@@ -72,7 +68,7 @@ in
   };
 
   xdg.configFile = {
-    ".config/zsh/.p10k.zsh" = {
+    "zsh/.p10k.zsh" = {
       source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/zsh/.p10k.zsh";
     };
   };

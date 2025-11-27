@@ -80,8 +80,6 @@ in
         #".config/Bitwarden"
         ".config/google-chrome"
         #".config/obsidian"
-        #".config/remmina"
-        #".config/freerdp"
 
         # neovim / remmina / flatpak / ...
         ".local/share/flatpak"
@@ -91,11 +89,9 @@ in
         # language package managers
         ".npm"
 
-        # neovim plugins(copilot)
-        #".config/github-copilot"
       ];
       files = [
-        ".zsh_history"
+        ".config/zsh/.zsh_history"
       ];
     };
   };

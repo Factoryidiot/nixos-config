@@ -62,10 +62,6 @@
       specialArgs = {
         inherit hyprland impermanence inputs lanzaboote nixpkgs-unstable self;
       };
-
-      customOverlays = [
-        #(import ./overlays/antidote-override.nix)
-      ];
  
       # Common modules for all systems (DRY principle)
       commonModules = [
@@ -90,16 +86,19 @@
           pkgs = import nixpkgs {
             inherit system;
             config.allowUnfree = true;
-            overlays = customOverlays;
           };
 
         in
           nixpkgs.lib.nixosSystem {
             inherit system;
-            specialArgs = hostArgs // { inherit pkgs; }; # Pass the combined args
+            specialArgs = hostArgs; # Pass the combined args
             modules = commonModules
               ++ modules
               ++ [
+                # Allow unfree packages for this system configuration
+                ({ pkgs, ... }: {
+                  nixpkgs.config.allowUnfree = true;
+                })
                 # This connects Home Manager to the specified user.
                 # The user itself (password, groups) should be defined
                 # in the host's module (e.g., ./hosts/whio/default.nix)
