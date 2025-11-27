@@ -64,6 +64,7 @@
       };
 
       customOverlays = [
+        #(import ./overlays/antidote-override.nix)
       ];
  
       # Common modules for all systems (DRY principle)
