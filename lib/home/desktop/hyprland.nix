@@ -1,4 +1,4 @@
-# lib/home/hyprland.nix
+# lib/home/desktop/hyprland.nix
 {
   config
   , inputs
@@ -6,16 +6,29 @@
   , ...
 }:
 let
+
+  dotfilesDir = "${config.home.homeDirectory}/.dotfiles";
+
+  # Helper function to create a symlink to an editable file in ~/.dotfiles/hypr
+  dotfileLink = name:
+    lib.file.mkOutOfStoreSymlink "${dotfilesDir}/hypr/${name}";
+
   # Access the hyprland input via the inputs specialArg passed from flake.nix
-  hyprlandInput = inputs.hyprland;
-  system = pkgs.stdenv.hostPlatform.system;
+  #hyprlandInput = inputs.hyprland;
+  #system = pkgs.stdenv.hostPlatform.system;
 in
 {
-  wayland.windowManager.hyprland = {
-    enable = true;
+  imports = [
+    # Ensure Hyprland is available from the unstable channel (as defined in flake.nix)
+    nixpkgs-unstable.nixosModules.hyprland
+  ];
+
+  #wayland.windowManager.hyprland = {
+  programs.hyprland = {
+     enable = true;
     xwayland.enable = true;
 
-    package = hyprlandInput.packages.${system}.hyprland;
+    #package = hyprlandInput.packages.${system}.hyprland;
   };
 
   xdg.configFile = {
@@ -34,11 +47,4 @@ in
     #"hypr/hyprpaper.conf".source = ./hypr/hyprpaper.conf;
   };
 
-  # 4. Install necessary packages for a working desktop environment
-  home.packages = with pkgs; [
-  ];
-
-  # Set up a few basic environment variables for Hyprland to function well
-  home.sessionVariables = {
-  };
 }

@@ -8,19 +8,14 @@
 }:
 let
   system = pkgs.stdenv.hostPlatform.system;
-  pkgs-unstable = inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system};
+  #pkgs-unstable = inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system};
+  pkgs-unstable = inputs.nixpkgs-unstable.legacyPackages.${system};
 in
 {
 
 # This makes them available as system daemons managed by NixOS.
-  programs.hyprlock = {
-    enable = true;
-    package = pkgs-unstable.hyprlock;
-  };
-  services.hypridle = {
-    enable = true;
-    package = pkgs-unstable.hypridle;
-  };
+  programs.hyprlock = pkgs-unstable.hyprlock;
+  services.hypridle = pkgs-unstable.hypridle;
 
   programs.hyprland = {
     enable = true;
@@ -32,10 +27,19 @@ in
   };
 
   environment.sessionVariables = {
+    hyprpaper
+    hyprlock
+    hypridle
   };
 
   # Install core Hyprland-related packages system-wide
   environment.systemPackages = with pkgs; [
+    # Ensure all graphical programs use Wayland where possible
+    NIXOS_OZONE_WL = "1";
+    # Set the backend for Hyprland's portal 
+    XDG_CURRENT_DESKTOP = "Hyprland"; 
+    XDG_SESSION_TYPE = "wayland";
+    XDG_SESSION_DESKTOP = "Hyprland";
   ];
 
 }

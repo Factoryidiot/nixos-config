@@ -3,9 +3,9 @@
 }: {
 
   imports = [
-    ../../lib/home/alacritty.nix
+    ../../lib/home/desktop.nix
     ../../lib/home/fastfetch.nix
-    ../../lib/home/hyprland.nix
+    #../../lib/home/hyprland.nix
     ../../lib/home/yazi.nix
     ../../lib/home/zsh.nix
   ];
