@@ -23,6 +23,9 @@ in
     pamixer # Audio control
     brightnessctl # Brightness control
     # You can add more here (e.g., foot, wezterm, firefox, etc.)
+    
+    xdg-desktop-portal
+    xdg-desktop-portal-gtk
   ];
 
 }

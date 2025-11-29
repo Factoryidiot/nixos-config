@@ -14,13 +14,13 @@
   boot.loader.efi.efiSysMountPoint = "/boot";
   boot.loader.systemd-boot.enable = true;
 
-  boot.initrd.availableKernelModules = [ "virtio_pci" "uhci_hcd" "ehci_pci" "ahci" "sr_mod" "virtio_blk" ];
+  boot.initrd.availableKernelModules = [ "virtio_blk" "virtio_gpu" "virtio_pci"  ];
   boot.initrd.kernelModules = [ ];
   boot.initrd.systemd.enable = true;
 
   boot.extraModulePackages = [ ];
 
-  boot.kernelModules = [ "kvm-amd" ];
+  boot.kernelModules = [ "virtio_pci" "virtio-input" "virtio_gpu" ];
   boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.kernelParams = [ ];
 
@@ -37,7 +37,7 @@
   boot.tmp.cleanOnBoot = true; # clear /tmp on boot to get a stateless /tmp directory
 
   boot.initrd = {
-    luks.devices."crypted" = lib.mkDefault { 
+    luks.devices."crypted" = lib.mkDefault {
       device = "/dev/disk/by-uuid/4502f7bc-c44d-4e94-93e3-3ab75036c3f5";
       allowDiscards = true;
       bypassWorkqueues = true;

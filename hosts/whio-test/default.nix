@@ -12,7 +12,7 @@ in
   imports = [
     # Host specific configuration
     ./hardware-configuration.nix
-    ./persistence.nix                 # Preservation configuration
+    ./persistence.nix                         # Preservation configuration
 
     # Basic configuration
     ../../lib/nixos/base-packages.nix
@@ -34,6 +34,12 @@ in
   networking = {
     hostName = hostname;
     networkmanager.enable = true;
+  };
+
+  services = {
+    libinput.enable = true;
+    qemuGuest.enable = true;
+    udev.enable = true;
   };
 
   users = {
