@@ -2,6 +2,7 @@
 {
   config
   , inputs
+  , lib
   , pkgs
   , ...
 }:
@@ -14,21 +15,27 @@ let
     lib.file.mkOutOfStoreSymlink "${dotfilesDir}/hypr/${name}";
 
   # Access the hyprland input via the inputs specialArg passed from flake.nix
-  #hyprlandInput = inputs.hyprland;
-  #system = pkgs.stdenv.hostPlatform.system;
+  hyprlandInput = inputs.hyprland;
+  system = pkgs.stdenv.hostPlatform.system;
 in
 {
   imports = [
-    # Ensure Hyprland is available from the unstable channel (as defined in flake.nix)
-    nixpkgs-unstable.nixosModules.hyprland
   ];
 
-  #wayland.windowManager.hyprland = {
-  programs.hyprland = {
-     enable = true;
+  wayland.windowManager.hyprland = {
+    enable = true;
+    package = null;
+    systemd.enable = true;
     xwayland.enable = true;
+  };
 
-    #package = hyprlandInput.packages.${system}.hyprland;
+  xdg.portal = {
+    enable = true;
+    extraPortals = with pkgs; [
+      xdg-desktop-portal-hyprland # Use the package from the main pkgs set
+    ];
+    # Ensure this is the preferred backend
+    config.common.default = "hyprland";
   };
 
   xdg.configFile = {
@@ -45,6 +52,12 @@ in
 
     # Wallpaper utility
     #"hypr/hyprpaper.conf".source = ./hypr/hyprpaper.conf;
+  };
+
+  # Set up environment variables required by Desktop
+  home.sessionVariables = {
+    TERMINAL = "alacritty";   # Specify the terminal emulator
+    NIXOS_OZONE_WL = "1";     # Tell GTK apps to use the correct theme engine
   };
 
 }

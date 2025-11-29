@@ -13,9 +13,9 @@ let
 in
 {
 
-# This makes them available as system daemons managed by NixOS.
-  programs.hyprlock = pkgs-unstable.hyprlock;
-  services.hypridle = pkgs-unstable.hypridle;
+  # This makes them available as system daemons managed by NixOS.
+  #programs.hyprlock = pkgs-unstable.hyprlock;
+  #services.hypridle = pkgs-unstable.hypridle;
 
   programs.hyprland = {
     enable = true;
@@ -27,19 +27,17 @@ in
   };
 
   environment.sessionVariables = {
-    hyprpaper
-    hyprlock
-    hypridle
+    XDG_SESSION_DESKTOP = "Hyprland";
+    NIXOS_OZONE_WL = "1";                   # Ensure all graphical programs use Wayland where possible
+    XDG_CURRENT_DESKTOP = "Hyprland";       # Set the backend for Hyprland's portal 
+    XDG_SESSION_TYPE = "wayland";
   };
 
   # Install core Hyprland-related packages system-wide
-  environment.systemPackages = with pkgs; [
-    # Ensure all graphical programs use Wayland where possible
-    NIXOS_OZONE_WL = "1";
-    # Set the backend for Hyprland's portal 
-    XDG_CURRENT_DESKTOP = "Hyprland"; 
-    XDG_SESSION_TYPE = "wayland";
-    XDG_SESSION_DESKTOP = "Hyprland";
+  environment.systemPackages = with pkgs-unstable; [
+    hyprpaper
+    hyprlock
+    hypridle
   ];
 
 }
