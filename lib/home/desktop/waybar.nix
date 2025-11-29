@@ -1,12 +1,10 @@
 {
   config
-  , pkgs
   , ...
 }: {
 
   programs.waybar = {
     enable = true;
-    # Configuration is managed via the files linked below
   };
 
   xdg.configFile = {

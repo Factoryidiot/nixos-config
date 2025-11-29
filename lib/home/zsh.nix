@@ -52,7 +52,7 @@
 
     history = {
       ignoreAllDups = true;
-      path = "${config.programs.zsh.dotDir}/.zsh_history";
+      path = "${config.home.homeDirectory}/${config.programs.zsh.dotDir}/.zsh_history";
       size = 10000;
     };
 
