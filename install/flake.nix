@@ -32,13 +32,15 @@
 
   outputs = inputs@{
     nixpkgs
+    , hyprland
     , impermanence
     , self
     , ...
   }:
     let
       system = "x86_64-linux";
-   
+      username = "rhys";
+
       # Pass inputs and self to all configurations for easy access
       specialArgs = {
         inherit hyprland inputs impermanence self;
@@ -51,8 +53,8 @@
       # Helper function to create a NixOS configuration
       mkNixosSystem = { name, modules }:
         let
-          hostname = name;                                        # The hostname for this system is the same as its name in the flake
-          hostArgs = specialArgs // { inherit hostname; };        # Merge the global special arguments with the host-specific ones (hostname)
+          hostname = name;                                            # The hostname for this system is the same as its name in the flake
+          hostArgs = specialArgs // { inherit hostname username; };   # Merge the global special arguments with the host-specific ones (hostname)
         in
           nixpkgs.lib.nixosSystem {
             inherit system;
