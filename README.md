@@ -14,20 +14,11 @@ OS: NixOS 24.11.20240906.574d1ea (Vicuna) x86_64
 Kernel: Linux 6.6.49
 Shell: zsh 5.9
 WM: Hyprland (Wayland)
-Terminal: kitty 0.36.1
+Terminal: Alacritty
 ```
 
 ## To do
 These are in no particular order of priority
-- [X] Retest hardware-configuration with /dev/mapper paths replacing UUIDs on the subvolumes
-- [X] Implement Secureboot
-- [ ] Implement Secrets
-- [/] Install zsh, neovim, tmux, kitty, and fonts
-- [/] Install nvidia drivers
-- [/] Install hyprland
-- [/] Install Steam
-- [/] Install kvm-qemu and Looking Glass
-- [ ] Tidy up and restructure
 
 ## Install
 ### Prerequsite
