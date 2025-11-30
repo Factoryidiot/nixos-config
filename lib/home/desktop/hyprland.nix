@@ -8,15 +8,10 @@
 }:
 let
 
-  dotfilesDir = "${config.home.homeDirectory}/.dotfiles";
-
-  # Helper function to create a symlink to an editable file in ~/.dotfiles/hypr
-  dotfileLink = name:
-    lib.file.mkOutOfStoreSymlink "${dotfilesDir}/hypr/${name}";
-
   # Access the hyprland input via the inputs specialArg passed from flake.nix
   hyprlandInput = inputs.hyprland;
   system = pkgs.stdenv.hostPlatform.system;
+
 in
 {
   imports = [
@@ -27,6 +22,16 @@ in
     package = null;
     systemd.enable = true;
     xwayland.enable = true;
+
+    settings = {
+      exec-once = [
+        "uwsm app -- waybar"
+      ];
+    };
+
+    extraConfig = "
+    ";
+
   };
 
   xdg.portal = {
@@ -40,7 +45,6 @@ in
 
   xdg.configFile = {
     # Main Hyprland configuration
-    "hypr/autostart.conf".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/hypr/autostart.conf";
     "hypr/bindings.conf".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/hypr/bindings.conf";
     "hypr/env.conf".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/hypr/env.conf";
     "hypr/hypridle.conf".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/hypr/hypridle.conf";
