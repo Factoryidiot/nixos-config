@@ -45,6 +45,7 @@ The repository is structured with a clear separation of concerns:
 
 ## Coding Constraints
 
+- **All implementation must be preceded by a numbered plan. Do not modify any files until the user has approved the plan.**
 - **Modularity:** Configurations are broken down into small, single-purpose modules located in `lib/`. For example, `lib/nixos/virt.nix` sets up virtualization, and `lib/home/desktop/hyprland.nix` configures the Hyprland window manager.
 
 - **Immutability and Purity:** Adhere to Nix's functional and declarative nature. Avoid stateful changes in modules where possible.
