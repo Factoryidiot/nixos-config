@@ -1,3 +1,4 @@
+# lib/home/desktop/waybar.nix
 {
   config
   , ...

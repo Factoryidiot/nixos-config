@@ -22,16 +22,6 @@ in
     package = null;
     systemd.enable = true;
     xwayland.enable = true;
-
-    settings = {
-      exec-once = [
-        "uwsm app -- waybar"
-      ];
-    };
-
-    extraConfig = "
-    ";
-
   };
 
   xdg.portal = {
@@ -45,6 +35,7 @@ in
 
   xdg.configFile = {
     # Main Hyprland configuration
+    "hypr/autostart.conf".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/hypr/autostart.conf";
     "hypr/bindings.conf".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/hypr/bindings.conf";
     "hypr/env.conf".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/hypr/env.conf";
     "hypr/hypridle.conf".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/hypr/hypridle.conf";
@@ -62,6 +53,7 @@ in
   home.sessionVariables = {
     TERMINAL = "alacritty";   # Specify the terminal emulator
     NIXOS_OZONE_WL = "1";     # Tell GTK apps to use the correct theme engine
+    XDG_CURRENT_DESKTOP = "Hyprland";
   };
 
 }

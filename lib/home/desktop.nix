@@ -21,10 +21,9 @@ in
     swaybg # Basic wallpaper setter for fallback
     jq # Needed for many Waybar scripts
     pamixer # Audio control
-    waybar # Waybar is needed for the desktop environment
     brightnessctl # Brightness control
     # You can add more here (e.g., foot, wezterm, firefox, etc.)
-    
+ 
     xdg-desktop-portal
     xdg-desktop-portal-gtk
   ];
