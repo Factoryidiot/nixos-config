@@ -43,6 +43,16 @@
     };
     nix-gaming.url = "github:fufexan/nix-gaming";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+
+    elephant = {
+      url = "github:abenz1267/elephant";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    walker = {
+      url = "github:abenz1267/walker";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.elephant.follows = "elephant";
+    };
   };
 
   outputs = inputs@{
@@ -53,6 +63,7 @@
     , lanzaboote
     , nixpkgs-unstable
     , self
+    , walker
     , ...
   }:
     let
@@ -112,7 +123,7 @@
       nixosConfigurations = {
         whio = mkNixosSystem {
           name = "whio";
-          username = "rhys"; # <-- Specify user for this host
+          username = "rhys";
           modules = [
             ./hosts/whio/default.nix
             # ./secrets/default.nix # Uncommented for clarity
@@ -124,7 +135,7 @@
 
         whio-test = mkNixosSystem {
           name = "whio-test";
-          username = "rhys"; # <-- Specify user for this host
+          username = "rhys";
           modules = [
             ./hosts/whio-test/default.nix
             #./secrets/default.nix
