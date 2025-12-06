@@ -8,8 +8,9 @@ let
 in
 {
   imports = [
-    ./desktop/alacritty.nix
     ./desktop/hyprland.nix
+    ./desktop/mako.nix
+    ./desktop/terminal.nix
     ./desktop/walker.nix
     ./desktop/waybar.nix
   ];

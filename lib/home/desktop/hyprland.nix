@@ -34,12 +34,7 @@ in
   };
 
   # Link the configuration file from your dotfiles directory
-  xdg.configFile = 
-  let
-    symlink = file: config.lib.file.mkOutOfStoreSymlink file;
-    dotfiles = "${config.home.homeDirectory}/.dotfiles";
-  in
-  lib.mkDefault {
+  xdg.configFile = { 
     # Main Hyprland configuration
     "hypr/autostart.conf".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/hypr/autostart.conf";
     "hypr/bindings.conf".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/hypr/bindings.conf";
