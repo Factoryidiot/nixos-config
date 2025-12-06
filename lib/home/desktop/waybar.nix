@@ -1,6 +1,7 @@
 # lib/home/desktop/waybar.nix
 {
   config
+  , lib
   , ...
 }: {
 
@@ -9,9 +10,14 @@
     systemd.enable = true;
   };
 
-  xdg.configFile = {
-    "waybar/config.jsonc".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/waybar/config.jsonc";
-    "waybar/style.css".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/waybar/style.css";
+  xdg.configFile 
+  let
+    symlink = file: config.lib.file.mkOutOfStoreSymlink file;
+    dotfiles = "${config.home.homeDirectory}/.dotfiles";
+  in
+  lib.mkDefault {
+    "waybar/config.jsonc".source = symlink "${dotfiles}/waybar/config.jsonc";
+    "waybar/style.css".source = symlink "${dotfiles}/waybar/style.css";
   };
 
 }

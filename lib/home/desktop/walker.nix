@@ -1,8 +1,8 @@
 {
-  config,
-  pkgs,
-  inputs,
-  ...
+  config
+  , inputs
+  , lib
+  , ...
 }: {
   imports = [
     inputs.walker.homeManagerModules.default
@@ -10,11 +10,17 @@
 
   programs.walker = {
     enable = true;
-    config = {};
-    runAsService = true; # Recommended for faster startups
+    runAsService = true;  # Recommended for faster startups
   };
 
   # Link the configuration file from your dotfiles directory
-  xdg.configFile."walker/config.toml".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/walker/config.toml";
-  xdg.configFile."elephant/config.toml".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/elephant/desktopapplications.toml";
+  xdg.configFile
+  let
+    symlink = file: config.lib.file.mkOutOfStoreSymlink file;
+    dotfiles = "${config.home.homeDirectory}/.dotfiles";
+  in
+  lib.mkDefault {
+    "walker/config.toml".source = symlink "${dotfiles}/walker/config.toml";
+    "elephant/desktopapplications.toml".source = symlink "${dotfiles}/elephant/desktopapplications.toml";
+  };
 }
