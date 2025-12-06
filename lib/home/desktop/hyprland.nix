@@ -41,15 +41,15 @@ in
   in
   lib.mkDefault {
     # Main Hyprland configuration
-    "hypr/autostart.conf".source = symlink "${dotfiles}/hypr/autostart.conf";
-    "hypr/bindings.conf".source = symlink "${dotfiles}/hypr/bindings.conf";
-    "hypr/env.conf".source = symlink "${dotfiles}/hypr/env.conf";
-    "hypr/hypridle.conf".source = symlink "${dotfiles}/hypr/hypridle.conf";
-    "hypr/hyprland.conf".source = symlink "${dotfiles}/hypr/hyprland.conf";
-    "hypr/hyprlock.conf".source = symlink "${dotfiles}/hypr/hyprlock.conf";
-    "hypr/hyprsunset.conf".source = symlink "${dotfiles}/hypr/hyprsunset.conf";
-    "hypr/input.conf".source = symlink "${dotfiles}/hypr/input.conf";
-    "hypr/monitors.conf".source = symlink "${dotfiles}/hypr/monitors.conf";
+    "hypr/autostart.conf".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/hypr/autostart.conf";
+    "hypr/bindings.conf".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/hypr/bindings.conf";
+    "hypr/env.conf".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/hypr/env.conf";
+    "hypr/hypridle.conf".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/hypr/hypridle.conf";
+    "hypr/hyprland.conf".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/hypr/hyprland.conf";
+    "hypr/hyprlock.conf".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/hypr/hyprlock.conf";
+    "hypr/hyprsunset.conf".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/hypr/hyprsunset.conf";
+    "hypr/input.conf".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/hypr/input.conf";
+    "hypr/monitors.conf".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/hypr/monitors.conf";
 
     # Wallpaper utility
     #"hypr/hyprpaper.conf".source = ./hypr/hyprpaper.conf;

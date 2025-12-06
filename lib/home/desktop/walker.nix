@@ -14,13 +14,9 @@
   };
 
   # Link the configuration file from your dotfiles directory
-  xdg.configFile =
-  let
-    symlink = file: config.lib.file.mkOutOfStoreSymlink file;
-    dotfiles = "${config.home.homeDirectory}/.dotfiles";
-  in
-  lib.mkDefault {
-    "walker/config.toml".source = symlink "${dotfiles}/walker/config.toml";
-    "elephant/desktopapplications.toml".source = symlink "${dotfiles}/elephant/desktopapplications.toml";
+  xdg.configFile = {
+    "walker/config.toml".source = lib.mkForce (config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/walker/config.toml");
+    "elephant/desktopapplications.toml".source = lib.mkForce (config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/elephant/desktopapplications.toml)";
   };
+
 }
