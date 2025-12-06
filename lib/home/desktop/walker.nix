@@ -14,7 +14,7 @@
   };
 
   # Link the configuration file from your dotfiles directory
-  xdg.configFile
+  xdg.configFile =
   let
     symlink = file: config.lib.file.mkOutOfStoreSymlink file;
     dotfiles = "${config.home.homeDirectory}/.dotfiles";

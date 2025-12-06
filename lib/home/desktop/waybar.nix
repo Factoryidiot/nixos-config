@@ -10,7 +10,7 @@
     systemd.enable = true;
   };
 
-  xdg.configFile 
+  xdg.configFile = 
   let
     symlink = file: config.lib.file.mkOutOfStoreSymlink file;
     dotfiles = "${config.home.homeDirectory}/.dotfiles";
