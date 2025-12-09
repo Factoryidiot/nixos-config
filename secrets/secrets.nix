@@ -1,22 +1,15 @@
 # secrets/secrets.nix
 { ... }: {
 
-  # This is where you define your secrets
-  age.secrets."my-test-secret" = {
-    # This file will be created in the next step
-    file = ./my-test-secret.age; 
-
-    # This specifies the list of *recipients* who can decrypt.
+  age.secrets."gh-hosts.yml" = {
+    file = ./gh-hosts.yml.age;
     publicKeys = [
-      # 1. The public key of whio-test (from ssh-to-age)
-      "age1...[whio-test-public-key]..." 
-
-      # 2. Your user public key (from age-keygen in Step 1)
-      "age1...[rhys-public-key]..." 
+      # TODO: Add the age public key for your user (rhys)
+      # You can get this by running: ssh-to-age -i deploy-keys/id_ed25519.pub
+      "<YOUR_USER_PUBLIC_KEY>"
+      # TODO: Add the age public key for the whio-test VM
+      # You can get this from the VM by running: cat /etc/ssh/ssh_host_ed25519_key.pub | ssh-to-age
+      "<YOUR_VM_PUBLIC_KEY>"
     ];
   };
-
-  # By default, this secret will be decrypted and available at:
-  # /run/agenix/my-test-secret
-
 }

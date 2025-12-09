@@ -183,6 +183,121 @@ sudo systemd-cryptenroll --recovery-key /dev/nvme0n1p2
 ```
 
 ---
+
+## Secrets Management (agenix)
+
+This project uses `agenix` (specifically `ryan4yin/ragenix`) for declarative secret management. Secrets are stored in a separate, private GitHub repository and are accessed via a deploy key.
+
+### Overview
+
+1.  **Secrets Repository**: A dedicated private GitHub repository (e.g., `nixos-secrets`) stores all encrypted secrets.
+2.  **Deploy Key**: An SSH deploy key grants read-only access to the secrets repository for your NixOS systems. The private part of this key is encrypted and managed by `agenix` within this `nixos-config` repository.
+3.  **`agenix`**: Handles encryption/decryption of secrets based on specified public keys (recipients).
+
+### Setup for a New Device or User
+
+To enable secret access on a new NixOS device or for a new user, follow these steps:
+
+#### 1. Generate Age Public Key (for new users)
+
+If you are a new user, you need to generate an `age` public key. This key will be used to encrypt secrets so only you can decrypt them.
+
+```bash
+age-keygen -o ~/.config/sops/age/keys.txt # Generates a new key pair
+cat ~/.config/sops/age/keys.txt | grep public # Display your public key
+```
+
+#### 2. Get Host Public Key (for new devices)
+
+For a new NixOS device, you will need its host SSH public key, which `agenix` can use for decryption.
+
+```bash
+ssh-to-age -i /etc/ssh/ssh_host_ed25519_key.pub
+```
+(Note: The path `/etc/ssh/ssh_host_ed25519_key.pub` might vary depending on your system.)
+
+#### 3. Add New Recipient(s) to `nixos-config/secrets/secrets.nix`
+
+Edit the `nixos-config/secrets/secrets.nix` file (in this repository) to include the public key(s) of the new device or user in the `publicKeys` list for *all* secrets they need to access.
+
+**Example:**
+
+```nix
+# secrets/secrets.nix
+{ ... }: {
+  age.secrets.deploy-key = {
+    file = ./deploy-key.age;
+    publicKeys = [
+      "age1...[existing-whio-test-public-key]..."
+      "age1...[existing-rhys-public-key]..."
+      "age1...[new-device-public-key]..."  # Add new device's age public key
+      "age1...[new-user-public-key]..."    # Add new user's age public key
+    ];
+  };
+  age.secrets.github_token = {
+    file = ./github_token.age;
+    publicKeys = [
+      "age1...[existing-whio-test-public-key]..."
+      "age1...[existing-rhys-public-key]..."
+      "age1...[new-device-public-key]..."  # Add new device's age public key
+      "age1...[new-user-public-key]..."    # Add new user's age public key
+    ];
+  };
+}
+```
+
+#### 4. Re-encrypt Secrets
+
+After adding new public keys, you *must* re-encrypt all affected `.age` files. This can be done using `agenix`.
+
+**From within your NixOS VM or a system with `agenix` and access to *all* private keys for existing recipients:**
+
+```bash
+agenix -r secrets/deploy-key.age secrets/github_token.age
+```
+(Repeat for all `.age` files if you have more.)
+
+Commit and push these re-encrypted secrets to this `nixos-config` repository.
+
+#### 5. Clone the Secrets Repository
+
+On the new device or for the new user, you need to clone the private `nixos-secrets` repository. This repository should contain a `secrets.nix` file (which defines additional secrets like your GitHub token) and their corresponding `.age` files.
+
+```bash
+git clone git@github.com:<your-username>/nixos-secrets.git /path/to/nixos-secrets
+```
+(Replace `/path/to/nixos-secrets` with the desired location, typically within your NixOS configuration directory if not already integrated as a flake input.)
+
+#### 6. (Optional) Create New Encrypted Secrets
+
+If you need to create a *new* secret:
+
+1.  Add an entry for the new secret in `nixos-config/secrets/secrets.nix` with the relevant `publicKeys`.
+2.  From within your NixOS VM (or a system with `agenix` and recipient private keys), create the encrypted file:
+    ```bash
+    agenix -e secrets/your-new-secret.age
+    ```
+    Paste the secret content, save, and exit.
+3.  Re-encrypt all secrets (`agenix -r ...`) and commit/push changes to both repositories if applicable.
+
+### Using Secrets in Your Configuration
+
+Secrets defined in `nixos-config/secrets/secrets.nix` (like `deploy-key`) are available via `config.age.secrets.<secret-name>.path`.
+
+Secrets defined in your separate `nixos-secrets` repository (like `github_token`) are available via `inputs.nixos-secrets.<secret-name>.path` or similar, depending on how you structure that repository.
+
+```nix
+# Example of using a secret in a NixOS module
+{ config, inputs, ... }: {
+  # For secrets managed directly in this repo
+  environment.variables.DEPLOY_KEY_PATH = config.age.secrets.deploy-key.path;
+
+  # For secrets from the 'nixos-secrets' flake input
+  environment.variables.GITHUB_TOKEN_PATH = inputs.nixos-secrets.github_token.path;
+}
+```
+
+---
 ## References
 - https://github.com/ryan4yin/nix-config
 - https://github.com/nix-community/lanzaboote/blob/master/docs/QUICK_START.md

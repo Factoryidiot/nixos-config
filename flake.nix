@@ -71,11 +71,12 @@
 
       # Pass inputs and self to all configurations for easy access
       specialArgs = {
-        inherit hyprland impermanence inputs lanzaboote nixpkgs-unstable self;
+        inherit hyprland impermanence inputs lanzaboote nixpkgs-unstable self agenix;
       };
  
       # Common modules for all systems (DRY principle)
       commonModules = [
+        ./lib/nixos/secrets.nix
         # Common home-manager configuration
         home-manager.nixosModules.home-manager
         {
@@ -126,7 +127,6 @@
           username = "rhys";
           modules = [
             ./hosts/whio/default.nix
-            # ./secrets/default.nix # Uncommented for clarity
             {
               system.stateVersion = "25.05";
             }
@@ -138,7 +138,6 @@
           username = "rhys";
           modules = [
             ./hosts/whio-test/default.nix
-            #./secrets/default.nix
             {
               # Ensure the system state version is set
               system.stateVersion = "25.05";
