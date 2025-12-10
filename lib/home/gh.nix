@@ -1,3 +1,4 @@
+# lib/home/gh.nix
 { config, pkgs, lib, ... }: {
 
   # Ensure gh is installed
@@ -15,7 +16,4 @@
     userEmail = "rhys.scandlyn@gmail.com";
   };
 
-  # Link the gh hosts file from agenix, which contains the auth token.
-  # This makes gh and git authentication work automatically.
-  home.file.".config/gh/hosts.yml".source = config.age.secrets."gh-hosts.yml".path;
 }
