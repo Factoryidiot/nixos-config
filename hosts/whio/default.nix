@@ -64,6 +64,7 @@
       playerctl
       pulseaudioFull
       supergfxctl
+      flatpak
    ];
   };
 

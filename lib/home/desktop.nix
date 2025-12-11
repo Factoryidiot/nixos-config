@@ -23,6 +23,7 @@ in
     jq # Needed for many Waybar scripts
     pamixer # Audio control
     brightnessctl # Brightness control
+    chromium
 
     # You can add more here (e.g., foot, wezterm, firefox, etc.)
  
