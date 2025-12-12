@@ -8,6 +8,7 @@ let
 in
 {
   imports = [
+    ./desktop/browser.nix
     ./desktop/hyprland.nix
     ./desktop/mako.nix
     ./desktop/terminal.nix
@@ -23,7 +24,6 @@ in
     jq # Needed for many Waybar scripts
     pamixer # Audio control
     brightnessctl # Brightness control
-    chromium
 
     # You can add more here (e.g., foot, wezterm, firefox, etc.)
  

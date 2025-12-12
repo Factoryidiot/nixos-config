@@ -38,20 +38,20 @@
 
   boot.initrd = {
     luks.devices."crypted" = lib.mkDefault {
-      device = "/dev/disk/by-uuid/4502f7bc-c44d-4e94-93e3-3ab75036c3f5";
+      device = "/dev/disk/by-uuid/ea4c4512-4b8a-4231-8092-f51f076446b0";
       allowDiscards = true;
       bypassWorkqueues = true;
     };
   };
 
   fileSystems."/boot" = lib.mkDefault
-    { device = "/dev/disk/by-uuid/EC53-3A42";
+    { device = "/dev/disk/by-uuid/9AB3-3B8F";
       fsType = "vfat";
       options = [ "fmask=0022" "dmask=0022" ];
     };
 
   fileSystems."/btr_pool" = lib.mkDefault
-    { device = "/dev/disk/by-uuid/63cc1458-78d4-4d5c-9d4e-94901b928b27";
+    { device = "/dev/disk/by-uuid/02656142-8d5c-4599-9b97-fe51848f8dcf";
       fsType = "btrfs"; 
       options = [ "subvolid=5" ];
     };
@@ -63,32 +63,32 @@
     };
 
   fileSystems."/gnu" = lib.mkDefault
-    { device = "/dev/disk/by-uuid/63cc1458-78d4-4d5c-9d4e-94901b928b27";
+    { device = "/dev/disk/by-uuid/02656142-8d5c-4599-9b97-fe51848f8dcf";
       fsType = "btrfs";
       options = [ "subvol=@guix" "noatime" "compress-force=zstd:1" ];
     };
 
   fileSystems."/nix" = lib.mkDefault
-    { device = "/dev/disk/by-uuid/63cc1458-78d4-4d5c-9d4e-94901b928b27";
+    { device = "/dev/disk/by-uuid/02656142-8d5c-4599-9b97-fe51848f8dcf";
       fsType = "btrfs";
       options = [ "subvol=@nix" "noatime" "compress-force=zstd:1" ];
     };
 
   fileSystems."/persistent" = lib.mkDefault
-    { device = "/dev/disk/by-uuid/63cc1458-78d4-4d5c-9d4e-94901b928b27";
+    { device = "/dev/disk/by-uuid/02656142-8d5c-4599-9b97-fe51848f8dcf";
       fsType = "btrfs";
       options = [ "subvol=@persistent" "compress-force=zstd:1" ];
       neededForBoot = true;
     };
 
   fileSystems."/snapshots" = lib.mkDefault
-    { device = "/dev/disk/by-uuid/63cc1458-78d4-4d5c-9d4e-94901b928b27";
+    { device = "/dev/disk/by-uuid/02656142-8d5c-4599-9b97-fe51848f8dcf";
       fsType = "btrfs";
       options = [ "subvol=@snapshots" "compress-force=zstd:1" ];
     };
 
   fileSystems."/swap" = lib.mkDefault
-    { device = "/dev/disk/by-uuid/63cc1458-78d4-4d5c-9d4e-94901b928b27";
+    { device = "/dev/disk/by-uuid/02656142-8d5c-4599-9b97-fe51848f8dcf";
       fsType = "btrfs";
       options = [ "subvol=@swap" "ro" ];
     };
@@ -101,7 +101,7 @@
     };
 
   fileSystems."/tmp" = lib.mkDefault
-    { device = "/dev/disk/by-uuid/63cc1458-78d4-4d5c-9d4e-94901b928b27";
+    { device = "/dev/disk/by-uuid/02656142-8d5c-4599-9b97-fe51848f8dcf";
       fsType = "btrfs";
       options = [ "subvol=@tmp" "compress-force=zstd:1" ];
     };

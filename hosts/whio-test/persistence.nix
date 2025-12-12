@@ -24,7 +24,7 @@ in
       "/etc/agenix/"    # secrets
 
       "/var/lib/nixos"
-      "/var/flatpak"
+      "/var/lib/flatpak"
 
       # network
       #"/var/lib/tailscale"
@@ -81,7 +81,6 @@ in
         ".config/google-chrome"
         #".config/obsidian"
 
-        # neovim / remmina / flatpak / ...
         ".local/share/flatpak"
         ".local/state"
 

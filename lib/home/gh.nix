@@ -10,7 +10,7 @@
   programs.git = {
     enable = true;
     extraConfig = {
-      "credential.helper" = "gh";
+      #"credential.helper" = "gh";
     };
     userName = "Rhys Scandlyn";
     userEmail = "rhys.scandlyn@gmail.com";
