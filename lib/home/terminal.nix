@@ -5,6 +5,10 @@
   , ...
 }: {
 
+  home.sessionPath = [
+    "~/.dotfiles/scripts"
+  ];
+
   programs.zsh = {
     enable = true;
 
@@ -48,7 +52,7 @@
       useFriendlyNames = true;
     };
 
-    dotDir = "${config.home.homeDirectory}";
+    dotDir = "${config.xdg.configHome}/zsh";
 
     history = {
       ignoreAllDups = true;

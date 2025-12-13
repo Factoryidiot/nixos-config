@@ -1,5 +1,7 @@
 # lib/home/git.nix
-{ ... }: {
+{ 
+  ... 
+}: {
 
   programs.gh = {
     enable = true;
@@ -12,12 +14,8 @@
   programs.git = {
     enable = true;
     settings = {
-      #init.defaultBranch = "main";
       user.name = "Rhys Scandlyn";
       user.email = "rhys.scandlyn@gmail.com";
-    };
-    url = {
-      "ssh://git@github.com/Factoryidiot" = { insteadOf = "https://github.com/Factoryidiot" };
     };
   };
 

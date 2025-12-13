@@ -29,6 +29,7 @@ in
  
     xdg-desktop-portal
     xdg-desktop-portal-gtk
+    xdg-terminal-exec
   ];
 
 }

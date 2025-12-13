@@ -13,6 +13,7 @@
 
   home.packages = with pkgs; [
     eza
+
     nerd-fonts.jetbrains-mono
   ];
 }

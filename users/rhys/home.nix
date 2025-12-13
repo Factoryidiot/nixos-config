@@ -3,11 +3,13 @@
 }: {
 
   imports = [
+    ../../lib/home/btop.nix
     ../../lib/home/desktop.nix
     ../../lib/home/fastfetch.nix
     ../../lib/home/git.nix
+    ../../lib/home/tmux.nix
     ../../lib/home/yazi.nix
-    ../../lib/home/zsh.nix
+    ../../lib/home/terminal.nix
   ];
 
   home = {
