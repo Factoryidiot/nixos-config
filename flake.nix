@@ -18,7 +18,7 @@
 
   inputs = {
     # Primary stable channel, all inputs follow this unless otherwise noted
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     agenix = {
@@ -27,7 +27,7 @@
     };
     home-manager = {
       # Updated to use the release branch from your second file
-      url = "github:nix-community/home-manager/release-25.05";
+      url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     hyprland = {
@@ -141,7 +141,7 @@
             ./hosts/whio-test/default.nix
             {
               # Ensure the system state version is set
-              system.stateVersion = "25.05";
+              system.stateVersion = "25.11";
             }
           ];
         };
