@@ -16,6 +16,9 @@
       user.name = "Rhys Scandlyn";
       user.email = "rhys.scandlyn@gmail.com";
     };
+    url = {
+      "ssh://git@github.com/Factoryidiot" = { insteadOf = "https://github.com/Factoryidiot" };
+    };
   };
 
   programs.lazygit.enable = true;
