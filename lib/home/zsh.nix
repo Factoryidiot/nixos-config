@@ -48,7 +48,7 @@
       useFriendlyNames = true;
     };
 
-    dotDir = ".config/zsh";
+    dotDir = "${config.home.homeDirectory}";
 
     history = {
       ignoreAllDups = true;
