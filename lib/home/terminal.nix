@@ -1,3 +1,4 @@
+# lib/home/terminal.nix
 {
   config
   , lib
@@ -6,7 +7,7 @@
 }: {
 
   home.sessionPath = [
-    "~/.dotfiles/scripts"
+    "${config.home.homeDirectory}/.dotfiles/bin"
   ];
 
   programs.zsh = {
@@ -56,7 +57,7 @@
 
     history = {
       ignoreAllDups = true;
-      path = "${config.home.homeDirectory}/${config.programs.zsh.dotDir}/.zsh_history";
+      path = "${config.programs.zsh.dotDir}/.zsh_history";
       size = 10000;
     };
 

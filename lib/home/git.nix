@@ -13,6 +13,10 @@
 
   programs.git = {
     enable = true;
+    ignores = [
+      "*~"
+      
+    ];
     settings = {
       user.name = "Rhys Scandlyn";
       user.email = "rhys.scandlyn@gmail.com";
