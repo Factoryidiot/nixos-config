@@ -6,6 +6,7 @@
   programs.gh = {
     enable = true;
     settings = {
+      credential.helper = "libsecret";
       git_protocol = "ssh";
       prompt = "enabled";
     };
