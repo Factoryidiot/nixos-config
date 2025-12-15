@@ -18,18 +18,27 @@ in
 
   # Install necessary packages for a working desktop environment
   home.packages = with pkgs; [
-    #+----Audio-------------------------
-    pamixer # Audio control
-    
+    #+---- Audio -----------------------
+    pamixer				# Audio control
+    playerctl				# CMD-Line to control media players
+
     # Other desktop dependencies
     swaybg	# Basic wallpaper setter for fallback
-    jq		# Needed for many Waybar scripts
     brightnessctl # Brightness control
 
-    # You can add more here (e.g., foot, wezterm, firefox, etc.)
- 
-    #+----Security and Auth-------------
+    #+---- Security and Auth -----------
     libsecret
+
+    #+---- Shell -----------------------
+    bat					# Cat clone with syntax highlighting and Git integration
+    eza					# Replacement for `ls`
+    fastfetch				# System information fetch tool
+    fd					# Simple, fast and user-friendly alternative to `find`
+    fzf					# Command line fuzzy finder
+    jq					# Needed for many Waybar scripts
+    ripgrep				# Search tool 
+    zoxide				# `cd` command tool
+
 
     xdg-desktop-portal
     xdg-desktop-portal-gtk

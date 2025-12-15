@@ -61,7 +61,9 @@ in
           directory = ".ssh";
           mode = "0700";
         }
-
+	# Flatpak
+        ".var/app"
+        
         # misc
         ".config/pulse"
         ".pki"
