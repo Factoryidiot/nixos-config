@@ -80,7 +80,8 @@ in
 
         # .config
         #".config/Bitwarden"
-        ".config/google-chrome"
+        #".config/google-chrome"
+        ".config/chromium"
         #".config/obsidian"
 
         ".local/share/flatpak"

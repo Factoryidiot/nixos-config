@@ -36,7 +36,8 @@ in
     fd					# Simple, fast and user-friendly alternative to `find`
     fzf					# Command line fuzzy finder
     jq					# Needed for many Waybar scripts
-    ripgrep				# Search tool 
+    ripgrep				# Search tool
+    terminaltexteffects			# Screensaver 
     zoxide				# `cd` command tool
 
 
