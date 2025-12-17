@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env zsh
 
 # Exit early if we don't have the tte show
 if ! command -v tte &>/dev/null; then
@@ -6,7 +6,7 @@ if ! command -v tte &>/dev/null; then
 fi
 
 # Exit early if screensave is already running
-pgrep -f org.omarchy.screensaver && exit 0
+pgrep -f dot.nixos.screensaver && exit 0
 
 # Allow screensaver to be turned off but also force started
 if [[ -f ~/.local/state/omarchy/toggles/screensaver-off ]] && [[ $1 != "force" ]]; then
@@ -25,9 +25,9 @@ for m in $(hyprctl monitors -j | jq -r '.[] | .name'); do
   case $terminal in
   *Alacritty*)
     hyprctl dispatch exec -- \
-      alacritty --class=org.omarchy.screensaver \
+      alacritty --class=dot.nixos.screensaver \
       --config-file ~/.local/share/omarchy/default/alacritty/screensaver.toml \
-      -e omarchy-cmd-screensaver
+      -e cmd-screensaver
     ;;
   *ghostty*)
     hyprctl dispatch exec -- \
