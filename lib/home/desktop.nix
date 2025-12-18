@@ -16,6 +16,7 @@ in
     ./desktop/waybar.nix
   ];
 
+
   # Install necessary packages for a working desktop environment
   home.packages = with pkgs; [
     #+---- Audio -----------------------
