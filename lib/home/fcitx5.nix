@@ -10,8 +10,6 @@ in
     enable = mkEnableOption "Enable fcitx5";
   };
 
-  programs.fcitx5.enable = true;
-
   config = mkIf cfg.enable {
     i18n.inputMethod = {
       enabled = "fcitx5";
