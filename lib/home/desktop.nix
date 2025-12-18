@@ -23,6 +23,8 @@ in
     pamixer				# Audio control
     playerctl				# CMD-Line to control media players
 
+    libnotify
+
     # Other desktop dependencies
     swaybg	# Basic wallpaper setter for fallback
     brightnessctl # Brightness control
