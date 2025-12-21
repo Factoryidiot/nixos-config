@@ -29,7 +29,6 @@ in
 
   hardware.opengl = {
     enable = true;
-    driSupport = true;
   };
 
   # Time and locale are specific to the physical location
