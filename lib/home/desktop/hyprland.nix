@@ -57,6 +57,7 @@ in
     TERMINAL = "alacritty";   # Specify the terminal emulator
     NIXOS_OZONE_WL = "1";     # Tell GTK apps to use the correct theme engine
     XDG_CURRENT_DESKTOP = "Hyprland";
+    WLR_RENDERER = "vulkan";
   };
 
 }
