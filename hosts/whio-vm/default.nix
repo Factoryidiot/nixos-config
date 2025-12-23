@@ -1,6 +1,7 @@
 # hosts/whio-vm/default.nix
 {
-  specialArgs
+  pkgs
+  , specialArgs
   , ...
 }:
 let
