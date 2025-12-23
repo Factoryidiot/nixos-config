@@ -1,4 +1,4 @@
-# hosts/whio-test/default.nix
+# hosts/whio-vm/default.nix
 {
   specialArgs
   , ...
@@ -30,6 +30,12 @@ in
   hardware.opengl = {
     enable = true;
   };
+
+  environment.systemPackages = with pkgs; [
+    mesa
+    xdg-desktop-portal
+    xdg-desktop-portal-gtk
+  ];
 
   # Time and locale are specific to the physical location
   time.timeZone = "Pacific/Auckland";

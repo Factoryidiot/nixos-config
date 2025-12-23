@@ -135,11 +135,11 @@
           ];
         };
 
-        whio-test = mkNixosSystem {
-          name = "whio-test";
+        whio-vm = mkNixosSystem {
+          name = "whio-vm";
           username = "rhys";
           modules = [
-            ./hosts/whio-test/default.nix
+            ./hosts/whio-vm/default.nix
             {
               # Ensure the system state version is set
               system.stateVersion = "25.11";
@@ -151,8 +151,8 @@
 
       # Standard outputs for convenience
       formatter.${system} = nixpkgs.legacyPackages.${system}.nixpkgs-fmt;
-      defaultPackage.${system} = self.packages.${system}.nixos-system-whio-test;
-      packages.${system}.nixos-system-whio-test = self.nixosConfigurations.whio-test.config.system.build.toplevel;
+      defaultPackage.${system} = self.packages.${system}.nixos-system-whio-vm;
+      packages.${system}.nixos-system-whio-vm = self.nixosConfigurations.whio-vm.config.system.build.toplevel;
 
     };
 }
