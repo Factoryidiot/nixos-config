@@ -2,33 +2,57 @@
 # VM Manager Script for NixOS 25.05 UEFI/Secure Boot VM
 
 # --- Configuration Variables ---
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+PROJECT_ROOT=$(realpath "$SCRIPT_DIR/../..")
 
-# Paths (Ensure these directories/files exist!)
+# Paths
 VM_NAME="NixOS_25.11_VM"
-VDI_PATH="/home/rhys/Documents/VM/VDI/nixos.qcow2"
-VDI_SIZE="64G" # New: Size for the VDI if it needs to be created
+VM_DATA_DIR="$PROJECT_ROOT/vm_data"
+VDI_PATH="$VM_DATA_DIR/nixos.qcow2"
+VDI_SIZE="64G"
 ISO_PATH="/home/rhys/Downloads/ISO/nixos-minimal-25.05.810995.5da4a26309e7-x86_64-linux.iso"
 
-# UEFI/Secure Boot Paths (Active for 'start' command)
+# UEFI/Secure Boot Paths
 BIOS_CODE_PATH="/home/rhys/Documents/VM/bios/OVMF_CODE_4M.secboot.fd"
 BIOS_VARS_PATH="/home/rhys/Documents/VM/bios/OVMF_VARS_4M.secboot.fd"
 
 # Hardware Configuration
-VM_MEMORY="8G" # Default VM Memory (e.g., 4G, 8G, 16G)
+VM_MEMORY="8G"
 
-# TPM Paths (Configuration for swtpm)
-TPM_STATE_DIR="/home/rhys/Documents/VM/nixos/tpm"              # Directory for TPM state files
-TPM_SOCKET_PATH="/home/rhys/Documents/VM/nixos/tpm/swtpm-sock" # Socket QEMU connects to
-SWTPM_PID_FILE="/tmp/swtpm-nixos-$USER.pid"                    # PID file for swtpm background process
+# TPM Paths
+TPM_STATE_DIR="$VM_DATA_DIR/tpm"
+TPM_SOCKET_PATH="$TPM_STATE_DIR/swtpm-sock"
+SWTPM_PID_FILE="/tmp/swtpm-nixos-$USER.pid"
 SWTPM_BIN="swtpm"
 QEMU_BIN="qemu-system-x86_64"
-QEMU_IMG_BIN="qemu-img" # New: Binary for VDI management
+QEMU_IMG_BIN="qemu-img"
 
 # Runtime/Control Variables
 MONITOR_SOCKET="/tmp/qemu-$USER-nixos-monitor.sock"
 PID_FILE="/tmp/qemu-$USER-nixos.pid"
 
 # --- Functions ---
+
+# Function to set up environment variables based on GPU vendor
+setup_gpu_environment() {
+  echo "--- Detecting GPU for hardware acceleration ---"
+  if lspci | grep -i 'VGA compatible controller.*NVIDIA' >/dev/null; then
+    echo "NVIDIA GPU detected. Setting up environment for NVIDIA."
+    export __GLX_VENDOR_LIBRARY_NAME=nvidia
+    export __EGL_VENDOR_LIBRARY_FILENAMES="/usr/share/glvnd/egl_vendor.d/10_nvidia.json"
+  elif lspci | grep -i 'VGA compatible controller.*AMD' >/dev/null; then
+    echo "AMD GPU detected. No specific environment variables needed for QEMU."
+    # AMD works out of the box with Mesa, no special vars needed typically
+  elif lspci | grep -i 'VGA compatible controller.*Intel' >/dev/null; then
+    echo "Intel GPU detected. No specific environment variables needed for QEMU."
+    # Intel also works out of the box with Mesa
+  else
+    echo "Could not detect a primary NVIDIA, AMD, or Intel GPU. Graphics acceleration may not work."
+  fi
+  # Generic backend setting
+  export GDK_BACKEND=x11
+}
+
 
 # Function to clean up temporary files (PID and monitor socket)
 cleanup() {
@@ -143,15 +167,12 @@ remove_vdi() {
 start_vm() {
   check_and_create_vdi || return 1 # Check and create VDI before starting
   start_swtpm || return 1
+  setup_gpu_environment # Set up GPU environment variables
 
   # VM is run in the foreground to display the window.
   echo "--- Starting $VM_NAME in FOREGROUND ---"
   echo "Monitor Socket: $MONITOR_SOCKET"
   echo "USE CTRL+C IN THIS TERMINAL TO STOP THE VM."
-  
-  export __GLX_VENDOR_LIBRARY_NAME=nvidia
-  export __EGL_VENDOR_LIBRARY_FILENAMES="/usr/share/glvnd/egl_vendor.d/10_nvidia.json"
-  export GDK_BACKEND=x11
 
   # The QEMU command for UEFI/Secure Boot with TPM
   "$QEMU_BIN" \
@@ -215,6 +236,7 @@ start_vm() {
 install_vm() {
   check_and_create_vdi || return 1 # Check and create VDI before starting
   start_swtpm || return 1
+  setup_gpu_environment
 
   # VM is run in the foreground to display the window.
   echo "--- Starting $VM_NAME in FOREGROUND ---"
