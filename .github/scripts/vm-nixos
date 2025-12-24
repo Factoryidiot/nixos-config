@@ -2,26 +2,23 @@
 # VM Manager Script for NixOS 25.05 UEFI/Secure Boot VM
 
 # --- Configuration Variables ---
-SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
-PROJECT_ROOT=$(realpath "$SCRIPT_DIR/../..")
 
-# Paths
+# Paths (Ensure these directories/files exist!)
 VM_NAME="NixOS_25.11_VM"
-VM_DATA_DIR="$PROJECT_ROOT/vm_data"
-VDI_PATH="$VM_DATA_DIR/nixos.qcow2"
-VDI_SIZE="64G"
+VDI_PATH="/home/rhys/Documents/VM/VDI/nixos.qcow2"
+VDI_SIZE="64G" # New: Size for the VDI if it needs to be created
 ISO_PATH="/home/rhys/Downloads/ISO/nixos-minimal-25.05.810995.5da4a26309e7-x86_64-linux.iso"
 
-# UEFI/Secure Boot Paths
+# UEFI/Secure Boot Paths (Active for 'start' command)
 BIOS_CODE_PATH="/home/rhys/Documents/VM/bios/OVMF_CODE_4M.secboot.fd"
 BIOS_VARS_PATH="/home/rhys/Documents/VM/bios/OVMF_VARS_4M.secboot.fd"
 
 # Hardware Configuration
-VM_MEMORY="8G"
+VM_MEMORY="8G" # Default VM Memory (e.g., 4G, 8G, 16G)
 
-# TPM Paths
-TPM_STATE_DIR="$VM_DATA_DIR/tpm"
-TPM_SOCKET_PATH="$TPM_STATE_DIR/swtpm-sock"
+# TPM Paths (Configuration for swtpm)
+TPM_STATE_DIR="/home/rhys/Documents/VM/nixos/tpm"              # Directory for TPM state files
+TPM_SOCKET_PATH="/home/rhys/Documents/VM/nixos/tpm/swtpm-sock" # Socket QEMU connects to
 SWTPM_PID_FILE="/tmp/swtpm-nixos-$USER.pid"
 SWTPM_BIN="swtpm"
 QEMU_BIN="qemu-system-x86_64"
@@ -62,6 +59,7 @@ cleanup() {
   # 1. Clean up QEMU files
   [ -f "$MONITOR_SOCKET" ] && rm -f "$MONITOR_SOCKET"
   [ -f "$PID_FILE" ] && rm -f "$PID_FILE"
+  [ -S "/tmp/nixos-vm.sock" ] && rm -f "/tmp/nixos-vm.sock"
 
   # 2. Clean up swtpm if we started it
   if [ -f "$SWTPM_PID_FILE" ]; then
@@ -222,9 +220,8 @@ start_vm() {
     return 1
   fi
 
-  echo "Launching Remote Viewer..."
-  #remote-viewer spice+unix:///tmp/nixos-vm.sock >/dev/null 2>&1 &
-  remote-viewer --spice-controller spice+unix:///tmp/nixos-vm.sock --hotkeys=release-cursor=ctrl+alt >/dev/null 2>&1 &
+  echo "Launching Remote Viewer... "
+  remote-viewer --full-screen spice+unix:///tmp/nixos-vm.sock >/dev/null 2>&1 &
 
   echo "VM and Viewer are running. Use Ctrl+C in this terminal to stop everything."
   wait $(cat "$PID_FILE")
