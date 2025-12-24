@@ -221,7 +221,7 @@ start_vm() {
   fi
 
   echo "Launching Remote Viewer... "
-  remote-viewer --full-screen spice+unix:///tmp/nixos-vm.sock >/dev/null 2>&1 &
+  remote-viewer --spice-controller spice+unix:///tmp/nixos-vm.sock --hotkeys=release-cursor=ctrl+alt >/dev/null 2>&1 &
 
   echo "VM and Viewer are running. Use Ctrl+C in this terminal to stop everything."
   wait $(cat "$PID_FILE")
