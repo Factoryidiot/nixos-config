@@ -22,9 +22,16 @@ in
 
   # Install necessary packages for a working desktop environment
   home.packages = with pkgs; [
-    #+---- Audio -----------------------
+    #+---- Audio & Media -----------------------
     pamixer				# Audio control
     playerctl				# CMD-Line to control media players
+    gst-plugin-pipewire # GStreamer pipewire plugin
+    imv # Powerful Wayland image viewer
+    webp-pixbuf-loader # WebP image support
+
+    #+---- System Utilities & TUIs ----------------
+    htop # TUI process viewer
+    bluetui # TUI for bluetooth
 
     libnotify
 
@@ -35,7 +42,7 @@ in
     #+---- Security and Auth -----------
     libsecret
 
-    #+---- Shell -----------------------
+    #+---- Shell & CLI Tools -----------------------
     bat					# Cat clone with syntax highlighting and Git integration
     eza					# Replacement for `ls`
     fastfetch				# System information fetch tool
@@ -43,10 +50,24 @@ in
     fzf					# Command line fuzzy finder
     jq					# Needed for many Waybar scripts
     ripgrep				# Search tool
-    terminaltexteffects			# Screensaver 
+    terminaltexteffects			# Screensaver
+    wget # Classic command-line file downloader
     zoxide				# `cd` command tool
 
+    #+---- GUI Apps -------------------------------
+    evince # PDF Viewer
+    gnome-calculator
+    localsend # AirDrop alternative
 
+    #+---- Screenshots & Screen Recording ----------
+    grim # Wayland screenshot tool
+    slurp # Wayland region selector for grim
+    satty # Screenshot annotation tool
+    hyprpicker # Wayland color picker
+    wl-clipboard # Copy to Wayland clipboard
+    gpu-screen-recorder # Screen recording utility
+
+    #+---- XDG & Portals --------------------------
     xdg-desktop-portal
     xdg-desktop-portal-gtk
     xdg-terminal-exec
