@@ -23,11 +23,10 @@ in
   # Install necessary packages for a working desktop environment
   home.packages = with pkgs; [
     #+---- Audio & Media -----------------------
-    pamixer				# Audio control
-    playerctl				# CMD-Line to control media players
-    gst-plugin-pipewire # GStreamer pipewire plugin
-    imv # Powerful Wayland image viewer
-    webp-pixbuf-loader # WebP image support
+    pamixer                                     # Audio control
+    playerctl                                   # CMD-Line to control media players
+    imv                                         # Powerful Wayland image viewer
+    webp-pixbuf-loader                          # WebP image support
 
     #+---- System Utilities & TUIs ----------------
     htop # TUI process viewer
