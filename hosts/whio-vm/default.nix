@@ -66,16 +66,13 @@ in
     avahi.enable = true;
     # BTRFS Snapshots
     snapper = {
-      enable = true;
       configs.root = {
-        subvolume = "/";
-        extraConfig = {
-          TIMELINE_CREATE = "no";
-          NUMBER_CLEANUP = "yes";
-          NUMBER_MIN_AGE = "1800";
-          NUMBER_LIMIT = "25";
-          NUMBER_LIMIT_IMPORTANT = "10";
-        };
+        SUBVOLUME = "/";
+        TIMELINE_CREATE = "no";
+        NUMBER_CLEANUP = "yes";
+        NUMBER_MIN_AGE = "1800";
+        NUMBER_LIMIT = "25";
+        NUMBER_LIMIT_IMPORTANT = "10";
       };
     };
   };
