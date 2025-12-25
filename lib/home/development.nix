@@ -11,7 +11,7 @@
     lazydocker
 
     # Language Runtimes & Tools
-    jdk-openjdk
+    #jdk-openjdk
     libsass
     sassc
   ];
