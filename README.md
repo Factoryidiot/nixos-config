@@ -298,6 +298,61 @@ Secrets defined in your separate `nixos-secrets` repository (like `github_token`
 ```
 
 ---
+
+## Filesystem Snapshots (Snapper)
+
+This configuration uses `snapper` to automatically create and manage Btrfs filesystem snapshots. This provides a powerful data recovery mechanism that is complementary to NixOS generations. While NixOS generations protect your *system configuration*, snapper protects your *data* (e.g., your `/home` directory).
+
+The configuration for `snapper` is named `root`.
+
+### Listing Snapshots
+
+To see a list of all available snapshots for the `root` configuration:
+
+```bash
+sudo snapper -c root list
+```
+
+This will output a table with the snapshot number, type, date, and description.
+
+### Viewing Changes Between Snapshots
+
+To see what files have been added, modified, or removed between two points in time, you can `diff` two snapshots.
+
+```bash
+# Show changes between snapshot 10 and snapshot 15
+sudo snapper -c root diff 10..15
+```
+
+### Restoring a Single File
+
+This is the most common and safest use case for `snapper`. If you accidentally delete a file, you can easily restore it from a recent snapshot.
+
+Snapshots are accessible via a hidden `.snapshots` directory within the subvolume they belong to. For example, to restore a file in your home directory:
+
+1.  List the snapshots (`sudo snapper -c root list`) to find a snapshot number (e.g., `#25`) from before the file was deleted.
+2.  Navigate to the `.snapshots` directory and copy the file back.
+
+    ```bash
+    # Example: Restore 'my-deleted-file.txt' from your home directory
+    sudo cp /home/.snapshots/25/snapshot/rhys/my-deleted-file.txt /home/rhys/
+    ```
+    *(Note: You will likely need `sudo` to access the `.snapshots` directory)*
+
+### Performing a Full Rollback (Use with Caution)
+
+A full rollback reverts the *entire subvolume* to a previous state. This is a destructive operation and should be used with care, as any changes made after the snapshot was taken will be lost. This is more powerful than restoring a single file but also riskier.
+
+1.  List the snapshots to find the number of the snapshot you wish to roll back to.
+2.  Execute the rollback command. This will create a new read-write snapshot of the target snapshot and set it as the new default subvolume.
+
+    ```bash
+    # Roll back the root subvolume to the state of snapshot 25
+    sudo snapper -c root rollback 25
+    ```
+3.  **You must reboot** after performing a rollback for the changes to take effect.
+
+---
 ## References
 - https://github.com/ryan4yin/nix-config
 - https://github.com/nix-community/lanzaboote/blob/master/docs/QUICK_START.md
