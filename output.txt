@@ -1,5 +1,5 @@
 [{
-    "address": "0x5599be1e29a0",
+    "address": "0x55d17865d3d0",
     "mapped": true,
     "hidden": false,
     "at": [967, 38],
@@ -15,7 +15,7 @@
     "title": "Alacritty",
     "initialClass": "Alacritty",
     "initialTitle": "Alacritty",
-    "pid": 822275,
+    "pid": 3663,
     "xwayland": false,
     "pinned": false,
     "fullscreen": 0,
@@ -29,7 +29,7 @@
     "xdgDescription": "",
     "contentType": "none"
 },{
-    "address": "0x5599be1f5830",
+    "address": "0x55d1787b7e10",
     "mapped": true,
     "hidden": false,
     "at": [12, 38],
@@ -45,7 +45,7 @@
     "title": "Alacritty",
     "initialClass": "Alacritty",
     "initialTitle": "Alacritty",
-    "pid": 57650,
+    "pid": 3433,
     "xwayland": false,
     "pinned": false,
     "fullscreen": 0,
