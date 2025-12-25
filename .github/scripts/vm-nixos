@@ -30,22 +30,30 @@ PID_FILE="/tmp/qemu-$USER-nixos.pid"
 
 # --- Functions ---
 
-# Function to set up environment variables based on GPU vendor
+# Function to set up environment variables based on GPU vendor preference
 setup_gpu_environment() {
-  echo "--- Detecting GPU for hardware acceleration ---"
-  if lspci | grep -i 'VGA compatible controller.*NVIDIA' >/dev/null; then
-    echo "NVIDIA GPU detected. Setting up environment for NVIDIA."
+  local gpu_preference="$1"
+
+  echo "--- Setting up GPU environment ---"
+
+  # Unset variables to ensure a clean slate
+  unset DRI_PRIME
+  unset __GLX_VENDOR_LIBRARY_NAME
+  unset __EGL_VENDOR_LIBRARY_FILENAMES
+
+  if [[ "$gpu_preference" == "amd" || "$gpu_preference" == "radeon" ]]; then
+    echo "Preference: AMD/Radeon GPU. Using integrated graphics (DRI_PRIME=0)."
+    export DRI_PRIME=0
+  elif [[ "$gpu_preference" == "nvidia" ]]; then
+    echo "Preference: NVIDIA GPU. Using discrete graphics (DRI_PRIME=1) and NVIDIA variables."
+    export DRI_PRIME=1
     export __GLX_VENDOR_LIBRARY_NAME=nvidia
     export __EGL_VENDOR_LIBRARY_FILENAMES="/usr/share/glvnd/egl_vendor.d/10_nvidia.json"
-  elif lspci | grep -i 'VGA compatible controller.*AMD' >/dev/null; then
-    echo "AMD GPU detected. No specific environment variables needed for QEMU."
-    # AMD works out of the box with Mesa, no special vars needed typically
-  elif lspci | grep -i 'VGA compatible controller.*Intel' >/dev/null; then
-    echo "Intel GPU detected. No specific environment variables needed for QEMU."
-    # Intel also works out of the box with Mesa
   else
-    echo "Could not detect a primary NVIDIA, AMD, or Intel GPU. Graphics acceleration may not work."
+    echo "No GPU preference specified or invalid option. Using system default."
+    # Let the system decide which GPU to use by default
   fi
+
   # Generic backend setting
   export GDK_BACKEND=x11
 }
@@ -163,9 +171,10 @@ remove_vdi() {
 
 # Function for Post-Install/Run Mode (UEFI/Secure Boot)
 start_vm() {
+  local gpu_pref="$1"
   check_and_create_vdi || return 1 # Check and create VDI before starting
   start_swtpm || return 1
-  setup_gpu_environment # Set up GPU environment variables
+  setup_gpu_environment "$gpu_pref" # Set up GPU environment variables
 
   # VM is run in the foreground to display the window.
   echo "--- Starting $VM_NAME in FOREGROUND ---"
@@ -231,9 +240,10 @@ start_vm() {
 
 # Function for Pre-Install Mode (Legacy Boot)
 install_vm() {
+  local gpu_pref="$1"
   check_and_create_vdi || return 1 # Check and create VDI before starting
   start_swtpm || return 1
-  setup_gpu_environment
+  setup_gpu_environment "$gpu_pref"
 
   # VM is run in the foreground to display the window.
   echo "--- Starting $VM_NAME in FOREGROUND ---"
@@ -309,30 +319,34 @@ stop_vm() {
 # Trap function to ensure cleanup runs on script exit or interrupt (Ctrl+C)
 trap cleanup EXIT
 
-case "$1" in
+COMMAND="$1"
+GPU_PREF="$2"
+
+case "$COMMAND" in
 start)
-  start_vm
+  start_vm "$GPU_PREF"
   ;;
 install)
-  install_vm
+  install_vm "$GPU_PREF"
   ;;
 stop)
   stop_vm
   ;;
 restart)
   echo "Restarting a foreground process is not reliable. Running 'start' now."
-  start_vm
+  start_vm "$GPU_PREF"
   ;;
 remove-vdi) # New Case Option
   remove_vdi
   ;;
 *)
-  echo "Usage: $0 {start|install|stop|restart|remove-vdi}"
-  echo "  start:     Starts the VM in UEFI/Secure Boot mode (Post-Install). Creates VDI if missing."
-  echo "  install:   Starts the VM in Legacy Boot mode (Pre-Install). Creates VDI if missing."
-  echo "  stop:      Attempts to gracefully shut down a background VM process."
-  echo "  restart:   Restarts the VM (runs 'start')."
+  echo "Usage: $0 {start|install|stop|restart|remove-vdi} [amd|nvidia]"
+  echo "  start:      Starts the VM in UEFI/Secure Boot mode (Post-Install)."
+  echo "  install:    Starts the VM in Legacy Boot mode (Pre-Install)."
+  echo "  stop:       Attempts to gracefully shut down a background VM process."
+  echo "  restart:    Restarts the VM (runs 'start')."
   echo "  remove-vdi: Permanently removes the VDI file and asks to remove the TPM state."
+  echo "  [amd|nvidia]: Optionally specify which GPU to use (amd for Radeon, nvidia for NVIDIA)."
   exit 1
   ;;
 esac
