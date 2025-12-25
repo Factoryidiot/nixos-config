@@ -1,4 +1,4 @@
 #!/usr/bin/env zsh
 
-APP_CLASS="dot.nix.$(basename $1)"
-exec setsid alacritty --class "$APP_CLASS" -e "$1" "${@:2}"
+APP_ID="dot.nix.$(basename $1)" # Use APP_ID as xdg-terminal-exec expects it
+exec setsid uwsm-app -- xdg-terminal-exec --app-id="$APP_ID" -e "$1" "${@:2}"
