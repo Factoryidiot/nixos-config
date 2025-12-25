@@ -23,6 +23,7 @@ in
     ../../lib/nixos/multimedia.nix
     ../../lib/nixos/virtualisation.nix
     ../../lib/nixos/zram.nix
+    ../../lib/nixos/snapper.nix
   ];
 
   hardware.graphics = {
@@ -64,17 +65,6 @@ in
     printing.enable = true;
     # Discovery
     avahi.enable = true;
-    # BTRFS Snapshots
-    snapper = {
-      configs.root = {
-        SUBVOLUME = "/";
-        TIMELINE_CREATE = "no";
-        NUMBER_CLEANUP = "yes";
-        NUMBER_MIN_AGE = "1800";
-        NUMBER_LIMIT = "25";
-        NUMBER_LIMIT_IMPORTANT = "10";
-      };
-    };
   };
 
   users = {
