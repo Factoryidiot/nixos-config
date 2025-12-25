@@ -48,7 +48,7 @@ in
   networking = {
     hostName = hostname;
     networkmanager.enable = false;
-    iwd.enable = true;
+    wireless.iwd.enable = true;
   };
 
   services = {
