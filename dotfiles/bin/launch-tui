@@ -1,4 +1,4 @@
 #!/usr/bin/env zsh
 
 APP_ID="dot.nix.$(basename $1)" # Use APP_ID as xdg-terminal-exec expects it
-exec setsid uwsm-app -- xdg-terminal-exec --app-id="$APP_ID" -e "$1" "${@:2}"
+exec setsid xdg-terminal-exec --app-id="$APP_ID" -e "$1" "${@:2}"
