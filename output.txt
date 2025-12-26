@@ -1,5 +1,5 @@
 [{
-    "address": "0x55d17865d3d0",
+    "address": "0x55d17865c710",
     "mapped": true,
     "hidden": false,
     "at": [967, 38],
@@ -15,7 +15,7 @@
     "title": "Alacritty",
     "initialClass": "Alacritty",
     "initialTitle": "Alacritty",
-    "pid": 3663,
+    "pid": 90787,
     "xwayland": false,
     "pinned": false,
     "fullscreen": 0,
