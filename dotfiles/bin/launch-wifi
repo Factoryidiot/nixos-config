@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# This script launches a TUI for managing Wi-Fi connections.
+# It uses 'nmcli' and 'nmtui' for network management.
+
+# Check if nmtui is available
+if command -v nmtui &> /dev/null; then
+    launch-or-focus-tui nmtui
+else
+    echo "Error: nmtui not found. Please install networkmanager or an alternative."
+    exit 1
+fi

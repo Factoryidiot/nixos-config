@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# This script launches a floating terminal and executes the provided command.
+# It uses 'alacritty' as the terminal emulator.
+# It expects a single argument: the command to execute.
+
+if [ -z "$1" ]; then
+  echo "Usage: launch-floating-terminal-with-presentation <command>"
+  exit 1
+fi
+
+alacritty --class "floating_terminal" -e bash -c "$1; read -p 'Press Enter to close...'" &
