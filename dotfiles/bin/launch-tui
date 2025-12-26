@@ -1,4 +1,4 @@
 #!/usr/bin/env zsh
 
-APP_TITLE_IDENTIFIER="dot.nix.$(basename $1)"
-exec setsid xdg-terminal-exec --title="$APP_TITLE_IDENTIFIER" -e "$1" "${@:2}"
+APP_CLASS="dot.nix.$(basename $1)"
+exec setsid alacritty --class "$APP_CLASS" -e "$1" "${@:2}"
