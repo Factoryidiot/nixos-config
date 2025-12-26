@@ -138,7 +138,7 @@
   },
   "custom/screenrecording-indicator": {
     "on-click": "cmd-screenrecord",
-    "exec": "screen-recording.sh",
+    "exec": "$OMARCHY_PATH/default/waybar/indicators/screen-recording.sh",
     "signal": 8,
     "return-type": "json"
   },
