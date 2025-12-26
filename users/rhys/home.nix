@@ -1,8 +1,10 @@
 {
+  agenix,
   ...
 }: {
 
   imports = [
+    agenix.homeManagerModules.default
     ../../lib/home/btop.nix
     ../../lib/home/desktop.nix
     ../../lib/home/development.nix
