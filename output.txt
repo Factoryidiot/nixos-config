@@ -15,7 +15,7 @@
     "title": "Alacritty",
     "initialClass": "dot.nix.btop",
     "initialTitle": "Alacritty",
-    "pid": 98372,
+    "pid": 112372,
     "xwayland": false,
     "pinned": false,
     "fullscreen": 0,
