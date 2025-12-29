@@ -80,14 +80,14 @@
         ./lib/nixos/secrets.nix
         # Common home-manager configuration
         home-manager.nixosModules.home-manager
-        {
+        ({ config, ... }: {
           home-manager = {
             backupFileExtension = "backup";
             useGlobalPkgs = true;
             useUserPackages = true;
-            extraSpecialArgs = specialArgs;
+            extraSpecialArgs = specialArgs // { secrets = config.age.secrets; };
           };
-        }
+        })
       ];
 
       # Helper function to create a NixOS configuration
@@ -152,7 +152,10 @@
       # Standard outputs for convenience
       formatter.${system} = nixpkgs.legacyPackages.${system}.nixpkgs-fmt;
       defaultPackage.${system} = self.packages.${system}.nixos-system-whio-vm;
-      packages.${system}.nixos-system-whio-vm = self.nixosConfigurations.whio-vm.config.system.build.toplevel;
+      packages.${system} = {
+        nixos-system-whio-vm = self.nixosConfigurations.whio-vm.config.system.build.toplevel;
+        nixos-system-whio = self.nixosConfigurations.whio.config.system.build.toplevel;
+      };
 
     };
 }

@@ -11,7 +11,6 @@
     ../../lib/home/fastfetch.nix
     ../../lib/home/flatpak.nix
     ../../lib/home/git.nix
-    ../../lib/home/github.nix
     ../../lib/home/tmux.nix
     ../../lib/home/yazi.nix
     ../../lib/home/terminal.nix
@@ -30,7 +29,6 @@
  
   };
 
-  programs.github.enable = true;
   programs.flatpak.enable = true;
 
   # Let Home Manager install and manage itself.

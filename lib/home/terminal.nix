@@ -68,6 +68,9 @@
         ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=black,bold'
       fi
       [[ ! -f ~/.config/zsh/.p10k.zsh ]] || source ~/.config/zsh/.p10k.zsh;
+      if [ -f "$HOME/.config/github/env.sh" ]; then
+        source "$HOME/.config/github/env.sh"
+      fi
     '';
 
   };
