@@ -1,6 +1,8 @@
 # lib/home/development.nix
 { pkgs, ... }:
 {
+  programs.gemini-cli.enable = true;
+
   home.packages = with pkgs; [
     # Git
     github-cli

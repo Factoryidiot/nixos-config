@@ -37,8 +37,6 @@ in
     xdg-desktop-portal
     xdg-desktop-portal-gtk
     impala
-    asusctl
-    supergfxctl
   ];
 
   # Time and locale are specific to the physical location

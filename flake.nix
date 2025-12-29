@@ -77,7 +77,7 @@
  
       # Common modules for all systems (DRY principle)
       commonModules = [
-        #./lib/nixos/secrets.nix
+        ./lib/nixos/secrets.nix
         # Common home-manager configuration
         home-manager.nixosModules.home-manager
         {

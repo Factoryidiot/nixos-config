@@ -15,12 +15,12 @@ This project manages NixOS and home-manager configurations for multiple systems 
 - **Desktop Environment:**
   - **Window Manager:** Hyprland (Wayland compositor)
   - **Shell:** zsh with powerlevel10k
-  - **Other Tools:** Waybar, Mako, Walker, etc.
+  - **Other Tools:** Waybar, Mako, Walker, fastfetch (for system stats), etc.
 - **Secrets Management:** `agenix` for declarative secret management.
 
 ### Execution Environment
 
-This project is primarily developed and managed on an Arch Linux laptop. Consequently, `nix` commands (e.g., `nix build`, `nix flake fmt`) and NixOS-specific tools are *not* directly available in the default system PATH. Any interaction requiring these tools will need explicit instructions on how to invoke them (e.g., through a `nix-shell`, `direnv`, or an explicit path).
+This project is primarily developed and managed on a NixOS system. Consequently, `nix` commands (e.g., `nix build`, `nix flake fmt`) and NixOS-specific tools are directly available in the system PATH.
 
 
 ## 2. ARCHITECTURE

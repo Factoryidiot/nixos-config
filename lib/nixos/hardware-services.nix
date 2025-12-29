@@ -13,5 +13,9 @@
   # Enable UPower service for power/battery status
   services.upower.enable = true;
 
+  # Enable asusctl and supergfxctl for Asus laptops
+  services.asusd.enable = true;
+  services.supergfxd.enable = true;
+
 
 }
