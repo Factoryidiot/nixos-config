@@ -14,11 +14,8 @@ in
     ./desktop/terminal.nix
     ./desktop/walker.nix
     ./desktop/waybar.nix
-    ./fcitx5.nix
+    ./desktop/fcitx5.nix
   ];
-
-  programs.fcitx5.enable = true;
-
 
   # Install necessary packages for a working desktop environment
   home.packages = with pkgs; [
