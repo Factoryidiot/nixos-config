@@ -1,4 +1,4 @@
-# lib/home/terminal.nix
+# lib/home/shell.nix
 { config
 , lib
 , pkgs
@@ -12,9 +12,24 @@
   programs.zsh = {
     enable = true;
 
-    autosuggestion.enable = lib.mkForce false;
-    enableCompletion = lib.mkForce false;
-    syntaxHighlighting.enable = lib.mkForce false;
+    enableCompletion = true;
+    powerlevel10k.enable = true; # Enabled powerlevel10k
+    syntaxHighlighting.enable = true; # Enabled via programs.zsh.antidote
+
+    # Disabled in favor of antidote
+    # autosuggestion.enable = true;
+    # plugins = [
+    #   { name = "zsh-history-substring-search"; src = pkgs.zsh-history-substring-search; }
+    #   pkgs.zsh-completions
+    #   pkgs.zsh-fzf-tab
+    # ];
+    # oh-my-zsh = {
+    #   enable = true;
+    #   plugins = [
+    #     "extract"
+    #     "powerlevel10k/powerlevel10k"
+    #   ];
+    # };
 
     antidote = {
       enable = true;
@@ -27,30 +42,28 @@
         # Completion styles
         "belak/zsh-utils path:completion/functions kind:autoload post:compstyle_zshzoo_setup"
 
-        # Prompt
-        "romkatv/powerlevel10k"
-
         # Keybindings
         "belak/zsh-utils path:editor"
 
         # History
         "belak/zsh-utils path:history"
 
+        # Prompt
+        "romkatv/powerlevel10k"
+
         # Utilities
+        # "zshzoo/macos conditional:is-macos" # Omitted as it's macOS specific
         "belak/zsh-utils path:utility"
         "romkatv/zsh-bench kind:path"
-
-        #oh-my-zsh
-        "getantidote/use-omz"
         "ohmyzsh/ohmyzsh path:plugins/extract"
 
         # Other Fish-like features
-        "zdharma-continuum/fast-syntax-highlighting" # Syntax highlighting
-        "zsh-users/zsh-autosuggestions" # Auto-suggestions
-        "zsh-users/zsh-history-substring-search" # Up/Down to search history
+        "zdharma-continuum/fast-syntax-highlighting"
+        "zsh-users/zsh-autosuggestions"
+        "zsh-users/zsh-history-substring-search"
       ];
-      useFriendlyNames = true;
     };
+
 
     dotDir = "${config.xdg.configHome}/zsh";
 
@@ -70,6 +83,12 @@
       if [ -f "$HOME/.config/github/env.sh" ]; then
         source "$HOME/.config/github/env.sh"
       fi
+    '';
+
+    # Override antidote's staticfile path
+    initExtra = ''
+      staticfile="$HOME/.cache/zsh/antidote_static.zsh"
+      zstyle ':antidote:static' file "$staticfile"
     '';
 
     shellAliases = {

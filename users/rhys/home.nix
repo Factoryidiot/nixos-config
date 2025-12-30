@@ -12,7 +12,7 @@
     ../../lib/home/fastfetch.nix
     # ../../lib/home/fcitx5.nix # Temporarily disabled
     ../../lib/home/git.nix
-    ../../lib/home/terminal.nix
+    ../../lib/home/shell.nix
     ../../lib/home/tmux.nix
     ../../lib/home/yazi.nix
     ../../lib/home/zoxide.nix
