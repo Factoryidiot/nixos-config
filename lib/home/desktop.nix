@@ -48,7 +48,7 @@ in
     ripgrep # Search tool
     terminaltexteffects # Screensaver
     wget # Classic command-line file downloader
-    zoxide # `cd` command tool
+
 
     #+---- GUI Apps ------------------------------
     evince # PDF Viewer

@@ -11,9 +11,10 @@
     ../../lib/home/eza.nix
     ../../lib/home/fastfetch.nix
     ../../lib/home/git.nix
+    ../../lib/home/terminal.nix
     ../../lib/home/tmux.nix
     ../../lib/home/yazi.nix
-    ../../lib/home/terminal.nix
+    ../../lib/home/zoxide.nix
   ];
 
   home = {
