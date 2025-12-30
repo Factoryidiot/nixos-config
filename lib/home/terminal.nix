@@ -1,9 +1,8 @@
 # lib/home/terminal.nix
-{
-  config
-  , lib
-  , pkgs
-  , ...
+{ config
+, lib
+, pkgs
+, ...
 }: {
 
   home.sessionPath = [
@@ -16,7 +15,7 @@
     autosuggestion.enable = lib.mkForce false;
     enableCompletion = lib.mkForce false;
     syntaxHighlighting.enable = lib.mkForce false;
- 
+
     antidote = {
       enable = true;
       plugins = [
@@ -46,14 +45,21 @@
         "ohmyzsh/ohmyzsh path:plugins/extract"
 
         # Other Fish-like features
-        "zdharma-continuum/fast-syntax-highlighting"  # Syntax highlighting
-        "zsh-users/zsh-autosuggestions"               # Auto-suggestions
-        "zsh-users/zsh-history-substring-search"      # Up/Down to search history
+        "zdharma-continuum/fast-syntax-highlighting" # Syntax highlighting
+        "zsh-users/zsh-autosuggestions" # Auto-suggestions
+        "zsh-users/zsh-history-substring-search" # Up/Down to search history
       ];
       useFriendlyNames = true;
     };
 
     dotDir = "${config.xdg.configHome}/zsh";
+
+    shellAliases = {
+      ls = "eza --icons";
+      la = "eza -a --icons";
+      ll = "eza -lbg --header --git --icons"; # Detailed list view
+      tree = "eza --tree";
+    };
 
     history = {
       ignoreAllDups = true;
