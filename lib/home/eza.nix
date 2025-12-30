@@ -5,7 +5,7 @@
   programs.eza = {
     enable = true;
     git = true; # Add git status columns
-    icons = true; # Enable file-type icons
+    icons = "auto"; # Enable file-type icons
     enableZshIntegration = true;
   };
 }

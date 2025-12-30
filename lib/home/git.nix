@@ -14,7 +14,7 @@
     enable = true;
     ignores = [
       "*~"
-      
+
     ];
     settings = {
       user.name = "Rhys Scandlyn";
@@ -27,7 +27,7 @@
   home.file.".config/github/env.sh".source = ../../dotfiles/github/env.sh;
 
   # Ensure this env.sh is sourced by the shell
-  programs.zsh.initExtra = lib.mkIf (config.programs.zsh.enable) ''
+  programs.zsh.initContent = lib.mkIf (config.programs.zsh.enable) ''
     if [ -f "$HOME/.config/github/env.sh" ]; then
       . "$HOME/.config/github/env.sh"
     fi
