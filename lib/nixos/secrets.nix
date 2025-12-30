@@ -3,7 +3,6 @@
 {
   imports = [
     inputs.agenix.nixosModules.default
-    ../../secrets/secrets.nix
   ];
 
   # Configure agenix
