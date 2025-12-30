@@ -1,7 +1,6 @@
-{
-  config
-  , pkgs
-  , ...
+{ config
+, pkgs
+, ...
 }: {
   programs.alacritty = {
     enable = true;
@@ -12,8 +11,6 @@
   };
 
   home.packages = with pkgs; [
-    eza
-
     nerd-fonts.jetbrains-mono
   ];
 }

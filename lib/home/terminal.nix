@@ -54,13 +54,6 @@
 
     dotDir = "${config.xdg.configHome}/zsh";
 
-    shellAliases = {
-      ls = "eza --icons";
-      la = "eza -a --icons";
-      ll = "eza -lbg --header --git --icons"; # Detailed list view
-      tree = "eza --tree";
-    };
-
     history = {
       ignoreAllDups = true;
       path = "${config.programs.zsh.dotDir}/.zsh_history";
