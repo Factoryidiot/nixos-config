@@ -10,6 +10,7 @@
     ../../lib/home/development.nix
     ../../lib/home/eza.nix
     ../../lib/home/fastfetch.nix
+    ../../lib/home/fcitx5.nix
     ../../lib/home/git.nix
     ../../lib/home/terminal.nix
     ../../lib/home/tmux.nix

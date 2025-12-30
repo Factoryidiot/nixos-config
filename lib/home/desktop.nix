@@ -14,7 +14,6 @@ in
     ./desktop/terminal.nix
     ./desktop/walker.nix
     ./desktop/waybar.nix
-    ./desktop/fcitx5.nix
   ];
 
   # Install necessary packages for a working desktop environment
