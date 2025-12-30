@@ -1,10 +1,9 @@
 # ./modules/nixos/base-packages.nix
-{ 
-  config
-  , lib
-  , pkgs
-  , specialArgs
-  , ...
+{ config
+, lib
+, pkgs
+, specialArgs
+, ...
 }:
 let
   # Inherit username from specialArgs to configure trusted users

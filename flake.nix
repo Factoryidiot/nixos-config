@@ -50,8 +50,8 @@
     };
   };
 
-  outputs = inputs@{
-    nixpkgs
+  outputs =
+    inputs@{ nixpkgs
     , agenix
     , home-manager
     , hyprland
@@ -61,7 +61,7 @@
     , walker
     , self
     , ...
-  }:
+    }:
     let
       system = "x86_64-linux"; # The system type we will use
 
@@ -69,7 +69,7 @@
       specialArgs = {
         inherit hyprland impermanence inputs lanzaboote nixpkgs-unstable self agenix;
       };
- 
+
       # Common modules for all systems (DRY principle)
       commonModules = [
         ./lib/nixos/secrets.nix
@@ -98,26 +98,27 @@
           };
 
         in
-          nixpkgs.lib.nixosSystem {
-            inherit system;
-            specialArgs = hostArgs; # Pass the combined args
-            modules = commonModules
-              ++ modules
-              ++ [
-                # Allow unfree packages for this system configuration
-                ({ pkgs, ... }: {
-                  nixpkgs.config.allowUnfree = true;
-                })
-                # This connects Home Manager to the specified user.
-                # The user itself (password, groups) should be defined
-                # in the host's module (e.g., ./hosts/whio/default.nix)
-                ({ ... }: {
-                  home-manager.users.${username} = import ./users/${username}/home.nix;
-                })
-              ];
-          };
+        nixpkgs.lib.nixosSystem {
+          inherit system;
+          specialArgs = hostArgs; # Pass the combined args
+          modules = commonModules
+            ++ modules
+            ++ [
+            # Allow unfree packages for this system configuration
+            ({ pkgs, ... }: {
+              nixpkgs.config.allowUnfree = true;
+            })
+            # This connects Home Manager to the specified user.
+            # The user itself (password, groups) should be defined
+            # in the host's module (e.g., ./hosts/whio/default.nix)
+            ({ ... }: {
+              home-manager.users.${username} = import ./users/${username}/home.nix;
+            })
+          ];
+        };
 
-    in {
+    in
+    {
       nixosConfigurations = {
         whio = mkNixosSystem {
           name = "whio";

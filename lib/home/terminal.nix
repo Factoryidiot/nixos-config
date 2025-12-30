@@ -72,12 +72,19 @@
       fi
     '';
 
+    shellAliases = {
+      eza = "eza --icons auto --git"; # Re-aliasing eza itself for consistency
+      ls = "eza --icons auto --git";
+      l = "eza -alh --icons auto --git";
+      ll = "eza -l --icons auto --git";
+      la = "eza -a --icons auto --git";
+      lt = "eza --tree --icons auto --git";
+    };
+
   };
 
   xdg.configFile = {
-    "zsh/.p10k.zsh" = {
-      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/zsh/.p10k.zsh";
-    };
+    "zsh/.p10k.zsh".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/zsh/.p10k.zsh";
   };
 
 }

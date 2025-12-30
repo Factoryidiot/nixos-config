@@ -10,7 +10,7 @@
         content = {
           type = "gpt";
           partitions = {
-            ESP = { 
+            ESP = {
               start = "1MiB";
               end = "500MiB";
               priority = 1;
@@ -67,7 +67,7 @@
                       mountOptions = [ "compress-force=zstd:1" "noatime" ];
                       mountpoint = "/nix";
                     };
-                   "@persistent" = {
+                    "@persistent" = {
                       mountOptions = [ "compress-force=zstd:1" ];
                       mountpoint = "/persistent";
                     };
@@ -83,7 +83,7 @@
                       mountOptions = [ "compress-force=zstd:1" ];
                       mountpoint = "/tmp";
                     };
- 
+
                   };
                 };
               };

@@ -1,6 +1,5 @@
-{
-  pkgs
-  , ...
+{ pkgs
+, ...
 }: {
 
   programs = {
@@ -25,7 +24,7 @@
             source-sans
             source-serif
           ];
-        };
+      };
       remotePlay.openFirewall = true;
       dedicatedServer.openFirewall = true;
     };

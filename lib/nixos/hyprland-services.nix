@@ -1,10 +1,9 @@
 # lib/nixos/hyprland-services.nix
-{
-  config
-  , inputs
-  , lib
-  , pkgs
-  , ...
+{ config
+, inputs
+, lib
+, pkgs
+, ...
 }:
 let
   system = pkgs.stdenv.hostPlatform.system;
@@ -28,8 +27,8 @@ in
 
   environment.sessionVariables = {
     XDG_SESSION_DESKTOP = "Hyprland";
-    NIXOS_OZONE_WL = "1";                   # Ensure all graphical programs use Wayland where possible
-    XDG_CURRENT_DESKTOP = "Hyprland";       # Set the backend for Hyprland's portal 
+    NIXOS_OZONE_WL = "1"; # Ensure all graphical programs use Wayland where possible
+    XDG_CURRENT_DESKTOP = "Hyprland"; # Set the backend for Hyprland's portal 
     XDG_SESSION_TYPE = "wayland";
   };
 

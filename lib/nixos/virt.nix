@@ -1,12 +1,11 @@
-{
-  pkgs 
-  , username
-  , ...
+{ pkgs
+, username
+, ...
 }: {
 
   environment = {
     systemPackages = with pkgs; [
-      spice 
+      spice
       spice-gtk
       spice-protocol
       virt-manager
@@ -17,7 +16,7 @@
         mode = "0755";
       };
       "/libvirt/qemu/OVMF_VARS.fd" = {
-        source = ./secureboot/OVMF_VARS_4M.ms.fd; 
+        source = ./secureboot/OVMF_VARS_4M.ms.fd;
         mode = "0755";
       };
       "/tmpfiles.d/10-looking-glass.conf" = {
@@ -64,7 +63,7 @@
         ovmf = {
           enable = true;
           packages = with pkgs; [ OVMFFull ];
-	};
+        };
         runAsRoot = true;
         swtpm.enable = true;
         # CHANGE: use 

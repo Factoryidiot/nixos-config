@@ -1,9 +1,8 @@
-{ 
-  config
-  , lib
-  , pkgs
-  , modulesPath
-  , ...
+{ config
+, lib
+, pkgs
+, modulesPath
+, ...
 }: {
 
   imports = [
@@ -36,63 +35,73 @@
   boot.initrd.luks.devices."crypted".bypassWorkqueues = true;
 
   fileSystems."/boot" = lib.mkDefault
-    { device = "/dev/disk/by-uuid/961C-C464";
+    {
+      device = "/dev/disk/by-uuid/961C-C464";
       fsType = "vfat";
       options = [ "fmask=0022" "dmask=0022" ];
     };
 
   fileSystems."/btr_pool" = lib.mkDefault
-    { device = "/dev/disk/by-uuid/f8d16240-7362-48da-98f6-ad055cf4b9e8";
-      fsType = "btrfs"; 
+    {
+      device = "/dev/disk/by-uuid/f8d16240-7362-48da-98f6-ad055cf4b9e8";
+      fsType = "btrfs";
       options = [ "subvolid=5" ];
     };
 
   fileSystems."/" =
-    { device = "tmpfs";
+    {
+      device = "tmpfs";
       fsType = "tmpfs";
       options = [ "relatime" "mode=755" ];
     };
 
   fileSystems."/gnu" = lib.mkDefault
-    { device = "/dev/disk/by-uuid/f8d16240-7362-48da-98f6-ad055cf4b9e8";
+    {
+      device = "/dev/disk/by-uuid/f8d16240-7362-48da-98f6-ad055cf4b9e8";
       fsType = "btrfs";
       options = [ "subvol=@guix" "noatime" "compress-force=zstd:1" ];
     };
 
   fileSystems."/nix" = lib.mkDefault
-    { device = "/dev/disk/by-uuid/f8d16240-7362-48da-98f6-ad055cf4b9e8";
+    {
+      device = "/dev/disk/by-uuid/f8d16240-7362-48da-98f6-ad055cf4b9e8";
       fsType = "btrfs";
       options = [ "subvol=@nix" "noatime" "compress-force=zstd:1" ];
     };
 
   fileSystems."/persistent" = lib.mkDefault
-    { device = "/dev/disk/by-uuid/f8d16240-7362-48da-98f6-ad055cf4b9e8";
+    {
+      device = "/dev/disk/by-uuid/f8d16240-7362-48da-98f6-ad055cf4b9e8";
       fsType = "btrfs";
       options = [ "subvol=@persistent" "compress-force=zstd:1" ];
       neededForBoot = true;
     };
 
   fileSystems."/snapshots" = lib.mkDefault
-    { device = "/dev/disk/by-uuid/f8d16240-7362-48da-98f6-ad055cf4b9e8";
+    {
+      device = "/dev/disk/by-uuid/f8d16240-7362-48da-98f6-ad055cf4b9e8";
       fsType = "btrfs";
       options = [ "subvol=@snapshots" "compress-force=zstd:1" ];
     };
 
   fileSystems."/swap" = lib.mkDefault
-    { device = "/dev/disk/by-uuid/f8d16240-7362-48da-98f6-ad055cf4b9e8";
+    {
+      device = "/dev/disk/by-uuid/f8d16240-7362-48da-98f6-ad055cf4b9e8";
       fsType = "btrfs";
       options = [ "subvol=@swap" "ro" ];
     };
 
   fileSystems."/swap/swapfile" =
-    { device = "/swap/swapfile";
+    {
+      device = "/swap/swapfile";
       depends = [ "/swap" ];
       fsType = "none";
       options = [ "bind" "rw" ];
     };
 
   fileSystems."/tmp" = lib.mkDefault
-    { device = "/dev/disk/by-uuid/f8d16240-7362-48da-98f6-ad055cf4b9e8";
+    {
+      device = "/dev/disk/by-uuid/f8d16240-7362-48da-98f6-ad055cf4b9e8";
       fsType = "btrfs";
       options = [ "subvol=@tmp" "compress-force=zstd:1" ];
     };

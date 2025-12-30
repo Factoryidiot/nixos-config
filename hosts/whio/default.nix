@@ -1,8 +1,7 @@
 # hosts/whio-vm/default.nix
-{
-  pkgs
-  , specialArgs
-  , ...
+{ pkgs
+, specialArgs
+, ...
 }:
 let
   # Destructure 'hostname' from the specialArgs passed from flake.nix
@@ -13,7 +12,7 @@ in
   imports = [
     # Host specific configuration
     ./hardware-configuration.nix
-    ./persistence.nix                         # Preservation configuration
+    ./persistence.nix # Preservation configuration
 
     # Basic configuration
     ../../lib/nixos/base-packages.nix
@@ -43,7 +42,7 @@ in
   # Time and locale are specific to the physical location
   time.timeZone = "Pacific/Auckland";
   i18n.defaultLocale = "en_NZ.UTF-8";
-  
+
   networking = {
     hostName = hostname;
     networkmanager.enable = true;

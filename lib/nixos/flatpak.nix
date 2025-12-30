@@ -1,8 +1,7 @@
 # lib/home/flatpak.nix
-{
-  config
-  , pkgs
-  , ... 
+{ config
+, pkgs
+, ...
 }: {
 
   services.flatpak.enable = true;

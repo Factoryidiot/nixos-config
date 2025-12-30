@@ -1,6 +1,5 @@
 # lib/home/desktop/hyprland.nix
-{
-   ...
+{ ...
 }: {
 
   # Enable Chromium with Wayland support

@@ -1,9 +1,8 @@
-{
-  config
-  , lib
-#  , nixos-hardware
-  , pkgs
-  , ...
+{ config
+, lib
+  #  , nixos-hardware
+, pkgs
+, ...
 }:
 {
 
@@ -13,7 +12,7 @@
       enable = true;
       enable32Bit = true;
     };
- 
+
     nvidia = {
       # Optionally, you may need to select the appropriate driver version for your specific GPU.
       # https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/os-specific/linux/nvidia-x11/default.nix
@@ -24,7 +23,7 @@
       # Enable the Nvidia settings menu,
       # accessible via `nvidia-settings`.
       nvidiaSettings = true;
- 
+
       # Use the NVidia open source kernel module (not to be confused with the
       # independent third-party "nouveau" open source driver).
       # Support is limited to the Turing and later architectures. Full list of 
@@ -51,10 +50,10 @@
         # Make sure to use the correct Bus ID values for your system!
         amdgpuBusId = "PCI:65:0:0";
         nvidiaBusId = "PCI:01:0:0";
- 
+
         offload = {
           enable = true;
-          enableOffloadCmd =  true; # command: nvidia-offload 
+          enableOffloadCmd = true; # command: nvidia-offload 
         };
         reverseSync.enable = true;
       };

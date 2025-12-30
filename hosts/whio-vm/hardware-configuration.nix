@@ -1,9 +1,8 @@
-{ 
-  config
-  , lib
-  , pkgs
-  , modulesPath
-  , ...
+{ config
+, lib
+, pkgs
+, modulesPath
+, ...
 }: {
 
   imports = [
@@ -14,7 +13,7 @@
   boot.loader.efi.efiSysMountPoint = "/boot";
   boot.loader.systemd-boot.enable = true;
 
-  boot.initrd.availableKernelModules = [ "virtio_blk" "virtio_gpu" "virtio_pci"  ];
+  boot.initrd.availableKernelModules = [ "virtio_blk" "virtio_gpu" "virtio_pci" ];
   boot.initrd.kernelModules = [ ];
   boot.initrd.systemd.enable = true;
 
@@ -45,63 +44,73 @@
   };
 
   fileSystems."/boot" = lib.mkDefault
-    { device = "/dev/disk/by-uuid/9AB3-3B8F";
+    {
+      device = "/dev/disk/by-uuid/9AB3-3B8F";
       fsType = "vfat";
       options = [ "fmask=0022" "dmask=0022" ];
     };
 
   fileSystems."/btr_pool" = lib.mkDefault
-    { device = "/dev/disk/by-uuid/02656142-8d5c-4599-9b97-fe51848f8dcf";
-      fsType = "btrfs"; 
+    {
+      device = "/dev/disk/by-uuid/02656142-8d5c-4599-9b97-fe51848f8dcf";
+      fsType = "btrfs";
       options = [ "subvolid=5" ];
     };
 
   fileSystems."/" = lib.mkDefault
-    { device = "tmpfs";
+    {
+      device = "tmpfs";
       fsType = "tmpfs";
       options = [ "relatime" "mode=755" ];
     };
 
   fileSystems."/gnu" = lib.mkDefault
-    { device = "/dev/disk/by-uuid/02656142-8d5c-4599-9b97-fe51848f8dcf";
+    {
+      device = "/dev/disk/by-uuid/02656142-8d5c-4599-9b97-fe51848f8dcf";
       fsType = "btrfs";
       options = [ "subvol=@guix" "noatime" "compress-force=zstd:1" ];
     };
 
   fileSystems."/nix" = lib.mkDefault
-    { device = "/dev/disk/by-uuid/02656142-8d5c-4599-9b97-fe51848f8dcf";
+    {
+      device = "/dev/disk/by-uuid/02656142-8d5c-4599-9b97-fe51848f8dcf";
       fsType = "btrfs";
       options = [ "subvol=@nix" "noatime" "compress-force=zstd:1" ];
     };
 
   fileSystems."/persistent" = lib.mkDefault
-    { device = "/dev/disk/by-uuid/02656142-8d5c-4599-9b97-fe51848f8dcf";
+    {
+      device = "/dev/disk/by-uuid/02656142-8d5c-4599-9b97-fe51848f8dcf";
       fsType = "btrfs";
       options = [ "subvol=@persistent" "compress-force=zstd:1" ];
       neededForBoot = true;
     };
 
   fileSystems."/snapshots" = lib.mkDefault
-    { device = "/dev/disk/by-uuid/02656142-8d5c-4599-9b97-fe51848f8dcf";
+    {
+      device = "/dev/disk/by-uuid/02656142-8d5c-4599-9b97-fe51848f8dcf";
       fsType = "btrfs";
       options = [ "subvol=@snapshots" "compress-force=zstd:1" ];
     };
 
   fileSystems."/swap" = lib.mkDefault
-    { device = "/dev/disk/by-uuid/02656142-8d5c-4599-9b97-fe51848f8dcf";
+    {
+      device = "/dev/disk/by-uuid/02656142-8d5c-4599-9b97-fe51848f8dcf";
       fsType = "btrfs";
       options = [ "subvol=@swap" "ro" ];
     };
 
   fileSystems."/swap/swapfile" =
-    { depends = [ "/swap" ];
+    {
+      depends = [ "/swap" ];
       device = "/swap/swapfile";
       fsType = "none";
       options = [ "bind" "rw" ];
     };
 
   fileSystems."/tmp" = lib.mkDefault
-    { device = "/dev/disk/by-uuid/02656142-8d5c-4599-9b97-fe51848f8dcf";
+    {
+      device = "/dev/disk/by-uuid/02656142-8d5c-4599-9b97-fe51848f8dcf";
       fsType = "btrfs";
       options = [ "subvol=@tmp" "compress-force=zstd:1" ];
     };

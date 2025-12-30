@@ -1,6 +1,5 @@
 # ./modules/nixos/hardware-services.nix
-{
-  ...
+{ ...
 }: {
 
   # Enable Bluetooth management

@@ -1,6 +1,5 @@
 # ./modules/nixos/security-defaults.nix
-{
-  ...
+{ ...
 }: {
 
   # System-level Firewall

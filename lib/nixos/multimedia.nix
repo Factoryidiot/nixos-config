@@ -1,6 +1,5 @@
 # ./modules/nixos/multimedia.nix
-{
-  ...
+{ ...
 }: {
   services.pipewire = {
     enable = true;

@@ -1,10 +1,9 @@
 # lib/home/desktop/hyprland.nix
-{
-  config
-  , inputs
-  , lib
-  , pkgs
-  , ...
+{ config
+, inputs
+, lib
+, pkgs
+, ...
 }:
 let
 
@@ -34,7 +33,7 @@ in
   };
 
   # Link the configuration file from your dotfiles directory
-  xdg.configFile = { 
+  xdg.configFile = {
     # Main Hyprland configuration
     "hypr/autostart.conf".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/hypr/autostart.conf";
     "hypr/bindings.conf".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/hypr/bindings.conf";
@@ -54,8 +53,8 @@ in
 
   # Set up environment variables required by Desktop
   home.sessionVariables = {
-    TERMINAL = "alacritty";   # Specify the terminal emulator
-    NIXOS_OZONE_WL = "1";     # Tell GTK apps to use the correct theme engine
+    TERMINAL = "alacritty"; # Specify the terminal emulator
+    NIXOS_OZONE_WL = "1"; # Tell GTK apps to use the correct theme engine
     XDG_CURRENT_DESKTOP = "Hyprland";
     WLR_RENDERER = "vulkan";
   };

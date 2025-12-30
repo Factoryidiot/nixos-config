@@ -1,8 +1,7 @@
-{
-  lanzaboote
-  , lib
-  , pkgs
-  , ...
+{ lanzaboote
+, lib
+, pkgs
+, ...
 }: {
 
   imports = [

@@ -1,8 +1,7 @@
-{
-  config
-  , inputs
-  , lib
-  , ...
+{ config
+, inputs
+, lib
+, ...
 }: {
   imports = [
     inputs.walker.homeManagerModules.default
@@ -10,7 +9,7 @@
 
   programs.walker = {
     enable = true;
-    runAsService = true;  # Recommended for faster startups
+    runAsService = true; # Recommended for faster startups
   };
 
   # Link the configuration file from your dotfiles directory

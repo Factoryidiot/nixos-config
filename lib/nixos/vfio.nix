@@ -1,17 +1,17 @@
 ## due to a whole bunch if issues with NIXOS and it's idiosyncrasies I have abandoned this module for now
 ## NIXOS has rubbish documentation
 
-{
-  lib
-  , pkgs
-  , ... 
+{ lib
+, pkgs
+, ...
 }:
 let
   grpIDs = [
     "10de:2860" # Geforce RX 4070 Max-Q / Mobile  0000:01:00.0
     "10de:22bd" # Audio Controller                0000:01:00.1
   ];
-in {
+in
+{
 
   boot = {
     blacklistedKernelModules = [
@@ -22,15 +22,15 @@ in {
       "nvidia_modeset"
     ];
 
-#    kernelModules = [
-#      "vfio_pci"
-#      "vfio"
-#      "vfio_iommu_type1"
-#     # "vfio_virqfd" depricated and now included in vfio
-#    ];
+    #    kernelModules = [
+    #      "vfio_pci"
+    #      "vfio"
+    #      "vfio_iommu_type1"
+    #     # "vfio_virqfd" depricated and now included in vfio
+    #    ];
     kernelParams = [
-      "amd.iommu=on" 
-#      "vfio-pci.ids=${lib.concatStringsSep "," grpIDs}"
+      "amd.iommu=on"
+      #      "vfio-pci.ids=${lib.concatStringsSep "," grpIDs}"
     ]; # ++ lib.optional cfg.enable ("vfio-pci.ids=" + lib.concatStringsSep "," gpuIDs);
 
   };
@@ -100,8 +100,8 @@ in {
   };
 
   system.activationScripts.libvirt-hooks.text = ''
-#   ln -Tfs /etc/libvirt/hooks /var/lib/libvirt/hooks/
-   ln -sfn /etc/libvirt/hooks /var/lib/libvirt/hooks/
+    #   ln -Tfs /etc/libvirt/hooks /var/lib/libvirt/hooks/
+       ln -sfn /etc/libvirt/hooks /var/lib/libvirt/hooks/
   '';
 
 }

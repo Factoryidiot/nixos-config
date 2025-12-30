@@ -1,7 +1,6 @@
-{
-  impermanence
-  , specialArgs
-  , ...
+{ impermanence
+, specialArgs
+, ...
 }:
 let
   # Destructure 'username' from the specialArgs passed from flake.nix
@@ -21,7 +20,7 @@ in
       "/etc/ssh"
       "/etc/nix/inputs"
       "/etc/secureboot" # lanzaboote - secure boot
-      "/etc/agenix/"    # secrets
+      "/etc/agenix/" # secrets
 
       "/var/lib/nixos"
       "/var/lib/flatpak"
@@ -61,9 +60,9 @@ in
           directory = ".ssh";
           mode = "0700";
         }
-	# Flatpak
+        # Flatpak
         ".var/app"
-        
+
         # misc
         ".config/pulse"
         ".pki"

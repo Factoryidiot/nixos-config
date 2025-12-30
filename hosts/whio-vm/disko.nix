@@ -52,14 +52,14 @@
                 ];
                 # 'extraOpenArgs' is for opening the volume (e.g., in initrd)
                 extraOpenArgs = [
-                   "--allow-discards"
+                  "--allow-discards"
                 ];
 
                 content = {
                   type = "btrfs";
                   # -f to force formatting
                   extraArgs = [ "-f" ];
-                  
+
                   # The main Btrfs volume is mounted at /mnt (disko default) 
                   # and contains all the subvolumes.
                   # We define the root (/) and /nix mountpoints here.
