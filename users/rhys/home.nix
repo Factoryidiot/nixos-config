@@ -9,7 +9,6 @@
     ../../lib/home/desktop.nix
     ../../lib/home/development.nix
     ../../lib/home/fastfetch.nix
-    ../../lib/home/flatpak.nix
     ../../lib/home/git.nix
     ../../lib/home/tmux.nix
     ../../lib/home/yazi.nix
@@ -28,8 +27,6 @@
     stateVersion = "25.11";
  
   };
-
-  programs.flatpak.enable = true;
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
