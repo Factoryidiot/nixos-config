@@ -21,10 +21,7 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    agenix = {
-      url = "github:ryan4yin/ragenix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    agenix.url = "github:ryan4yin/ragenix";
     home-manager = {
       # Updated to use the release branch from your second file
       url = "github:nix-community/home-manager/release-25.11";
@@ -46,9 +43,7 @@
     nix-gaming.url = "github:fufexan/nix-gaming";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
-    elephant = {
-      url = "github:abenz1267/elephant";
-    };
+    elephant.url = "github:abenz1267/elephant";
     walker = {
       url = "github:abenz1267/walker";
       inputs.elephant.follows = "elephant";
@@ -130,7 +125,7 @@
           modules = [
             ./hosts/whio/default.nix
             {
-              system.stateVersion = "25.05";
+              system.stateVersion = "25.11";
             }
           ];
         };
@@ -141,7 +136,6 @@
           modules = [
             ./hosts/whio-vm/default.nix
             {
-              # Ensure the system state version is set
               system.stateVersion = "25.11";
             }
           ];

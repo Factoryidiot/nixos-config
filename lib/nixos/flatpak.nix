@@ -10,10 +10,6 @@
   xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
   xdg.portal.config.common.default = "gtk";
 
-  xdg.configFile = {
-    "flatpak/flatpak.conf".source = "${config.home.homeDirectory}/.dotfiles/flatpak/flatpak.conf";
-  };
-
   systemd.services.flatpak-repo = {
     wantedBy = [ "multi-user.target" ];
     path = [ pkgs.flatpak ];
