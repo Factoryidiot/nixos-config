@@ -1,8 +1,10 @@
-{ pkgs, ... }:
-
 {
+  ...
+}: {
+
   programs.yazi = {
     enable = true;
+    enableZshIntegration = true;
     theme = "default"; # Explicitly set default theme
 
     # Uncomment and fill these if you create custom yazi config files
