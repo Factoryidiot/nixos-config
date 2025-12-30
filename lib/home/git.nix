@@ -1,7 +1,5 @@
 # lib/home/git.nix
-{
-  ...
-}: {
+{ config, pkgs, lib, ... }: {
 
   programs.gh = {
     enable = true;
@@ -25,5 +23,14 @@
   };
 
   programs.lazygit.enable = true;
+
+  home.file.".config/github/env.sh".source = ../../dotfiles/github/env.sh;
+
+  # Ensure this env.sh is sourced by the shell
+  programs.zsh.initExtra = lib.mkIf (config.programs.zsh.enable) ''
+    if [ -f "$HOME/.config/github/env.sh" ]; then
+      . "$HOME/.config/github/env.sh"
+    fi
+  '';
 
 }

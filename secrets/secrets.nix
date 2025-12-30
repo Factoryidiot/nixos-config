@@ -1,8 +1,6 @@
-# secrets/secrets.nix
+let
+  rhys = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFJCkeOcvLsmdbtI/gkuqGSB5XQYLaLdF74M3Ck2vPuQ";
+in
 {
-  age.secrets.github_token = {
-    file = ./github_token.age;
-    owner = "rhys";
-    mode = "440";
-  };
+  "github.age".publicKeys = [ rhys ];
 }

@@ -26,7 +26,6 @@
     # the Home Manager release notes for a list of state version
     # changes in each release.
     stateVersion = "25.11";
- 
   };
 
   # Let Home Manager install and manage itself.
