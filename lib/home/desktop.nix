@@ -26,6 +26,7 @@ in
     #+---- System Utilities & TUIs ---------------
     htop # TUI process viewer
     bluetui # TUI for bluetooth
+    wiremix # TUI mixer for PipeWire
 
     libnotify
 
@@ -40,6 +41,7 @@ in
     evince # PDF Viewer
     gnome-calculator
     localsend # AirDrop alternative
+    impala # Spotify client
 
     #+---- Screenshots & Screen Recording --------
     grim # Wayland screenshot tool
@@ -50,8 +52,6 @@ in
     #    gpu-screen-recorder			# Screen recording utility
 
     #+---- XDG & Portals -------------------------
-    xdg-desktop-portal
-    xdg-desktop-portal-gtk
     xdg-terminal-exec
   ];
 

@@ -37,6 +37,9 @@ in
     hyprpaper
     hyprlock
     hypridle
-  ];
+  ] ++ (with pkgs; [
+    xdg-desktop-portal
+    xdg-desktop-portal-gtk
+  ]);
 
 }

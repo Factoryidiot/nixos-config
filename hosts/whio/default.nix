@@ -1,4 +1,4 @@
-# hosts/whio-vm/default.nix
+# hosts/whio/default.nix
 { pkgs
 , specialArgs
 , ...
@@ -34,10 +34,7 @@ in
   };
 
   environment.systemPackages = with pkgs; [
-    xdg-desktop-portal
-    xdg-desktop-portal-gtk
-    impala
-  ];
+    ];
 
   # Time and locale are specific to the physical location
   time.timeZone = "Pacific/Auckland";
