@@ -8,14 +8,11 @@
     ../../lib/home/btop.nix
     ../../lib/home/desktop.nix
     ../../lib/home/development.nix
-    ../../lib/home/eza.nix
-    ../../lib/home/fastfetch.nix
-    # ../../lib/home/fcitx5.nix # Temporarily disabled
+    #../../lib/home/fcitx5.nix # Temporarily disabled
     ../../lib/home/git.nix
     ../../lib/home/shell.nix
     ../../lib/home/tmux.nix
     ../../lib/home/yazi.nix
-    ../../lib/home/zoxide.nix
   ];
 
   home = {
