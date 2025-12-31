@@ -25,8 +25,9 @@
   programs.lazygit.enable = true;
 
   xdg.configFile = {
-    ".config/github/env.sh".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/github/env.sh;
-  }; 
+    ".config/github/env.sh".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/github/env.sh";
+  };
+
   # Ensure this env.sh is sourced by the shell
   programs.zsh.initContent = lib.mkIf (config.programs.zsh.enable) ''
     if [ -f "$HOME/.config/github/env.sh" ]; then
