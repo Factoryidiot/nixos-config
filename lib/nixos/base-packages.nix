@@ -47,6 +47,7 @@ in
       usbutils
       vim
       wget
+      nixpkgs-fmt
     ];
     variables.EDITOR = "vim";
   };
