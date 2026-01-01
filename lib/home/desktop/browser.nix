@@ -1,4 +1,4 @@
-# lib/home/desktop/hyprland.nix
+# lib/home/desktop/browser.nix
 { ...
 }: {
 
@@ -13,20 +13,23 @@
     ];
   };
 
-  # Note: Google Chrome is now the default browser
-  # Uncomment the following if you want to make Chromium the default again:
+  # Set Chromium as the default browser
   xdg.mimeApps.defaultApplications = {
-    "text/html" = "Chromium.desktop";
+    "text/html" = "chromium-browser.desktop";
+    "x-scheme-handler/http" = "chromium-browser.desktop";
+    "x-scheme-handler/https" = "chromium-browser.desktop";
+    "x-scheme-handler/about" = "chromium-browser.desktop";
+    "x-scheme-handler/unknown" = "chromium-browser.desktop";
   };
 
   # Desktop entry for Chromium
-  xdg.desktopEntries.Chromium = {
+  xdg.desktopEntries."chromium-browser" = {
     name = "Chromium";
     genericName = "Web Browser";
     comment = "Access the Internet";
     exec = "chromium --enable-features=UseOzonePlatform --ozone-platform=wayland %U";
     terminal = false;
-    icon = "google-chrome";
+    icon = "chromium";
     type = "Application";
     categories = [
       "Network"

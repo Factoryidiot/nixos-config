@@ -17,33 +17,33 @@ in
   ];
 
   home.packages = with pkgs; [
-    #+---- Audio & Media -------------------------
+    #+----- Audio & Media ------------------------
     pamixer # Audio control
     playerctl # CMD-Line to control media players
     imv # Powerful Wayland image viewer
     webp-pixbuf-loader # WebP image support
 
-    #+---- System Utilities & TUIs ---------------
+    #+----- System Utilities & TUIs --------------
     htop # TUI process viewer
     bluetui # TUI for bluetooth
     wiremix # TUI mixer for PipeWire
 
     libnotify
 
-    #+---- Other desktop dependencies ------------
+    #+----- Other desktop dependencies -----------
     swaybg # Basic wallpaper setter for fallback
     brightnessctl # Brightness control
 
-    #+---- Security and Auth ---------------------
+    #+----- Security and Auth --------------------
     libsecret
 
-    #+---- GUI Apps ------------------------------
+    #+----- GUI Apps -----------------------------
     evince # PDF Viewer
     gnome-calculator
     localsend # AirDrop alternative
     impala # Spotify client
 
-    #+---- Screenshots & Screen Recording --------
+    #+----- Screenshots & Screen Recording -------
     grim # Wayland screenshot tool
     slurp # Wayland region selector for grim
     satty # Screenshot annotation tool
@@ -51,7 +51,7 @@ in
     wl-clipboard # Copy to Wayland clipboard
     #    gpu-screen-recorder			# Screen recording utility
 
-    #+---- XDG & Portals -------------------------
+    #+----- XDG & Portals ------------------------
     xdg-terminal-exec
   ];
 
