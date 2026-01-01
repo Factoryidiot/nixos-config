@@ -13,10 +13,7 @@
     ../../lib/home/shell.nix
     ../../lib/home/tmux.nix
     ../../lib/home/yazi.nix
-    ../../lib/home/gaming.nix
   ];
-
-  gaming.enable = true;
 
   home = {
     # This value determines the Home Manager release that your

@@ -23,7 +23,10 @@ in
     ../../lib/nixos/virtualisation.nix
     ../../lib/nixos/zram.nix
     ../../lib/nixos/snapper.nix
+    ../../lib/nixos/gaming.nix
   ];
+
+  gaming.enable = true;
 
   hardware.graphics = {
     enable = true;

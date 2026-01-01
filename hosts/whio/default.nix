@@ -24,7 +24,10 @@ in
     ../../lib/nixos/zram.nix
     ../../lib/nixos/snapper.nix
     ../../lib/nixos/nvidia.nix
+    ../../lib/nixos/gaming.nix
   ];
+
+  gaming.enable = true;
 
   hardware.cpu.amd.updateMicrocode = true;
 
