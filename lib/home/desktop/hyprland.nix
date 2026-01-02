@@ -13,8 +13,6 @@ let
 
 in
 {
-  imports = [
-  ];
 
   wayland.windowManager.hyprland = {
     enable = true;
@@ -28,7 +26,7 @@ in
     # Main Hyprland configuration
     "hypr/autostart.conf".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/hypr/autostart.conf";
     "hypr/bindings.conf".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/hypr/bindings.conf";
-    "hypr/env.conf".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/hypr/env.conf";
+    "hypr/envs.conf".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/hypr/envs.conf";
     "hypr/hypridle.conf".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/hypr/hypridle.conf";
     "hypr/hyprland.conf".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/hypr/hyprland.conf";
     "hypr/hyprlock.conf".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/hypr/hyprlock.conf";
@@ -45,8 +43,6 @@ in
   # Set up environment variables required by Desktop
   home.sessionVariables = {
     TERMINAL = "alacritty"; # Specify the terminal emulator
-    NIXOS_OZONE_WL = "1"; # Tell GTK apps to use the correct theme engine
-    XDG_CURRENT_DESKTOP = "Hyprland";
     WLR_RENDERER = "vulkan";
   };
 

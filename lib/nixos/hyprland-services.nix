@@ -21,7 +21,6 @@ in
     withUWSM = true;
 
     package = inputs.hyprland.packages.${system}.default;
-    portalPackage = inputs.hyprland.packages.${system}.xdg-desktop-portal-hyprland;
 
   };
 
@@ -37,9 +36,6 @@ in
     hyprpaper
     hyprlock
     hypridle
-  ] ++ (with pkgs; [
-    xdg-desktop-portal
-    xdg-desktop-portal-gtk
-  ]);
+  ];
 
 }

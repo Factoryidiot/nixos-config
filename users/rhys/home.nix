@@ -8,7 +8,6 @@
     ../../lib/home/btop.nix
     ../../lib/home/desktop.nix
     ../../lib/home/development.nix
-    ../../lib/home/xdg.nix
     #../../lib/home/fcitx5.nix # Temporarily disabled
     ../../lib/home/git.nix
     ../../lib/home/shell.nix

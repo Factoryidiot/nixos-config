@@ -21,6 +21,7 @@ in
     ../../lib/nixos/gaming.nix
     ../../lib/nixos/hardware-services.nix
     ../../lib/nixos/hyprland-services.nix
+    ../../lib/nixos/xdg.nix
     ../../lib/nixos/multimedia.nix
     ../../lib/nixos/nvidia.nix
     ../../lib/nixos/snapper.nix

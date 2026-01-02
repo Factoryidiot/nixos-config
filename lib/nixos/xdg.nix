@@ -1,4 +1,4 @@
-# /lib/home/xdg.nix
+# /lib/nixos/xdg.nix
 { pkgs, ... }: {
   # Enable the XDG portal service and configure backends
   xdg.portal = {
