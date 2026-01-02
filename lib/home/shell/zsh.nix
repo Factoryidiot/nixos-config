@@ -1,7 +1,6 @@
-# lib/home/eza.nix
-{
-  config
-  , ...
+# lib/home/zsh.nix
+{ config
+, ...
 }: {
 
   programs.zsh = {

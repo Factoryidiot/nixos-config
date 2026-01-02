@@ -23,15 +23,6 @@ in
     xwayland.enable = true;
   };
 
-  xdg.portal = {
-    enable = true;
-    extraPortals = with pkgs; [
-      xdg-desktop-portal-hyprland # Use the package from the main pkgs set
-    ];
-    # Ensure this is the preferred backend
-    config.common.default = "hyprland";
-  };
-
   # Link the configuration file from your dotfiles directory
   xdg.configFile = {
     # Main Hyprland configuration

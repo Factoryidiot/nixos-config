@@ -24,8 +24,9 @@ in
     webp-pixbuf-loader # WebP image support
 
     #+----- System Utilities & TUIs --------------
-    htop # TUI process viewer
     bluetui # TUI for bluetooth
+    htop # TUI process viewer
+    impala # TUI wifi
     wiremix # TUI mixer for PipeWire
 
     libnotify
@@ -53,6 +54,7 @@ in
 
     #+----- XDG & Portals ------------------------
     xdg-terminal-exec
+    xdg-utils
   ];
 
 }
