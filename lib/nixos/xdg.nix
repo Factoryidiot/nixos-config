@@ -1,16 +1,15 @@
 # /lib/nixos/xdg.nix
-{ pkgs, ... }: {
+{ pkgs
+  , ... 
+}: {
   # Enable the XDG portal service and configure backends
   xdg.portal = {
     enable = true;
-    # We need to specify the backends.
-    # xdg-desktop-portal-gtk is for GTK applications.
-    # xdg-desktop-portal-hyprland is for Hyprland (wayland).
-    extraPortals = [
-      pkgs.xdg-desktop-portal-gtk
-      pkgs.xdg-desktop-portal-hyprland
+    config.common.default = "*"; # This is to fix the warning with xdg-desktop-portal 1.17+
+
+    configPackages = with pkgs; [
+      xdg-desktop-portal-gtk # xdg-desktop-portal-gtk is for GTK applications.
+      xdg-desktop-portal-hyprland # xdg-desktop-portal-hyprland is for Hyprland (wayland).
     ];
-    # This is to fix the warning with xdg-desktop-portal 1.17+
-    config.common.default = "*";
-  };
+ };
 }
