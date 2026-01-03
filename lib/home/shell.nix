@@ -9,6 +9,7 @@
     ./shell/eza.nix
     ./shell/fastfetch.nix
     ./shell/fzf.nix
+    ./shell/starship.nix # New: Import Starship configuration
     ./shell/zoxide.nix
     ./shell/zsh.nix
   ];
@@ -20,13 +21,13 @@
   home.packages = with pkgs; [
     #+----- Shell & CLI Tools ---------------------
     bat # Cat clone with syntax highlighting and Git integration
-    eza # Replacement for `ls`
-    fastfetch # System information fetch tool
+    #eza # Replacement for `ls`
+    #fastfetch # System information fetch tool
     fd # Simple, fast and user-friendly alternative to `find`
-    fzf # Command line fuzzy finder
+    #fzf # Command line fuzzy finder
     jq # Needed for many Waybar scripts
     ripgrep # Search tool
-    terminaltexteffects # Screensaver
+    #terminaltexteffects # Screensaver
     wget # Classic command-line file downloader
   ];
 
