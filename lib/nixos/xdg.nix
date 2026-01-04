@@ -2,7 +2,7 @@
 { pkgs
   , ... 
 }: {
-  # Enable the XDG portal service and configure backends
+
   xdg.portal = {
     enable = true;
     config.common.default = "*"; # This is to fix the warning with xdg-desktop-portal 1.17+
@@ -12,4 +12,5 @@
       xdg-desktop-portal-hyprland # xdg-desktop-portal-hyprland is for Hyprland (wayland).
     ];
  };
+
 }

@@ -22,7 +22,7 @@
     };
   };
 
-  programs.lazygit.enable = true;
+  programs.lazygit.enable = false;
 
   xdg.configFile = {
     ".config/github/env.sh".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/github/env.sh";

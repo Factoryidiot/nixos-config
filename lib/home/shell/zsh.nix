@@ -1,11 +1,13 @@
 # lib/home/zsh.nix
-{ config
-, lib
-, ...
-}: {
+{ config, lib, ...}:
+{
 
   programs.zsh = {
     enable = true;
+
+    autosuggestion.enable = true;
+
+    dotDir = "${config.home.homeDirectory}/.config/zsh";
 
     history = {
       ignoreAllDups = true;
@@ -13,20 +15,14 @@
       size = 10000;
     };
 
-    # Zsh Initialisation Content
-    initContent = let
-      zshEarly = lib.mkOrder 500 ''
-        if [ "$TERM" = "linux" ]; then
-          fastfetch
-        fi
-      '';
-    in
-     zshEarly;
+    initContent = ''
+      if [ "$TERM" = "linux" ]; then
+        fastfetch
+      fi
+    '';
 
+    syntaxHighlighting.enable = true;
+    
   };
-
-  #xdg.configFile = {
-  #  "zsh/.p10k.zsh".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/zsh/.p10k.zsh";
-  #};
 
 }

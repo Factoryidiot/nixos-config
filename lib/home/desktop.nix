@@ -11,6 +11,7 @@ in
     ./desktop/cliphist.nix
     ./desktop/hyprland.nix
     ./desktop/mako.nix
+    ./desktop/swayosd.nix
     ./desktop/terminal.nix
     ./desktop/walker.nix
     ./desktop/waybar.nix
@@ -32,6 +33,7 @@ in
     libnotify
 
     #+----- Other desktop dependencies -----------
+    libinput # Input device library
     swaybg # Basic wallpaper setter for fallback
     brightnessctl # Brightness control
 

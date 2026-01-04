@@ -16,7 +16,7 @@ in
     hideMounts = true;
     # sets the mount option x-gvfs-hide on all the bind mounts
     directories = [
-      "/etc/NetworkManager/system-connections"
+      #"/etc/NetworkManager/system-connections"
       "/etc/ssh"
       "/etc/nix/inputs"
       "/etc/secureboot" # lanzaboote - secure boot
@@ -28,7 +28,7 @@ in
       # network
       #"/var/lib/tailscale"
       "/var/lib/bluetooth"
-      "/var/lib/NetworkManager"
+      #"/var/lib/NetworkManager"
       "/var/lib/iwd"
     ];
 
