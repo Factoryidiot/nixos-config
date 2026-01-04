@@ -7,6 +7,7 @@ in
   # Enable Docker
   virtualisation.docker = {
     enable = true;
+    enableNvidia = true;
     package = pkgs.docker;
   };
 

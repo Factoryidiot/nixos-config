@@ -5,6 +5,7 @@
   programs.bat = {
     enable = true;
     extraPackages = with pkgs.bat-extras; [ 
+      prettybat
       batdiff
       batman
       batgrep

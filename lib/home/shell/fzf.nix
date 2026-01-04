@@ -4,7 +4,7 @@
   programs.fzf = {
     enable = true;
     enableZshIntegration = true; # Adds keybindings and completions
-    defaultCommand = "fd --type f --hidden --exclude .git"; # Use fd, exclude hidden files and .git
+    defaultCommand = "fzf --preview 'bat --style=numbers --color-always --line-range :500 {}'";
   };
 
 }
