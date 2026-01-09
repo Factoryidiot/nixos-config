@@ -26,6 +26,7 @@ in
 
     #+----- System Utilities & TUIs --------------
     bluetui # TUI for bluetooth
+    gum
     htop # TUI process viewer
     impala # TUI wifi
     wiremix # TUI mixer for PipeWire
