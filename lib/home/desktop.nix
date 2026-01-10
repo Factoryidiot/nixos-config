@@ -1,9 +1,42 @@
 # lib/home/desktop.nix
-{ pkgs
-, ...
+{
+  pkgs
+  # , terminaltexteffects
+  , inputs
+  , nixpkgs-unstable
+  , ... 
 }:
 let
   system = pkgs.stdenv.hostPlatform.system;
+  unstable = import nixpkgs-unstable {
+    inherit system;
+    config.allowUnfree = true;
+  };
+
+  tte-latest = pkgs.python3Packages.buildPythonApplication {
+    pname = "terminaltexteffects";
+    version = "0.14.0";
+    format = "pyproject";
+
+    src = inputs.terminaltexteffects;
+
+    # Dependencies required to build/run
+    nativeBuildInputs = with pkgs.python3Packages; [
+      #poetry-core
+      hatchling
+    ];
+
+    # If it has runtime dependencies, add them here. 
+    # v0.14.2 is mostly self-contained but requires standard python libs.
+    propagatedBuildInputs = with pkgs.python3Packages; [
+      # Add any specific python deps if the build fails, 
+      # but usually poetry-core handles the internal structure.
+      pydantic
+    ];
+
+    doCheck = false;
+  };
+
 in
 {
   imports = [
@@ -19,9 +52,9 @@ in
 
   home.packages = with pkgs; [
     #+----- Audio & Media ------------------------
+    imv # Powerful Wayland image viewer
     pamixer # Audio control
     playerctl # CMD-Line to control media players
-    imv # Powerful Wayland image viewer
     webp-pixbuf-loader # WebP image support
 
     #+----- System Utilities & TUIs --------------
@@ -29,12 +62,14 @@ in
     gum
     htop # TUI process viewer
     impala # TUI wifi
+    #terminaltexteffects.packages.${system}.default
+    #unstable.terminaltexteffects
+    tte-latest
     wiremix # TUI mixer for PipeWire
-
-    libnotify
 
     #+----- Other desktop dependencies -----------
     libinput # Input device library
+    libnotify
     swaybg # Basic wallpaper setter for fallback
     brightnessctl # Brightness control
 

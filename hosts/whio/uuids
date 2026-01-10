@@ -1,8 +1,0 @@
-total 0
-drwxr-xr-x  2 root root 140 Dec 27 19:57 .
-drwxr-xr-x 11 root root 220 Dec 27 19:54 ..
-lrwxrwxrwx  1 root root  10 Dec 27 19:46 1234-5678 -> ../../sda2
-lrwxrwxrwx  1 root root  10 Dec 27 19:54 1980-01-01-00-00-00-00 -> ../../sda1
-lrwxrwxrwx  1 root root  15 Dec 27 19:54 961C-C464 -> ../../nvme0n1p1
-lrwxrwxrwx  1 root root  15 Dec 27 19:56 c8ab03bb-b1bd-47a2-9778-3b07add65081 -> ../../nvme0n1p2
-lrwxrwxrwx  1 root root  10 Dec 27 19:57 f8d16240-7362-48da-98f6-ad055cf4b9e8 -> ../../dm-0

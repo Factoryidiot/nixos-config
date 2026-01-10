@@ -42,7 +42,10 @@
     };
     nix-gaming.url = "github:fufexan/nix-gaming";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
-
+    terminaltexteffects = {
+      url = "github:ChrisBuilds/terminaltexteffects/release-0.14.2";
+      flake = false;
+    };
     elephant.url = "github:abenz1267/elephant";
     walker = {
       url = "github:abenz1267/walker";
@@ -51,13 +54,15 @@
   };
 
   outputs =
-    inputs@{ nixpkgs
-    , agenix
+    inputs@{
+      agenix
     , home-manager
     , hyprland
     , impermanence
     , lanzaboote
+    , nixpkgs
     , nixpkgs-unstable
+    , terminaltexteffects
     , walker
     , self
     , ...
@@ -67,7 +72,8 @@
 
       # Pass inputs and self to all configurations for easy access
       specialArgs = {
-        inherit hyprland impermanence inputs lanzaboote nixpkgs-unstable self agenix;
+        #inherit agenix hyprland impermanence inputs lanzaboote nixpkgs-unstable self terminaltexteffects;
+        inherit agenix hyprland impermanence inputs lanzaboote nixpkgs-unstable self;
       };
 
       # Common modules for all systems (DRY principle)
@@ -94,7 +100,7 @@
           pkgs = import nixpkgs {
             inherit system;
             config.allowUnfree = true;
-            overlays = [ (import ./overlays/terminaltexteffects.nix) ];
+            overlays = [ ];
           };
 
         in

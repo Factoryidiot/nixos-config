@@ -1,7 +1,6 @@
-{ config
-, pkgs
-, ...
-}: {
+# lib/home/desktop/terminal.nix
+{ config, pkgs, ...}:
+{
 
   programs.alacritty = {
     enable = true;
@@ -9,6 +8,7 @@
 
   xdg.configFile = {
     "alacritty/alacritty.toml".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/alacritty/alacritty.toml";
+    "alacritty/screensaver.toml".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/alacritty/screensaver.toml";
   };
 
   home.packages = with pkgs; [
