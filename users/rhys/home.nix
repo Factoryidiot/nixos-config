@@ -11,6 +11,7 @@
     #../../lib/home/fcitx5.nix # Temporarily disabled
     ../../lib/home/git.nix
     ../../lib/home/shell.nix
+    ../../lib/home/shell/ncdu.nix # Import the ncdu module
     ../../lib/home/tmux.nix
     ../../lib/home/yazi.nix
   ];
@@ -26,6 +27,8 @@
     # changes in each release.
     stateVersion = "25.11";
   };
+
+  programs.ncdu.enable = true; # Enable ncdu
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
