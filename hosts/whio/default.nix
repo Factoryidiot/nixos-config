@@ -21,10 +21,11 @@ in
     ../../lib/nixos/gaming.nix
     ../../lib/nixos/hardware-services.nix
     ../../lib/nixos/hyprland-services.nix
-    ../../lib/nixos/xdg.nix
     ../../lib/nixos/multimedia.nix
     ../../lib/nixos/nvidia.nix
     ../../lib/nixos/snapper.nix
+    ../../lib/nixos/xdg.nix
+    ../../lib/nixos/virtualisation.nix
     ../../lib/nixos/zram.nix
   ];
 
@@ -38,10 +39,6 @@ in
   # Time and locale are specific to the physical location
   time.timeZone = "Pacific/Auckland";
   i18n.defaultLocale = "en_NZ.UTF-8";
-
-  #environment.systemPackages = with pkgs; [
-  #  impala
-  #]; see lib/home/desktop.nix
 
   networking = {
     hostName = hostname;

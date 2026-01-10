@@ -28,7 +28,6 @@ in
       # network
       #"/var/lib/tailscale"
       "/var/lib/bluetooth"
-      #"/var/lib/NetworkManager"
       "/var/lib/iwd"
     ];
 
@@ -48,7 +47,8 @@ in
         ".dotfiles"
 
         # Work
-        "Projects/Nixos/nixos-config"
+        #"Projects/Nixos/nixos-config"
+        "Projects"
         "tmp"
 
         {

@@ -1,16 +1,12 @@
 # lib/nixos/virtualisation.nix
-{ pkgs, specialArgs, ... }:
-let
-  inherit (specialArgs) username;
-in
+{ pkgs, ... }:
 {
-  # Enable Docker
-  virtualisation.docker = {
-    enable = true;
-    enableNvidia = true;
-    package = pkgs.docker;
-  };
+  # Docker daemon is not needed for rootless docker
+  virtualisation.docker.enable = false;
 
-  # Add user to the docker group so they can use it without sudo
-  users.extraGroups.docker.members = [ username ];
+  # Enable rootless Docker
+  virtualisation.docker.rootless = {
+    enable = true;
+    setSocketVariable = true;
+  };
 }
