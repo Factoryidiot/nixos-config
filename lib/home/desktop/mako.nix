@@ -8,6 +8,8 @@
   };
 
   xdg.configFile = {
-    "mako/mako.ini".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/mako/mako.ini";
+    "mako/mako.ini".source =
+	config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/mako/mako.ini";
   };
+
 }

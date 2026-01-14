@@ -1,8 +1,7 @@
-{ config
-, inputs
-, lib
-, ...
-}: {
+# lib/home/desktop/walker.nix
+{ config, inputs, lib, ... }:
+{
+
   imports = [
     inputs.walker.homeManagerModules.default
   ];
@@ -14,8 +13,10 @@
 
   # Link the configuration file from your dotfiles directory
   xdg.configFile = {
-    "walker/config.toml".source = lib.mkForce (config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/walker/config.toml");
-    "elephant/desktopapplications.toml".source = lib.mkForce (config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/elephant/desktopapplications.toml");
+    "walker/config.toml".source = 
+	lib.mkForce (config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/walker/config.toml");
+    "elephant/desktopapplications.toml".source = 
+	config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/elephant/desktopapplications.toml";
   };
 
 }
