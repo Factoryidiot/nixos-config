@@ -42,6 +42,7 @@ in
   imports = [
     ./desktop/browser.nix
     ./desktop/cliphist.nix
+    ./desktop/cursor.nix
     ./desktop/hyprland.nix
     ./desktop/mako.nix
     ./desktop/swayosd.nix
