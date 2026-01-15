@@ -1,8 +1,5 @@
 # hosts/whio/default.nix
-{ pkgs
-, specialArgs
-, ...
-}:
+{ pkgs, specialArgs, ...}:
 let
   # Destructure 'hostname' from the specialArgs passed from flake.nix
   inherit (specialArgs) hostname username;
@@ -10,11 +7,12 @@ in
 {
 
   imports = [
-    # Host specific configuration
+    #+----- Host specific configuration ----------
     ./hardware-configuration.nix
     ./persistence.nix # Preservation configuration
 
-    # Basic configuration
+    #+----- Basic configuration ------------------
+    ../../lib/nixos/asus.nix
     ../../lib/nixos/base-packages.nix
     ../../lib/nixos/base-security.nix
     ../../lib/nixos/flatpak.nix
