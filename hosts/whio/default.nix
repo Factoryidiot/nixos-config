@@ -1,5 +1,5 @@
 # hosts/whio/default.nix
-{ pkgs, specialArgs, ...}:
+{ pkgs, specialArgs, ... }:
 let
   # Destructure 'hostname' from the specialArgs passed from flake.nix
   inherit (specialArgs) hostname username;

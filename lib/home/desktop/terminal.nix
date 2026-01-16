@@ -1,5 +1,5 @@
 # lib/home/desktop/terminal.nix
-{ config, pkgs, ...}:
+{ config, pkgs, ... }:
 {
 
   programs.alacritty = {

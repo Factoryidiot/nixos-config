@@ -41,6 +41,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-gaming.url = "github:fufexan/nix-gaming";
+    nixvim = {
+      url = "github:nix-community/nixvim";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     terminaltexteffects = {
       url = "github:ChrisBuilds/terminaltexteffects/release-0.14.2";
@@ -54,14 +58,14 @@
   };
 
   outputs =
-    inputs@{
-      agenix
+    inputs@{ agenix
     , home-manager
     , hyprland
     , impermanence
     , lanzaboote
     , nixpkgs
     , nixpkgs-unstable
+    , nixvim
     , terminaltexteffects
     , walker
     , self
@@ -73,7 +77,7 @@
       # Pass inputs and self to all configurations for easy access
       specialArgs = {
         #inherit agenix hyprland impermanence inputs lanzaboote nixpkgs-unstable self terminaltexteffects;
-        inherit agenix hyprland impermanence inputs lanzaboote nixpkgs-unstable self;
+        inherit agenix hyprland impermanence inputs lanzaboote nixpkgs-unstable nixvim self;
       };
 
       # Common modules for all systems (DRY principle)

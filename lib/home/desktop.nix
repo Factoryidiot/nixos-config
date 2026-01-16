@@ -1,10 +1,9 @@
 # lib/home/desktop.nix
-{
-  pkgs
+{ pkgs
   # , terminaltexteffects
-  , inputs
-  , nixpkgs-unstable
-  , ... 
+, inputs
+, nixpkgs-unstable
+, ...
 }:
 let
   system = pkgs.stdenv.hostPlatform.system;

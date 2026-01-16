@@ -1,5 +1,5 @@
 # lib/home/desktop/waybar.nix
-{ config ,...}:
+{ config, ... }:
 
 {
 
@@ -9,7 +9,7 @@
 
   xdg.configFile = {
     "mako/mako.ini".source =
-	config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/mako/mako.ini";
+      config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/mako/mako.ini";
   };
 
 }

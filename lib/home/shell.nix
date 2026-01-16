@@ -10,7 +10,7 @@
     ./shell/eza.nix
     ./shell/fastfetch.nix
     ./shell/fzf.nix
-    ./shell/starship.nix 
+    ./shell/starship.nix
     ./shell/zoxide.nix
     ./shell/zsh.nix
   ];

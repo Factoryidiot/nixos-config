@@ -1,9 +1,8 @@
-{ agenix
-, ...
-}: {
+{ agenix, inputs, ... }: {
 
   imports = [
     agenix.homeManagerModules.default
+    inputs.nixvim.homeModules.nixvim
 
     ../../lib/home/btop.nix
     ../../lib/home/desktop.nix
@@ -13,6 +12,7 @@
     ../../lib/home/shell.nix
     ../../lib/home/shell/ncdu.nix # Import the ncdu module
     ../../lib/home/tmux.nix
+    ../../lib/home/nixvim.nix
     ../../lib/home/yazi.nix
   ];
 
@@ -29,6 +29,7 @@
   };
 
   programs.ncdu.enable = true; # Enable ncdu
+  modules.nixvim.enable = true;
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;

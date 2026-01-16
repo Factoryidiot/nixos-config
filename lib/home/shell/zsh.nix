@@ -1,5 +1,5 @@
 # lib/home/zsh.nix
-{ config, lib, ...}:
+{ config, lib, ... }:
 {
 
   programs.zsh = {
@@ -22,7 +22,7 @@
     '';
 
     syntaxHighlighting.enable = true;
-    
+
   };
 
 }

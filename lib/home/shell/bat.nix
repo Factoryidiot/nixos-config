@@ -4,7 +4,7 @@
 {
   programs.bat = {
     enable = true;
-    extraPackages = with pkgs.bat-extras; [ 
+    extraPackages = with pkgs.bat-extras; [
       prettybat
       batdiff
       batman

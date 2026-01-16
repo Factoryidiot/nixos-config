@@ -1,6 +1,6 @@
 # /lib/nixos/xdg.nix
 { pkgs
-  , ... 
+, ...
 }: {
 
   xdg.portal = {
@@ -11,6 +11,6 @@
       xdg-desktop-portal-gtk # xdg-desktop-portal-gtk is for GTK applications.
       xdg-desktop-portal-hyprland # xdg-desktop-portal-hyprland is for Hyprland (wayland).
     ];
- };
+  };
 
 }
