@@ -1,11 +1,10 @@
-{ config
-, ...
-}: {
+{ config, ...}:
+{
 
   programs.btop = {
     enable = true;
     settings = {
-      color_theme = "current";
+      color_theme = "nord";
       theme_background = "true";
 
       #* Sets if 24-bit truecolor should be used, will convert 24-bit colors to 256 color (6x6x6 color cube) if false.

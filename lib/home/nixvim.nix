@@ -4,7 +4,12 @@
 
   programs.nixvim = {
     enable = true;
-    colorschemes.nord.enable = true;
+    colorschemes.nord = {
+      enable = true;
+      settings = {
+        disable_background = true;
+      };
+    };
     defaultEditor = true;
 
     globals.mapleader = " ";

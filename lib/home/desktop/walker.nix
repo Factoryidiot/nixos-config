@@ -12,10 +12,14 @@
   };
 
   xdg.configFile = {
-    "walker/config.toml".source =
-      lib.mkForce (config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/walker/config.toml");
     "elephant/desktopapplications.toml".source =
       config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/elephant/desktopapplications.toml";
-  };
+    "walker/config.toml".source =
+      lib.mkDefault (config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/walker/config.toml");
+    "walker/themes/default/layout.xml".source =
+      config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/walker/themes/default/layout.xml";
+    "walker/themes/default/style.css".source =
+      config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/walker/themes/default/style.css";
+   };
 
 }
