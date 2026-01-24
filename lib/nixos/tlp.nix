@@ -1,4 +1,7 @@
+# lib/nixos/
 {
+ ...
+}: {
 
   services.tlp.settings = {
     ## Adaptive Backlight Modulation

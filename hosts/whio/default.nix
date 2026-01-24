@@ -26,6 +26,7 @@ in
     ../../lib/nixos/multimedia.nix
     ../../lib/nixos/nvidia.nix
     ../../lib/nixos/snapper.nix
+    ../../lib/nixos/tlp.nix # TLP power management
     ../../lib/nixos/xdg.nix
     ../../lib/nixos/virtualisation.nix
     ../../lib/nixos/zram.nix
