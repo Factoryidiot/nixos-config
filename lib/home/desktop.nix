@@ -21,7 +21,6 @@ let
 
     # Dependencies required to build/run
     nativeBuildInputs = with pkgs.python3Packages; [
-      #poetry-core
       hatchling
     ];
 
@@ -62,16 +61,14 @@ in
     gum
     htop # TUI process viewer
     impala # TUI wifi
-    #terminaltexteffects.packages.${system}.default
-    #unstable.terminaltexteffects
     tte-latest
     wiremix # TUI mixer for PipeWire
 
     #+----- Other desktop dependencies -----------
+    brightnessctl # Brightness control
     libinput # Input device library
     libnotify
     swaybg # Basic wallpaper setter for fallback
-    brightnessctl # Brightness control
 
     #+----- Security and Auth --------------------
     libsecret
@@ -89,6 +86,9 @@ in
     hyprpicker # Wayland color picker
     wl-clipboard # Copy to Wayland clipboard
     #    gpu-screen-recorder			# Screen recording utility
+
+    #+----- XDG & Portals ------------------------
+    quickemu
 
     #+----- XDG & Portals ------------------------
     xdg-terminal-exec
