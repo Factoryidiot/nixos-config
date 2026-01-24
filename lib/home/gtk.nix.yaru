@@ -1,0 +1,32 @@
+# lib/home/gtk.nix
+{ pkgs
+, ... 
+}: {
+
+  gtk = {
+    enable = true;
+    
+    theme = {
+      name = "Yaru-dark";
+      package = pkgs.yaru-theme;
+    };
+
+    iconTheme = {
+      name = "Yaru-dark";
+      package = pkgs.yaru-theme;
+    };
+
+    cursorTheme = {
+      name = "Yaru";
+      package = pkgs.yaru-theme;
+    };
+
+    gtk3.extraConfig = {
+      gtk-application-prefer-dark-theme = 1;
+    };
+    gtk4.extraConfig = {
+      gtk-application-prefer-dark-theme = 1;
+    };
+  };
+
+}

@@ -8,8 +8,8 @@
     ../../lib/home/desktop.nix
     ../../lib/home/development.nix
     ../../lib/home/git.nix
+    ../../lib/home/gtk.nix
     ../../lib/home/shell.nix
-    ../../lib/home/shell/ncdu.nix # Import the ncdu module
     ../../lib/home/tmux.nix
     ../../lib/home/nixvim.nix
     ../../lib/home/yazi.nix
