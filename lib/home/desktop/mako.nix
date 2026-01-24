@@ -1,15 +1,15 @@
-# lib/home/desktop/waybar.nix
-{ config, ... }:
-
-{
+# lib/home/desktop/mako.nix
+{ config
+, ...
+}: {
 
   services.mako = {
     enable = true;
   };
 
   xdg.configFile = {
-    "mako/mako.ini".source =
-      config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/mako/mako.ini";
+    "mako/config".source =
+      config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/mako/config";
   };
 
 }

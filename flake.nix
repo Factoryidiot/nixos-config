@@ -17,13 +17,11 @@
   };
 
   inputs = {
-    # Primary stable channel, all inputs follow this unless otherwise noted
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     agenix.url = "github:ryan4yin/ragenix";
     home-manager = {
-      # Updated to use the release branch from your second file
       url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
@@ -74,16 +72,12 @@
     let
       system = "x86_64-linux"; # The system type we will use
 
-      # Pass inputs and self to all configurations for easy access
       specialArgs = {
-        #inherit agenix hyprland impermanence inputs lanzaboote nixpkgs-unstable self terminaltexteffects;
         inherit agenix hyprland impermanence inputs lanzaboote nixpkgs-unstable nixvim self;
       };
 
-      # Common modules for all systems (DRY principle)
       commonModules = [
         ./lib/nixos/secrets.nix
-        # Common home-manager configuration
         home-manager.nixosModules.home-manager
         ({ config, ... }: {
           home-manager = {
@@ -95,7 +89,6 @@
         })
       ];
 
-      # Helper function to create a NixOS configuration
       mkNixosSystem = { name, username, modules }:
         let
           hostname = name;
@@ -158,8 +151,8 @@
       formatter.${system} = nixpkgs.legacyPackages.${system}.nixpkgs-fmt;
       defaultPackage.${system} = self.packages.${system}.nixos-system-whio-vm;
       packages.${system} = {
-        nixos-system-whio-vm = self.nixosConfigurations.whio-vm.config.system.build.toplevel;
         nixos-system-whio = self.nixosConfigurations.whio.config.system.build.toplevel;
+        nixos-system-whio-vm = self.nixosConfigurations.whio-vm.config.system.build.toplevel;
       };
 
     };

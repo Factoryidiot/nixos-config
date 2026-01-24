@@ -1,8 +1,11 @@
 # lib/home/desktop/hyprland.nix
-{ config, inputs, lib, pkgs, ... }:
-let
+{ config
+, inputs
+, lib
+, pkgs
+, ...
+}: let
 
-  # Access the hyprland input via the inputs specialArg passed from flake.nix
   hyprlandInput = inputs.hyprland;
   system = pkgs.stdenv.hostPlatform.system;
 
@@ -18,7 +21,7 @@ in
 
   # Link the configuration file from your dotfiles directory
   xdg.configFile = {
-    # Main Hyprland configuration
+    #+----- Main Hyprland configuration ----------
     "hypr/autostart.conf".source =
       config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/hypr/autostart.conf";
     "hypr/keybindings.conf".source =
@@ -41,6 +44,10 @@ in
       config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/hypr/monitors.conf";
     "hypr/windows.conf".source =
       config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/hypr/windows.conf";
+
+    #+----- Theme --------------------------------
+    "hypr/theme.conf".source =
+      config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/hypr/theme.conf";
 
     # Wallpaper utility
     #"hypr/hyprpaper.conf".source = ./hypr/hyprpaper.conf;
