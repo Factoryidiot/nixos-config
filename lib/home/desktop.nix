@@ -61,6 +61,7 @@ in
     gum
     htop # TUI process viewer
     impala # TUI wifi
+    ncdu 
     tte-latest
     wiremix # TUI mixer for PipeWire
 

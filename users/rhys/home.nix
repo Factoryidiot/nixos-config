@@ -7,7 +7,6 @@
     ../../lib/home/btop.nix
     ../../lib/home/desktop.nix
     ../../lib/home/development.nix
-    #../../lib/home/fcitx5.nix # Temporarily disabled
     ../../lib/home/git.nix
     ../../lib/home/shell.nix
     ../../lib/home/shell/ncdu.nix # Import the ncdu module
@@ -27,9 +26,6 @@
     # changes in each release.
     stateVersion = "25.11";
   };
-
-  programs.ncdu.enable = true; # Enable ncdu
-  modules.nixvim.enable = true;
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
