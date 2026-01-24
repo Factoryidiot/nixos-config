@@ -1,12 +1,16 @@
 # lib/home/nixvim.nix
-{ lib
-, config
-, ... 
+{
+ ... 
 }: {
 
   programs.nixvim = {
     enable = true;
-    colorschemes.nord.enable = true;
+    colorschemes.nord = {
+      enable = true;
+      settings = {
+        disable_background = true;
+      };
+    };
     defaultEditor = true;
     globals.mapleader = " ";
 
@@ -75,13 +79,18 @@
     };
 
     plugins = {
+      blink-cmp = {
+        enable = true;
+        setupLspCapabilities = true;
+      };
+
       lsp = {
         enable = true;
-	servers = {
-	  jsonls.enable = true;
-	  lua_ls.enable = true;
-	  nixd.enable = true;
-	};
+	      servers = {
+      	  jsonls.enable = true;
+      	  lua_ls.enable = true;
+      	  nixd.enable = true;
+      	};
       };
 
       gitsigns = {
