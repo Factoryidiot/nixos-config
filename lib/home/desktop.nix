@@ -1,41 +1,10 @@
 # lib/home/desktop.nix
 { pkgs
-  # , terminaltexteffects
 , inputs
-, nixpkgs-unstable
 , ...
 }:
-let
-  system = pkgs.stdenv.hostPlatform.system;
-  unstable = import nixpkgs-unstable {
-    inherit system;
-    config.allowUnfree = true;
-  };
 
-  tte-latest = pkgs.python3Packages.buildPythonApplication {
-    pname = "terminaltexteffects";
-    version = "0.14.0";
-    format = "pyproject";
-
-    src = inputs.terminaltexteffects;
-
-    # Dependencies required to build/run
-    nativeBuildInputs = with pkgs.python3Packages; [
-      hatchling
-    ];
-
-    # If it has runtime dependencies, add them here. 
-    # v0.14.2 is mostly self-contained but requires standard python libs.
-    propagatedBuildInputs = with pkgs.python3Packages; [
-      # Add any specific python deps if the build fails, 
-      # but usually poetry-core handles the internal structure.
-      pydantic
-    ];
-
-    doCheck = false;
-  };
-
-in
+  
 {
   imports = [
     ./desktop/browser.nix
@@ -62,7 +31,7 @@ in
     htop # TUI process viewer
     impala # TUI wifi
     ncdu 
-    tte-latest
+
     wiremix # TUI mixer for PipeWire
 
     #+----- Other desktop dependencies -----------
@@ -88,7 +57,7 @@ in
     wl-clipboard # Copy to Wayland clipboard
     #    gpu-screen-recorder			# Screen recording utility
 
-    #+----- XDG & Portals ------------------------
+    #+----- Virtualisation -----------------------
     quickemu
 
     #+----- XDG & Portals ------------------------

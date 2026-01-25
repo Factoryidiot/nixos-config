@@ -13,6 +13,7 @@
     ../../lib/home/tmux.nix
     ../../lib/home/nixvim.nix
     ../../lib/home/yazi.nix
+    ../../lib/home/desktop/terminaltexteffects.nix
   ];
 
   home = {
@@ -29,4 +30,11 @@
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
+
+  xdg.portal = {
+    enable = true;
+    config.common.default = "*";
+  };
+
+  terminaltexteffects.enable = true;
 }
