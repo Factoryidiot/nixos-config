@@ -82,15 +82,9 @@
       blink-cmp = {
         enable = true;
         setupLspCapabilities = true;
-      };
-
-      lsp = {
-        enable = true;
-	      servers = {
-      	  jsonls.enable = true;
-      	  lua_ls.enable = true;
-      	  nixd.enable = true;
-      	};
+        settings = {
+          keymap.preset = "enter";
+        };
       };
 
       gitsigns = {
@@ -102,14 +96,6 @@
             delay = 0;
             virt_text_pos = "eol";
           };
-        };
-      };
-
-      lazygit = {
-        enable = true;
-        settings = {
-          floating_window_winblend = 0;
-          floating_window_scaling_factor = 0.9;
         };
       };
 
@@ -125,6 +111,14 @@
         };
       };
 
+      lazygit = {
+        enable = true;
+        settings = {
+          floating_window_winblend = 0;
+          floating_window_scaling_factor = 0.9;
+        };
+      };
+
       lualine = {
         enable = true;
         settings = {
@@ -134,6 +128,23 @@
             section_separators = { left = ""; right = ""; };
             component_separators = { left = ""; right = ""; };
           };
+        };
+      };
+
+      lsp = {
+        enable = true;
+	      servers = {
+      	  jsonls.enable = true;
+      	  lua_ls.enable = true;
+      	  nixd.enable = true;
+      	};
+      };
+
+      obsidian = {
+        enable = true;
+        settings = {
+          name = "";
+          path = "~/Documents/Obsidian";
         };
       };
 

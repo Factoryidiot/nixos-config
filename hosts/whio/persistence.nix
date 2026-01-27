@@ -24,6 +24,7 @@ in
 
       "/var/lib/nixos"
       "/var/lib/flatpak"
+      "/var/lib/docker"
 
       # network
       #"/var/lib/tailscale"
@@ -50,6 +51,8 @@ in
         #"Projects/Nixos/nixos-config"
         "Projects"
         "tmp"
+
+        ".local/share/docker"
 
         {
           directory = ".gnupg";

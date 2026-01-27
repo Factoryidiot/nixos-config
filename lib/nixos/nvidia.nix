@@ -1,20 +1,15 @@
+# lib/nixos/nvidia.nix
 { config
 , lib
-  #  , nixos-hardware
 , pkgs
 , ...
-}:
-{
+}: {
 
   hardware = {
 
     graphics = {
       enable = true;
       enable32Bit = true;
-    };
-
-    nvidia-container-toolkit = {
-      enable = true;
     };
 
     nvidia = {

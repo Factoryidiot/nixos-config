@@ -6,7 +6,12 @@
 
   services.asusd = {
     enable = true;
-    # battery_charge_limit = 80;
+    enableUserService = true;
+
+    asusdConfig.text = ''
+     charge_control_end_threshold: 80
+     disable_nvidia_powerd_on_batter: true
+    '';
   };
 
   services.supergfxd.enable = true;

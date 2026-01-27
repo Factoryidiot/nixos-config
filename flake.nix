@@ -26,7 +26,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     hyprland = {
-      url = "github:hyprwm/Hyprland";
+      url = "github:hyprwm/Hyprland/75f6435f70dee8f8b685a02c52db7ba16f5db39c";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     hyprland-plugins = {
@@ -73,7 +73,7 @@
       system = "x86_64-linux"; # The system type we will use
 
       specialArgs = {
-        inherit agenix hyprland impermanence inputs lanzaboote nixpkgs-unstable nixvim self;
+        inherit agenix hyprland impermanence inputs lanzaboote nixpkgs-unstable nixvim self system;
       };
 
       commonModules = [
@@ -94,11 +94,7 @@
           hostname = name;
           hostArgs = specialArgs // { inherit hostname username; };
 
-          pkgs = import nixpkgs {
-            inherit system;
-            config.allowUnfree = true;
-            overlays = [ ];
-          };
+
 
         in
         nixpkgs.lib.nixosSystem {

@@ -3,7 +3,6 @@
 , inputs
 , ...
 }:
-
   
 {
   imports = [
@@ -16,6 +15,7 @@
     ./desktop/terminal.nix
     ./desktop/walker.nix
     ./desktop/waybar.nix
+    ./desktop/terminaltexteffects.nix
   ];
 
   home.packages = with pkgs; [
@@ -65,4 +65,5 @@
     xdg-utils
   ];
 
+  terminaltexteffects.enable = true;
 }

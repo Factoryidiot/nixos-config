@@ -13,7 +13,7 @@
     ../../lib/home/tmux.nix
     ../../lib/home/nixvim.nix
     ../../lib/home/yazi.nix
-    ../../lib/home/desktop/terminaltexteffects.nix
+
   ];
 
   home = {
@@ -36,5 +36,4 @@
     config.common.default = "*";
   };
 
-  terminaltexteffects.enable = true;
 }
