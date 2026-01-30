@@ -52,7 +52,7 @@ in
     avahi.enable = true; # Discovery
     blueman.enable = true; # Bluetooth
     libinput.enable = true; # Input
-    power-profiles-daemon.enable = true;
+    # power-profiles-daemon.enable = true;
     printing.enable = true; # Printing
     resolved.enable = true; # DNS
     udev.enable = true; # Hardware

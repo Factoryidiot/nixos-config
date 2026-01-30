@@ -1,7 +1,10 @@
 # lib/home/terminaltexteffects.nix
-{ config, lib, pkgs, inputs, ... }:
-
-with lib;
+{ config
+, lib
+, pkgs
+, inputs
+, ...
+}: with lib;
 let
   cfg = config.terminaltexteffects;
 

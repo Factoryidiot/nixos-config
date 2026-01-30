@@ -22,14 +22,14 @@ in
       "/etc/secureboot" # lanzaboote - secure boot
       "/etc/agenix/" # secrets
 
-      "/var/lib/nixos"
-      "/var/lib/flatpak"
+      "/var/lib/asusd"
+      "/var/lib/bluetooth"
       "/var/lib/docker"
-
+      "/var/lib/flatpak"
+      "/var/lib/iwd"
+      "/var/lib/nixos"
       # network
       #"/var/lib/tailscale"
-      "/var/lib/bluetooth"
-      "/var/lib/iwd"
     ];
 
     files = [
@@ -39,13 +39,15 @@ in
     # the following directories will be passed to /persistent/home/$USER
     users.${username} = {
       directories = [
+        ".dotfiles"
+
         "Documents"
         "Downloads"
         "Music"
         "Pictures"
         "Videos"
+        "VMs"
 
-        ".dotfiles"
 
         # Work
         #"Projects/Nixos/nixos-config"
