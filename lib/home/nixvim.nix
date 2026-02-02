@@ -32,6 +32,7 @@
       termguicolors = true;
       completeopt = "menuone,noselect";
       updatetime = 300;
+      conceallevel = 1;
 
       #+----- tab settings -----------------------
       tabstop = 2;
@@ -123,7 +124,7 @@
         enable = true;
         settings = {
           options = {
-            theme = "tokyonight";
+            theme = "nord";
             icons_enabled = true;
             section_separators = { left = ""; right = ""; };
             component_separators = { left = ""; right = ""; };
@@ -143,8 +144,13 @@
       obsidian = {
         enable = true;
         settings = {
-          name = "";
-          path = "~/Documents/Obsidian";
+          legacy_commands = false;
+          workspaces = [
+            {
+              name = "Obsidian";
+              path = "~/Documents/Obsidian";
+            }
+          ];
         };
       };
 
