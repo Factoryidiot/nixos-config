@@ -16,13 +16,13 @@ in
     hideMounts = true;
     # sets the mount option x-gvfs-hide on all the bind mounts
     directories = [
+      "/etc/asusd"
+      "/etc/agenix/" # secrets
       #"/etc/NetworkManager/system-connections"
-      "/etc/ssh"
       "/etc/nix/inputs"
       "/etc/secureboot" # lanzaboote - secure boot
-      "/etc/agenix/" # secrets
+      "/etc/ssh"
 
-      "/var/lib/asusd"
       "/var/lib/bluetooth"
       "/var/lib/docker"
       "/var/lib/flatpak"

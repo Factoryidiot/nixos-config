@@ -73,7 +73,7 @@
       system = "x86_64-linux"; # The system type we will use
 
       specialArgs = {
-        inherit agenix hyprland impermanence inputs lanzaboote nixpkgs-unstable nixvim self system;
+        inherit agenix hyprland impermanence inputs lanzaboote nixpkgs-unstable nixvim self;
       };
 
       commonModules = [

@@ -1,13 +1,13 @@
 # lib/home/desktop/hyprland.nix
 { config
-, inputs
-, lib
-, pkgs
+#, inputs
+#, lib
+#, pkgs
 , ...
 }: let
 
-  hyprlandInput = inputs.hyprland;
-  system = pkgs.stdenv.hostPlatform.system;
+#  hyprlandInput = inputs.hyprland;
+#  system = pkgs.stdenv.hostPlatform.system;
 
 in
 {
@@ -18,6 +18,8 @@ in
     systemd.enable = false;
     xwayland.enable = true;
   };
+
+  services.hyprsunset.enable = true;
 
   # Link the configuration file from your dotfiles directory
   xdg.configFile = {

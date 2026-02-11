@@ -20,6 +20,7 @@
 
   home.packages = with pkgs; [
     #+----- Audio & Media ------------------------
+    ani-cli # Cli tool to browse and play anime
     imv # Powerful Wayland image viewer
     pamixer # Audio control
     playerctl # CMD-Line to control media players
@@ -38,10 +39,12 @@
     brightnessctl # Brightness control
     libinput # Input device library
     libnotify
+    matugen # Material you color generation tool
     swaybg # Basic wallpaper setter for fallback
+    wayfreeze # Tool to freeze the screen of a Wayland compositor
 
     #+----- Security and Auth --------------------
-    libsecret
+    libsecret # Library for storing and retrieving passwords and other secrets
 
     #+----- GUI Apps -----------------------------
     evince # PDF Viewer
@@ -58,7 +61,7 @@
     #    gpu-screen-recorder			# Screen recording utility
 
     #+----- Virtualisation -----------------------
-    quickemu
+    #quickemu
 
     #+----- XDG & Portals ------------------------
     xdg-terminal-exec
