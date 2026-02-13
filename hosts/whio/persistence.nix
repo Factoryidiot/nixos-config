@@ -48,9 +48,6 @@ in
         "Videos"
         "VMs"
 
-
-        # Work
-        #"Projects/Nixos/nixos-config"
         "Projects"
         "tmp"
 

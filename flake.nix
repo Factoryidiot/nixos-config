@@ -71,6 +71,7 @@
     }:
     let
       system = "x86_64-linux"; # The system type we will use
+      pkgs = nixpkgs.legacyPackages.${system};
 
       specialArgs = {
         inherit agenix hyprland impermanence inputs lanzaboote nixpkgs-unstable nixvim self;
@@ -111,7 +112,7 @@
             # The user itself (password, groups) should be defined
             # in the host's module (e.g., ./hosts/whio/default.nix)
             ({ ... }: {
-              home-manager.users.${username} = import ./users/${username}/home.nix;
+              home-manager.users.${username} = import ./users/${username}.nix;
             })
           ];
         };

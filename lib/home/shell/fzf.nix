@@ -1,10 +1,17 @@
-{ ...
+{ pkgs
+, ...
 }: {
 
   programs.fzf = {
     enable = true;
+
+    defaultCommand = "${pkgs.fd}/bin/fd --type f";
+    defaultOptions = [
+      "--preview '${pkgs.bat}/bin/bat --style=numbers --line-range :500 {}'"
+    ];
+
     enableZshIntegration = true; # Adds keybindings and completions
-    defaultCommand = "fzf --preview 'bat --style=numbers --color-always --line-range :500 {}'";
+    tmux.enableShellIntegration = true;
   };
 
 }
