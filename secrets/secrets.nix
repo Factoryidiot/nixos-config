@@ -4,4 +4,5 @@ in
 {
   "github.age".publicKeys = [ rhys ];
   "git-email.age".publicKeys = [ rhys ];
+  "disko-password-file.age".publicKeys = [ rhys ];
 }
