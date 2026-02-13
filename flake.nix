@@ -119,6 +119,13 @@
 
     in
     {
+      devShells.${system}.default = pkgs.mkShell {
+        packages = [
+          agenix.packages.${system}.default
+          pkgs.nixpkgs-fmt
+        ];
+      };
+
       nixosConfigurations = {
         whio = mkNixosSystem {
           name = "whio";
