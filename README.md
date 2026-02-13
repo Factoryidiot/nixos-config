@@ -62,6 +62,16 @@ nixos-install --root /mnt --no-root-password \
 ```
 
 > [!TIP]
+> **Handling Secrets During Installation**
+> If your configuration uses secrets managed by `agenix` (like git email or disk encryption password), you'll need to ensure `agenix` can decrypt them during installation.
+> 1.  **Enter Development Shell:** From your cloned repository, enter the development shell to get access to the correct `agenix` tool:
+>     ```bash
+>     nix develop
+>     ```
+> 2.  **Access Private Key:** Ensure your private SSH key (the one used for `agenix` encryption) is accessible. For example, if it's password-protected, you might need to load it into an SSH agent.
+> 3.  **Run `nixos-install`:** Execute the `nixos-install` command from within the `nix develop` shell. The NixOS build process will automatically invoke `agenix` to decrypt the secrets.
+
+> [!TIP]
 > To refresh the cache:
 > nix: `--no-eval-cache`
 > --flake: `--option eval-cache false`
@@ -188,4 +198,28 @@ sudo systemd-cryptenroll --recovery-key /dev/nvme0n1p2
 
 This project uses `agenix` (specifically `ryan4yin/ragenix`) for declarative secret management. Secrets are stored in a separate, private GitHub repository and are accessed via a deploy key.
 
-### Overview
+### Generating and Managing Secrets
+
+To create or edit secrets, you will use the `agenix` tool from within the development shell.
+
+1.  **Enter Development Shell:**
+    ```bash
+    nix develop
+    ```
+
+2.  **Create/Edit Secrets:**
+    *   **Git Email:** To encrypt your Git email address, run:
+        ```bash
+        agenix -e secrets/git-email.age
+        ```
+        When prompted, enter your email address (e.g., `rhys.scandlyn@gmail.com`).
+    *   **Disk Encryption Password File Path:** To encrypt the path to your disk encryption key, run:
+        ```bash
+        agenix -e secrets/disko-password-file.age
+        ```
+        When prompted, enter the *path* to your secret key file (e.g., `/tmp/secret.key`).
+
+    After entering the content, save and exit the editor. `agenix` will encrypt the file.
+
+3.  **Commit Encrypted Secrets:**
+    The generated `.age` files (e.g., `secrets/git-email.age`, `secrets/disko-password-file.age`) are encrypted and should be committed to your *private* secrets repository. They are safe to store there, as they can only be decrypted by authorized keys (your SSH public key, in this case).
