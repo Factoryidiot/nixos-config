@@ -4,9 +4,9 @@
   # The actual root of the OS is the @root subvolume mounted at /
   disko.devices = {
     disk = {
-      vda = {
+      sda = {
         type = "disk";
-        device = "/dev/vda";
+        device = "/dev/sda";
         content = {
           type = "gpt";
           partitions = {
@@ -29,7 +29,7 @@
               content = {
                 type = "luks";
                 name = "crypted";
-                #passwordFile = "/tmp/secret.key";
+                  passwordFile = builtins.trim (builtins.readFile config.age.secrets."disko-password-file.age".path);
                 # NOTE: passwordFile is typically only used by 'disko --mode format'
                 # to set the initial password, not for unlocking during boot.
                 # It will be ignored after the initial install.
