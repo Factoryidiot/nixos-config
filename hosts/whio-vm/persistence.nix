@@ -16,20 +16,20 @@ in
     hideMounts = true;
     # sets the mount option x-gvfs-hide on all the bind mounts
     directories = [
-      "/etc/NetworkManager/system-connections"
-      "/etc/ssh"
+      "/etc/asusd"
+      "/etc/agenix/" # secrets
+      #"/etc/NetworkManager/system-connections"
       "/etc/nix/inputs"
       "/etc/secureboot" # lanzaboote - secure boot
-      "/etc/agenix/" # secrets
+      "/etc/ssh"
 
-      "/var/lib/nixos"
+      "/var/lib/bluetooth"
+      "/var/lib/docker"
       "/var/lib/flatpak"
-
+      "/var/lib/iwd"
+      "/var/lib/nixos"
       # network
       #"/var/lib/tailscale"
-      "/var/lib/bluetooth"
-      "/var/lib/NetworkManager"
-      "/var/lib/iwd"
     ];
 
     files = [
@@ -39,17 +39,19 @@ in
     # the following directories will be passed to /persistent/home/$USER
     users.${username} = {
       directories = [
+        ".dotfiles"
+
         "Documents"
         "Downloads"
         "Music"
         "Pictures"
         "Videos"
+        "VMs"
 
-        ".dotfiles"
-
-        # Work
-        "Projects/Nixos/nixos-config"
+        "Projects"
         "tmp"
+
+        ".local/share/docker"
 
         {
           directory = ".gnupg";
