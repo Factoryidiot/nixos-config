@@ -213,13 +213,8 @@ To create or edit secrets, you will use the `agenix` tool from within the develo
         agenix -e secrets/git-email.age
         ```
         When prompted, enter your email address (e.g., `rhys.scandlyn@gmail.com`).
-    *   **Disk Encryption Password File Path:** To encrypt the path to your disk encryption key, run:
-        ```bash
-        agenix -e secrets/disko-password-file.age
-        ```
-        When prompted, enter the *path* to your secret key file (e.g., `/tmp/secret.key`).
 
     After entering the content, save and exit the editor. `agenix` will encrypt the file.
 
 3.  **Commit Encrypted Secrets:**
-    The generated `.age` files (e.g., `secrets/git-email.age`, `secrets/disko-password-file.age`) are encrypted and should be committed to your *private* secrets repository. They are safe to store there, as they can only be decrypted by authorized keys (your SSH public key, in this case).
+    The generated `.age` files (e.g., `secrets/git-email.age`) are encrypted and should be committed to your *private* secrets repository. They are safe to store there, as they can only be decrypted by authorized keys (your SSH public key, in this case).

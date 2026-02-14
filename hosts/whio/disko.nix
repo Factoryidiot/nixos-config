@@ -30,7 +30,6 @@
                   # keyFile = "/dev/disk/by-label/CRYPT"; # The keyfile is stored on a USB stick
                   # The maximum size of the keyfile is 8192 KiB
                   # type `cryptsetup --help` to see the compiled-in key and passphrase maximum sizes
-                  passwordFile = builtins.trim (builtins.readFile config.age.secrets."disko-password-file.age".path);
                   # keyFileSize = 512 * 64; # match the `bs * count` of the `dd` command
                   # keyFileOffset = 512 * 128; # match the `bs * skip` of the `dd` command
                   fallbackToPassword = true;

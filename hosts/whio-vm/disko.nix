@@ -29,7 +29,6 @@
               content = {
                 type = "luks";
                 name = "crypted";
-                  passwordFile = builtins.trim (builtins.readFile config.age.secrets."disko-password-file.age".path);
                 # NOTE: passwordFile is typically only used by 'disko --mode format'
                 # to set the initial password, not for unlocking during boot.
                 # It will be ignored after the initial install.
