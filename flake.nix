@@ -140,7 +140,7 @@
 
         whio-vm = mkNixosSystem {
           name = "whio-vm";
-          username = "rhys";
+          username = "factory";
           modules = [
             ./hosts/whio-vm/default.nix
             {

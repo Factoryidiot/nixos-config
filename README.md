@@ -57,23 +57,11 @@ Generate a `hardware-configuration.nix` to update the `UUID`s for the hardware-c
 3. Remove the contents of `rm /mnt/etc/nixos/*`.
 
 ### Perform installation
-nix-shell -p ragenix age
 From `/nixos-config` run:
 ```sh
 nixos-install --root /mnt --no-root-password \
 --flake .#[host-name] --no-write-lock-file
 ```
-
-> [!TIP]
-> **Handling Secrets During Installation**
-> If your configuration uses secrets managed by `agenix` (like git email or disk encryption password), you'll need to ensure `agenix` can decrypt them during installation.
-> 1.  **Enter Development Shell:** From your cloned repository, enter the development shell to get access to the correct `agenix` tool:
->     ```bash
->     nix develop
->     ```
-> 2.  **Access Private Key:** Ensure your private SSH key (the one used for `agenix` encryption) is accessible. For example, if it's password-protected, you might need to load it into an SSH agent.
-> 3.  **Run `nixos-install`:** Execute the `nixos-install` command from within the `nix develop` shell. The NixOS build process will automatically invoke `agenix` to decrypt the secrets.
-
 > [!TIP]
 > To refresh the cache:
 > nix: `--no-eval-cache`
@@ -90,7 +78,7 @@ Move any essential files to their `/persistent` location
 - `mv ../nixos-config /mnt/persistent/home/{user}/Projects/Nixos/`
 - `touch local-user.nix`
 ```sh
-{ config, lib, ... }:
+{ ... }:
 
 {
   # Git user name and email
