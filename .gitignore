@@ -2,3 +2,5 @@
 tmp-external-scripts/
 *.swp
 users/local-user.nix
+flake.lock
+GEMINI.md
