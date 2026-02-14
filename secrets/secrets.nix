@@ -3,6 +3,4 @@ let
 in
 {
   "github.age".publicKeys = [ rhys ];
-  "git-email.age".publicKeys = [ rhys ];
-  "git-user-name.age".publicKeys = [ rhys ];
 }

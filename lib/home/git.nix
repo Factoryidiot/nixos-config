@@ -17,8 +17,8 @@
 
     ];
     settings = {
-      user.name = builtins.trim (builtins.readFile config.age.secrets."git-user-name.age".path);
-      user.email = builtins.trim (builtins.readFile config.age.secrets."git-email.age".path);
+      user.name = "Rhys Scandlyn";
+      user.email = "rhys.scandlyn@gmail.com";
     };
   };
 

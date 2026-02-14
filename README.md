@@ -202,28 +202,31 @@ sudo systemd-cryptenroll --recovery-key /dev/nvme0n1p2
 
 This project uses `agenix` (specifically `ryan4yin/ragenix`) for declarative secret management. Secrets are stored in a separate, private GitHub repository and are accessed via a deploy key.
 
-### Generating and Managing Secrets
+---
 
-To create or edit secrets, you will use the `agenix` tool from within the development shell.
+## Local PII Management (Git User Name & Email)
 
-1.  **Enter Development Shell:**
+To manage personal identifiable information (PII) such as your Git user name and email, we use a local, Git-ignored file. This ensures your PII is never committed to a public repository.
+
+1.  **Create Local PII File:**
+    Copy the example file to create your local PII configuration:
     ```bash
-    nix develop
+    cp users/local-user.nix.example users/local-user.nix
     ```
 
-2.  **Create/Edit Secrets:**
-    *   **Git User Name:** To encrypt your Git user name, run:
-        ```bash
-        agenix -e secrets/git-user-name.age
-        ```
-        When prompted, enter your full name (e.g., "Rhys Scandlyn").
-    *   **Git Email:** To encrypt your Git email address, run:
-        ```bash
-        agenix -e secrets/git-email.age
-        ```
-        When prompted, enter your email address (e.g., `rhys.scandlyn@gmail.com`).
+2.  **Edit Local PII File:**
+    Open `users/local-user.nix` in your editor and replace the placeholder values with your actual Git user name and email:
+    ```nix
+    # users/local-user.nix
+    { config, lib, ... }:
 
-    After entering the content, save and exit the editor. `agenix` will encrypt the file.
+    {
+      programs.git.settings = {
+        user.name = "Rhys Scandlyn"; # Your full name
+        user.email = "rhys.scandlyn@gmail.com"; # Your email address
+      };
+    }
+    ```
 
-3.  **Commit Encrypted Secrets:**
-    The generated `.age` files (e.g., `secrets/git-email.age`, `secrets/git-user-name.age`) are encrypted and should be committed to your *private* secrets repository. They are safe to store there, as they can only be decrypted by authorized keys (your SSH public key, in this case).
+3.  **Ensure Git Ignores Local PII File:**
+    The `users/local-user.nix` file is already added to `.gitignore`, so it will not be accidentally committed.
