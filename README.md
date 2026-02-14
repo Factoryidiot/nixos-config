@@ -88,6 +88,18 @@ Move any essential files to their `/persistent` location
 - `mv /mnt/etc/ssh /mnt/persistent/etc`
 - `mv hosts/{hostname}/hardware-configuration.nix /mnt/persistent/home/{user}/Documents/`
 - `mv ../nixos-config /mnt/persistent/home/{user}/Projects/Nixos/`
+- `touch local-user.nix`
+```sh
+{ config, lib, ... }:
+
+{
+  # Git user name and email
+  programs.git.settings = {
+    user.name = "Your Name"; 
+    user.email = "your.email@example.com"; 
+  };
+}
+``` 
 
 > [!TIP]
 > **Configure Local PII**
