@@ -1,4 +1,7 @@
-{ agenix, inputs, ... }: {
+{ agenix
+, inputs
+, ... 
+}: {
 
   imports = [
     agenix.homeManagerModules.default

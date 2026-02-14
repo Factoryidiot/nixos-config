@@ -89,6 +89,10 @@ Move any essential files to their `/persistent` location
 - `mv hosts/{hostname}/hardware-configuration.nix /mnt/persistent/home/{user}/Documents/`
 - `mv ../nixos-config /mnt/persistent/home/{user}/Projects/Nixos/`
 
+> [!TIP]
+> **Configure Local PII**
+> After installation, remember to configure your local PII (Git user name and email) by following the instructions in the "Local PII Management" section of this README.
+
 ### Reboot
 `reboot`
 
