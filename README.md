@@ -52,10 +52,13 @@ Generate a `hardware-configuration.nix` to update the `UUID`s for the hardware-c
  nixos-generate-config --root /mnt
 ```
 2. Use editor to update the UUIDs found in `/mnt/etc/nixos/hardware-configuration.nix` into the hosts hardware-configuration e.g. `hosts/whio/hardware-configuration.nix`.
+> [!TIP]
+> ls -la /dev/disk/by-uuid/ > uuids
 3. Remove the contents of `rm /mnt/etc/nixos/*`.
 
 ### Perform installation
-From `nixos-install` run:
+nix-shell -p ragenix age
+From `/nixos-config` run:
 ```sh
 nixos-install --root /mnt --no-root-password \
 --flake .#[host-name] --no-write-lock-file
@@ -83,6 +86,7 @@ nixos-install --root /mnt --no-root-password \
 ### Post install
 Move any essential files to their `/persistent` location
 - `mv /mnt/etc/ssh /mnt/persistent/etc`
+- `mv hosts/{hostname}/hardware-configuration.nix /mnt/persistent/home/{user}/Documents/`
 - `mv ../nixos-config /mnt/persistent/home/{user}/Projects/Nixos/`
 
 ### Reboot
@@ -208,6 +212,11 @@ To create or edit secrets, you will use the `agenix` tool from within the develo
     ```
 
 2.  **Create/Edit Secrets:**
+    *   **Git User Name:** To encrypt your Git user name, run:
+        ```bash
+        agenix -e secrets/git-user-name.age
+        ```
+        When prompted, enter your full name (e.g., "Rhys Scandlyn").
     *   **Git Email:** To encrypt your Git email address, run:
         ```bash
         agenix -e secrets/git-email.age
@@ -217,4 +226,4 @@ To create or edit secrets, you will use the `agenix` tool from within the develo
     After entering the content, save and exit the editor. `agenix` will encrypt the file.
 
 3.  **Commit Encrypted Secrets:**
-    The generated `.age` files (e.g., `secrets/git-email.age`) are encrypted and should be committed to your *private* secrets repository. They are safe to store there, as they can only be decrypted by authorized keys (your SSH public key, in this case).
+    The generated `.age` files (e.g., `secrets/git-email.age`, `secrets/git-user-name.age`) are encrypted and should be committed to your *private* secrets repository. They are safe to store there, as they can only be decrypted by authorized keys (your SSH public key, in this case).

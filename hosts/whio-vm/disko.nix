@@ -34,7 +34,6 @@
                 # It will be ignored after the initial install.
                 settings = {
                   allowDiscards = true;
-                  #fallbackToPassword = true;
                 };
                 # Setting this to true is required for TPM/Passphrase unlock in the initrd
                 initrdUnlock = true;
