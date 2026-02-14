@@ -2,12 +2,13 @@
 # Copy this file to users/local-user.nix and fill in your details.
 # Add users/local-user.nix to your .gitignore.
 
-{ config, lib, ... }:
-
+{ ... }:
 {
+
   # Git user name and email
   programs.git.settings = {
-    user.name = "Your Name"; # e.g., Rhys Scandlyn
-    user.email = "your.email@example.com"; # e.g., rhys.scandlyn@gmail.com
+    user.name = "Your Name"; 
+    user.email = "your.email@example.com"; 
   };
+
 }

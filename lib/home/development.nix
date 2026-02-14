@@ -1,6 +1,8 @@
 # lib/home/development.nix
-{ pkgs, ... }:
-{
+{ pkgs
+, ... 
+}: {
+
   programs.gemini-cli.enable = true;
 
   home.packages = with pkgs; [
@@ -14,4 +16,5 @@
 
     # Language Runtimes & Tools
   ];
+
 }
