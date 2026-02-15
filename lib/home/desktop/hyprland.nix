@@ -1,16 +1,7 @@
 # lib/home/desktop/hyprland.nix
 { config
-#, inputs
-#, lib
-#, pkgs
 , ...
-}: let
-
-#  hyprlandInput = inputs.hyprland;
-#  system = pkgs.stdenv.hostPlatform.system;
-
-in
-{
+}: {
 
   wayland.windowManager.hyprland = {
     enable = true;

@@ -81,7 +81,6 @@
       commonModules = [
         ./lib/nixos/secrets.nix
         home-manager.nixosModules.home-manager
-        inputs.nix-flatpak.nixosModules.default
         ({ config, ... }: {
           home-manager = {
             backupFileExtension = "backup";

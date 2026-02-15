@@ -1,4 +1,8 @@
-{
+{ inputs, ... }: {
+  imports = [
+    inputs.nix-flatpak.nixosModules.default
+  ];
+
   services.flatpak.enable = true;
   nix-flatpak.remotes = [{
     name = "flathub";
