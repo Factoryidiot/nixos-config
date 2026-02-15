@@ -1,13 +1,10 @@
+# /hosts/whio/hardware-configuration.nix
 { config
 , lib
 , pkgs
 , modulesPath
 , ...
 }: {
-
-  imports = [
-    (modulesPath + "/installer/scan/not-detected.nix")
-  ];
 
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot";
@@ -16,8 +13,9 @@
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "thunderbolt" "sd_mod" "usbhid" "usb_storage" ];
   boot.initrd.kernelModules = [ ];
   boot.initrd.systemd.enable = true;
-  boot.kernelModules = [ "amdgpu" "kvm-amd" ];
+  boot.kernelPackages = pkgs.linuxPackages_zen;
   boot.kernelParams = [ "amd_pstate=active" ];
+  boot.kernelModules = [ "amdgpu" "kvm-amd" ];
   boot.extraModulePackages = [ ];
   boot.tmp.cleanOnBoot = true; # clear /tmp on boot to get a stateless /tmp directory
   boot.supportedFilesystems = [
@@ -30,20 +28,20 @@
     "exfat"
   ];
 
-  boot.initrd.luks.devices."crypted".device = "/dev/disk/by-uuid/c8ab03bb-b1bd-47a2-9778-3b07add65081";
+  boot.initrd.luks.devices."crypted".device = "/dev/disk/by-uuid/896f3bcf-962b-4b24-8f81-a09c34eecb19";
   boot.initrd.luks.devices."crypted".allowDiscards = true;
   boot.initrd.luks.devices."crypted".bypassWorkqueues = true;
 
   fileSystems."/boot" = lib.mkDefault
     {
-      device = "/dev/disk/by-uuid/961C-C464";
+      device = "/dev/disk/by-uuid/49FC-6578";
       fsType = "vfat";
-      options = [ "fmask=0022" "dmask=0022" ];
+      options = [ "fmask=0077" "dmask=0077" ];
     };
 
   fileSystems."/btr_pool" = lib.mkDefault
     {
-      device = "/dev/disk/by-uuid/f8d16240-7362-48da-98f6-ad055cf4b9e8";
+      device = "/dev/disk/by-uuid/6007d420-dbed-4fc1-8663-0efbd8fd4346"; 
       fsType = "btrfs";
       options = [ "subvolid=5" ];
     };
@@ -57,21 +55,21 @@
 
   fileSystems."/gnu" = lib.mkDefault
     {
-      device = "/dev/disk/by-uuid/f8d16240-7362-48da-98f6-ad055cf4b9e8";
+      device = "/dev/disk/by-uuid/6007d420-dbed-4fc1-8663-0efbd8fd4346"; 
       fsType = "btrfs";
       options = [ "subvol=@guix" "noatime" "compress-force=zstd:1" ];
     };
 
   fileSystems."/nix" = lib.mkDefault
     {
-      device = "/dev/disk/by-uuid/f8d16240-7362-48da-98f6-ad055cf4b9e8";
+      device = "/dev/disk/by-uuid/6007d420-dbed-4fc1-8663-0efbd8fd4346"; 
       fsType = "btrfs";
       options = [ "subvol=@nix" "noatime" "compress-force=zstd:1" ];
     };
 
   fileSystems."/persistent" = lib.mkDefault
     {
-      device = "/dev/disk/by-uuid/f8d16240-7362-48da-98f6-ad055cf4b9e8";
+      device = "/dev/disk/by-uuid/6007d420-dbed-4fc1-8663-0efbd8fd4346"; 
       fsType = "btrfs";
       options = [ "subvol=@persistent" "compress-force=zstd:1" ];
       neededForBoot = true;
@@ -79,14 +77,14 @@
 
   fileSystems."/snapshots" = lib.mkDefault
     {
-      device = "/dev/disk/by-uuid/f8d16240-7362-48da-98f6-ad055cf4b9e8";
+      device = "/dev/disk/by-uuid/6007d420-dbed-4fc1-8663-0efbd8fd4346"; 
       fsType = "btrfs";
       options = [ "subvol=@snapshots" "compress-force=zstd:1" ];
     };
 
   fileSystems."/swap" = lib.mkDefault
     {
-      device = "/dev/disk/by-uuid/f8d16240-7362-48da-98f6-ad055cf4b9e8";
+      device = "/dev/disk/by-uuid/6007d420-dbed-4fc1-8663-0efbd8fd4346"; 
       fsType = "btrfs";
       options = [ "subvol=@swap" "ro" ];
     };
@@ -101,7 +99,7 @@
 
   fileSystems."/tmp" = lib.mkDefault
     {
-      device = "/dev/disk/by-uuid/f8d16240-7362-48da-98f6-ad055cf4b9e8";
+      device = "/dev/disk/by-uuid/6007d420-dbed-4fc1-8663-0efbd8fd4346"; 
       fsType = "btrfs";
       options = [ "subvol=@tmp" "compress-force=zstd:1" ];
     };

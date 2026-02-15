@@ -1,16 +1,11 @@
-# lib/home/flatpak.nix
-{ config
-, pkgs
-, ...
-}: {
-
+{
   services.flatpak.enable = true;
+  nix-flatpak.remotes = [{
+    name = "flathub";
+    location = "https://dl.flathub.org/repo/flathub.flatpakrepo";
+  }];
 
-  systemd.services.flatpak-repo = {
-    wantedBy = [ "multi-user.target" ];
-    path = [ pkgs.flatpak ];
-    script = ''
-      flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-    '';
-  };
+  nix-flatpak.installations = [{
+    app-id = "io.github.kolunmi.Bazaar";
+  }];
 }

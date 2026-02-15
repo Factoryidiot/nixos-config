@@ -38,6 +38,7 @@
       url = "github:nix-community/lanzaboote/v0.4.3";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-flatpak.url = "github:gmodena/nix-flatpak";
     nix-gaming.url = "github:fufexan/nix-gaming";
     nixvim = {
       url = "github:nix-community/nixvim";
@@ -80,6 +81,7 @@
       commonModules = [
         ./lib/nixos/secrets.nix
         home-manager.nixosModules.home-manager
+        inputs.nix-flatpak.nixosModules.default
         ({ config, ... }: {
           home-manager = {
             backupFileExtension = "backup";
@@ -129,7 +131,7 @@
       nixosConfigurations = {
         whio = mkNixosSystem {
           name = "whio";
-          username = "rhys";
+          username = "factory";
           modules = [
             ./hosts/whio/default.nix
             {
