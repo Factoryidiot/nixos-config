@@ -1,5 +1,9 @@
 # lib/home/git.nix
-{ config, pkgs, lib, ... }: {
+{ config
+, lib
+, pkgs
+, ...
+}: {
 
   programs.gh = {
     enable = true;
@@ -17,8 +21,6 @@
 
     ];
     settings = {
-      user.name = "Rhys Scandlyn";
-      user.email = "rhys.scandlyn@gmail.com";
     };
   };
 
