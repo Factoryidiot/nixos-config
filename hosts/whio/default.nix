@@ -2,7 +2,8 @@
 { pkgs
 , specialArgs
 , ... 
-}: let
+}:
+let
 
   # Destructure 'hostname' from the specialArgs passed from flake.nix
   inherit (specialArgs) hostname username;
@@ -33,6 +34,7 @@ in
   ];
 
   hardware.cpu.amd.updateMicrocode = true;
+  hardware.enableRedistributableFirmware = true;
 
   boot = {
     blacklistedKernelModules = [ "nouveau" ];

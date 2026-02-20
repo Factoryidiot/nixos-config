@@ -38,7 +38,7 @@
       url = "github:nix-community/lanzaboote/v0.4.3";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nix-flatpak.url = "github:gmodena/nix-flatpak";
+    nix-flatpak.url = "github:gmodena/nix-flatpak/";
     nix-gaming.url = "github:fufexan/nix-gaming";
     nixvim = {
       url = "github:nix-community/nixvim";
@@ -79,6 +79,7 @@
       };
 
       commonModules = [
+        agenix.nixosModules.default
         ./lib/nixos/secrets.nix
         home-manager.nixosModules.home-manager
         ({ config, ... }: {
