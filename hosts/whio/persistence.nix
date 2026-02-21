@@ -23,6 +23,7 @@ in
       "/etc/secureboot" # lanzaboote - secure boot
       "/etc/ssh"
 
+      "/var/lib/agenix"
       "/var/lib/bluetooth"
       "/var/lib/docker"
       "/var/lib/flatpak"

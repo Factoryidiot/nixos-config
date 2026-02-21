@@ -76,7 +76,7 @@ Adherence to these guidelines is crucial for maintaining the quality and consist
     - When enabled, it should:
       - Add the application's package to `home.packages`.
       - Link the configuration file from the *external* `~/.dotfiles` directory to the correct location in the user's home directory using `home.file`. The path to your dotfiles repo can be referenced dynamically using `${config.home.homeDirectory}/.dotfiles/...`.
-3.  **Import Module:** Import the new module into `users/rhys/home.nix` (or a more specific module if appropriate) and enable it.
+3.  **Import Module:** Import the new module into users/user/home.nix
 
 ### Secrets Management
 

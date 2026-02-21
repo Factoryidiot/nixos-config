@@ -23,7 +23,7 @@ These are in no particular order of priority
 ## Install
 ### Prerequsite
 1. `sudo -i`
-2. Clone the repo `git clone https://github.com/Factoryidiot/nixos-config.git`.
+2. Clone the repo `git clone https://github.com/your-username/nixos-config.git`.
 ### Prepare Disk
 1. Navigate to the desired hosts disko configuration and execute: 
 ```sh
@@ -189,37 +189,3 @@ sudo systemd-cryptenroll --recovery-key /dev/nvme0n1p2
 
 ```
 
----
-
-## Secrets Management (agenix)
-
-This project uses `agenix` (specifically `ryan4yin/ragenix`) for declarative secret management. Secrets are stored in a separate, private GitHub repository and are accessed via a deploy key.
-
----
-
-## Local PII Management (Git User Name & Email)
-
-To manage personal identifiable information (PII) such as your Git user name and email, we use a local, Git-ignored file. This ensures your PII is never committed to a public repository.
-
-1.  **Create Local PII File:**
-    Copy the example file to create your local PII configuration:
-    ```bash
-    cp users/local-user.nix.example users/local-user.nix
-    ```
-
-2.  **Edit Local PII File:**
-    Open `users/local-user.nix` in your editor and replace the placeholder values with your actual Git user name and email:
-    ```nix
-    # users/local-user.nix
-    { config, lib, ... }:
-
-    {
-      programs.git.settings = {
-        user.name = "Rhys Scandlyn"; # Your full name
-        user.email = "rhys.scandlyn@gmail.com"; # Your email address
-      };
-    }
-    ```
-
-3.  **Ensure Git Ignores Local PII File:**
-    The `users/local-user.nix` file is already added to `.gitignore`, so it will not be accidentally committed.

@@ -8,6 +8,7 @@
 
   age.identityPaths = [
     "/etc/ssh/ssh_host_ed25519_key"
+    "/persistent/etc/ssh/ssh_host_ed25519_key"
   ];
   age.secrets = {
     "git-config" = {
