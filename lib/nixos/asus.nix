@@ -16,8 +16,6 @@ in
 
   services.asusd = {
     enable = true;
-    enableUserService = true;
-    package = unstable-asusctl;
     asusdConfig.text = ''
       (
         charge_control_end_threshold: 80,
@@ -44,27 +42,10 @@ in
         armoury_settings: {},
       )
     '';
-  };
+    enableUserService = true;
+    package = unstable-asusctl;
+ };
 
-  #services.dbus.packages = [ unstable-asusctl ];
   services.supergfxd.enable = true;
-
-  #systemd.services.asus-battery-enforcer = {
-  #  description = "Force ASUS battery limit to 80% at boot";
-  #  after = [ "asusd.service" "multi-user.target" ];
-  #  wantedBy = [ "multi-user.target" ];
-  #  serviceConfig = {
-  #    Type = "oneshot";
-  #    RemainAfterExit = true;
-  #    # We use asusctl directly to ensure the kernel gets the message
-  #    ExecStart = "${unstable-asusctl}/bin/asusctl battery-limit 80";
-  #  };
-  #};
-
-  #systemd.services.supergfxd.serviceConfig.ExecStart = [
-  #  "" # This clears the existing command
-  #  "${unstable-supergfxctl}/bin/supergfxd"
-  #];
-
 
 }
