@@ -1,7 +1,5 @@
 # lib/nixos/virtualisation.nix
-{ config
-, lib
-, pkgs
+{ pkgs
 , username
 ,  ...
 }:
@@ -21,19 +19,13 @@
 
     autoPrune.enable = true;
     daemon.settings = {
-      #default-runtime = "nvidia";
       dns = [ "8.8.8.8" "8.8.4.4" ];
       features = {
         cdi = true;
       };
       registry-mirrors = [ "https://mirror.gcr.io" ];
-      #runtimes = {
-      #  nvidia = {
-      #    path = "${pkgs.nvidia-container-toolkit}/bin/nvidia-container-toolkit";
-      #  };
-      #};
     };
-    storageDriver = "overlay2";
+    storageDriver = "btrfs";
   };
 
 }

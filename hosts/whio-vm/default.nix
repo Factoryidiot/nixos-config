@@ -16,6 +16,7 @@ in
 
     # Basic configuration
     ../../lib/nixos/base-packages.nix
+    ../../lib/nixos/btrfs.nix
     ../../lib/nixos/base-security.nix
     ../../lib/nixos/hardware-services.nix
     ../../lib/nixos/hyprland-services.nix

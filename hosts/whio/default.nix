@@ -19,6 +19,7 @@ in
     #+----- Basic configuration ------------------
     ../../lib/nixos/asus.nix
     ../../lib/nixos/base-packages.nix
+    ../../lib/nixos/btrfs.nix
     ../../lib/nixos/base-security.nix
     ../../lib/nixos/flatpak.nix
     ../../lib/nixos/gaming.nix

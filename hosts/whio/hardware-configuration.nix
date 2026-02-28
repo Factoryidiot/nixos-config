@@ -4,7 +4,11 @@
 , pkgs
 , modulesPath
 , ...
-}: {
+}:
+let
+  btrfsOptions = [ "noatime" "compress=zstd:1" "ssd" "discard=async" ];
+in
+{
 
   imports = [ 
     (modulesPath + "/installer/scan/not-detected.nix")
@@ -32,9 +36,11 @@
   ];
 
   boot.initrd.luks.devices."crypted".device = "/dev/disk/by-uuid/46c43240-99a5-45bf-aa4c-d568e2fa93c6";
-  boot.initrd.luks.devices."crypted".allowDiscards = true;
-  boot.initrd.luks.devices."crypted".bypassWorkqueues = true;
-  boot.initrd.luks.devices."crypted".crypttabExtraOpts = [ "tpm2-device=auto" ];
+  boot.initrd.luks.devices."crypted" = { 
+    allowDiscards = true;
+    bypassWorkqueues = true;
+    crypttabExtraOpts = [ "tpm2-device=auto" ];
+  };
 
   fileSystems."/boot" = lib.mkDefault
     {
@@ -61,21 +67,21 @@
     {
       device = "/dev/disk/by-uuid/28c12aa0-3d86-491d-ab94-148d91efc6c8"; 
       fsType = "btrfs";
-      options = [ "subvol=@guix" "noatime" "compress-force=zstd:1" ];
+      options = btrfsOptions ++ [ "subvol=@guix" ];
     };
 
   fileSystems."/nix" = lib.mkDefault
     {
       device = "/dev/disk/by-uuid/28c12aa0-3d86-491d-ab94-148d91efc6c8"; 
       fsType = "btrfs";
-      options = [ "subvol=@nix" "noatime" "compress-force=zstd:1" ];
+      options = btrfsOptions ++ [ "subvol=@nix" ];
     };
 
   fileSystems."/persistent" = lib.mkDefault
     {
       device = "/dev/disk/by-uuid/28c12aa0-3d86-491d-ab94-148d91efc6c8"; 
       fsType = "btrfs";
-      options = [ "subvol=@persistent" "compress-force=zstd:1" ];
+      options = btrfsOptions ++ [ "subvol=@persistent" ];
       neededForBoot = true;
     };
 
@@ -83,14 +89,14 @@
     {
       device = "/dev/disk/by-uuid/28c12aa0-3d86-491d-ab94-148d91efc6c8"; 
       fsType = "btrfs";
-      options = [ "subvol=@snapshots" "compress-force=zstd:1" ];
+      options = btrfsOptions ++ [ "subvol=@snapshots" ];
     };
 
   fileSystems."/swap" = lib.mkDefault
     {
       device = "/dev/disk/by-uuid/28c12aa0-3d86-491d-ab94-148d91efc6c8"; 
       fsType = "btrfs";
-      options = [ "subvol=@swap" "ro" ];
+      options = [ "subvol=@swap" "nodatacow" "noatime" ];
     };
 
   fileSystems."/swap/swapfile" =
@@ -105,7 +111,7 @@
     {
       device = "/dev/disk/by-uuid/28c12aa0-3d86-491d-ab94-148d91efc6c8"; 
       fsType = "btrfs";
-      options = [ "subvol=@tmp" "compress-force=zstd:1" ];
+      options = btrfsOptions ++ [ "subvol=@tmp" ];
     };
 
   swapDevices = [
