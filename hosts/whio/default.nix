@@ -26,6 +26,7 @@ in
     ../../lib/nixos/hyprland-services.nix
     ../../lib/nixos/multimedia.nix
     ../../lib/nixos/nvidia.nix
+    ../../lib/nixos/secureboot.nix
     ../../lib/nixos/snapper.nix
     ../../lib/nixos/xdg.nix
     ../../lib/nixos/virt.nix

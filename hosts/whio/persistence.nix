@@ -20,7 +20,6 @@ in
       "/etc/agenix/" # secrets
       #"/etc/NetworkManager/system-connections"
       "/etc/nix/inputs"
-      "/etc/secureboot" # lanzaboote - secure boot
       "/etc/ssh"
 
       "/var/lib/agenix"
@@ -29,6 +28,7 @@ in
       "/var/lib/flatpak"
       "/var/lib/iwd"
       "/var/lib/nixos"
+      "/var/lib/sbctl"
       # network
       #"/var/lib/tailscale"
     ];

@@ -34,6 +34,7 @@
   boot.initrd.luks.devices."crypted".device = "/dev/disk/by-uuid/46c43240-99a5-45bf-aa4c-d568e2fa93c6";
   boot.initrd.luks.devices."crypted".allowDiscards = true;
   boot.initrd.luks.devices."crypted".bypassWorkqueues = true;
+  boot.initrd.luks.devices."crypted".crypttabExtraOpts = [ "tpm2-device=auto" ];
 
   fileSystems."/boot" = lib.mkDefault
     {
