@@ -17,10 +17,9 @@ in
     # sets the mount option x-gvfs-hide on all the bind mounts
     directories = [
       "/etc/asusd"
-      "/etc/agenix/" # secrets
+      "/etc/agenix/"              # secrets
       #"/etc/NetworkManager/system-connections"
       "/etc/nix/inputs"
-      "/etc/ssh"
 
       "/var/lib/agenix"
       "/var/lib/bluetooth"
@@ -28,13 +27,19 @@ in
       "/var/lib/flatpak"
       "/var/lib/iwd"
       "/var/lib/nixos"
-      "/var/lib/sbctl"
+      "/var/lib/sbctl"            # secure boot
+      "/var/lib/systemd/timers/"  # cron/timers
+      "/var/log"                  # logs and troubleshooting
       # network
       #"/var/lib/tailscale"
     ];
 
     files = [
       "/etc/machine-id"
+      "/etc/ssh/ssh_host_ed25519_key"
+      "/etc/ssh/ssh_host_ed25519_key.pub"
+      "/etc/ssh/ssh_host_rsa_key"
+      "/etc/ssh/ssh_host_rsa_key.pub"
     ];
 
     # the following directories will be passed to /persistent/home/$USER
