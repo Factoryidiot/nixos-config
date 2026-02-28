@@ -19,10 +19,22 @@
   # System-level OpenSSH service settings
   services.openssh = {
     enable = true;
+    hostKeys = [
+      {
+        path = "/etc/ssh/ssh_host_ed25519_key";
+        type = "ed25519";
+      }
+      {
+        path = "/etc/ssh/ssh_host_rsa_key";
+        type = "rsa";
+        bits = 4096;
+      }
+    ];
     settings = {
-      X11Forwarding = true;
-      PermitRootLogin = "no";
+      KbdInteractiveAuthentication = false;
       PasswordAuthentication = false;
+      PermitRootLogin = "no";
+      X11Forwarding = true;
     };
     # Open the port in the system firewall
     openFirewall = true;
