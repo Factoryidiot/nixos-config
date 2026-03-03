@@ -27,7 +27,9 @@
     webp-pixbuf-loader # WebP image support
 
     #+----- System Utilities & TUIs --------------
+    bitwarden-desktop
     bluetui # TUI for bluetooth
+    # deskflow
     gum
     htop # TUI process viewer
     impala # TUI wifi
@@ -42,6 +44,7 @@
     matugen # Material you color generation tool
     swaybg # Basic wallpaper setter for fallback
     wayfreeze # Tool to freeze the screen of a Wayland compositor
+    waypaper # GUI wallpaper setter for Wayland-based window managers
 
     #+----- Security and Auth --------------------
     libsecret # Library for storing and retrieving passwords and other secrets

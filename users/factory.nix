@@ -7,13 +7,6 @@
     agenix.homeManagerModules.default
     inputs.nixvim.homeModules.nixvim
 
-    # Import user-specific PII if available locally
-    (
-      if builtins.pathExists ./local-user.nix
-      then ./local-user.nix
-      else { }
-    )
-
     ../lib/home/btop.nix
     ../lib/home/desktop.nix
     ../lib/home/development.nix

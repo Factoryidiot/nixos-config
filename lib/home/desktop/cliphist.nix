@@ -1,10 +1,9 @@
 # lib/home/desktop/cliphist.nix
-{ config
-, lib
-, pkgs
+{ pkgs
 , ...
 }:
 {
+
   services.cliphist = {
     enable = true;
   };
@@ -13,8 +12,4 @@
     cliphist
   ];
 
-  # Optional: Add keybindings for cliphist in Hyprland
-  wayland.windowManager.hyprland.settings = {
-    "$mod, V" = "exec, cliphist list | walker | cliphist decode | wl-copy";
-  };
 }
