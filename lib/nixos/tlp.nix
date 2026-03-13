@@ -1,6 +1,5 @@
 # lib/nixos/tlp.nix
-{
-  ...
+{ ...
 }: {
 
   services.tlp = {

@@ -17,7 +17,7 @@ in
     # sets the mount option x-gvfs-hide on all the bind mounts
     directories = [
       "/etc/asusd"
-      "/etc/agenix/"              # secrets
+      "/etc/agenix/" # secrets
       #"/etc/NetworkManager/system-connections"
       "/etc/nix/inputs"
 
@@ -27,9 +27,9 @@ in
       "/var/lib/flatpak"
       "/var/lib/iwd"
       "/var/lib/nixos"
-      "/var/lib/sbctl"            # secure boot
-      "/var/lib/systemd/timers/"  # cron/timers
-      "/var/log"                  # logs and troubleshooting
+      "/var/lib/sbctl" # secure boot
+      "/var/lib/systemd/timers/" # cron/timers
+      "/var/log" # logs and troubleshooting
       # network
       #"/var/lib/tailscale"
     ];

@@ -19,7 +19,7 @@
     includes = [
       { path = "/run/agenix/git-config"; }
     ];
-  };    
+  };
 
   programs.lazygit.enable = false;
 

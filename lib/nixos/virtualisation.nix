@@ -1,7 +1,7 @@
 # lib/nixos/virtualisation.nix
 { pkgs
 , username
-,  ...
+, ...
 }:
 {
 

@@ -1,6 +1,7 @@
 # lib/nixos/secrets.nix
 { inputs
-, ... }:
+, ...
+}:
 {
   imports = [
     inputs.agenix.nixosModules.default

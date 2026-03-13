@@ -1,7 +1,7 @@
 # lib/home/desktop/waybar.nix
 { config
 , lib
-, ... 
+, ...
 }: {
 
   programs.waybar = {

@@ -11,13 +11,13 @@
 
   programs.walker = {
     enable = true;
-    runAsService = true; 
+    runAsService = true;
   };
 
   xdg.configFile = {
     "elephant/desktopapplications.toml".source =
       config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/elephant/desktopapplications.toml";
-     "elephant/calc.toml".source =
+    "elephant/calc.toml".source =
       config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/elephant/calc.toml";
     "walker/config.toml".source =
       lib.mkForce (config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/walker/config.toml");

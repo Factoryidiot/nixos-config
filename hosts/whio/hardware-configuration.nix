@@ -10,7 +10,7 @@ let
 in
 {
 
-  imports = [ 
+  imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
@@ -36,7 +36,7 @@ in
   ];
 
   boot.initrd.luks.devices."crypted".device = "/dev/disk/by-uuid/46c43240-99a5-45bf-aa4c-d568e2fa93c6";
-  boot.initrd.luks.devices."crypted" = { 
+  boot.initrd.luks.devices."crypted" = {
     allowDiscards = true;
     bypassWorkqueues = true;
     crypttabExtraOpts = [ "tpm2-device=auto" ];
@@ -51,7 +51,7 @@ in
 
   fileSystems."/btr_pool" = lib.mkDefault
     {
-      device = "/dev/disk/by-uuid/28c12aa0-3d86-491d-ab94-148d91efc6c8"; 
+      device = "/dev/disk/by-uuid/28c12aa0-3d86-491d-ab94-148d91efc6c8";
       fsType = "btrfs";
       options = [ "subvolid=5" ];
     };
@@ -65,21 +65,21 @@ in
 
   fileSystems."/gnu" = lib.mkDefault
     {
-      device = "/dev/disk/by-uuid/28c12aa0-3d86-491d-ab94-148d91efc6c8"; 
+      device = "/dev/disk/by-uuid/28c12aa0-3d86-491d-ab94-148d91efc6c8";
       fsType = "btrfs";
       options = btrfsOptions ++ [ "subvol=@guix" ];
     };
 
   fileSystems."/nix" = lib.mkDefault
     {
-      device = "/dev/disk/by-uuid/28c12aa0-3d86-491d-ab94-148d91efc6c8"; 
+      device = "/dev/disk/by-uuid/28c12aa0-3d86-491d-ab94-148d91efc6c8";
       fsType = "btrfs";
       options = btrfsOptions ++ [ "subvol=@nix" ];
     };
 
   fileSystems."/persistent" = lib.mkDefault
     {
-      device = "/dev/disk/by-uuid/28c12aa0-3d86-491d-ab94-148d91efc6c8"; 
+      device = "/dev/disk/by-uuid/28c12aa0-3d86-491d-ab94-148d91efc6c8";
       fsType = "btrfs";
       options = btrfsOptions ++ [ "subvol=@persistent" ];
       neededForBoot = true;
@@ -87,14 +87,14 @@ in
 
   fileSystems."/snapshots" = lib.mkDefault
     {
-      device = "/dev/disk/by-uuid/28c12aa0-3d86-491d-ab94-148d91efc6c8"; 
+      device = "/dev/disk/by-uuid/28c12aa0-3d86-491d-ab94-148d91efc6c8";
       fsType = "btrfs";
       options = btrfsOptions ++ [ "subvol=@snapshots" ];
     };
 
   fileSystems."/swap" = lib.mkDefault
     {
-      device = "/dev/disk/by-uuid/28c12aa0-3d86-491d-ab94-148d91efc6c8"; 
+      device = "/dev/disk/by-uuid/28c12aa0-3d86-491d-ab94-148d91efc6c8";
       fsType = "btrfs";
       options = [ "subvol=@swap" "nodatacow" "noatime" ];
     };
@@ -109,7 +109,7 @@ in
 
   fileSystems."/tmp" = lib.mkDefault
     {
-      device = "/dev/disk/by-uuid/28c12aa0-3d86-491d-ab94-148d91efc6c8"; 
+      device = "/dev/disk/by-uuid/28c12aa0-3d86-491d-ab94-148d91efc6c8";
       fsType = "btrfs";
       options = btrfsOptions ++ [ "subvol=@tmp" ];
     };

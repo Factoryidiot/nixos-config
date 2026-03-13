@@ -3,7 +3,7 @@
 , inputs
 , ...
 }:
-  
+
 {
   imports = [
     ./desktop/browser.nix
@@ -33,7 +33,7 @@
     gum
     htop # TUI process viewer
     impala # TUI wifi
-    ncdu 
+    ncdu
 
     wiremix # TUI mixer for PipeWire
 

@@ -1,8 +1,9 @@
 # lib/home/desktop/swayosd.nix
 { config
 , pkgs
-, ... 
-}: let
+, ...
+}:
+let
   swayosd-watchdog = pkgs.writeShellScriptBin "swayosd-watchdog" ''
     # Kill any existing instances first
     ${pkgs.procps}/bin/pkill swayosd-server || true
@@ -33,8 +34,8 @@ in
       config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/swayosd/config.toml";
     "swayosd/style.css".source =
       config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/swayosd/style.css";
-     "swayosd/theme.css".source =
+    "swayosd/theme.css".source =
       config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/swayosd/theme.css";
- };
+  };
 
 }

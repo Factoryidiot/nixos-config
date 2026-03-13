@@ -1,6 +1,5 @@
 # lib/home/nixvim.nix
-{
- ... 
+{ ...
 }: {
 
   programs.nixvim = {
@@ -134,11 +133,11 @@
 
       lsp = {
         enable = true;
-	      servers = {
-      	  jsonls.enable = true;
-      	  lua_ls.enable = true;
-      	  nixd.enable = true;
-      	};
+        servers = {
+          jsonls.enable = true;
+          lua_ls.enable = true;
+          nixd.enable = true;
+        };
       };
 
       obsidian = {
@@ -157,7 +156,7 @@
       telescope = {
         enable = true;
         extensions."fzf-native" = {
-          enable = true;          # enable fzf-native extension
+          enable = true; # enable fzf-native extension
           settings = {
             fuzzy = true;
             override_file_sorter = true;

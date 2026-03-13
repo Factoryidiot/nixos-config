@@ -4,6 +4,8 @@
 
   # System-level Firewall
   networking.firewall.enable = true;
+  networking.firewall.allowedTcpPorts = [ 53317 ];
+  networking.firewall.allowedUdpPorts = [ 53317 ];
 
   # GnuPG agent configuration for SSH and browser integration
   programs.gnupg.agent = {

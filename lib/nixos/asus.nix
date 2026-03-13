@@ -1,7 +1,7 @@
 # /lib/nixos/asus.nix
 { inputs
 , pkgs
-,  ...
+, ...
 }:
 let
   unstable-asusctl = inputs.nixpkgs-unstable.legacyPackages.${pkgs.system}.asusctl;
@@ -44,7 +44,7 @@ in
     '';
     enableUserService = true;
     package = unstable-asusctl;
- };
+  };
 
   services.supergfxd.enable = true;
 
