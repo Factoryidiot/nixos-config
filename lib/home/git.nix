@@ -1,8 +1,6 @@
 # lib/home/git.nix
-{ config
-, lib
-, pkgs
-, ...
+{
+ ...
 }: {
 
   programs.gh = {
@@ -19,6 +17,12 @@
     includes = [
       { path = "/run/agenix/git-config"; }
     ];
+    settings = {
+      url."git@github.com:".insteadOf = [
+        "https://github.com/"
+      ];
+    };
+
   };
 
   programs.lazygit.enable = false;
