@@ -35,12 +35,12 @@ run github:nix-community/disko/latest -- \
 > !TIP
 > if there are errors in the disko process, we can update the script push to git `rm -rf .cache` and rerun the line above.
 2. Enable swapfile `swapon /mnt/swap/swapfile` and confim `swapon -s` if required
-> !TIP
+> [!TIP]
 > Confirm swap, `lsattr /mnt/swap` should output:
 >
 > `---------------C------ /mnt/swap/swapfile`
 
-> !TIP
+> [!TIP]
 > If a swap partition is not set up we can do this manually
 > `btrfs filesystem mkswapfile --size 24g --uuid clear /mnt/swap/swapfile`
 > Then run swapon see step 2.
