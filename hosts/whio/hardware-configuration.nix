@@ -35,7 +35,7 @@ in
     "exfat"
   ];
 
-  boot.initrd.luks.devices."crypted".device = "/dev/disk/by-uuid/46c43240-99a5-45bf-aa4c-d568e2fa93c6";
+  boot.initrd.luks.devices."crypted".device = "/dev/disk/by-uuid/8b152900-298c-4c60-a275-485e1bf2bc9b";
   boot.initrd.luks.devices."crypted" = {
     allowDiscards = true;
     bypassWorkqueues = true;
@@ -43,15 +43,14 @@ in
   };
 
   fileSystems."/boot" = lib.mkDefault
-    {
-      device = "/dev/disk/by-uuid/2CB9-241F";
+    { device = "/dev/disk/by-uuid/6C28-8A6B";
       fsType = "vfat";
       options = [ "fmask=0077" "dmask=0077" ];
     };
 
   fileSystems."/btr_pool" = lib.mkDefault
     {
-      device = "/dev/disk/by-uuid/28c12aa0-3d86-491d-ab94-148d91efc6c8";
+      device = "/dev/disk/by-uuid/528baf24-b6fa-4407-8d49-249a8113c303"; 
       fsType = "btrfs";
       options = [ "subvolid=5" ];
     };
@@ -65,21 +64,21 @@ in
 
   fileSystems."/gnu" = lib.mkDefault
     {
-      device = "/dev/disk/by-uuid/28c12aa0-3d86-491d-ab94-148d91efc6c8";
+      device = "/dev/disk/by-uuid/528baf24-b6fa-4407-8d49-249a8113c303"; 
       fsType = "btrfs";
       options = btrfsOptions ++ [ "subvol=@guix" ];
     };
 
   fileSystems."/nix" = lib.mkDefault
     {
-      device = "/dev/disk/by-uuid/28c12aa0-3d86-491d-ab94-148d91efc6c8";
+      device = "/dev/disk/by-uuid/528baf24-b6fa-4407-8d49-249a8113c303"; 
       fsType = "btrfs";
       options = btrfsOptions ++ [ "subvol=@nix" ];
     };
 
   fileSystems."/persistent" = lib.mkDefault
     {
-      device = "/dev/disk/by-uuid/28c12aa0-3d86-491d-ab94-148d91efc6c8";
+      device = "/dev/disk/by-uuid/528baf24-b6fa-4407-8d49-249a8113c303"; 
       fsType = "btrfs";
       options = btrfsOptions ++ [ "subvol=@persistent" ];
       neededForBoot = true;
@@ -87,14 +86,14 @@ in
 
   fileSystems."/snapshots" = lib.mkDefault
     {
-      device = "/dev/disk/by-uuid/28c12aa0-3d86-491d-ab94-148d91efc6c8";
+      device = "/dev/disk/by-uuid/528baf24-b6fa-4407-8d49-249a8113c303"; 
       fsType = "btrfs";
       options = btrfsOptions ++ [ "subvol=@snapshots" ];
     };
 
   fileSystems."/swap" = lib.mkDefault
     {
-      device = "/dev/disk/by-uuid/28c12aa0-3d86-491d-ab94-148d91efc6c8";
+      device = "/dev/disk/by-uuid/528baf24-b6fa-4407-8d49-249a8113c303"; 
       fsType = "btrfs";
       options = [ "subvol=@swap" "nodatacow" "noatime" ];
     };
@@ -109,7 +108,7 @@ in
 
   fileSystems."/tmp" = lib.mkDefault
     {
-      device = "/dev/disk/by-uuid/28c12aa0-3d86-491d-ab94-148d91efc6c8";
+      device = "/dev/disk/by-uuid/528baf24-b6fa-4407-8d49-249a8113c303"; 
       fsType = "btrfs";
       options = btrfsOptions ++ [ "subvol=@tmp" ];
     };

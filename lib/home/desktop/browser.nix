@@ -15,6 +15,10 @@
     package = pkgs.brave;
   };
 
+  programs.firefox = {
+    enable = true;
+  };
+
   # Set Chromium as the default browser
   xdg.mimeApps.defaultApplications = {
     "text/html" = "brave-browser.desktop";
