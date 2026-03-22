@@ -86,7 +86,7 @@ in
         }
 
         # .config
-        #".config/Bitwarden"
+        ".config/Bitwarden"
         #".config/google-chrome"
         #".config/chromium"
         ".config/BraveSoftware"
