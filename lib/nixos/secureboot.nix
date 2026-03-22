@@ -1,3 +1,4 @@
+# /lib/nixos/secureboot.nix
 { lanzaboote
 , lib
 , pkgs
