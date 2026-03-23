@@ -1,8 +1,8 @@
 # lib/home/shell.nix
-{ config
-, lib
-, pkgs
-, ...
+{
+  config,
+  pkgs,
+  ...
 }: {
 
   imports = [
