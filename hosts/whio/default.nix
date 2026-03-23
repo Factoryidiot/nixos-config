@@ -1,13 +1,10 @@
-# hosts/whio/default.nix
-{ pkgs
-, specialArgs
-, ...
+# ./hosts/whio/default.nix
+{
+  specialArgs
+  , ...
 }:
 let
-
-  # Destructure 'hostname' from the specialArgs passed from flake.nix
   inherit (specialArgs) hostname username;
-
 in
 {
 
@@ -21,26 +18,37 @@ in
     ../../lib/nixos/base-packages.nix
     ../../lib/nixos/btrfs.nix
     ../../lib/nixos/base-security.nix
+    ../../lib/nixos/docker.nix
     ../../lib/nixos/flatpak.nix
     ../../lib/nixos/gaming.nix
     ../../lib/nixos/hardware-services.nix
     ../../lib/nixos/hyprland-services.nix
+    ../../lib/nixos/maintenance.nix
     ../../lib/nixos/multimedia.nix
     ../../lib/nixos/nvidia.nix
     ../../lib/nixos/secureboot.nix
     ../../lib/nixos/snapper.nix
     ../../lib/nixos/xdg.nix
     ../../lib/nixos/virt.nix
-    ../../lib/nixos/virtualisation.nix
     ../../lib/nixos/zram.nix
   ];
 
   hardware.cpu.amd.updateMicrocode = true;
   hardware.enableRedistributableFirmware = true;
+  hardware.ksm.enable = true;
 
   boot = {
     blacklistedKernelModules = [ "nouveau" ];
-    kernelParams = [ "amd.iommu=on" ];
+    kernel.sysctl = {
+      "vfs_cache_pressure" = 50;
+      "vm.swappiness" = 10;
+      "vm.dirty_background_ratio" = 5;
+      "vm.dirty_ratio"= 10;
+    };
+    kernelParams = [
+      "amd.iommu=on"
+      # "transparent_hugepage=madvise" # NixOS sets madvise by default (25.11) cat /sys/kernel/mm/transparent_hugepage/enabled always [madvise] never
+    ];
   };
 
   # Time and locale are specific to the physical location
@@ -56,7 +64,6 @@ in
     avahi.enable = true; # Discovery
     blueman.enable = true; # Bluetooth
     libinput.enable = true; # Input
-    # power-profiles-daemon.enable = true;
     printing.enable = true; # Printing
     resolved.enable = true; # DNS
     udev.enable = true; # Hardware

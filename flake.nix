@@ -66,8 +66,6 @@
     , nixpkgs
     , nixpkgs-unstable
     , nixvim
-    , terminaltexteffects
-    , walker
     , self
     , ...
     }:
@@ -97,9 +95,6 @@
         let
           hostname = name;
           hostArgs = specialArgs // { inherit hostname username; };
-
-
-
         in
         nixpkgs.lib.nixosSystem {
           inherit system;
@@ -141,8 +136,8 @@
           ];
         };
 
-        whio-vm = mkNixosSystem {
-          name = "whio-vm";
+        tahi = mkNixosSystem {
+          name = "tahi";
           username = "factory";
           modules = [
             ./hosts/whio-vm/default.nix
@@ -156,10 +151,9 @@
 
       # Standard outputs for convenience
       formatter.${system} = nixpkgs.legacyPackages.${system}.nixpkgs-fmt;
-      defaultPackage.${system} = self.packages.${system}.nixos-system-whio-vm;
       packages.${system} = {
+        nixos-system-tahi = self.nixosConfigurations.tahi.config.system.build.toplevel;
         nixos-system-whio = self.nixosConfigurations.whio.config.system.build.toplevel;
-        nixos-system-whio-vm = self.nixosConfigurations.whio-vm.config.system.build.toplevel;
       };
 
     };

@@ -1,4 +1,4 @@
-# lib/nixos/virtualisation.nix
+# lib/nixos/docker.nix
 { pkgs
 , username
 , ...
