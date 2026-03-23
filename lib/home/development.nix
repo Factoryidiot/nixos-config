@@ -1,6 +1,7 @@
 # lib/home/development.nix
-{ pkgs
-, ...
+{
+  pkgs,
+  ...
 }: {
 
   programs.gemini-cli.enable = true;
