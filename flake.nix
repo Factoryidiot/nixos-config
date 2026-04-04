@@ -89,6 +89,11 @@
             extraSpecialArgs = specialArgs // { secrets = config.age.secrets; };
           };
         })
+        ({ ... }: {
+          nixpkgs.overlays = [
+            self.overlays.gemini-cli
+          ];
+        })
       ];
 
       mkNixosSystem = { name, username, modules }:
@@ -102,21 +107,19 @@
           modules = commonModules
             ++ modules
             ++ [
-            # Allow unfree packages for this system configuration
-            ({ pkgs, ... }: {
-              nixpkgs.config.allowUnfree = true;
-            })
-            # This connects Home Manager to the specified user.
-            # The user itself (password, groups) should be defined
-            # in the host's module (e.g., ./hosts/whio/default.nix)
             ({ ... }: {
+              nixpkgs.config.allowUnfree = true;
               home-manager.users.${username} = import ./users/${username}.nix;
             })
           ];
         };
-
     in
     {
+
+      overlays.gemini-cli = final: prev: {
+        gemini-cli = inputs.nixpkgs-unstable.legacyPackages.${system}.gemini-cli;
+      };
+
       devShells.${system}.default = pkgs.mkShell {
         packages = [
           agenix.packages.${system}.default
@@ -140,7 +143,7 @@
           name = "tahi";
           username = "factory";
           modules = [
-            ./hosts/whio-vm/default.nix
+            ./hosts/tahi/default.nix
             {
               system.stateVersion = "25.11";
             }
@@ -157,4 +160,5 @@
       };
 
     };
+
 }
