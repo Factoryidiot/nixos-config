@@ -17,7 +17,7 @@
       "--enable-wayland-ime"
       "--wayland-text-input-version=3"
     ];
-    package = pkgs.ungoogled-chromium;
+    package = pkgs.brave;
   };
 
   programs.firefox = {
