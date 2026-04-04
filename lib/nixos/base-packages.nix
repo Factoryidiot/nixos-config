@@ -21,6 +21,7 @@
       vim
       wget
       nixpkgs-fmt
+      nmap
     ];
     variables.EDITOR = "vim";
   };
