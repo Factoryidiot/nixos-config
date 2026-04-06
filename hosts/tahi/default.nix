@@ -1,7 +1,7 @@
 # ./hosts/whio/default.nix
 {
-  specialArgs
-  , ...
+  specialArgs,
+  ...
 }:
 let
   inherit (specialArgs) hostname username;
@@ -14,22 +14,12 @@ in
     ./persistence.nix # Preservation configuration
 
     #+----- Basic configuration ------------------
-    ../../lib/nixos/asus.nix
     ../../lib/nixos/base-packages.nix
-    ../../lib/nixos/btrfs.nix
     ../../lib/nixos/base-security.nix
-    ../../lib/nixos/docker.nix
-    ../../lib/nixos/flatpak.nix
-    ../../lib/nixos/gaming.nix
-    ../../lib/nixos/hardware-services.nix
-    ../../lib/nixos/hyprland-services.nix
+    ../../lib/nixos/btrfs.nix
     ../../lib/nixos/maintenance.nix
-    ../../lib/nixos/multimedia.nix
-    ../../lib/nixos/nvidia.nix
-    ../../lib/nixos/secureboot.nix
-    ../../lib/nixos/snapper.nix
-    ../../lib/nixos/xdg.nix
     ../../lib/nixos/virt.nix
+    ../../lib/nixos/incus.nix # Incus virtualization
     ../../lib/nixos/zram.nix
   ];
 
@@ -38,7 +28,6 @@ in
   hardware.ksm.enable = true;
 
   boot = {
-    blacklistedKernelModules = [ "nouveau" ];
     kernel.sysctl = {
       "vfs_cache_pressure" = 50;
       "vm.swappiness" = 10;
@@ -57,16 +46,28 @@ in
 
   networking = {
     hostName = hostname;
-    wireless.iwd.enable = true;
+    # wireless.iwd.enable = true; # Not needed for a server
   };
 
   services = {
     avahi.enable = true; # Discovery
-    blueman.enable = true; # Bluetooth
-    libinput.enable = true; # Input
-    printing.enable = true; # Printing
+    # blueman.enable = true; # Bluetooth - Not needed for a server
+    # libinput.enable = true; # Input - Not needed for a server
+    # printing.enable = true; # Printing - Not needed for a server
     resolved.enable = true; # DNS
     udev.enable = true; # Hardware
+
+    # Enable OpenSSH daemon for remote access
+    openssh = {
+      enable = true;
+      permitRootLogin = "prohibit-password"; # Allow root login only with keys
+      passwordAuthentication = false;
+      settings = {
+        # Add your SSH public key here for passwordless access
+        # For initial setup, you might manually add it to /root/.ssh/authorized_keys
+        # or use home-manager to deploy it for non-root users.
+      };
+    };
   };
 
   users = {
