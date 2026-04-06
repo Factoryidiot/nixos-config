@@ -17,8 +17,15 @@ Memory: 30 GiB
 3.  Navigate to the cloned repository: `cd /mnt/config`.
 
 ### Prepare Disk and LUKS Keyfile
+
+> [!CAUTION]
+> **CRITICAL: VERIFY TARGET DISK**
+> Your `disko.nix` is configured to partition `/dev/sda`. **Before proceeding, ensure that `/dev/sda` is indeed the correct 223.6G SSD for your NixOS installation and that you are not accidentally targeting another disk (e.g., `/dev/sdc`).**
+>
+> Run `lsblk -f` to verify disk names and sizes. Running `disko` on the wrong disk will **ERASE ALL DATA** on that disk.
+
 1.  **Partition and Format with `disko`**:
-    Navigate to the desired host's `disko` configuration and execute:
+    Execute the `disko` command, ensuring it targets `tahi` (which uses `/dev/sda`):
     ```sh
     nix --experimental-features "nix-command flakes" 
     run github:nix-community/disko/latest -- 
@@ -26,7 +33,7 @@ Memory: 30 GiB
     --flake .#tahi
     ```
     > !TIP
-    > If there are errors in the disko process, we can update the script, push to git, `rm -rf .cache`, and rerun the line above.
+    > If there are errors in the disko process, you may need to update the script, push to git, `rm -rf .cache`, and rerun the line above.
 
 2.  **Generate and Add LUKS Keyfile**:
     *   Generate a secure random keyfile:
@@ -34,12 +41,11 @@ Memory: 30 GiB
         dd if=/dev/urandom of=/mnt/boot/secret.key bs=512 count=1
         chmod 400 /mnt/boot/secret.key
         ```
-    *   Add this keyfile to the LUKS volume (`/dev/disk/by-partlabel/luks` is the encrypted partition created by `disko`):
+    *   Add this keyfile to the LUKS volume (`/dev/disk/by-partlabel/disk-main-luks`):
         ```sh
-        sudo cryptsetup luksAddKey /dev/disk/by-partlabel/crypted /mnt/boot/secret.key
+        sudo cryptsetup luksAddKey /dev/disk/by-partlabel/disk-main-luks /mnt/boot/secret.key
         ```
         > IMPORTANT: You will be prompted for your main LUKS passphrase.
-        > Replace `/dev/disk/by-partlabel/luks` with the actual path to your LUKS partition if it's different.
 
 3.  **Enable Swapfile (if configured in `disko.nix`):**
     *   `swapon /mnt/swap/swapfile` and confirm with `swapon -s`.
