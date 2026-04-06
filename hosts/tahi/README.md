@@ -14,38 +14,16 @@ Shell: bash
 ```
 ## Disk
 ```
-❯ lsblk
-NAME                         MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS
-loop0                          7:0    0     8G  0 loop 
-loop1                          7:1    0    20G  0 loop 
-sda                            8:0    0 223.6G  0 disk 
-├─sda1                         8:1    0  1007K  0 part 
-├─sda2                         8:2    0     1G  0 part /boot/efi
-└─sda3                         8:3    0 222.6G  0 part 
-  ├─pve-swap                 252:0    0     8G  0 lvm  [SWAP]
-  ├─pve-root                 252:1    0  65.6G  0 lvm  /
-  ├─pve-data_tmeta           252:2    0   1.3G  0 lvm  
-  │ └─pve-data-tpool         252:4    0 130.3G  0 lvm  
-  │   ├─pve-data             252:5    0 130.3G  1 lvm  
-  │   ├─pve-vm--100--disk--0 252:6    0    32G  0 lvm  
-  │   └─pve-vm--104--disk--0 252:7    0    32G  0 lvm  
-  └─pve-data_tdata           252:3    0 130.3G  0 lvm  
-    └─pve-data-tpool         252:4    0 130.3G  0 lvm  
-      ├─pve-data             252:5    0 130.3G  1 lvm  
-      ├─pve-vm--100--disk--0 252:6    0    32G  0 lvm  
-      └─pve-vm--104--disk--0 252:7    0    32G  0 lvm  
-sdb                            8:16   0   5.5T  0 disk 
-└─sdb1                         8:17   0   5.5T  0 part 
-sdc                            8:32   0   5.5T  0 disk 
-└─sdc1                         8:33   0   5.5T  0 part 
-sdd                            8:48   0   5.5T  0 disk 
-└─sdd1                         8:49   0   5.5T  0 part 
-sde                            8:64   0   5.5T  0 disk 
-└─sde1                         8:65   0   5.5T  0 part 
-sdf                            8:80   1  58.6G  0 disk 
-└─sdf1                         8:81   1  58.6G  0 part 
-sdg                            8:96   0   500G  0 disk 
-
+NAME                           SIZE ROTA MODEL                TRAN
+loop0                            8G    0                      
+loop1                           20G    0                      
+sda                          223.6G    0 ADATA SU630          sata
+sdb                            5.5T    1 WDC WD60EFAX-68SHWN0 sata
+sdc                            5.5T    1 WDC WD60EFAX-68SHWN0 sata
+sdd                            5.5T    1 WDC WD60EFAX-68SHWN0 sata
+sde                            5.5T    1 WDC WD60EFAX-68SHWN0 sata
+sdf                           58.6G    1 OnlyDisk             usb
+```
 ❯ df -Th 
 Filesystem                            Type      Size  Used Avail Use% Mounted on
 udev                                  devtmpfs   16G     0   16G   0% /dev
