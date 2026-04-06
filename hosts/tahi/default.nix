@@ -38,6 +38,16 @@ in
       "amd.iommu=on"
       # "transparent_hugepage=madvise" # NixOS sets madvise by default (25.11) cat /sys/kernel/mm/transparent_hugepage/enabled always [madvise] never
     ];
+
+    # Configure LUKS auto-unlock with keyfile
+    initrd.luks.devices.crypted = {
+      device = "/dev/disk/by-uuid/UUID_OF_LUKS_PARTITION"; # IMPORTANT: REPLACE THIS WITH ACTUAL LUKS PARTITION UUID (e.g., from blkid or lsblk -f)
+      keyFile = "/secret.key";
+    };
+    initrd.extraFiles."/secret.key" = {
+      source = "/boot/secret.key"; # Source path on the unencrypted /boot partition
+      mode = "0400"; # Restrict permissions for the keyfile
+    };
   };
 
   # Time and locale are specific to the physical location

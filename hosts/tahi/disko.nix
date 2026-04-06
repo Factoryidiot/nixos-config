@@ -1,3 +1,4 @@
+# ./hosts/tahi/disko.nix
 {
 
   fileSystems."/persistent".neededForBoot = true;
@@ -27,15 +28,11 @@
                 type = "luks";
                 name = "crypted";
                 settings = {
-                  # keyFile = "/dev/disk/by-label/CRYPT"; # The keyfile is stored on a USB stick
-                  # The maximum size of the keyfile is 8192 KiB
-                  # type `cryptsetup --help` to see the compiled-in key and passphrase maximum sizes
-                  # keyFileSize = 512 * 64; # match the `bs * count` of the `dd` command
-                  # keyFileOffset = 512 * 128; # match the `bs * skip` of the `dd` command
-                  fallbackToPassword = true;
+                  keyFile = "/boot/secret.key"; # Keyfile for automatic unlock
+                  fallbackToPassword = false; # No password prompt on boot
                   allowDiscards = true;
                 };
-                initrdUnlock = false;
+                initrdUnlock = true; # Ensure initrd handles the unlock
                 # additionalKeyFiles = [];
                 extraFormatArgs = [
                   "--type luks2"
