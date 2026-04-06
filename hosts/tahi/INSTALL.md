@@ -36,7 +36,7 @@ Memory: 30 GiB
         ```
     *   Add this keyfile to the LUKS volume (`/dev/disk/by-partlabel/luks` is the encrypted partition created by `disko`):
         ```sh
-        sudo cryptsetup luksAddKey /dev/disk/by-partlabel/luks /mnt/boot/secret.key
+        sudo cryptsetup luksAddKey /dev/disk/by-partlabel/crypted /mnt/boot/secret.key
         ```
         > IMPORTANT: You will be prompted for your main LUKS passphrase.
         > Replace `/dev/disk/by-partlabel/luks` with the actual path to your LUKS partition if it's different.
