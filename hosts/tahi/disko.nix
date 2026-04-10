@@ -93,13 +93,17 @@
         type = "disk";
         device = "/dev/sdc";
         content = {
-          type = "partition"; # Use 'partition' directly as we want a single partition
-          name = "luks-backup-key-part"; # Name for the partition
-          content = {
-            type = "filesystem";
-            format = "ext4";
-            mountpoint = "/mnt/luks-backup-key"; # Mount point for the key
-            # No size specified, it will take the remaining space
+          type = "gpt";
+          partitions = {
+            keypart = {
+              start = "0%";
+              end = "100%";
+              content = {
+                type = "filesystem";
+                format = "ext4";
+                mountpoint = "/mnt/luks-backup-key"; # Mount point for the key
+              };
+            };
           };
         };
       };
