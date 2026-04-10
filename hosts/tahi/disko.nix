@@ -29,7 +29,6 @@
                 type = "luks";
                 name = "crypted";
                 settings = {
-                  keyFile = "/boot/secret.key"; # Keyfile for automatic unlock
                   fallbackToPassword = false; # No password prompt on boot
                   allowDiscards = true;
                 };

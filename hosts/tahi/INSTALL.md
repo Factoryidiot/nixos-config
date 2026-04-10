@@ -43,10 +43,16 @@ Memory: 30 GiB
             chmod 400 /mnt/boot/secret.key
             ```
         *   Add this keyfile to the LUKS volume (`/dev/disk/by-partlabel/disk-main-luks`):
-            ```sh
+            ```
             sudo cryptsetup luksAddKey /dev/disk/by-partlabel/disk-main-luks /mnt/boot/secret.key
             ```
             > IMPORTANT: You will be prompted for your main LUKS passphrase.
+            > **CRITICAL:** After creating the key, verify its presence and permissions:
+            > ```sh
+            > ls -l /mnt/boot/secret.key
+            > # Expected output example: -r-------- 1 root root 512 ... /mnt/boot/secret.key
+            > ```
+            > Ensure the file exists and has `0400` permissions (`-r--------`). If not, recreate it and set permissions.
     b.  **For Backup LUKS Key (on /dev/sdc)**:
         *   Generate a secure random keyfile on the `/dev/sdc` partition (mounted at `/mnt/luks-backup-key` by `disko`):
             ```sh
