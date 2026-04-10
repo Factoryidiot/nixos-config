@@ -48,6 +48,10 @@ in
       source = "/boot/secret.key"; # Source path on the unencrypted /boot partition
       mode = "0400"; # Restrict permissions for the keyfile
     };
+    initrd.extraFiles."/mnt/luks-backup-key/tahi-luks-backup.key" = {
+      source = "/mnt/luks-backup-key/tahi-luks-backup.key"; # Source path on the mounted USB partition
+      mode = "0400"; # Restrict permissions for the keyfile
+    };
   };
 
   # Time and locale are specific to the physical location

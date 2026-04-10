@@ -2,6 +2,7 @@
 {
 
   fileSystems."/persistent".neededForBoot = true;
+  fileSystems."/mnt/luks-backup-key".neededForBoot = true;
 
   disko.devices = {
     disk = {
@@ -84,6 +85,21 @@
                 };
               };
             };
+          };
+        };
+      };
+      # New entry for /dev/sdc for LUKS backup key
+      sdc-key-disk = {
+        type = "disk";
+        device = "/dev/sdc";
+        content = {
+          type = "partition"; # Use 'partition' directly as we want a single partition
+          name = "luks-backup-key-part"; # Name for the partition
+          content = {
+            type = "filesystem";
+            format = "ext4";
+            mountpoint = "/mnt/luks-backup-key"; # Mount point for the key
+            # No size specified, it will take the remaining space
           };
         };
       };

@@ -35,17 +35,29 @@ Memory: 30 GiB
     > !TIP
     > If there are errors in the disko process, you may need to update the script, push to git, `rm -rf .cache`, and rerun the line above.
 
-2.  **Generate and Add LUKS Keyfile**:
-    *   Generate a secure random keyfile:
-        ```sh
-        dd if=/dev/urandom of=/mnt/boot/secret.key bs=512 count=1
-        chmod 400 /mnt/boot/secret.key
-        ```
-    *   Add this keyfile to the LUKS volume (`/dev/disk/by-partlabel/disk-main-luks`):
-        ```sh
-        sudo cryptsetup luksAddKey /dev/disk/by-partlabel/disk-main-luks /mnt/boot/secret.key
-        ```
-        > IMPORTANT: You will be prompted for your main LUKS passphrase.
+2.  **Generate and Add LUKS Keyfiles**:
+    a.  **For Primary LUKS Key (on /boot)**:
+        *   Generate a secure random keyfile:
+            ```sh
+            dd if=/dev/urandom of=/mnt/boot/secret.key bs=512 count=1
+            chmod 400 /mnt/boot/secret.key
+            ```
+        *   Add this keyfile to the LUKS volume (`/dev/disk/by-partlabel/disk-main-luks`):
+            ```sh
+            sudo cryptsetup luksAddKey /dev/disk/by-partlabel/disk-main-luks /mnt/boot/secret.key
+            ```
+            > IMPORTANT: You will be prompted for your main LUKS passphrase.
+    b.  **For Backup LUKS Key (on /dev/sdc)**:
+        *   Generate a secure random keyfile on the `/dev/sdc` partition (mounted at `/mnt/luks-backup-key` by `disko`):
+            ```sh
+            dd if=/dev/urandom of=/mnt/luks-backup-key/tahi-luks-backup.key bs=512 count=1
+            chmod 400 /mnt/luks-backup-key/tahi-luks-backup.key
+            ```
+        *   Add this keyfile to the LUKS volume (`/dev/disk/by-partlabel/disk-main-luks`):
+            ```sh
+            sudo cryptsetup luksAddKey /dev/disk/by-partlabel/disk-main-luks /mnt/luks-backup-key/tahi-luks-backup.key
+            ```
+            > IMPORTANT: You will be prompted for your main LUKS passphrase again.
 
 3.  **Enable Swapfile (if configured in `disko.nix`):**
     *   `swapon /mnt/swap/swapfile` and confirm with `swapon -s`.
@@ -60,10 +72,13 @@ Generate a `hardware-configuration.nix` to get accurate UUIDs for your `tahi` ha
     ```sh
     nixos-generate-config --root /mnt --dir /mnt/config/hosts/tahi
     ```
-2.  **Identify LUKS Partition UUID:**
-    *   Find the UUID of your LUKS-encrypted partition (e.g., `/dev/sda2`). You can use `lsblk -f /dev/sda` or `blkid` after unlocking it.
+2.  **Identify LUKS Partition UUIDs:**
+    *   Find the UUID of your main LUKS-encrypted partition (e.g., `/dev/sda2`). You can use `lsblk -f /dev/sda` or `blkid` after unlocking it.
     *   **CRITICAL:** Update the `UUID_OF_LUKS_PARTITION` placeholder in `/mnt/config/hosts/tahi/default.nix` with the actual UUID.
         *   Example: `boot.initrd.luks.devices.crypted.device = "/dev/disk/by-uuid/<YOUR_ACTUAL_LUKS_UUID>";`
+    *   Find the UUID of the `/dev/sdc` partition (e.g., `/dev/sdc1`).
+        *   Example: `lsblk -f /dev/sdc` or `blkid /dev/sdc1`
+    *   **CRITICAL:** Update the `UUID_OF_SDC_PARTITION` placeholder in `/mnt/config/hosts/tahi/hardware-configuration.nix` with the actual UUID.
 3.  Remove the contents of `/mnt/etc/nixos/*` created by `nixos-generate-config`, as we use our flake for configuration:
     ```sh
     rm /mnt/etc/nixos/*

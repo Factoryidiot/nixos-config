@@ -40,12 +40,21 @@ in
     allowDiscards = true;
     bypassWorkqueues = true;
     crypttabExtraOpts = [ "tpm2-device=auto" ];
+    additionalKeyFiles = [ "/mnt/luks-backup-key/tahi-luks-backup.key" ];
   };
 
   fileSystems."/boot" = lib.mkDefault
     { device = "/dev/disk/by-uuid/6C28-8A6B";
       fsType = "vfat";
       options = [ "fmask=0077" "dmask=0077" ];
+    };
+
+  fileSystems."/mnt/luks-backup-key" = lib.mkDefault
+    {
+      device = "/dev/disk/by-uuid/UUID_OF_SDC_PARTITION"; # IMPORTANT: REPLACE THIS WITH ACTUAL UUID OF /dev/sdc PARTITION
+      fsType = "ext4";
+      options = [ "defaults" ];
+      neededForBoot = true;
     };
 
   fileSystems."/btr_pool" = lib.mkDefault
