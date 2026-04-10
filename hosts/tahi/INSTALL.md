@@ -13,8 +13,8 @@ Memory: 30 GiB
 ## Install
 ### Prerequisite
 1.  `sudo -i`
-2.  Clone the repo `git clone https://github.com/your-username/nixos-config.git /mnt/config`.
-3.  Navigate to the cloned repository: `cd /mnt/config`.
+2.  Clone the repo `git clone https://github.com/your-username/nixos-config.git
+3.  Navigate to the cloned repository: `cd /nixos-config`.
 
 ### Prepare Disk and LUKS Keyfile
 
@@ -30,7 +30,7 @@ Memory: 30 GiB
     nix --experimental-features "nix-command flakes" 
     run github:nix-community/disko/latest -- 
     --mode disko 
-    --flake .#tahi
+    ./disko.nix
     ```
     > !TIP
     > If there are errors in the disko process, you may need to update the script, push to git, `rm -rf .cache`, and rerun the line above.

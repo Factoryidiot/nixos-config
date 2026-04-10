@@ -39,6 +39,9 @@ in
 
   boot = {
     blacklistedKernelModules = [ "nouveau" ];
+    extraModprobeConfig = ''
+      options iwlwifi disable_11ax=Y
+    '';
     kernel.sysctl = {
       "vfs_cache_pressure" = 50;
       "vm.swappiness" = 10;
@@ -57,7 +60,19 @@ in
 
   networking = {
     hostName = hostname;
-    wireless.iwd.enable = true;
+    networkmanager.enable = false;
+    wireless.iwd = {
+      enable = true;
+      settings = {
+        General = { # Needed to stop the wifi from flipping to roaming and back
+          RoamThreshold = -80;
+          RoamThreshold5G = -80;
+        };
+        Network = {
+          EnableIPv6 = true;
+        };
+      };
+    };
   };
 
   services = {
