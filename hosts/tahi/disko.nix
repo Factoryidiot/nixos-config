@@ -2,7 +2,7 @@
 {
 
   fileSystems."/persistent".neededForBoot = true;
-  fileSystems."/mnt/luks-backup-key".neededForBoot = true;
+  fileSystems."/mnt/key-backup".neededForBoot = true;
 
   disko.devices = {
     disk = {
@@ -88,19 +88,18 @@
         };
       };
       # New entry for /dev/sdc for LUKS backup key
-      sdc-key-disk = {
+      key-backup = {
         type = "disk";
         device = "/dev/sdc";
         content = {
           type = "gpt";
           partitions = {
-            keypart = {
-              start = "0%";
-              end = "100%";
+            root = {
+              size = "100%";
               content = {
                 type = "filesystem";
                 format = "ext4";
-                mountpoint = "/mnt/luks-backup-key"; # Mount point for the key
+                mountpoint = "/mnt/key-backup"; # Mount point for the key
               };
             };
           };
