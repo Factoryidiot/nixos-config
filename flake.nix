@@ -96,10 +96,10 @@
         })
       ];
 
-      mkNixosSystem = { name, username, modules }:
+      mkNixosSystem = { name, username, modules, isServer ? false }:
         let
           hostname = name;
-          hostArgs = specialArgs // { inherit hostname username; };
+          hostArgs = specialArgs // { inherit hostname username isServer; };
         in
         nixpkgs.lib.nixosSystem {
           inherit system;
@@ -109,7 +109,10 @@
             ++ [
             ({ ... }: {
               nixpkgs.config.allowUnfree = true;
-              home-manager.users.${username} = import ./users/${username}.nix;
+              home-manager.users.${username} = import ./users/${username}/default.nix {
+                inherit (hostArgs) isServer;
+                inherit (specialArgs) agenix inputs lib; # Explicitly inherit agenix, inputs, and lib from specialArgs
+              };
             })
           ];
         };
@@ -131,6 +134,7 @@
         whio = mkNixosSystem {
           name = "whio";
           username = "factory";
+          isServer = false;
           modules = [
             ./hosts/whio/default.nix
             {
@@ -142,6 +146,7 @@
         tahi = mkNixosSystem {
           name = "tahi";
           username = "factory";
+          isServer = true;
           modules = [
             ./hosts/tahi/default.nix
             {
