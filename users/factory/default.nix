@@ -1,4 +1,8 @@
-{ agenix, inputs, lib, isServer, ... }:
+
+{ 
+  isServer,
+  ... 
+}:
 
 {
   imports = [

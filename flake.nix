@@ -134,7 +134,6 @@
         whio = mkNixosSystem {
           name = "whio";
           username = "factory";
-          isServer = false;
           modules = [
             ./hosts/whio/default.nix
             {
