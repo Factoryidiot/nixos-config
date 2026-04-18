@@ -24,7 +24,7 @@ Memory: 30 GiB
 >
 > Run `lsblk -f` to verify disk names and sizes. Running `disko` on the wrong disk will **ERASE ALL DATA** on that disk.
 
-1.  **Partition and Format with `disko`**:
+1. **Partition and Format with `disko`**:
     First, ensure `hosts/tahi/disko.nix` is updated with the correct main disk device path.
     Then, execute the `disko` command, ensuring it targets `tahi` (which uses your specified main disk):
     ```sh
@@ -36,9 +36,7 @@ Memory: 30 GiB
     > !TIP
     > If there are errors in the disko process, you may need to update the script, push to git, `rm -rf .cache`, and rerun the line above.
 
-
-
-3.  **Enable Swapfile (if configured in `disko.nix`):**
+2.  **Enable Swapfile (if configured in `disko.nix`):**
     *   `swapon /mnt/swap/swapfile` and confirm with `swapon -s`.
     > [!TIP]
     > Confirm swap, `lsattr /mnt/swap` should output:
@@ -49,11 +47,9 @@ Memory: 30 GiB
 Generate a `hardware-configuration.nix` to get accurate UUIDs for your `tahi` hardware.
 1.  Create `hardware-configuration.nix` for your current configuration:
     ```sh
-    nixos-generate-config --root /mnt --dir /mnt/config/hosts/tahi
+    nixos-generate-config --root /mnt
     ```
-
-
-3.  Remove the contents of `/mnt/etc/nixos/*` created by `nixos-generate-config`, as we use our flake for configuration:
+2.  Remove the contents of `/mnt/etc/nixos/*` created by `nixos-generate-config`, as we use our flake for configuration:
     ```sh
     rm /mnt/etc/nixos/*
     ```
