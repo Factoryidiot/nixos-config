@@ -1,4 +1,4 @@
-# /hosts/whio/hardware-configuration.nix
+# /hosts/tahi/hardware-configuration.nix
 { config
 , lib
 , pkgs
@@ -35,13 +35,7 @@ in
     "exfat"
   ];
 
-  boot.initrd.luks.devices."crypted".device = "/dev/disk/by-uuid/8b152900-298c-4c60-a275-485e1bf2bc9b";
-  boot.initrd.luks.devices."crypted" = {
-    allowDiscards = true;
-    bypassWorkqueues = true;
-    crypttabExtraOpts = [ "tpm2-device=auto" ];
-    additionalKeyFiles = [ "/mnt/luks-backup-key/tahi-luks-backup.key" ];
-  };
+
 
   fileSystems."/boot" = lib.mkDefault
     { device = "/dev/disk/by-uuid/6C28-8A6B";
@@ -49,13 +43,7 @@ in
       options = [ "fmask=0077" "dmask=0077" ];
     };
 
-  fileSystems."/mnt/luks-backup-key" = lib.mkDefault
-    {
-      device = "/dev/disk/by-uuid/UUID_OF_SDC_PARTITION"; # IMPORTANT: REPLACE THIS WITH ACTUAL UUID OF /dev/sdc PARTITION
-      fsType = "ext4";
-      options = [ "defaults" ];
-      neededForBoot = true;
-    };
+
 
   fileSystems."/btr_pool" = lib.mkDefault
     {
