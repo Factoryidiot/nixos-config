@@ -35,10 +35,7 @@ in
       "vm.dirty_background_ratio" = 5;
       "vm.dirty_ratio"= 10;
     };
-    kernelParams = [
-      "amd.iommu=on"
-      # "transparent_hugepage=madvise" # NixOS sets madvise by default (25.11) cat /sys/kernel/mm/transparent_hugepage/enabled always [madvise] never
-    ];
+
 
 
   };
