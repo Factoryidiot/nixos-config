@@ -1,14 +1,12 @@
 # ./hosts/tahi/disko.nix
 {
-
   fileSystems."/persistent".neededForBoot = true;
-  fileSystems."/mnt/key-backup".neededForBoot = true;
 
   disko.devices = {
     disk = {
       main = {
         type = "disk";
-        device = "/dev/sda";
+        device = "/dev/sda"; # IMPORTANT: Update this to the actual largest disk (e.g., /dev/sdb or /dev/sdd)
         content = {
           type = "gpt";
           partitions = {
@@ -23,63 +21,36 @@
                 mountpoint = "/boot";
               };
             };
-            luks = {
+            root = {
               size = "100%";
               content = {
-                type = "luks";
-                name = "crypted";
-                settings = {
-                  fallbackToPassword = false; # No password prompt on boot
-                  allowDiscards = true;
-                };
-                initrdUnlock = true; # Ensure initrd handles the unlock
-                # additionalKeyFiles = [];
-                extraFormatArgs = [
-                  "--type luks2"
-                  "--cipher aes-xts-plain64"
-                  "--hash sha512"
-                  "--iter-time 5000"
-                  "--key-size 256"
-                  "--pbkdf argon2id"
-                  "--use-random" # use true random data from /dev/random, will block until enough entropy is available
-                  "--verify-passphrase"
-                ];
-                extraOpenArgs = [
-                  "--timeout 10"
-                ];
-                content = {
-                  type = "btrfs";
-                  extraArgs = [ "-f" ];
-                  subvolumes = {
-                    "/" = {
-                      mountOptions = [ "subvolid=5" ];
-                      mountpoint = "/btr_pool";
-                    };
-                    "@guix" = {
-                      mountOptions = [ "compress-force=zstd:1" "noatime" ];
-                      mountpoint = "/gnu";
-                    };
-                    "@nix" = {
-                      mountOptions = [ "compress-force=zstd:1" "noatime" ];
-                      mountpoint = "/nix";
-                    };
-                    "@persistent" = {
-                      mountOptions = [ "compress-force=zstd:1" ];
-                      mountpoint = "/persistent";
-                    };
-                    "@snapshots" = {
-                      mountOptions = [ "compress-force=zstd:1" ];
-                      mountpoint = "/snapshots";
-                    };
-                    "@swap" = {
-                      mountpoint = "/swap";
-                      swap.swapfile.size = "24G";
-                    };
-                    "@tmp" = {
-                      mountOptions = [ "compress-force=zstd:1" ];
-                      mountpoint = "/tmp";
-                    };
-
+                type = "btrfs";
+                extraArgs = [ "-f" ]; # Force creation, useful for new install
+                mountpoint = "/"; # Mount the main BTRFS filesystem as root
+                subvolumes = {
+                  "/guix" = {
+                    mountOptions = [ "compress-force=zstd:1" "noatime" ];
+                    mountpoint = "/gnu";
+                  };
+                  "/nix" = {
+                    mountOptions = [ "compress-force=zstd:1" "noatime" ];
+                    mountpoint = "/nix";
+                  };
+                  "/persistent" = {
+                    mountOptions = [ "compress-force=zstd:1" ];
+                    mountpoint = "/persistent";
+                  };
+                  "/snapshots" = {
+                    mountOptions = [ "compress-force=zstd:1" ];
+                    mountpoint = "/snapshots";
+                  };
+                  "/swap" = {
+                    mountpoint = "/swap";
+                    swap.swapfile.size = "24G";
+                  };
+                  "/tmp" = {
+                    mountOptions = [ "compress-force=zstd:1" ];
+                    mountpoint = "/tmp";
                   };
                 };
               };
@@ -87,25 +58,7 @@
           };
         };
       };
-      # New entry for /dev/sdc for LUKS backup key
-      key-backup = {
-        type = "disk";
-        device = "/dev/sdc";
-        content = {
-          type = "gpt";
-          partitions = {
-            root = {
-              size = "100%";
-              content = {
-                type = "filesystem";
-                format = "ext4";
-                mountpoint = "/mnt/key-backup"; # Mount point for the key
-              };
-            };
-          };
-        };
-      };
+      # The 'key-backup' disk definition has been removed.
     };
   };
-
 }
