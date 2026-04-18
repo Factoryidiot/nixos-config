@@ -18,11 +18,11 @@ in
   boot.loader.efi.efiSysMountPoint = "/boot";
   boot.loader.systemd-boot.enable = true;
   boot.kernelPackages = pkgs.linuxPackages_zen;
-  boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "thunderbolt" "sd_mod" "usbhid" "usb_storage" ];
+  boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "ehci_pci" "sd_mod" "usb_storage" ];
   boot.initrd.kernelModules = [ ];
   boot.initrd.systemd.enable = true;
   boot.kernelParams = [ "amd_pstate=active" ];
-  boot.kernelModules = [ "amdgpu" "kvm-amd" ];
+  boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
   boot.tmp.cleanOnBoot = true; # clear /tmp on boot to get a stateless /tmp directory
   boot.supportedFilesystems = [
@@ -35,15 +35,11 @@ in
     "exfat"
   ];
 
-
-
   fileSystems."/boot" = lib.mkDefault
     { device = "/dev/disk/by-uuid/6C28-8A6B";
       fsType = "vfat";
       options = [ "fmask=0077" "dmask=0077" ];
     };
-
-
 
   fileSystems."/btr_pool" = lib.mkDefault
     {
@@ -118,6 +114,5 @@ in
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
-  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
 }

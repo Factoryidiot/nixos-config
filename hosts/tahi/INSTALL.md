@@ -53,7 +53,6 @@ Generate a `hardware-configuration.nix` to get accurate UUIDs for your `tahi` ha
     ```sh
     rm /mnt/etc/nixos/*
     ```
-
 ### Perform Installation
 From `/mnt/config` run:
 ```sh
