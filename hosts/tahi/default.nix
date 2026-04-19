@@ -35,9 +35,6 @@ in
       "vm.dirty_background_ratio" = 5;
       "vm.dirty_ratio"= 10;
     };
-
-
-
   };
 
   # Time and locale are specific to the physical location

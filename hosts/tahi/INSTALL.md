@@ -25,39 +25,38 @@ Memory: 30 GiB
 > Run `lsblk -f` to verify disk names and sizes. Running `disko` on the wrong disk will **ERASE ALL DATA** on that disk.
 
 1. **Partition and Format with `disko`**:
-    First, ensure `hosts/tahi/disko.nix` is updated with the correct main disk device path.
-    Then, execute the `disko` command, ensuring it targets `tahi` (which uses your specified main disk):
-    ```sh
-    nix --experimental-features "nix-command flakes" \
-    run github:nix-community/disko/latest -- \
-    --mode disko \
-    ./disko.nix
-    ```
-    > !TIP
-    > If there are errors in the disko process, you may need to update the script, push to git, `rm -rf .cache`, and rerun the line above.
+First, ensure `hosts/tahi/disko.nix` is updated with the correct main disk device path.
+Then, execute the `disko` command, ensuring it targets `tahi` (which uses your specified main disk):
+```sh
+nix --experimental-features "nix-command flakes" \
+run github:nix-community/disko/latest -- \
+--mode disko \
+./disko.nix
+```
+> !TIP
+> If there are errors in the disko process, you may need to update the script, push to git, `rm -rf .cache`, and rerun the line above.
 
 2.  **Enable Swapfile (if configured in `disko.nix`):**
-    *   `swapon /mnt/swap/swapfile` and confirm with `swapon -s`.
-    > [!TIP]
-    > Confirm swap, `lsattr /mnt/swap` should output:
-    >
-    > `---------------C------ /mnt/swap/swapfile`
+*   `swapon /mnt/swap/swapfile` and confirm with `swapon -s`.
+> [!TIP]
+> Confirm swap, `lsattr /mnt/swap` should output:
+>
+> `---------------C------ /mnt/swap/swapfile`
 
 ### Update `hardware-configuration`
 Generate a `hardware-configuration.nix` to get accurate UUIDs for your `tahi` hardware.
 1.  Create `hardware-configuration.nix` for your current configuration:
-    ```sh
-    nixos-generate-config --root /mnt
-    ```
+```sh
+nixos-generate-config --root /mnt
+```
 2.  Remove the contents of `/mnt/etc/nixos/*` created by `nixos-generate-config`, as we use our flake for configuration:
-    ```sh
-    rm /mnt/etc/nixos/*
-    ```
+```sh
+ rm /mnt/etc/nixos/*
+```
 ### Perform Installation
 From `/mnt/config` run:
 ```sh
-nixos-install --root /mnt --no-root-password 
---flake .#tahi --no-write-lock-file
+nixos-install --root /mnt --no-root-password --flake .#tahi --no-write-lock-file
 ```
 > [!TIP]
 > To refresh the cache:
@@ -67,52 +66,42 @@ nixos-install --root /mnt --no-root-password
 > For troubleshooting and extra logging use:
 > `--show-trace --verbose`
 
-### Post Install
-### SSH Access (Post-Reboot Preparation)
+### Post install
+Move any essential files to their `/persistent` location
+- `mv /mnt/etc/ssh /mnt/persistent/etc`
+- `cp hosts/{hostname}/hardware-configuration.nix /mnt/persistent/home/{user}/Projects/`
+- `mv ../nixos-config /mnt/persistent/home/{user}/Projects/`
+
+> [!TIP]
+> **Configure Local PII**
+> After installation, remember to configure your local PII (Git user name and email) by following the instructions in the "Local PII Management" section of this README.
+
+#### SSH Access (Post-Reboot Preparation)
 
 Before rebooting, ensure you set up SSH access for the `factory` user, as it's configured for persistence and password authentication is disabled.
 
-1.  **Retrieve your SSH Public Key:**
-    On your client machine (the one you'll be SSHing *from*), get your public SSH key. It's usually in `~/.ssh/id_rsa.pub` (or `id_ed25519.pub`). Copy its content.
-    ```bash
-    cat ~/.ssh/id_rsa.pub
-    # Copy the entire output string (e.g., ssh-rsa AAAA...)
-    ```
+1. **Retrieve your SSH Public Key:**
+On your client machine (the one you'll be SSHing *from*), get your public SSH key. It's usually in `~/.ssh/id_rsa.pub` (or `id_ed25519.pub`). Copy its content.
+```bash
+cat ~/.ssh/id_rsa.pub
+# Copy the entire output string (e.g., ssh-rsa AAAA...)
+```
 
-2.  **Add your Public Key to the `factory` User's `authorized_keys` on the Installed `tahi` System:**
-    While you are still in the installation environment (before rebooting), perform these commands. We assume `/mnt` is the mount point for your newly installed system's root.
+1. **Add your Public Key to the `factory` User's `authorized_keys` on the Installed `tahi` System:**
+While you are still in the installation environment (before rebooting), perform these commands. We assume `/mnt` is the mount point for your newly installed system's root.
 
-    ```bash
-    # (In the installation environment shell)
-    # 1. Create the .ssh directory if it doesn't exist
-    mkdir -p /mnt/home/factory/.ssh
-
-    # 2. Set correct permissions for the .ssh directory
-    chmod 700 /mnt/home/factory/.ssh
-
-    # 3. Add your public key to the authorized_keys file
-    echo "PASTE_YOUR_PUBLIC_SSH_KEY_HERE" >> /mnt/home/factory/.ssh/authorized_keys
-
-    # 4. Set correct permissions for the authorized_keys file
-    chmod 600 /mnt/home/factory/.ssh/authorized_keys
-
-    # NOTE: The 'chown factory:users' command may fail in the installer environment
-    # with "invalid user: ‘factory:users’". This is expected because the installer
-    # doesn't recognize the new system's users/groups by name. NixOS will
-    # correctly set the ownership when the system boots and the 'factory' user is created.
-    # So, you can ignore the chown error and proceed.
-    ```
-
-3.  **SSH into `tahi` after Reboot:**
-    Once `tahi` has rebooted and acquired a network address, you should be able to SSH into it as the `factory` user:
-    ```bash
-    ssh factory@<tahi_ip_address_or_hostname>
-    ```
-
-Move any essential files to their `/persistent` location, or update configurations.
--   `mv /mnt/etc/ssh /mnt/persistent/etc` (This is typically done by Home Manager for non-root users, but for root SSH keys it might be needed if not handled by `impermanence` or configuration.)
--   `mv hosts/{hostname}/hardware-configuration.nix /mnt/persistent/home/{user}/Documents/` (Adjust path as needed, or remove if not desired)
--   `mv /mnt/config /mnt/persistent/home/{user}/Projects/Nixos/` (Move the entire cloned repo to a persistent location)
-
+2. Add your public key to the authorized_keys file
+```sh
+echo "PASTE_YOUR_PUBLIC_SSH_KEY_HERE" >> /mnt/home/factory/.ssh/authorized_keys
+```
+3. Set correct permissions for the authorized_keys file
+```sh
+chmod 600 /mnt/home/factory/.ssh/authorized_keys
+```
+4. **SSH into `tahi` after Reboot:**
+Once `tahi` has rebooted and acquired a network address, you should be able to SSH into it as the `factory` user:
+```sh
+ssh factory@<tahi_ip_address_or_hostname>
+```
 ### Reboot
 `reboot`

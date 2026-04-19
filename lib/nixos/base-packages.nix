@@ -16,7 +16,6 @@
       git
       lshw
       pciutils
-      stow
       usbutils
       vim
       wget
@@ -28,7 +27,5 @@
 
   programs.zsh.enable = true;
   users.defaultUserShell = pkgs.zsh;
-
-
 
 }
