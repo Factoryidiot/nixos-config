@@ -1,6 +1,7 @@
-{ impermanence
-, specialArgs
-, ...
+{ 
+  impermanence,
+  specialArgs,
+  ...
 }:
 let
   # Destructure 'username' from the specialArgs passed from flake.nix

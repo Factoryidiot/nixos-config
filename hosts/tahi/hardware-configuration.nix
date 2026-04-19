@@ -18,7 +18,7 @@ in
   boot.loader.efi.efiSysMountPoint = "/boot";
   boot.loader.systemd-boot.enable = true;
   boot.kernelPackages = pkgs.linuxPackages_zen;
-  boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "ehci_pci" "sd_mod" "usb_storage" ];
+  boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "ehci_pci" "sd_mod" "usb_storage" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
   boot.initrd.systemd.enable = true;
   boot.kernelParams = [ "amd_pstate=active" "amd.iommu=on" ];
@@ -43,7 +43,7 @@ in
 
   fileSystems."/btr_pool" = lib.mkDefault
     {
-      device = "/dev/disk/by-uuid/528baf24-b6fa-4407-8d49-249a8113c303"; 
+      device = "/dev/disk/by-uuid/74475504-b09b-40d6-aa52-a0a87d840252"; 
       fsType = "btrfs";
       options = [ "subvolid=5" ];
     };
@@ -57,21 +57,21 @@ in
 
   fileSystems."/gnu" = lib.mkDefault
     {
-      device = "/dev/disk/by-uuid/528baf24-b6fa-4407-8d49-249a8113c303"; 
+      device = "/dev/disk/by-uuid/74475504-b09b-40d6-aa52-a0a87d840252"; 
       fsType = "btrfs";
       options = btrfsOptions ++ [ "subvol=@guix" ];
     };
 
   fileSystems."/nix" = lib.mkDefault
     {
-      device = "/dev/disk/by-uuid/528baf24-b6fa-4407-8d49-249a8113c303"; 
+      device = "/dev/disk/by-uuid/74475504-b09b-40d6-aa52-a0a87d840252"; 
       fsType = "btrfs";
       options = btrfsOptions ++ [ "subvol=@nix" ];
     };
 
   fileSystems."/persistent" = lib.mkDefault
     {
-      device = "/dev/disk/by-uuid/528baf24-b6fa-4407-8d49-249a8113c303"; 
+      device = "/dev/disk/by-uuid/74475504-b09b-40d6-aa52-a0a87d840252"; 
       fsType = "btrfs";
       options = btrfsOptions ++ [ "subvol=@persistent" ];
       neededForBoot = true;
@@ -79,16 +79,16 @@ in
 
   fileSystems."/snapshots" = lib.mkDefault
     {
-      device = "/dev/disk/by-uuid/528baf24-b6fa-4407-8d49-249a8113c303"; 
+      device = "/dev/disk/by-uuid/74475504-b09b-40d6-aa52-a0a87d840252"; 
       fsType = "btrfs";
       options = btrfsOptions ++ [ "subvol=@snapshots" ];
     };
 
   fileSystems."/swap" = lib.mkDefault
     {
-      device = "/dev/disk/by-uuid/528baf24-b6fa-4407-8d49-249a8113c303"; 
+      device = "/dev/disk/by-uuid/74475504-b09b-40d6-aa52-a0a87d840252"; 
       fsType = "btrfs";
-      options = [ "subvol=@swap" "nodatacow" "noatime" ];
+      options = [ "subvol=swap" "nodatacow" "noatime" ];
     };
 
   fileSystems."/swap/swapfile" =
@@ -101,7 +101,7 @@ in
 
   fileSystems."/tmp" = lib.mkDefault
     {
-      device = "/dev/disk/by-uuid/528baf24-b6fa-4407-8d49-249a8113c303"; 
+      device = "/dev/disk/by-uuid/74475504-b09b-40d6-aa52-a0a87d840252"; 
       fsType = "btrfs";
       options = btrfsOptions ++ [ "subvol=@tmp" ];
     };
