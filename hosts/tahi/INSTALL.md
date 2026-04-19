@@ -68,6 +68,47 @@ nixos-install --root /mnt --no-root-password
 > `--show-trace --verbose`
 
 ### Post Install
+### SSH Access (Post-Reboot Preparation)
+
+Before rebooting, ensure you set up SSH access for the `factory` user, as it's configured for persistence and password authentication is disabled.
+
+1.  **Retrieve your SSH Public Key:**
+    On your client machine (the one you'll be SSHing *from*), get your public SSH key. It's usually in `~/.ssh/id_rsa.pub` (or `id_ed25519.pub`). Copy its content.
+    ```bash
+    cat ~/.ssh/id_rsa.pub
+    # Copy the entire output string (e.g., ssh-rsa AAAA...)
+    ```
+
+2.  **Add your Public Key to the `factory` User's `authorized_keys` on the Installed `tahi` System:**
+    While you are still in the installation environment (before rebooting), perform these commands. We assume `/mnt` is the mount point for your newly installed system's root.
+
+    ```bash
+    # (In the installation environment shell)
+    # 1. Create the .ssh directory if it doesn't exist
+    mkdir -p /mnt/home/factory/.ssh
+
+    # 2. Set correct permissions for the .ssh directory
+    chmod 700 /mnt/home/factory/.ssh
+
+    # 3. Add your public key to the authorized_keys file
+    echo "PASTE_YOUR_PUBLIC_SSH_KEY_HERE" >> /mnt/home/factory/.ssh/authorized_keys
+
+    # 4. Set correct permissions for the authorized_keys file
+    chmod 600 /mnt/home/factory/.ssh/authorized_keys
+
+    # NOTE: The 'chown factory:users' command may fail in the installer environment
+    # with "invalid user: ‘factory:users’". This is expected because the installer
+    # doesn't recognize the new system's users/groups by name. NixOS will
+    # correctly set the ownership when the system boots and the 'factory' user is created.
+    # So, you can ignore the chown error and proceed.
+    ```
+
+3.  **SSH into `tahi` after Reboot:**
+    Once `tahi` has rebooted and acquired a network address, you should be able to SSH into it as the `factory` user:
+    ```bash
+    ssh factory@<tahi_ip_address_or_hostname>
+    ```
+
 Move any essential files to their `/persistent` location, or update configurations.
 -   `mv /mnt/etc/ssh /mnt/persistent/etc` (This is typically done by Home Manager for non-root users, but for root SSH keys it might be needed if not handled by `impermanence` or configuration.)
 -   `mv hosts/{hostname}/hardware-configuration.nix /mnt/persistent/home/{user}/Documents/` (Adjust path as needed, or remove if not desired)
