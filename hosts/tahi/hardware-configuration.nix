@@ -53,6 +53,7 @@ in
       device = "tmpfs";
       fsType = "tmpfs";
       options = [ "relatime" "mode=755" ];
+      neededForBoot = true;
     };
 
   fileSystems."/gnu" = lib.mkDefault

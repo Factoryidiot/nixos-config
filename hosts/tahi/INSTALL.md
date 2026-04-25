@@ -13,7 +13,7 @@ Memory: 30 GiB
 ## Install
 ### Prerequisite
 1.  `sudo -i`
-2.  Clone the repo `git clone https://github.com/your-username/nixos-config.git
+2.  Clone the repo `git clone https://github.com/Factoryidiot/nixos-config.git`
 3.  Navigate to the cloned repository: `cd /nixos-config`.
 
 ### Prepare Disk
@@ -45,17 +45,18 @@ run github:nix-community/disko/latest -- \
 
 ### Update `hardware-configuration`
 Generate a `hardware-configuration.nix` to get accurate UUIDs for your `tahi` hardware.
-1.  Create `hardware-configuration.nix` for your current configuration:
+1. Create `hardware-configuration.nix` for your current configuration:
 ```sh
 nixos-generate-config --root /mnt
 ```
-2.  Remove the contents of `/mnt/etc/nixos/*` created by `nixos-generate-config`, as we use our flake for configuration:
+2. Remove the contents of `/mnt/etc/nixos/*` created by `nixos-generate-config`, as we use our flake for configuration:
 ```sh
  rm /mnt/etc/nixos/*
 ```
 ### Perform Installation
 From `/mnt/config` run:
 ```sh
+git add .
 nixos-install --root /mnt --no-root-password --flake .#tahi --no-write-lock-file
 ```
 > [!TIP]

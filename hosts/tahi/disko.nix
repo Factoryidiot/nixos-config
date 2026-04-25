@@ -1,6 +1,7 @@
 # ./hosts/tahi/disko.nix
 {
   fileSystems."/persistent".neededForBoot = true;
+  fileSystems."/nix".neededForBoot = true;
 
   disko.devices = {
     disk = {
@@ -28,27 +29,27 @@
                 extraArgs = [ "-f" ]; # Force creation, useful for new install
                 mountpoint = "/"; # Mount the main BTRFS filesystem as root
                 subvolumes = {
-                  "/guix" = {
+                  "@guix" = {
                     mountOptions = [ "compress-force=zstd:1" "noatime" ];
                     mountpoint = "/gnu";
                   };
-                  "/nix" = {
+                  "@nix" = {
                     mountOptions = [ "compress-force=zstd:1" "noatime" ];
                     mountpoint = "/nix";
                   };
-                  "/persistent" = {
+                  "@persistent" = {
                     mountOptions = [ "compress-force=zstd:1" ];
                     mountpoint = "/persistent";
                   };
-                  "/snapshots" = {
+                  "@snapshots" = {
                     mountOptions = [ "compress-force=zstd:1" ];
                     mountpoint = "/snapshots";
                   };
-                  "/swap" = {
+                  "swap" = {
                     mountpoint = "/swap";
                     swap.swapfile.size = "24G";
                   };
-                  "/tmp" = {
+                  "@tmp" = {
                     mountOptions = [ "compress-force=zstd:1" ];
                     mountpoint = "/tmp";
                   };
@@ -58,7 +59,6 @@
           };
         };
       };
-      # The 'key-backup' disk definition has been removed.
     };
   };
 }
