@@ -69,8 +69,8 @@ nixos-install --root /mnt --no-root-password --flake .#tahi --no-write-lock-file
 ### Post install
 Move any essential files to their `/persistent` location
 - `mv /mnt/etc/ssh /mnt/persistent/etc`
-- `cp hosts/{hostname}/hardware-configuration.nix /mnt/persistent/home/{user}/Projects/`
-- `mv ../nixos-config /mnt/persistent/home/{user}/Projects/`
+- `cp hosts/tahi/hardware-configuration.nix /mnt/persistent/home/factory/Projects/`
+- `mv ../nixos-config /mnt/persistent/home/factory/Projects/`
 
 > [!TIP]
 > **Configure Local PII**
@@ -86,17 +86,16 @@ On your client machine (the one you'll be SSHing *from*), get your public SSH ke
 cat ~/.ssh/id_rsa.pub
 # Copy the entire output string (e.g., ssh-rsa AAAA...)
 ```
-
 1. **Add your Public Key to the `factory` User's `authorized_keys` on the Installed `tahi` System:**
 While you are still in the installation environment (before rebooting), perform these commands. We assume `/mnt` is the mount point for your newly installed system's root.
 
 2. Add your public key to the authorized_keys file
 ```sh
-echo "PASTE_YOUR_PUBLIC_SSH_KEY_HERE" >> /mnt/home/factory/.ssh/authorized_keys
+echo "PASTE_YOUR_PUBLIC_SSH_KEY_HERE" >> /mnt/persistent/home/factory/.ssh/authorized_keys
 ```
 3. Set correct permissions for the authorized_keys file
 ```sh
-chmod 600 /mnt/home/factory/.ssh/authorized_keys
+chmod 600 /mnt/persistent/home/factory/.ssh/authorized_keys
 ```
 4. **SSH into `tahi` after Reboot:**
 Once `tahi` has rebooted and acquired a network address, you should be able to SSH into it as the `factory` user:

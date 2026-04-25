@@ -67,6 +67,7 @@ in
       device = "/dev/disk/by-uuid/74475504-b09b-40d6-aa52-a0a87d840252"; 
       fsType = "btrfs";
       options = btrfsOptions ++ [ "subvol=@nix" ];
+      neededForBoot = true;
     };
 
   fileSystems."/persistent" = lib.mkDefault
