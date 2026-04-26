@@ -36,14 +36,13 @@ in
   ];
 
   fileSystems."/boot" = lib.mkDefault
-    { device = "/dev/disk/by-uuid/6C28-8A6B";
+    { device = "/dev/disk/by-uuid/472A-8EC9";
       fsType = "vfat";
       options = [ "fmask=0077" "dmask=0077" ];
     };
 
   fileSystems."/btr_pool" = lib.mkDefault
-    {
-      device = "/dev/disk/by-uuid/74475504-b09b-40d6-aa52-a0a87d840252"; 
+    { device = "/dev/disk/by-uuid/b0e26576-945c-4f26-97c8-d8a0ac70283c";
       fsType = "btrfs";
       options = [ "subvolid=5" ];
     };
@@ -57,38 +56,33 @@ in
     };
 
   fileSystems."/gnu" = lib.mkDefault
-    {
-      device = "/dev/disk/by-uuid/74475504-b09b-40d6-aa52-a0a87d840252"; 
+    { device = "/dev/disk/by-uuid/b0e26576-945c-4f26-97c8-d8a0ac70283c";
       fsType = "btrfs";
       options = btrfsOptions ++ [ "subvol=@guix" ];
     };
 
   fileSystems."/nix" = lib.mkDefault
-    {
-      device = "/dev/disk/by-uuid/74475504-b09b-40d6-aa52-a0a87d840252"; 
+    { device = "/dev/disk/by-uuid/b0e26576-945c-4f26-97c8-d8a0ac70283c";
       fsType = "btrfs";
       options = btrfsOptions ++ [ "subvol=@nix" ];
       neededForBoot = true;
     };
 
   fileSystems."/persistent" = lib.mkDefault
-    {
-      device = "/dev/disk/by-uuid/74475504-b09b-40d6-aa52-a0a87d840252"; 
+    { device = "/dev/disk/by-uuid/b0e26576-945c-4f26-97c8-d8a0ac70283c";
       fsType = "btrfs";
       options = btrfsOptions ++ [ "subvol=@persistent" ];
       neededForBoot = true;
     };
 
   fileSystems."/snapshots" = lib.mkDefault
-    {
-      device = "/dev/disk/by-uuid/74475504-b09b-40d6-aa52-a0a87d840252"; 
+    { device = "/dev/disk/by-uuid/b0e26576-945c-4f26-97c8-d8a0ac70283c";
       fsType = "btrfs";
       options = btrfsOptions ++ [ "subvol=@snapshots" ];
     };
 
   fileSystems."/swap" = lib.mkDefault
-    {
-      device = "/dev/disk/by-uuid/74475504-b09b-40d6-aa52-a0a87d840252"; 
+    { device = "/dev/disk/by-uuid/b0e26576-945c-4f26-97c8-d8a0ac70283c";
       fsType = "btrfs";
       options = [ "subvol=swap" "nodatacow" "noatime" ];
     };
@@ -102,15 +96,14 @@ in
     };
 
   fileSystems."/tmp" = lib.mkDefault
-    {
-      device = "/dev/disk/by-uuid/74475504-b09b-40d6-aa52-a0a87d840252"; 
+    { device = "/dev/disk/by-uuid/b0e26576-945c-4f26-97c8-d8a0ac70283c";
       fsType = "btrfs";
       options = btrfsOptions ++ [ "subvol=@tmp" ];
     };
 
-  swapDevices = [
-    { device = "/swap/swapfile"; }
-  ];
+  #swapDevices = [
+  #  { device = "/swap/swapfile"; }
+  #];
 
   networking.useDHCP = lib.mkDefault true;
 
@@ -118,3 +111,4 @@ in
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
 
 }
+
