@@ -19,6 +19,7 @@ in
       "/etc/agenix/" # secrets
       "/etc/nix/inputs"
       "/var/lib/agenix"
+      "/var/lib/incus"
       "/var/lib/nixos"
       "/var/log" # logs and troubleshooting
     ];
@@ -47,7 +48,6 @@ in
 
       files = [
         # Any user specific files that need persistence can be added here
-        ".config/zsh/.zsh_history"
       ];
     };
   };
