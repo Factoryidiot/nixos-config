@@ -35,13 +35,19 @@ in
       directories = [
         "Projects"
         "VMs"
+ 
+        # .config
+        ".config/git"
+
         {
           directory = ".ssh";
           mode = "0700";
         }
       ];
+
       files = [
         # Any user specific files that need persistence can be added here
+        ".config/zsh/.zsh_history"
       ];
     };
   };
