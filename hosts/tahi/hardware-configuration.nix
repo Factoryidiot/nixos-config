@@ -1,12 +1,13 @@
 # /hosts/tahi/hardware-configuration.nix
-{ config
-, lib
-, pkgs
-, modulesPath
-, ...
+{ config,
+  lib,
+  pkgs,
+  modulesPath,
+  ...
 }:
 let
   btrfsOptions = [ "noatime" "compress=zstd:1" "ssd" "discard=async" ];
+  uuid = "7f124d78-940d-4dfc-bd23-ba8dadeb5d63";
 in
 {
 
@@ -35,77 +36,62 @@ in
     "exfat"
   ];
 
-  fileSystems."/boot" = lib.mkDefault
-    { device = "/dev/disk/by-uuid/6C28-8A6B";
-      fsType = "vfat";
-      options = [ "fmask=0077" "dmask=0077" ];
-    };
-
-  fileSystems."/btr_pool" = lib.mkDefault
-    {
-      device = "/dev/disk/by-uuid/74475504-b09b-40d6-aa52-a0a87d840252"; 
-      fsType = "btrfs";
-      options = [ "subvolid=5" ];
-    };
-
   fileSystems."/" =
     {
       device = "tmpfs";
       fsType = "tmpfs";
-      options = [ "relatime" "mode=755" ];
+      options = [ "relatime" "mode=755" "size=8G" ];
       neededForBoot = true;
     };
 
-  fileSystems."/gnu" = lib.mkDefault
-    {
-      device = "/dev/disk/by-uuid/74475504-b09b-40d6-aa52-a0a87d840252"; 
-      fsType = "btrfs";
-      options = btrfsOptions ++ [ "subvol=@guix" ];
-    };
-
   fileSystems."/nix" = lib.mkDefault
-    {
-      device = "/dev/disk/by-uuid/74475504-b09b-40d6-aa52-a0a87d840252"; 
+    { device = "/dev/disk/by-uuid/${uuid}";
       fsType = "btrfs";
       options = btrfsOptions ++ [ "subvol=@nix" ];
       neededForBoot = true;
     };
 
   fileSystems."/persistent" = lib.mkDefault
-    {
-      device = "/dev/disk/by-uuid/74475504-b09b-40d6-aa52-a0a87d840252"; 
+    { device = "/dev/disk/by-uuid/${uuid}";
       fsType = "btrfs";
       options = btrfsOptions ++ [ "subvol=@persistent" ];
       neededForBoot = true;
     };
 
+  fileSystems."/boot" = lib.mkDefault
+    { device = "/dev/disk/by-uuid/5398-3214";
+      fsType = "vfat";
+      options = [ "fmask=0077" "dmask=0077" ];
+    };
+
+  fileSystems."/gnu" = lib.mkDefault
+    { device = "/dev/disk/by-uuid/${uuid}";
+      fsType = "btrfs";
+      options = btrfsOptions ++ [ "subvol=@guix" ];
+    };
+
   fileSystems."/snapshots" = lib.mkDefault
-    {
-      device = "/dev/disk/by-uuid/74475504-b09b-40d6-aa52-a0a87d840252"; 
+    { device = "/dev/disk/by-uuid/${uuid}";
       fsType = "btrfs";
       options = btrfsOptions ++ [ "subvol=@snapshots" ];
     };
 
-  fileSystems."/swap" = lib.mkDefault
-    {
-      device = "/dev/disk/by-uuid/74475504-b09b-40d6-aa52-a0a87d840252"; 
-      fsType = "btrfs";
-      options = [ "subvol=swap" "nodatacow" "noatime" ];
-    };
-
-  fileSystems."/swap/swapfile" =
-    {
-      device = "/swap/swapfile";
-      depends = [ "/swap" ];
-      fsType = "none";
-      options = [ "bind" "rw" ];
-    };
-
   fileSystems."/tmp" = lib.mkDefault
-    {
-      device = "/dev/disk/by-uuid/74475504-b09b-40d6-aa52-a0a87d840252"; 
+    { device = "/dev/disk/by-uuid/${uuid}";
       fsType = "btrfs";
       options = btrfsOptions ++ [ "subvol=@tmp" ];
+    };
+
+  fileSystems."/btr_pool" = lib.mkDefault
+    { device = "/dev/disk/by-uuid/${uuid}";
+      fsType = "btrfs";
+      options = [ "subvolid=5" ];
+    };
+
+  fileSystems."/swap" = lib.mkDefault
+    { device = "/dev/disk/by-uuid/${uuid}";
+      fsType = "btrfs";
+      options = [ "subvol=swap" "nodatacow" "noatime" ];
     };
 
   swapDevices = [
@@ -115,6 +101,7 @@ in
   networking.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
+  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  powerManagement.cpuFreqGovernor = lib.mkDefault "ondemand";
 
 }

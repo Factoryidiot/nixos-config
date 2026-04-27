@@ -57,9 +57,9 @@ in
     # Enable OpenSSH daemon for remote access
     openssh = {
       enable = true;
-      permitRootLogin = lib.mkForce "prohibit-password"; # Allow root login only with keys
-      passwordAuthentication = false;
       settings = {
+        PermitRootLogin = lib.mkForce "prohibit-password"; # Allow root login only with keys
+        PasswordAuthentication = false;
         # Add your SSH public key here for passwordless access
         # For initial setup, you might manually add it to /root/.ssh/authorized_keys
         # or use home-manager to deploy it for non-root users.
