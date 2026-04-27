@@ -1,12 +1,14 @@
 # /hosts/whio/hardware-configuration.nix
-{ config
-, lib
-, pkgs
-, modulesPath
-, ...
+{
+  config,
+  lib,
+  pkgs,
+  modulesPath,
+  ...
 }:
 let
   btrfsOptions = [ "noatime" "compress=zstd:1" "ssd" "discard=async" ];
+  uuid = "528baf24-b6fa-4407-8d49-249a8113c303";
 in
 {
 
@@ -49,8 +51,7 @@ in
     };
 
   fileSystems."/btr_pool" = lib.mkDefault
-    {
-      device = "/dev/disk/by-uuid/528baf24-b6fa-4407-8d49-249a8113c303"; 
+    { device = "/dev/disk/by-uuid/${uuid}"; 
       fsType = "btrfs";
       options = [ "subvolid=5" ];
     };
@@ -63,52 +64,46 @@ in
     };
 
   fileSystems."/gnu" = lib.mkDefault
-    {
-      device = "/dev/disk/by-uuid/528baf24-b6fa-4407-8d49-249a8113c303"; 
+    { device = "/dev/disk/by-uuid/${uuid}"; 
       fsType = "btrfs";
       options = btrfsOptions ++ [ "subvol=@guix" ];
     };
 
   fileSystems."/nix" = lib.mkDefault
-    {
-      device = "/dev/disk/by-uuid/528baf24-b6fa-4407-8d49-249a8113c303"; 
+    { device = "/dev/disk/by-uuid/${uuid}"; 
       fsType = "btrfs";
       options = btrfsOptions ++ [ "subvol=@nix" ];
     };
 
   fileSystems."/persistent" = lib.mkDefault
-    {
-      device = "/dev/disk/by-uuid/528baf24-b6fa-4407-8d49-249a8113c303"; 
+    { device = "/dev/disk/by-uuid/${uuid}"; 
       fsType = "btrfs";
       options = btrfsOptions ++ [ "subvol=@persistent" ];
       neededForBoot = true;
     };
 
   fileSystems."/snapshots" = lib.mkDefault
-    {
-      device = "/dev/disk/by-uuid/528baf24-b6fa-4407-8d49-249a8113c303"; 
+    { device = "/dev/disk/by-uuid/${uuid}"; 
       fsType = "btrfs";
       options = btrfsOptions ++ [ "subvol=@snapshots" ];
     };
 
   fileSystems."/swap" = lib.mkDefault
-    {
-      device = "/dev/disk/by-uuid/528baf24-b6fa-4407-8d49-249a8113c303"; 
+    { device = "/dev/disk/by-uuid/${uuid}"; 
       fsType = "btrfs";
       options = [ "subvol=@swap" "nodatacow" "noatime" ];
     };
 
-  fileSystems."/swap/swapfile" =
-    {
-      device = "/swap/swapfile";
-      depends = [ "/swap" ];
-      fsType = "none";
-      options = [ "bind" "rw" ];
-    };
+  #fileSystems."/swap/swapfile" =
+  #  {
+  #    device = "/swap/swapfile";
+  #    depends = [ "/swap" ];
+  #    fsType = "none";
+  #    options = [ "bind" "rw" ];
+  #  };
 
   fileSystems."/tmp" = lib.mkDefault
-    {
-      device = "/dev/disk/by-uuid/528baf24-b6fa-4407-8d49-249a8113c303"; 
+    { device = "/dev/disk/by-uuid/${uuid}"; 
       fsType = "btrfs";
       options = btrfsOptions ++ [ "subvol=@tmp" ];
     };

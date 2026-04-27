@@ -59,8 +59,7 @@ Generate a `hardware-configuration.nix` to update the `UUID`s for the hardware-c
 ### Perform installation
 From `/nixos-config` run:
 ```sh
-nixos-install --root /mnt --no-root-password \
---flake .#[host-name] --no-write-lock-file
+nixos-install --root /mnt --no-root-password --flake .#[host-name] --no-write-lock-file
 ```
 > [!TIP]
 > To refresh the cache:
@@ -74,9 +73,8 @@ nixos-install --root /mnt --no-root-password \
 ### Post install
 Move any essential files to their `/persistent` location
 - `mv /mnt/etc/ssh /mnt/persistent/etc`
-- `mv hosts/{hostname}/hardware-configuration.nix /mnt/persistent/home/{user}/Documents/`
-- `mv ../nixos-config /mnt/persistent/home/{user}/Projects/Nixos/`
-- `mv local-user.nix.example local-user.nix` and update
+- `mv hosts/whio/hardware-configuration.nix /mnt/persistent/home/factory/Projects/`
+- `mv ../nixos-config /mnt/persistent/home/factory/Projects/`
 
 > [!TIP]
 > **Configure Local PII**
