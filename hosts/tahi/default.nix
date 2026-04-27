@@ -64,12 +64,17 @@ in
     };
   };
 
+  systemd.tmpfiles.rules = [
+    "z /etc/ssh/ssh_host_ed25519_key 0640 root keys - -"
+  ];
+
   users = {
     users.${username} = {
       home = "/home/${username}";
       isNormalUser = true;
       extraGroups = [
         "input"
+        "keys"
         "network"
         "users"
         "video"
