@@ -1,7 +1,8 @@
-# lib/home/tmux.conf
-{ config
-, lib
-, ...
+# lib/home/tmux.nix
+{
+  config,
+  lib,
+  ...
 }: {
 
   programs.tmux = {

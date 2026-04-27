@@ -10,7 +10,7 @@
     firewall.trustedInterfaces = [ "br0" ];
     interfaces.br0.useDHCP = true;
     #firewall.trustedInterfaces = [ "incusbr0" ]; # Trust Incus bridge
-    #nftables.enable = true; # Recommended for Incus networking
+    nftables.enable = true; # Recommended for Incus networking
 
   };
 
