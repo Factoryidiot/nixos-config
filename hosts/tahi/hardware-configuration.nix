@@ -1,5 +1,6 @@
 # /hosts/tahi/hardware-configuration.nix
-{ config,
+{
+  config,
   lib,
   pkgs,
   modulesPath,

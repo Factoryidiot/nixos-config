@@ -1,7 +1,9 @@
 # ./lib/nixos/nas.nix
-{ config, pkgs, ... }:
-
 {
+  config,
+  pkgs,
+  ...
+}: {
   # 1. Enable ZFS Support
   boot.supportedFilesystems = [ "zfs" ];
   networking.hostId = "8425e349"; # Generate yours with: head -c4 /dev/urandom | od -A none -t x4
