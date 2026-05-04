@@ -6,11 +6,14 @@
 {
 
   networking = {
-    bridges."br0".interfaces = [ "enp2s0f0" ];
+    bridges."br0" = {
+      interfaces = [ "enp2s0f0" ];
+      rstp = false;
+    };
     firewall.trustedInterfaces = [ "br0" ];
     interfaces = {
       br0.useDHCP = true;
-      enp2s0.useDHCP = false;
+      enp2s0f0.useDHCP = false;
     };
     nftables.enable = true;
   };
@@ -21,20 +24,6 @@
     enable = true;
 
     preseed = {
-      #networks = [
-      #  {
-      #    name = "incusbr0";
-      #    type = "bridge";
-      #    config = {
-      #      # Setting the bridge IP to .201
-      #      "ipv4.address" = "172.16.1.201/24"; 
-      #      "ipv4.nat" = "true";
-      #      # Restricting the DHCP range to your 50 set-aside IPs
-      #      "ipv4.dhcp.ranges" = "172.16.1.202-172.16.1.250";
-      #      "ipv6.address" = "none"; # Keeping it simple for now
-      #    };
-      #  }
-      #];
       profiles = [
         {
           name = "default";
@@ -43,7 +32,6 @@
               name = "eth0";
               nictype = "bridged";
               parent = "br0";
-              #network = "incusbr0";
               type = "nic";
             };
             root = {
