@@ -5,19 +5,6 @@
 }:
 {
 
-  networking = {
-    bridges."br0" = {
-      interfaces = [ "enp2s0f0" ];
-      rstp = false;
-    };
-    firewall.trustedInterfaces = [ "br0" ];
-    interfaces = {
-      br0.useDHCP = true;
-      enp2s0f0.useDHCP = false;
-    };
-    nftables.enable = true;
-  };
-
   users.users.${username}.extraGroups = [ "incus-admin" ]; # Add user to incus-admin group
 
   virtualisation.incus = {

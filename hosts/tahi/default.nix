@@ -42,8 +42,28 @@ in
   i18n.defaultLocale = "en_NZ.UTF-8";
 
   networking = {
+    bridges."br0".interfaces = [ "enp2s0f0" ];
+    defaultGateway = "172.16.1.1";
+    nameservers = [
+      "1.1.1.1"
+      "8.8.8.8"
+    ];
+    firewall.trustedInterfaces = [ "br0" ];
     hostName = hostname;
-    # wireless.iwd.enable = true; # Not needed for a server
+    interfaces = {
+      br0 = {
+        ipv4.addresses = [
+          {
+            address = "172.16.1.30";
+            prefixLength = 24;
+          }
+        ];
+        useDHCP = true;
+      };
+      enp2s0f0.useDHCP = false;
+    };
+    nftables.enable = true;
+    useDHCP = false;
   };
 
   services = {
