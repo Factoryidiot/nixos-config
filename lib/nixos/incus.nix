@@ -6,7 +6,7 @@
 {
 
   networking = {
-    bridges."br0".interfaces = [ "enp2s0" ];
+    bridges."br0".interfaces = [ "enp2s0f0" ];
     firewall.trustedInterfaces = [ "br0" ];
     interfaces = {
       br0.useDHCP = true;
