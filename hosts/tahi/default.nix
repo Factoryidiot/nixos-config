@@ -58,7 +58,7 @@ in
             prefixLength = 24;
           }
         ];
-        useDHCP = true;
+        useDHCP = false;
       };
       enp2s0f0.useDHCP = false;
     };
