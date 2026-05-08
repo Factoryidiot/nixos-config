@@ -45,8 +45,8 @@ in
     bridges."br0".interfaces = [ "enp2s0f0" ];
     defaultGateway = "172.16.1.1";
     nameservers = [
-      "1.1.1.1"
-      "8.8.8.8"
+      "1.1.1.2"
+      "9.9.9.9"
     ];
     firewall.trustedInterfaces = [ "br0" ];
     hostName = hostname;
@@ -54,7 +54,7 @@ in
       br0 = {
         ipv4.addresses = [
           {
-            address = "172.16.1.30";
+            address = "172.16.1.201";
             prefixLength = 24;
           }
         ];
