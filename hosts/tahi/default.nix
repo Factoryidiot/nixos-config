@@ -20,8 +20,10 @@ in
     ../../lib/nixos/btrfs.nix
     ../../lib/nixos/maintenance.nix
     ../../lib/nixos/virt.nix
-    ../../lib/nixos/incus.nix # Incus virtualization
     ../../lib/nixos/zram.nix
+
+   #+----- Incus virtualisation ------------------
+    ../../lib/nixos/incus
   ];
 
   hardware.cpu.amd.updateMicrocode = true;
