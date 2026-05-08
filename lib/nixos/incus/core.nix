@@ -15,6 +15,10 @@
       profiles = [
         {
           name = "default";
+          config = {
+            "cloud-init.user-data" = ""; 
+            "security.privileged" = "false";
+          };
           devices = {
             eth0 = {
               name = "eth0";

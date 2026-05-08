@@ -54,13 +54,13 @@ in
     hostName = hostname;
     interfaces = {
       br0 = {
-        ipv4.addresses = [
-          {
-            address = "172.16.1.201";
-            prefixLength = 24;
-          }
-        ];
-        useDHCP = false;
+        #ipv4.addresses = [
+        #  {
+        #    address = "172.16.1.201";
+        #    prefixLength = 24;
+        #  }
+        #];
+        useDHCP = true;
       };
       enp2s0f0.useDHCP = false;
     };
@@ -84,6 +84,12 @@ in
         # or use home-manager to deploy it for non-root users.
       };
     };
+  };
+
+  systemd.network.networks."40-br0" = {
+    matchConfig.Name = "br0";
+    networkConfig.DHCP = "ipv4";
+    dhcpV4Config.ClientIdentifier = "mac";
   };
 
   systemd.tmpfiles.rules = [
