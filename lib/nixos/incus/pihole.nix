@@ -6,7 +6,7 @@
 let
   containerName = "${hostname}-pihole";
 
-  piholeCloudConfig = pkgs.writeText "pihole-cloud-init.yml" ''
+  cloudConfig = pkgs.writeText "cloud-init.yml" ''
     #cloud-config
     packages:
       - curl
@@ -26,7 +26,6 @@ let
           CACHE_SIZE=10000
 
     runcmd:
-      # 1. The Identity Fix (Matches the Traefik/Tahi pattern)
       - |
         cat <<EOF > /etc/systemd/network/10-cloud-init-eth0.network
         [Match]
@@ -38,11 +37,11 @@ let
         EOF
       - systemctl restart systemd-networkd
 
-      # 2. Install Pi-hole (Unattended)
+      - until ping -c 1 pi-hole.net; do sleep 2; done
       - curl -L https://install.pi-hole.net | bash /dev/stdin --unattended
 
-      # 3. Set a temporary admin password (you should change this)
-      - pihole -a -p admin
+      - systemctl stop dhcpcd || true
+      - systemctl disable dhcpcd || true
   '';
 
 in
@@ -63,9 +62,8 @@ in
       fi
 
       # 2. Apply the cloud-config
-      ${pkgs.incus}/bin/incus config set ${containerName} user.user-data - < ${piholeCloudConfig}
+      ${pkgs.incus}/bin/incus config set ${containerName} user.user-data - < ${cloudConfig}
       
-      # We stop here to let you grep the MAC and set the TP-Link reservation for .202
     '';
   };
 }

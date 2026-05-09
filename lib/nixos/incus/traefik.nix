@@ -2,11 +2,11 @@
   pkgs,
   hostname,
   ...
-}: # hostname is passed from specialArgs in your host config
+}:
 let
   containerName = "${hostname}-traefik";
 
-  traefikCloudConfig = pkgs.writeText "traefik-cloud-init.yml" ''
+  cloudConfig = pkgs.writeText "cloud-init.yml" ''
     #cloud-config
     packages:
       - curl
@@ -33,11 +33,8 @@ let
           WantedBy=multi-user.target
 
     runcmd:
-      # 1. Binary Setup
       - [ sh, -c, "curl -L https://github.com/traefik/traefik/releases/download/v3.0.0/traefik_v3.0.0_linux_amd64.tar.gz | tar -xz -C /usr/local/bin" ]
       - chmod 755 /usr/local/bin/traefik
-
-      # 2. The Identity Fix (Crucial for TP-Link)
       - |
         cat <<EOF > /etc/systemd/network/10-cloud-init-eth0.network
         [Match]
@@ -47,7 +44,6 @@ let
         [DHCPv4]
         ClientIdentifier=mac
         EOF
-
       - systemctl restart systemd-networkd
       - systemctl daemon-reload
       - systemctl enable --now traefik
@@ -74,7 +70,7 @@ in
       fi
 
       # 2. Update config
-      ${pkgs.incus}/bin/incus config set ${containerName} user.user-data - < ${traefikCloudConfig}
+      ${pkgs.incus}/bin/incus config set ${containerName} user.user-data - < ${cloudConfig}
     '';
   };
 }
