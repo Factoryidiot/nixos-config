@@ -45,7 +45,10 @@ in
 
   networking = {
     bridges."br0".interfaces = [ "enp2s0f0" ];
-    defaultGateway = "172.16.1.1";
+    defaultGateway = {
+      address = "172.16.1.1";
+      interface = "br0";
+    };
     nameservers = [
       "1.1.1.2"
       "9.9.9.9"
@@ -54,18 +57,14 @@ in
     hostName = hostname;
     interfaces = {
       br0 = {
-        #ipv4.addresses = [
-        #  {
-        #    address = "172.16.1.201";
-        #    prefixLength = 24;
-        #  }
-        #];
         useDHCP = true;
+        macAddress = "d4:c9:ef:ce:e1:6e";
       };
       enp2s0f0.useDHCP = false;
     };
     nftables.enable = true;
     useDHCP = false;
+    useNetworkd = true;
   };
 
   services = {
@@ -88,8 +87,9 @@ in
 
   systemd.network.networks."40-br0" = {
     matchConfig.Name = "br0";
-    networkConfig.DHCP = "ipv4";
+    networkConfig.DHCP = lib.mkForce "ipv4";
     dhcpV4Config.ClientIdentifier = "mac";
+    linkConfig.MACAddress = "d4:c9:ef:ce:e1:6e";
   };
 
   systemd.tmpfiles.rules = [

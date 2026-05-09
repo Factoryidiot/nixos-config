@@ -9,17 +9,10 @@ let
   traefikCloudConfig = pkgs.writeText "traefik-cloud-init.yml" ''
     #cloud-config
     packages:
+      - curl
+      - xz-utils
 
     write_files:
-      # 1. This is the heavy hitter. It overrides the default DHCP behavior 
-      # for eth0 specifically to use the MAC address.
-      - path: /etc/systemd/network/eth0.network.d/override.conf
-        content: |
-          [Network]
-          DHCP=ipv4
-          [DHCPv4]
-          ClientIdentifier=mac
-
       - path: /etc/traefik/traefik.yml
         content: |
           entryPoints:
@@ -40,14 +33,11 @@ let
           WantedBy=multi-user.target
 
     runcmd:
-      # 1. Traefik Binary Setup
+      # 1. Binary Setup
       - [ sh, -c, "curl -L https://github.com/traefik/traefik/releases/download/v3.0.0/traefik_v3.0.0_linux_amd64.tar.gz | tar -xz -C /usr/local/bin" ]
       - chmod 755 /usr/local/bin/traefik
-      - systemctl daemon-reload
-      - systemctl enable --now traefik
-      
-      # 2. The Identity Fix: Overwrite the cloud-init network config.
-      # This forces systemd-networkd to use the MAC address as the DHCP ID.
+
+      # 2. The Identity Fix (Crucial for TP-Link)
       - |
         cat <<EOF > /etc/systemd/network/10-cloud-init-eth0.network
         [Match]
@@ -57,10 +47,10 @@ let
         [DHCPv4]
         ClientIdentifier=mac
         EOF
-      
-      # 3. Restart the network service to claim the .200 IP immediately
-      - systemctl restart systemd-networkd
 
+      - systemctl restart systemd-networkd
+      - systemctl daemon-reload
+      - systemctl enable --now traefik
   '';
 
 in

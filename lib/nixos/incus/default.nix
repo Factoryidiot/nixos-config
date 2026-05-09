@@ -6,6 +6,7 @@
 
   imports = [
     ./core.nix
+    ./pihole.nix
     ./traefik.nix
   ];
 
