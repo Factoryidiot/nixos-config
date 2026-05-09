@@ -5,6 +5,7 @@
 }:
 {
 
+  networking.firewall.allowedTCPPorts = [ 8443 ];
   users.users.${username}.extraGroups = [ "incus-admin" ]; # Add user to incus-admin group
 
   virtualisation.incus = {
