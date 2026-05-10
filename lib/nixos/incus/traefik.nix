@@ -6,6 +6,16 @@
 let
   containerName = "${hostname}-traefik";
 
+  ipAddr = { #Mmanual configuration
+    tahi = "172.16.1.201";
+  };
+  hostIP = ipAddr."${hostname}";
+
+  macAddr = { #Manual configuration
+    tahi = "10:66:6a:c4:5f:6b";
+  };
+  hostMAC = macAddr."${hostname}";
+
   cloudConfig = pkgs.writeText "cloud-init.yml" ''
     #cloud-config
     packages:
@@ -16,12 +26,17 @@ let
       - path: /etc/traefik/traefik.yml
         content: |
           entryPoints:
-            web: {address: ":80"}
-          api: {insecure: true, dashboard: true}
+            web:
+              address: ":80"
+          api:
+            insecure: true
+            dashboard: true
           providers:
-            file: {directory: /etc/traefik/conf.d/, watch: true}
+            file:
+              directory: /etc/traefik/conf.d/
+              watch: true
 
-      - path: /etc/systemd/system/traefik.service
+     - path: /etc/systemd/system/traefik.service
         content: |
           [Unit]
           Description=Traefik Proxy
@@ -33,6 +48,7 @@ let
           WantedBy=multi-user.target
 
     runcmd:
+      - mkdir -p /etc/traefik/conf.d/
       - [ sh, -c, "curl -L https://github.com/traefik/traefik/releases/download/v3.0.0/traefik_v3.0.0_linux_amd64.tar.gz | tar -xz -C /usr/local/bin" ]
       - chmod 755 /usr/local/bin/traefik
       - |
@@ -51,7 +67,8 @@ let
 
 in
 {
-  systemd.services.init-traefik-container = {
+
+  systemd.services."init-${containerName}" = {
     description = "Ensure ${containerName} container exists and is configured";
     after = [ "incus.service" "incus.socket" ];
     requires = [ "incus.socket" ];
@@ -61,16 +78,28 @@ in
       RemainAfterExit = true;
     };
     script = ''
-      # Wait for Incus
       until ${pkgs.incus}/bin/incus info >/dev/null 2>&1; do sleep 1; done
 
-      # 1. 'init' creates the container but keeps it STOPPED
       if ! ${pkgs.incus}/bin/incus list --format csv -c n | grep -qx "${containerName}"; then
         ${pkgs.incus}/bin/incus init images:debian/12/cloud ${containerName} --profile default
       fi
 
-      # 2. Update config
+      ${pkgs.incus}/bin/incus config set ${containerName} volatile.eth0.hwaddr ${hostMAC}
       ${pkgs.incus}/bin/incus config set ${containerName} user.user-data - < ${cloudConfig}
+      ${pkgs.incus}/bin/incus start ${containerName} || true
+      ${pkgs.incus}/bin/incus exec ${containerName} -- mkdir -p /etc/traefik/conf.d/
+
+      # Use the same <<'EOF' pattern for the Traefik Dashboard itself
+      ${pkgs.incus}/bin/incus exec ${containerName} -- sh -c "cat <<'EOF' > /etc/traefik/conf.d/traefik-dashboard.yml
+http:
+  routers:
+    dashboard:
+      rule: \"Host(\`traefik.lan\`)\"
+      service: api@internal
+      entryPoints:
+        - web
+EOF"
+
     '';
   };
 }

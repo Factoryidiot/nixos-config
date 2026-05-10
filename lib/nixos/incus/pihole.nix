@@ -5,6 +5,17 @@
 }:
 let
   containerName = "${hostname}-pihole";
+  traefikContainer = "${hostname}-traefik";
+
+  ipAddr = { #Mmanual configuration
+    tahi = "172.16.1.202";
+  };
+  hostIP = ipAddr."${hostname}";
+
+  macAddr = { #Manual configuration
+    tahi = "10:66:6a:bb:eb:ec";
+  };
+  hostMAC = macAddr."${hostname}";
 
   cloudConfig = pkgs.writeText "cloud-init.yml" ''
     #cloud-config
@@ -13,7 +24,6 @@ let
       - debconf-utils
 
     write_files:
-      # 1. Pre-configure Pi-hole for non-interactive installation
       - path: /etc/pihole/setupVars.conf
         content: |
           PIHOLE_INTERFACE=eth0
@@ -47,8 +57,9 @@ let
 in
 {
   systemd.services."init-${containerName}" = {
-    description = "Initialize ${containerName} (Manual DHCP Step Required)";
-    after = [ "incus.service" ];
+    description = "Initialize ${containerName} and link to Traefik";
+    # Ensure this runs after Traefik's own init service
+    after = [ "incus.service" "init-${traefikContainer}.service" ];
     requires = [ "incus.socket" ];
     wantedBy = [ "multi-user.target" ];
     serviceConfig = {
@@ -56,14 +67,35 @@ in
       RemainAfterExit = true;
     };
     script = ''
-      # 1. Create the container if it doesn't exist
+      until ${pkgs.incus}/bin/incus info >/dev/null 2>&1; do sleep 1; done
+
       if ! ${pkgs.incus}/bin/incus list --format csv -c n | grep -qx "${containerName}"; then
         ${pkgs.incus}/bin/incus init images:debian/12/cloud ${containerName} --profile default
       fi
 
-      # 2. Apply the cloud-config
+      ${pkgs.incus}/bin/incus config set ${containerName} volatile.eth0.hwaddr ${hostMAC}
+
       ${pkgs.incus}/bin/incus config set ${containerName} user.user-data - < ${cloudConfig}
+      ${pkgs.incus}/bin/incus start ${containerName} || true
+
+      # 3. Wait for Traefik's config dir and inject rule
+      # We use a simple check; if Traefik is 'after' us, it should be ready.
+      ${pkgs.incus}/bin/incus exec ${traefikContainer} -- mkdir -p /etc/traefik/conf.d
       
+      ${pkgs.incus}/bin/incus exec ${traefikContainer} -- sh -c "cat <<'EOF' > /etc/traefik/conf.d/pihole.yml
+http:
+  routers:
+    pihole:
+      rule: \"Host(\`pihole.lan\`)\"
+      service: pihole-service
+      entryPoints:
+        - web
+  services:
+    pihole-service:
+      loadBalancer:
+        servers:
+          - url: "http://${hostIP}/admin/"
+EOF"
     '';
   };
 }
