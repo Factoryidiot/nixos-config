@@ -7,6 +7,8 @@ let
   containerName = "${hostname}-pihole";
   traefikContainer = "${hostname}-traefik";
 
+  unboundIP = "172.16.1.203";
+
   ipAddr = { #Mmanual configuration
     tahi = "172.16.1.202";
   };
@@ -22,18 +24,6 @@ let
     packages:
       - curl
       - debconf-utils
-
-    write_files:
-      - path: /etc/pihole/setupVars.conf
-        content: |
-          PIHOLE_INTERFACE=eth0
-          PIHOLE_DNS_1=1.1.1.2
-          PIHOLE_DNS_2=9.9.9.9
-          QUERY_LOGGING=true
-          INSTALL_WEB_INTERFACE=true
-          INSTALL_WEB_SERVER=true
-          LIGHTTPD_ENABLED=true
-          CACHE_SIZE=10000
 
     runcmd:
       - |
@@ -78,10 +68,20 @@ in
       ${pkgs.incus}/bin/incus config set ${containerName} user.user-data - < ${cloudConfig}
       ${pkgs.incus}/bin/incus start ${containerName} || true
 
-      # 3. Wait for Traefik's config dir and inject rule
-      # We use a simple check; if Traefik is 'after' us, it should be ready.
+      # --- WAIT FOR INSTALLATION ---
+      echo "Waiting for Pi-hole installation to create the 'pihole' user..."
+      iteration=0
+      until ${pkgs.incus}/bin/incus exec ${containerName} -- id -u pihole >/dev/null 2>&1; do
+        iteration=$((iteration+1))
+        if [ $iteration -gt 300 ]; then
+          echo "Pi-hole installation timed out after 5 minutes."
+          exit 1
+        fi
+        sleep 2
+      done
+
       ${pkgs.incus}/bin/incus exec ${traefikContainer} -- mkdir -p /etc/traefik/conf.d
-      
+
       ${pkgs.incus}/bin/incus exec ${traefikContainer} -- sh -c "cat <<'EOF' > /etc/traefik/conf.d/pihole.yml
 http:
   routers:
@@ -96,6 +96,29 @@ http:
         servers:
           - url: "http://${hostIP}/admin/"
 EOF"
+
+      ${pkgs.incus}/bin/incus exec ${containerName} -- mkdir -p /etc/pihole
+
+      ${pkgs.incus}/bin/incus exec ${containerName} -- sh -c "cat <<'EOF' > /etc/pihole/setupVars.conf
+PIHOLE_INTERFACE=eth0
+PIHOLE_DNS_1=${unboundIP}#53
+PIHOLE_DNS_2=no
+DNS_FQDN_REQUIRED=true
+DNS_BOGUS_PRIV=true
+DNSSEC=true
+QUERY_LOGGING=true
+INSTALL_WEB_INTERFACE=true
+INSTALL_WEB_SERVER=true
+LIGHTTPD_ENABLED=true
+CACHE_SIZE=10000
+EOF"
+
+      ${pkgs.incus}/bin/incus exec ${containerName} -- chown -R pihole:pihole /etc/pihole
+
+      ${pkgs.incus}/bin/incus exec ${containerName} -- pihole restartdns
+
+      ${pkgs.incus}/bin/incus exec ${traefikContainer} -- killall -HUP traefik || true
+
     '';
   };
 }

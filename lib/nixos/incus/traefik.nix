@@ -98,6 +98,24 @@ http:
       service: api@internal
       entryPoints:
         - web
+
+    incus:
+      rule: \"Host(\`incus.lan\`)\"
+      service: incus-service
+      entryPoints:
+        - web
+
+  services:
+    incus-service:
+      loadBalancer:
+        servers:
+          - url: \"https://172.16.1.200:8443/\"
+        serversTransport: incus-transport
+  
+  serversTransports:
+    incus-transport:
+      insecureSkipVerify: true
+
 EOF"
 
     '';

@@ -8,6 +8,7 @@
     ./core.nix
     ./pihole.nix
     ./traefik.nix
+    ./unbound.nix
   ];
 
 }
