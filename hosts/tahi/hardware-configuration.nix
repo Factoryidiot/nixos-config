@@ -19,7 +19,7 @@ in
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot";
   boot.loader.systemd-boot.enable = true;
-  boot.kernelPackages = pkgs.linuxPackages_zen;
+  boot.kernelPackages = pkgs.linuxPackages_6_12;
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "ehci_pci" "usb_storage" "sd_mod" "btrfs" "pata_marvell" ];
   boot.initrd.kernelModules = [ ];
   boot.initrd.systemd.enable = true;

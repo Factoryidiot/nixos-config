@@ -40,30 +40,30 @@
   # 5. Declarative Samba (Windows Shares)
   services.samba = {
     enable = true;
-    securityType = "user";
     openFirewall = true;
-    extraConfig = ''
-      workgroup = WORKGROUP
-      server string = Tahi NAS
-      netbios name = tahi
-      security = user 
-      # Disable printers
-      load printers = no
-      printing = bsd
-      printcap name = /dev/null
-      disable spoolss = yes
-      socket options = TCP_NODELAY IPTOS_LOWDELAY
-      min protocol = SMB2
-    '';
-    shares = {
+    settings = {
+      global = {
+        "netbios name" = "tahi";
+        "security" = "user";
+        "server string" = "Tahi NAS";
+        "workgroup" = "WORKGROUP";
+        # Disable printers
+        "disable spoolss" = "yes";
+        "load printers" = "no";
+        "printcap name" = "/dev/null";
+        "printing" = "bsd";
+        # Optimisations for local network performance
+        "min protocol" = "SMB2";
+        "socket options" = "TCP_NODELAY IPTOS_LOWDELAY";
+      };
       data = {
-        path = "/storage/data";
-        browseable = "yes";
+        "path" = "/storage/data";
+        "browseable" = "yes";
         "read only" = "no";
         "guest ok" = "no";
         "create mask" = "0644";
         "directory mask" = "0755";
-        "force user" = "factory"; # Use your username here
+         "force user" = "factory"; # Use your username here
       };
     };
   };

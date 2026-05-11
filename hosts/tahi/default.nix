@@ -59,6 +59,10 @@ in
     interfaces = {
       br0 = {
         useDHCP = true;
+        ipv4.addresses = [{
+          address = "172.16.1.200";
+          prefixLength = 24;
+        }];
         macAddress = "d4:c9:ef:ce:e1:6e";
       };
       enp2s0f0.useDHCP = false;
