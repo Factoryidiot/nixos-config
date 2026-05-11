@@ -19,6 +19,7 @@ in
     ../../lib/nixos/base-security.nix
     ../../lib/nixos/btrfs.nix
     ../../lib/nixos/maintenance.nix
+    ../../lib/nixos/nas.nix
     ../../lib/nixos/virt.nix
     ../../lib/nixos/zram.nix
 

@@ -23,7 +23,7 @@ in
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "ehci_pci" "usb_storage" "sd_mod" "btrfs" "pata_marvell" ];
   boot.initrd.kernelModules = [ ];
   boot.initrd.systemd.enable = true;
-  boot.kernelParams = [ "amd_pstate=active" "amd.iommu=on" "rootWait=10" "pci=nocrs" "iommu=pt" ];
+  boot.kernelParams = [ "amd_pstate=active" "rootWait=10" "pci=nocrs" "iommu=pt" "pci=realloc" "libata.force=noncq" ];
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
   boot.tmp.cleanOnBoot = true; # clear /tmp on boot to get a stateless /tmp directory
