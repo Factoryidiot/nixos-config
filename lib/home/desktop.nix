@@ -52,8 +52,9 @@
     #+----- GUI Apps -----------------------------
     evince # PDF Viewer
     gnome-calculator
-    localsend # AirDrop alternative
     impala # Spotify client
+    localsend # AirDrop alternative
+    remmina # RDP
 
     #+----- Screenshots & Screen Recording -------
     grim # Wayland screenshot tool
