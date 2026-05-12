@@ -1,3 +1,4 @@
+# ./lib/nixos/incus/traefik.nix
 {
   pkgs,
   hostname,
@@ -25,9 +26,6 @@ let
     write_files:
       - path: /etc/traefik/traefik.yml
         content: |
-          entryPoints:
-            web:
-              address: ":80"
           api:
             insecure: true
             dashboard: true
@@ -87,6 +85,26 @@ in
       ${pkgs.incus}/bin/incus config set ${containerName} volatile.eth0.hwaddr ${hostMAC}
       ${pkgs.incus}/bin/incus config set ${containerName} user.user-data - < ${cloudConfig}
       ${pkgs.incus}/bin/incus start ${containerName} || true
+
+      ${pkgs.incus}/bin/incus exec ${containerName} -- sh -c "cat <<'EOF' > /etc/traefik/traefik.yml
+entryPoints:
+  web:
+    address: \":80\"
+    http:
+      redirections:
+        entryPoint:
+          to: websecure
+          scheme: https
+  websecure:
+    address: \":443\"
+api:
+  dashboard: true
+providers:
+  file:
+    directory: /etc/traefik/conf.d/
+    watch: true
+EOF"
+
       ${pkgs.incus}/bin/incus exec ${containerName} -- mkdir -p /etc/traefik/conf.d/
 
       # Use the same <<'EOF' pattern for the Traefik Dashboard itself
@@ -97,27 +115,29 @@ http:
       rule: \"Host(\`traefik.lan\`)\"
       service: api@internal
       entryPoints:
-        - web
+        - websecure
+      tls: {}
+EOF"
 
+      ${pkgs.incus}/bin/incus exec ${containerName} -- sh -c "cat <<'EOF' > /etc/traefik/conf.d/incus.yml
+tcp:
+  routers:
     incus:
-      rule: \"Host(\`incus.lan\`)\"
+      rule: \"HostSNI(\`incus.lan\`)\"
       service: incus-service
       entryPoints:
-        - web
+        - websecure
+      tls:
+        passthrough: true
 
   services:
     incus-service:
       loadBalancer:
         servers:
-          - url: \"https://172.16.1.200:8443/\"
-        serversTransport: incus-transport
-  
-  serversTransports:
-    incus-transport:
-      insecureSkipVerify: true
-
+          - address: \"172.16.1.200:8443\"
 EOF"
 
+      ${pkgs.incus}/bin/incus exec ${containerName} -- systemctl restart traefik
     '';
   };
 }
