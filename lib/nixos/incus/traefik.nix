@@ -7,48 +7,33 @@
 let
   containerName = "${hostname}-traefik";
 
-  ipAddr = { #Mmanual configuration
+  ipAddr = {
     tahi = "172.16.1.201";
   };
   hostIP = ipAddr."${hostname}";
 
-  macAddr = { #Manual configuration
+  macAddr = {
     tahi = "10:66:6a:c4:5f:6b";
   };
   hostMAC = macAddr."${hostname}";
 
-  cloudConfig = pkgs.writeText "cloud-init.yml" ''
+  cloudConfig = pkgs.writeText "traefik-cloud-init.yml" ''
     #cloud-config
     packages:
       - curl
       - xz-utils
-
-    write_files:
-      - path: /etc/traefik/traefik.yml
-        content: |
-          api:
-            insecure: true
-            dashboard: true
-          providers:
-            file:
-              directory: /etc/traefik/conf.d/
-              watch: true
-
-     - path: /etc/systemd/system/traefik.service
-        content: |
-          [Unit]
-          Description=Traefik Proxy
-          After=network.target
-          [Service]
-          ExecStart=/usr/local/bin/traefik --configfile=/etc/traefik/traefik.yml
-          Restart=always
-          [Install]
-          WantedBy=multi-user.target
+      - ca-certificates
 
     runcmd:
       - mkdir -p /etc/traefik/conf.d/
       - [ sh, -c, "curl -L https://github.com/traefik/traefik/releases/download/v3.0.0/traefik_v3.0.0_linux_amd64.tar.gz | tar -xz -C /usr/local/bin" ]
       - chmod 755 /usr/local/bin/traefik
+      # Trust the Step-CA Root (Crucial for Traefik to talk to Step-CA)
+      - |
+        until curl -k -I https://172.16.1.203/roots.pem; do sleep 2; done
+        curl -k https://172.16.1.203/roots.pem -o /usr/local/share/ca-certificates/tahi-root.crt
+        update-ca-certificates
+      # Network Setup
       - |
         cat <<EOF > /etc/systemd/network/10-cloud-init-eth0.network
         [Match]
@@ -61,13 +46,24 @@ let
       - systemctl restart systemd-networkd
       - systemctl daemon-reload
       - systemctl enable --now traefik
+
+    write_files:
+      - path: /etc/systemd/system/traefik.service
+        content: |
+          [Unit]
+          Description=Traefik Proxy
+          After=network.target
+          [Service]
+          ExecStart=/usr/local/bin/traefik --configfile=/etc/traefik/traefik.yml
+          Restart=always
+          [Install]
+          WantedBy=multi-user.target
   '';
 
 in
 {
-
   systemd.services."init-${containerName}" = {
-    description = "Ensure ${containerName} container exists and is configured";
+    description = "Ensure ${containerName} exists and is configured";
     after = [ "incus.service" "incus.socket" ];
     requires = [ "incus.socket" ];
     wantedBy = [ "multi-user.target" ];
@@ -86,6 +82,7 @@ in
       ${pkgs.incus}/bin/incus config set ${containerName} user.user-data - < ${cloudConfig}
       ${pkgs.incus}/bin/incus start ${containerName} || true
 
+      # --- Static Configuration (The Engine) ---
       ${pkgs.incus}/bin/incus exec ${containerName} -- sh -c "cat <<'EOF' > /etc/traefik/traefik.yml
 entryPoints:
   web:
@@ -97,18 +94,72 @@ entryPoints:
           scheme: https
   websecure:
     address: \":443\"
+
+certificatesResolvers:
+  stepca:
+    acme:
+      email: \"admin@tahi.lan\"
+      caServer: \"https://172.16.1.203/acme/acme/directory\"
+      storage: \"/etc/traefik/acme.json\"
+      httpChallenge:
+        entryPoint: web
+
 api:
   dashboard: true
+
 providers:
   file:
     directory: /etc/traefik/conf.d/
     watch: true
 EOF"
 
-      ${pkgs.incus}/bin/incus exec ${containerName} -- mkdir -p /etc/traefik/conf.d/
+      # --- Dynamic Configuration (The Routes) ---
 
-      # Use the same <<'EOF' pattern for the Traefik Dashboard itself
-      ${pkgs.incus}/bin/incus exec ${containerName} -- sh -c "cat <<'EOF' > /etc/traefik/conf.d/traefik-dashboard.yml
+      # 1. Incus UI/API Route
+      ${pkgs.incus}/bin/incus exec ${containerName} -- sh -c "cat <<'EOF' > /etc/traefik/conf.d/incus.yml
+http:
+  routers:
+    incus:
+      rule: \"Host(\`incus.lan\`)\"
+      service: incus-service
+      entryPoints:
+        - websecure
+      tls:
+        certResolver: stepca
+
+  services:
+    incus-service:
+      loadBalancer:
+        servers:
+          - url: \"https://172.16.1.200:8443\"
+        serversTransport: incus-transport
+
+  serversTransports:
+    incus-transport:
+      insecureSkipVerify: true
+EOF"
+
+      # 2. Pi-hole Route
+      ${pkgs.incus}/bin/incus exec ${containerName} -- sh -c "cat <<'EOF' > /etc/traefik/conf.d/pihole.yml
+http:
+  routers:
+    pihole:
+      rule: \"Host(\`pihole.lan\`)\"
+      service: pihole-service
+      entryPoints:
+        - websecure
+      tls:
+        certResolver: stepca
+
+  services:
+    pihole-service:
+      loadBalancer:
+        servers:
+          - url: \"http://172.16.1.202:80\"
+EOF"
+
+      # 3. Traefik Dashboard Route
+      ${pkgs.incus}/bin/incus exec ${containerName} -- sh -c "cat <<'EOF' > /etc/traefik/conf.d/dashboard.yml
 http:
   routers:
     dashboard:
@@ -116,25 +167,8 @@ http:
       service: api@internal
       entryPoints:
         - websecure
-      tls: {}
-EOF"
-
-      ${pkgs.incus}/bin/incus exec ${containerName} -- sh -c "cat <<'EOF' > /etc/traefik/conf.d/incus.yml
-tcp:
-  routers:
-    incus:
-      rule: \"HostSNI(\`incus.lan\`)\"
-      service: incus-service
-      entryPoints:
-        - websecure
       tls:
-        passthrough: true
-
-  services:
-    incus-service:
-      loadBalancer:
-        servers:
-          - address: \"172.16.1.200:8443\"
+        certResolver: stepca
 EOF"
 
       ${pkgs.incus}/bin/incus exec ${containerName} -- systemctl restart traefik
