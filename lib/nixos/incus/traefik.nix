@@ -82,6 +82,15 @@ in
       ${pkgs.incus}/bin/incus config set ${containerName} user.user-data - < ${cloudConfig}
       ${pkgs.incus}/bin/incus start ${containerName} || true
 
+      # --- INJECT ROOT TRUST FROM HOST (Fixed Cryptographic Chain) ---
+      # Wait briefly for container filesystem mount paths to stabilize
+      sleep 2
+      # Push the host-verified certificate directly into Debian's trust anchors
+      ${pkgs.incus}/bin/incus file push /home/factory/new_tahi_root.crt ${containerName}/usr/local/share/ca-certificates/tahi-root.crt
+      # Force Debian's trust manager inside the container to re-index the file system store
+      ${pkgs.incus}/bin/incus exec ${containerName} -- update-ca-certificates
+
+
       # --- Static Configuration (The Engine) ---
       ${pkgs.incus}/bin/incus exec ${containerName} -- sh -c "cat <<'EOF' > /etc/traefik/traefik.yml
 entryPoints:
@@ -115,7 +124,7 @@ EOF"
 
       # --- Dynamic Configuration (The Routes) ---
 
-# 1. Incus UI/API Route (TCP Passthrough for mTLS)
+      # 1. Incus UI/API Route (TCP Passthrough for mTLS)
       ${pkgs.incus}/bin/incus exec ${containerName} -- sh -c "cat <<'EOF' > /etc/traefik/conf.d/incus.yml
 tcp:
   routers:
