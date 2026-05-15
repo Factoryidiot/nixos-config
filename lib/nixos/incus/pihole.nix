@@ -89,12 +89,23 @@ http:
       rule: \"Host(\`pihole.lan\`)\"
       service: pihole-service
       entryPoints:
-        - web
+        - websecure
+      tls:
+        certResolver: stepca
+      middlewares:
+        - pihole-redirect
+
+  middlewares:
+    pihole-redirect:
+      redirectRegex:
+        regex: \"^https://pihole.lan/$\"
+        replacement: \"https://pihole.lan/admin/\"
+
   services:
     pihole-service:
       loadBalancer:
         servers:
-          - url: "http://${hostIP}/admin/"
+          - url: \"http://${hostIP}\"
 EOF"
 
       ${pkgs.incus}/bin/incus exec ${containerName} -- mkdir -p /etc/pihole

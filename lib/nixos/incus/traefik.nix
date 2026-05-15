@@ -30,8 +30,8 @@ let
       - chmod 755 /usr/local/bin/traefik
       # Trust the Step-CA Root (Crucial for Traefik to talk to Step-CA)
       - |
-        until curl -k -I https://172.16.1.203/roots.pem; do sleep 2; done
-        curl -k https://172.16.1.203/roots.pem -o /usr/local/share/ca-certificates/tahi-root.crt
+        until curl -k -I https://172.16.1.204/roots.pem; do sleep 2; done
+        curl -k https://172.16.1.204/roots.pem -o /usr/local/share/ca-certificates/tahi-root.crt
         update-ca-certificates
       # Network Setup
       - |
@@ -99,7 +99,7 @@ certificatesResolvers:
   stepca:
     acme:
       email: \"admin@tahi.lan\"
-      caServer: \"https://172.16.1.203/acme/acme/directory\"
+      caServer: \"https://172.16.1.204/acme/acme/directory\"
       storage: \"/etc/traefik/acme.json\"
       httpChallenge:
         entryPoint: web
@@ -115,50 +115,27 @@ EOF"
 
       # --- Dynamic Configuration (The Routes) ---
 
-      # 1. Incus UI/API Route
+# 1. Incus UI/API Route (TCP Passthrough for mTLS)
       ${pkgs.incus}/bin/incus exec ${containerName} -- sh -c "cat <<'EOF' > /etc/traefik/conf.d/incus.yml
-http:
+tcp:
   routers:
     incus:
-      rule: \"Host(\`incus.lan\`)\"
+      # Use HostSNI for TCP passthrough
+      rule: \"HostSNI(\`incus.lan\`)\"
       service: incus-service
       entryPoints:
         - websecure
       tls:
-        certResolver: stepca
+        passthrough: true
 
   services:
     incus-service:
       loadBalancer:
         servers:
-          - url: \"https://172.16.1.200:8443\"
-        serversTransport: incus-transport
-
-  serversTransports:
-    incus-transport:
-      insecureSkipVerify: true
+          - address: \"172.16.1.200:8443\"
 EOF"
 
-      # 2. Pi-hole Route
-      ${pkgs.incus}/bin/incus exec ${containerName} -- sh -c "cat <<'EOF' > /etc/traefik/conf.d/pihole.yml
-http:
-  routers:
-    pihole:
-      rule: \"Host(\`pihole.lan\`)\"
-      service: pihole-service
-      entryPoints:
-        - websecure
-      tls:
-        certResolver: stepca
-
-  services:
-    pihole-service:
-      loadBalancer:
-        servers:
-          - url: \"http://172.16.1.202:80\"
-EOF"
-
-      # 3. Traefik Dashboard Route
+      # 2. Traefik Dashboard Route
       ${pkgs.incus}/bin/incus exec ${containerName} -- sh -c "cat <<'EOF' > /etc/traefik/conf.d/dashboard.yml
 http:
   routers:
