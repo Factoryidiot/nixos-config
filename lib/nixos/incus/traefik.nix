@@ -86,7 +86,7 @@ in
       # Wait briefly for container filesystem mount paths to stabilize
       sleep 2
       # Push the host-verified certificate directly into Debian's trust anchors
-      ${pkgs.incus}/bin/incus file push /home/factory/new_tahi_root.crt ${containerName}/usr/local/share/ca-certificates/tahi-root.crt
+      ${pkgs.incus}/bin/incus file push /home/factory/Project/nixos-config/hosts/tahi/tahi_root.crt ${containerName}/usr/local/share/ca-certificates/tahi-root.crt
       # Force Debian's trust manager inside the container to re-index the file system store
       ${pkgs.incus}/bin/incus exec ${containerName} -- update-ca-certificates
 
