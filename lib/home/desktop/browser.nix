@@ -17,6 +17,9 @@
       "--enable-wayland-ime"
       "--wayland-text-input-version=3"
     ];
+    extraOpts = {
+      "CACertificateManagementAllowed" = true;
+    };
     package = pkgs.brave;
   };
 
@@ -156,6 +159,10 @@
       DisplayBookmarksToolbar = "newtab"; # alternatives: "always" or "never"
     };
   };
+
+  security.pki.certificateFiles = [
+    ./tahi_root.crt
+  ];
 
 }
 

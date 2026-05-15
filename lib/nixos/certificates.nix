@@ -1,0 +1,20 @@
+# ./lib/nixos/certificates.nix
+{ ... }:
+{
+  security.pki.certificates = [
+    ''
+    -----BEGIN CERTIFICATE-----
+    MIIBvjCCAWWgAwIBAgIQDZ5R5KatI7UqrZQoV3usYjAKBggqhkjOPQQDAjA+MRkw
+    FwYDVQQKExBUYWhpIEludGVybmFsIENBMSEwHwYDVQQDExhUYWhpIEludGVybmFs
+    IENBIFJvb3QgQ0EwHhcNMjYwNTEzMDYyNTM2WhcNMzYwNTEwMDYyNTM2WjA+MRkw
+    FwYDVQQKExBUYWhpIEludGVybmFsIENBMSEwHwYDVQQDExhUYWhpIEludGVybmFs
+    IENBIFJvb3QgQ0EwWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAARY4Y3bsCdH8Cay
+    amp4zLJUTQ1EDU42ySAkOnKQoEuQX9u3Ik2OmRAHYEv0z/SfmjICWH2qoo1IyG2o
+    AjM9L3/Po0UwQzAOBgNVHQ8BAf8EBAMCAQYwEgYDVR0TAQH/BAgwBgEB/wIBATAd
+    BgNVHQ4EFgQU3s9kCTwX3TmJ/W2oTNXE4qOxNJIwCgYIKoZIzj0EAwIDRwAwRAIg
+    YTlrUC/9ZyqPzihYTGb3TPm3L8C4nibufKyPMRtB6vICIDcDszanj9piGtuauqNk
+    7mv95PCHTrnwiwkX/Dj05wLh
+    -----END CERTIFICATE-----
+    ''
+  ];
+}
