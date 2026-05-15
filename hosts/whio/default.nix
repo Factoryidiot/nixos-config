@@ -82,6 +82,10 @@ in
     };
   };
 
+  security.pki.certificateFiles = [
+    ../tahi/tahi_root.crt
+  ];
+
   services = {
     avahi.enable = true; # Discovery
     blueman.enable = true; # Bluetooth

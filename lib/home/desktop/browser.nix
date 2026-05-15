@@ -17,9 +17,6 @@
       "--enable-wayland-ime"
       "--wayland-text-input-version=3"
     ];
-    extraOpts = {
-      "CACertificateManagementAllowed" = true;
-    };
     package = pkgs.brave;
   };
 
@@ -160,9 +157,6 @@
     };
   };
 
-  security.pki.certificateFiles = [
-    ./tahi_root.crt
-  ];
 
 }
 
