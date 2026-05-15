@@ -21,12 +21,16 @@
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     agenix.url = "github:ryan4yin/ragenix";
+
+    helium-flake= {
+      url = "github:oxcl/nix-flake-helium-browser";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     home-manager = {
       url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     hyprland = {
-      #url = "github:hyprwm/Hyprland/75f6435f70dee8f8b685a02c52db7ba16f5db39c";
       url = "github:hyprwm/Hyprland";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
@@ -58,23 +62,25 @@
   };
 
   outputs =
-    inputs@{ agenix
-    , home-manager
-    , hyprland
-    , impermanence
-    , lanzaboote
-    , nixpkgs
-    , nixpkgs-unstable
-    , nixvim
-    , self
-    , ...
+    inputs@{
+    agenix,
+    helium-flake,
+    home-manager,
+    hyprland,
+    impermanence,
+    lanzaboote,
+    nixpkgs,
+    nixpkgs-unstable,
+    nixvim,
+    self,
+    ...
     }:
     let
       system = "x86_64-linux"; # The system type we will use
       pkgs = nixpkgs.legacyPackages.${system};
 
       specialArgs = {
-        inherit agenix hyprland impermanence inputs lanzaboote nixpkgs-unstable nixvim self;
+        inherit agenix helium-flake hyprland impermanence inputs lanzaboote nixpkgs-unstable nixvim self;
       };
 
       commonModules = [

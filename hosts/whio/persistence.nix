@@ -90,6 +90,7 @@ in
         ".config/Bitwarden"
         #".config/google-chrome"
         #".config/chromium"
+        ".config/helium"
         ".config/BraveSoftware"
         #".config/obsidian"
 
