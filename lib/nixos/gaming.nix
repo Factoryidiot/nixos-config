@@ -1,7 +1,7 @@
-{ config
-, lib
-, pkgs
-, ...
+# ./lib/nixos/gaming.nix
+{
+  pkgs,
+  ...
 }: {
 
   environment.systemPackages = with pkgs; [
@@ -13,7 +13,7 @@
     libstrangle # Framerate limiter
 
     # Tools for managing Wine/Proton environments
-    protontricks
+    #protontricks
     winetricks
 
     # Communication for gaming

@@ -1,7 +1,9 @@
-# lib/home/shell/starship.nix
-{ config, lib, ... }:
-
+# ./lib/home/shell/starship.nix
 {
+  config,
+  lib,
+  ...
+}: {
 
   programs.starship = {
     enable = true;
@@ -23,6 +25,5 @@
   xdg.configFile = {
     "starship/starship.toml".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/starship/starship.toml";
   };
-
 
 }

@@ -1,4 +1,4 @@
-# lib/home/shell.nix
+# ./lib/home/shell.nix
 {
   config,
   pkgs,
@@ -21,7 +21,6 @@
 
   home.packages = with pkgs; [
     #+----- Shell & CLI Tools ---------------------
-    #bat # Cat clone with syntax highlighting and Git integration
     fd # Simple, fast and user-friendly alternative to `find`
     jq # Needed for many Waybar scripts
     ripgrep # Search tool

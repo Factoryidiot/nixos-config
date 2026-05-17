@@ -1,9 +1,13 @@
-# lib/home/shell/bat.nix
-{ pkgs, ... }:
-
-{
+# ./lib/home/shell/bat.nix
+{ 
+  pkgs,
+  ...
+}: {
   programs.bat = {
     enable = true;
+    config = {
+      pager = "less -FR";
+    };
     extraPackages = with pkgs.bat-extras; [
       prettybat
       batdiff
@@ -11,8 +15,12 @@
       batgrep
       batwatch
     ];
-    config = {
-      pager = "less -FR";
+  };
+
+  programs.zsh = {
+    shellAliases = {
+      cat="bat";
     };
   };
+
 }

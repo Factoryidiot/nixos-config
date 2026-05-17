@@ -91,7 +91,8 @@ in
         #".config/google-chrome"
         #".config/chromium"
         ".config/helium"
-        ".config/BraveSoftware"
+        ".config/net.imput.helium"
+        #".config/BraveSoftware"
         #".config/obsidian"
 
         ".local/share/flatpak"
