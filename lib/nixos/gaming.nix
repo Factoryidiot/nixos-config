@@ -14,7 +14,7 @@
 
     # Tools for managing Wine/Proton environments
     #protontricks
-    winetricks
+    #winetricks
 
     # Communication for gaming
     #discord

@@ -47,7 +47,6 @@ in
     users.${username} = {
       directories = [
         ".dotfiles"
-
         "Documents"
         "Downloads"
         "Music"
@@ -69,7 +68,8 @@ in
           directory = ".ssh";
           mode = "0700";
         }
-        # Flatpak
+        #+----- Flatpak --------------------------
+        ".local/share/flatpak"
         ".var/app"
 
         # misc
@@ -86,7 +86,7 @@ in
           mode = "0700";
         }
 
-        # .config
+        #+----- Browser --------------------------
         ".config/Bitwarden"
         #".config/google-chrome"
         #".config/chromium"
@@ -94,11 +94,14 @@ in
         ".config/net.imput.helium"
         #".config/BraveSoftware"
         #".config/obsidian"
+        ".mozilla"
 
-        ".local/share/flatpak"
+        #+----- Web App --------------------------
+        ".local/share/applications"
+        ".local/share/web-apps"
+
         ".local/state"
 
-        ".mozilla"
         # language package managers
         ".npm"
 

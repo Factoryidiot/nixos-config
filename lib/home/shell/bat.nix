@@ -19,7 +19,7 @@
 
   programs.zsh = {
     shellAliases = {
-      cat="bat";
+      cat="bat -pP";
     };
   };
 

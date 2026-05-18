@@ -1,8 +1,7 @@
-# lib/nixos/nvidia.nix
-{ config
-, lib
-, pkgs
-, ...
+# ./lib/nixos/nvidia.nix
+{
+  config,
+  ...
 }: {
 
   hardware = {
