@@ -63,17 +63,17 @@
 
   outputs =
     inputs@{
-    agenix,
-    helium-flake,
-    home-manager,
-    hyprland,
-    impermanence,
-    lanzaboote,
-    nixpkgs,
-    nixpkgs-unstable,
-    nixvim,
-    self,
-    ...
+      agenix,
+      helium-flake,
+      home-manager,
+      hyprland,
+      impermanence,
+      lanzaboote,
+      nixpkgs,
+      nixpkgs-unstable,
+      nixvim,
+      self,
+      ...
     }:
     let
       system = "x86_64-linux"; # The system type we will use

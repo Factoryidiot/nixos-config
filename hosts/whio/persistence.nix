@@ -96,9 +96,8 @@ in
         #".config/obsidian"
         ".mozilla"
 
-        #+----- Web App --------------------------
+        #+----- Applications ---------------------
         ".local/share/applications"
-        ".local/share/web-apps"
 
         ".local/state"
 
