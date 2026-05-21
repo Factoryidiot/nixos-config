@@ -1,7 +1,7 @@
 # ./hosts/whio/default.nix
 {
-  specialArgs
-  , ...
+  specialArgs,
+  ...
 }:
 let
   inherit (specialArgs) hostname username;

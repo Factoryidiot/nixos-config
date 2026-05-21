@@ -30,7 +30,7 @@
     bitwarden-desktop
     bluetui # TUI for bluetooth
     # deskflow
-    gum
+    gum # Tasty Bubble Gum for your shell
     htop # TUI process viewer
     impala # TUI wifi
     ncdu
@@ -49,10 +49,9 @@
     #+----- Security and Auth --------------------
     libsecret # Library for storing and retrieving passwords and other secrets
 
-    #+----- GUI Apps -----------------------------
+    #+----- Desktoos Apps ------------------------
     evince # PDF Viewer
     gnome-calculator
-    impala # Spotify client
     localsend # AirDrop alternative
     remmina # RDP
 

@@ -89,9 +89,9 @@ in
         #+----- Browser --------------------------
         ".config/Bitwarden"
         #".config/google-chrome"
-        #".config/chromium"
-        ".config/helium"
-        ".config/net.imput.helium"
+        ".config/chromium"
+        #".config/helium"
+        #".config/net.imput.helium"
         #".config/BraveSoftware"
         #".config/obsidian"
         ".mozilla"

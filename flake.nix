@@ -22,10 +22,6 @@
 
     agenix.url = "github:ryan4yin/ragenix";
 
-    helium-flake= {
-      url = "github:oxcl/nix-flake-helium-browser";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     home-manager = {
       url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -64,7 +60,6 @@
   outputs =
     inputs@{
       agenix,
-      helium-flake,
       home-manager,
       hyprland,
       impermanence,
@@ -80,7 +75,7 @@
       pkgs = nixpkgs.legacyPackages.${system};
 
       specialArgs = {
-        inherit agenix helium-flake hyprland impermanence inputs lanzaboote nixpkgs-unstable nixvim self;
+        inherit agenix hyprland impermanence inputs lanzaboote nixpkgs-unstable nixvim self;
       };
 
       commonModules = [

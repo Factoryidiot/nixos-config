@@ -47,7 +47,7 @@
       grep="rg --color=auto";
     };
     
-    #syntaxHighlighting.enable = true;
+    syntaxHighlighting.enable = true;
 
     zplug = {
       enable = true;
@@ -55,7 +55,7 @@
       plugins = [
         { name = "zsh-users/zsh-history-substring-search"; }
         #{ name = "jeffreytse/zsh-vi-mode"; }
-        { name = "zdharma-continuum/fast-syntax-highlighting"; }
+        #{ name = "zdharma-continuum/fast-syntax-highlighting"; }
       ];
     };
 
