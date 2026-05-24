@@ -3,12 +3,14 @@
 
   nixConfig = {
     extra-substituters = [
+      "https://cache.numtide.com"
       "https://nix-community.cachix.org"
       "https://nix-gaming.cachix.org"
       "https://hyprland.cachix.org"
       "https://walker.cachix.org"
     ];
     extra-trusted-public-keys = [
+      "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4="
       "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
@@ -39,6 +41,7 @@
       url = "github:nix-community/lanzaboote/v1.0.0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    llm-agents.url = "github:numtide/llm-agents.nix";
     nix-flatpak.url = "github:gmodena/nix-flatpak/";
     nix-gaming.url = "github:fufexan/nix-gaming";
     nixvim = {
@@ -64,6 +67,7 @@
       hyprland,
       impermanence,
       lanzaboote,
+      llm-agents,
       nixpkgs,
       nixpkgs-unstable,
       nixvim,
@@ -75,7 +79,7 @@
       pkgs = nixpkgs.legacyPackages.${system};
 
       specialArgs = {
-        inherit agenix hyprland impermanence inputs lanzaboote nixpkgs-unstable nixvim self;
+        inherit agenix hyprland impermanence inputs lanzaboote llm-agents nixpkgs-unstable nixvim self;
       };
 
       commonModules = [
@@ -91,9 +95,7 @@
           };
         })
         ({ ... }: {
-          nixpkgs.overlays = [
-            self.overlays.gemini-cli
-          ];
+          nixpkgs.overlays = [];
         })
       ];
 
@@ -120,10 +122,6 @@
     in
     {
 
-      overlays.gemini-cli = final: prev: {
-        gemini-cli = inputs.nixpkgs-unstable.legacyPackages.${system}.gemini-cli;
-      };
-
       devShells.${system}.default = pkgs.mkShell {
         packages = [
           agenix.packages.${system}.default
@@ -132,16 +130,6 @@
       };
 
       nixosConfigurations = {
-        whio = mkNixosSystem {
-          name = "whio";
-          username = "factory";
-          modules = [
-            ./hosts/whio/default.nix
-            {
-              system.stateVersion = "25.11";
-            }
-          ];
-        };
 
         tahi = mkNixosSystem {
           name = "tahi";
@@ -150,6 +138,18 @@
           modules = [
             ./hosts/tahi/default.nix
             {
+              system.stateVersion = "25.11";
+            }
+          ];
+        };
+
+        whio = mkNixosSystem {
+          name = "whio";
+          username = "factory";
+          modules = [
+            ./hosts/whio/default.nix
+            {
+              nixpkgs.overlays = [ llm-agents.overlays.default ];
               system.stateVersion = "25.11";
             }
           ];

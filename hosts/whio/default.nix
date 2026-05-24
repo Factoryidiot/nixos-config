@@ -24,6 +24,7 @@ in
     ../../lib/nixos/gaming.nix
     ../../lib/nixos/hardware-services.nix
     ../../lib/nixos/hyprland-services.nix
+    ../../lib/nixos/llm-agents.nix
     ../../lib/nixos/maintenance.nix
     ../../lib/nixos/multimedia.nix
     ../../lib/nixos/nvidia.nix
@@ -58,6 +59,8 @@ in
   # Time and locale are specific to the physical location
   time.timeZone = "Pacific/Auckland";
   i18n.defaultLocale = "en_NZ.UTF-8";
+
+  #llm-agents.enable = true;
 
   networking = {
     hostName = hostname;
