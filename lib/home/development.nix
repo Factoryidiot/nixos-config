@@ -4,8 +4,6 @@
   ...
 }: {
 
-  programs.gemini-cli.enable = true;
-
   home.packages = with pkgs; [
     # Git
     github-cli
