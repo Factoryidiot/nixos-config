@@ -6,7 +6,6 @@
 
   wayland.windowManager.hyprland = {
     enable = true;
-    configType = "lua";
     package = null;
     systemd.enable = false; # As II used UWSM systemd integration needs to be disabled.
     xwayland.enable = true;

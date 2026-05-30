@@ -23,10 +23,8 @@
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     agenix.url = "github:ryan4yin/ragenix";
-
     home-manager = {
-      url = "github:nix-community/home-manager";
-      #inputs.nixpkgs.follows = "nixpkgs-unstable";
+      url = "github:nix-community/home-manager/release-26.05";
     };
     hyprland = {
       url = "github:hyprwm/Hyprland";
@@ -46,11 +44,10 @@
     nix-gaming.url = "github:fufexan/nix-gaming";
     nixvim = {
       url = "github:nix-community/nixvim";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     terminaltexteffects = {
-      url = "github:ChrisBuilds/terminaltexteffects/release-0.14.2";
+      url = "github:ChrisBuilds/terminaltexteffects/release-0.15.0";
       flake = false;
     };
     elephant.url = "github:abenz1267/elephant";
