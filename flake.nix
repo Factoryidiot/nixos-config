@@ -19,14 +19,14 @@
   };
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     agenix.url = "github:ryan4yin/ragenix";
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.11";
-      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:nix-community/home-manager";
+      #inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     hyprland = {
       url = "github:hyprwm/Hyprland";
@@ -46,7 +46,7 @@
     nix-gaming.url = "github:fufexan/nix-gaming";
     nixvim = {
       url = "github:nix-community/nixvim";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     terminaltexteffects = {
@@ -150,6 +150,9 @@
             ./hosts/whio/default.nix
             {
               nixpkgs.overlays = [ llm-agents.overlays.default ];
+              nixpkgs.config.permittedInsecurePackages = [
+                "electron-39.8.10"
+              ];
               system.stateVersion = "25.11";
             }
           ];

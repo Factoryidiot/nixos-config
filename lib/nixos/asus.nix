@@ -1,7 +1,8 @@
-# /lib/nixos/asus.nix
-{ inputs
-, pkgs
-, ...
+# ./lib/nixos/asus.nix
+{
+  inputs,
+  pkgs,
+  ...
 }:
 let
   unstable-asusctl = inputs.nixpkgs-unstable.legacyPackages.${pkgs.system}.asusctl;
@@ -42,7 +43,7 @@ in
         armoury_settings: {},
       )
     '';
-    enableUserService = true;
+    # enableUserService = true;
     package = unstable-asusctl;
   };
 
