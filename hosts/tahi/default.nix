@@ -50,11 +50,8 @@ in
       address = "172.16.1.1";
       interface = "br0";
     };
-    nameservers = [
-      "1.1.1.2"
-      "9.9.9.9"
-    ];
     firewall.trustedInterfaces = [ "br0" ];
+    hostId = "8425e349"; # Generate yours with: head -c4 /dev/urandom | od -A none -t x4
     hostName = hostname;
     interfaces = {
       br0 = {
@@ -67,6 +64,10 @@ in
       };
       enp2s0f0.useDHCP = false;
     };
+    nameservers = [
+      "1.1.1.2"
+      "9.9.9.9"
+    ];
     nftables.enable = true;
     useDHCP = false;
     useNetworkd = true;

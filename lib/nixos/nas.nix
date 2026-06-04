@@ -1,32 +1,23 @@
 # ./lib/nixos/nas.nix
 {
-  config,
   pkgs,
   ...
 }: {
-  # 1. Enable ZFS Support
-  boot.supportedFilesystems = [ "zfs" ];
-  networking.hostId = "8425e349"; # Generate yours with: head -c4 /dev/urandom | od -A none -t x4
 
-  # 2. Essential NAS Management Tools
   environment.systemPackages = with pkgs; [
-    gptfdisk  # Provides sgdisk
-    smartmontools # Check disk health/SMART data
-    pciutils  # For lspci troubleshooting
-    nfs-utils # If you ever want to mount NFS
-    zfs-autobackup # Great for future off-site replication
+    gptfdisk        # Provides sgdisk
+    smartmontools   # Check disk health/SMART data
+    pciutils        # For lspci troubleshooting
+    nfs-utils       # If you ever want to mount NFS
+    zfs-autobackup  # Great for future off-site replication
   ];
 
-  # 3. Storage Pool & File Systems
-  # Note: Create the pool once manually: 
-  # sudo zpool create -f tank raidz1 /dev/disk/by-id/drive1 /dev/disk/by-id/drive2 ...
   fileSystems."/storage/data" = {
     device = "tank/data";
     fsType = "zfs";
     options = [ "nofail" ]; # Prevent boot hang if pool is missing
   };
 
-  # 4. Avahi for Network Discovery (mDNS)
   services.avahi = {
     enable = true;
     nssmdns4 = true;
@@ -37,7 +28,6 @@
     };
   };
 
-  # 5. Declarative Samba (Windows Shares)
   services.samba = {
     enable = true;
     openFirewall = true;
@@ -68,7 +58,6 @@
     };
   };
 
-  # 6. Automated Maintenance
   services.zfs = {
     autoScrub.enable = true;      # Weekly health checks
     autoSnapshot = {

@@ -9,7 +9,7 @@
     enable = true;
     enableDefaultConfig = false;
 
-    matchBlocks = {
+    settings = {
       "github.com" = {
         identityFile = "/etc/ssh/ssh_host_ed25519_key";
         identitiesOnly = true;

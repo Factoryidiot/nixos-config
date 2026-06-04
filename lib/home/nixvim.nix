@@ -1,5 +1,6 @@
-# lib/home/nixvim.nix
-{ ...
+# ./lib/home/nixvim.nix
+{ 
+  ...
 }: {
 
   programs.nixvim = {
@@ -15,67 +16,67 @@
 
     keymaps = [
       {
-        key = "<leader>w";
         action = "<cmd>w<cr>";
+        key = "<leader>w";
         options.noremap = true;
       }
     ];
 
     opts = {
+      #+----- folding ----------------------------
+      foldenable = false;
+      foldlevel = 99;
+      foldmethod = "indent";
+
       #+----- general ----------------------------
       clipboard = "unnamedplus";
+      completeopt = "menuone,noselect";
+      conceallevel = 1;
       mouse = "a";
       splitbelow = true;
       splitright = true;
-      timeoutlen = 500;
       termguicolors = true;
-      completeopt = "menuone,noselect";
+      timeoutlen = 500;
       updatetime = 300;
-      conceallevel = 1;
-
-      #+----- tab settings -----------------------
-      tabstop = 2;
-      shiftwidth = 2;
-      softtabstop = 2;
-      expandtab = true;
-      shiftround = true;
-      autoindent = true;
-      smartindent = true;
 
       #+----- linenumbers ------------------------
+      cursorline = true;
       number = true;
       relativenumber = true;
-      wrap = false;
-      cursorline = true;
-      signcolumn = "yes";
       scrolloff = 8;
       sidescrolloff = 5;
+      signcolumn = "yes";
+      wrap = false;
 
       #+----- search -----------------------------
-      ignorecase = true;
-      smartcase = true;
-      incsearch = true;
       hlsearch = true;
+      ignorecase = true;
+      incsearch = true;
+      smartcase = true;
 
       #+----- swap -------------------------------
-      swapfile = false;
       backup = false;
-      writebackup = false;
+      swapfile = false;
       undofile = true;
+      writebackup = false;
+
+      #+----- tab settings -----------------------
+      autoindent = true;
+      expandtab = true;
+      tabstop = 2;
+      shiftround = true;
+      shiftwidth = 2;
+      smartindent = true;
+      softtabstop = 2;
 
       #+----- text -------------------------------
       list = true;
       listchars = {
-        tab = "→ ";
-        trail = "°";
         extends = "›";
         precedes = "‹";
+        tab = "→ ";
+        trail = "°";
       };
-
-      #+----- folding ----------------------------
-      foldmethod = "indent";
-      foldlevel = 99;
-      foldenable = false;
     };
 
     plugins = {
@@ -130,13 +131,34 @@
           };
         };
       };
-
       lsp = {
         enable = true;
         servers = {
+          clangd = {
+            enable = true;
+            config = {
+              cmd = [
+                "clangd"
+                "--background-index"
+              ];
+              filetypes = [
+                "c"
+                "cpp"
+              ];
+              root_markers = [
+                "compile_commands.json"
+                "compile_flags.txt"
+              ];
+            };
+          };
           jsonls.enable = true;
           lua_ls.enable = true;
           nixd.enable = true;
+          rust_analyzer = {
+            enable = true;
+            installCargo = true;
+            installRustc = true;
+          };
         };
       };
 
@@ -156,7 +178,7 @@
       telescope = {
         enable = true;
         extensions."fzf-native" = {
-          enable = true; # enable fzf-native extension
+          enable = true;
           settings = {
             fuzzy = true;
             override_file_sorter = true;

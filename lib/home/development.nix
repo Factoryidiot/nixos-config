@@ -5,15 +5,17 @@
 }: {
 
   home.packages = with pkgs; [
-    # Git
-    github-cli
-    lazygit
 
-    # Docker
+    #+----- Docker -------------------------------
     docker-compose
     lazydocker
 
-    # Language Runtimes & Tools
+    #+----- Git ----------------------------------
+    github-cli
+    lazygit
+
+    #+----- Language Runtimes & Tools ------------
+    devenv
   ];
 
 }

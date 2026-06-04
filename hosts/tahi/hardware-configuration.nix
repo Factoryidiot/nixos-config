@@ -35,7 +35,9 @@ in
     "fat"
     "vfat"
     "exfat"
+    "zfs"
   ];
+  boot.zfs.forceImportRoot = false;
 
   fileSystems."/" =
     {
