@@ -1,12 +1,15 @@
-# lib/nixos/snapper.nix
-{ specialArgs, ... }:
+# ./lib/nixos/snapper.nix
+{
+  specialArgs,
+  ...
+}:
 let
   inherit (specialArgs) username;
 in
 {
   services.snapper = {
-    configs."home" = {
-      SUBVOLUME = "/home";
+    configs."persistent" = {
+      SUBVOLUME = "/persistent";
       ALLOW_USERS = [ username ];
       TIMELINE_CREATE = true;
       TIMELINE_CLEANUP = true;
