@@ -80,11 +80,38 @@
     };
 
     plugins = {
+
       blink-cmp = {
         enable = true;
         setupLspCapabilities = true;
         settings = {
-          keymap.preset = "enter";
+          keymap = {
+            preset = "none";
+            "<C-j>" = [
+              "select_next"
+              "fallback"
+            ];
+            "<C-k>" = [
+              "select_prev"
+              "fallback"
+            ];
+            "<Up>" = [
+              "scroll_documentation_up"
+              "fallback"
+            ];
+            "<Down>" = [
+              "scroll_documentation_down"
+              "fallback"
+            ];
+            "<CR>" = [
+              "accept"
+              "fallback"
+            ];
+            "<C-y>" = [
+              "select_and_accept"
+              "fallback"
+            ];
+          };
         };
       };
 
@@ -131,6 +158,7 @@
           };
         };
       };
+
       lsp = {
         enable = true;
         servers = {
@@ -186,14 +214,22 @@
             case_mode = "smart_case";
           };
         };
+      };
 
-        settings = {
-          defaults = {
-            layout_config = { prompt_position = "top"; };
-            sorting_strategy = "ascending";
-          };
-          pickers.find_files.hidden = true;
+      treesitter = {
+        enable = true;
+        nixvimInjections = true;
+        highlight = {
+          enable = true;
         };
+      };
+
+      settings = {
+        defaults = {
+          layout_config = { prompt_position = "top"; };
+          sorting_strategy = "ascending";
+        };
+        pickers.find_files.hidden = true;
       };
 
       web-devicons.enable = true;
