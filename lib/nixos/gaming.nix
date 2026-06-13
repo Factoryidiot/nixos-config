@@ -12,19 +12,17 @@
   };
 
   environment.systemPackages = with pkgs; [
-    # Core gaming utilities
-    steam
+    #+----- Core gaming utilities ----------------
     gamemode
     gamescope
-    vkbasalt
     libstrangle # Framerate limiter
+    opentrack
+    steam
+    vkbasalt
 
     # Tools for managing Wine/Proton environments
     #protontricks
     #winetricks
-
-    # Communication for gaming
-    #discord
 
     # Game launchers
     #lutris
@@ -35,14 +33,12 @@
 
   hardware.xpadneo.enable = true;
   
-  # NixOS-level configuration for Steam
   programs.steam = {
     enable = true;
     remotePlay.openFirewall = true;
     dedicatedServer.openFirewall = true;
   };
 
-  # Enable Gamemode (NixOS service)
   programs.gamemode.enable = true;
 
 
