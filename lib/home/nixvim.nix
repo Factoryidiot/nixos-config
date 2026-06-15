@@ -162,6 +162,14 @@
       lsp = {
         enable = true;
         servers = {
+          bashls = {
+            enable = true;
+            filetypes = [
+              "sh"
+              "bash"
+              "zsh"
+            ];
+          };
           clangd = {
             enable = true;
             cmd = [
@@ -177,6 +185,9 @@
               "compile_flags.txt"
             ];
           };
+          cssls.enable = true;
+          docker_compose_language_service.enable = true;  # Docker Compose language server
+          html.enable = true;
           jsonls.enable = true;
           lua_ls.enable = true;
           nixd.enable = true;
@@ -184,6 +195,14 @@
             enable = true;
             installCargo = true;
             installRustc = true;
+          };
+          taplo.enable = true;                            # TOML language server      # YAML language server
+          yamlls = {
+            enable = true;
+            settings.yaml.schemas = {
+              # GitHub Actions workflow schema
+              "https://json.schemastore.org/github-workflow.json" = ".github/workflows/*.{yml,yaml}";
+            };
           };
         };
       };
@@ -216,15 +235,34 @@
 
       treesitter = {
         enable = true;
+        grammarPackages = with config.plugins.treesitter.package.builtGrammars; [
+          bash
+          c
+          comment
+          css
+          dockerfile
+          html
+          json
+          lua
+          make
+          markdown
+          nix
+          regex
+          rust
+          toml
+          vim
+          vimdoc
+          xml
+          yaml
+        ];
         nixvimInjections = true;
-        highlight = {
-          enable = true;
-        };
         settings = {
           defaults = {
             layout_config = { prompt_position = "top"; };
             sorting_strategy = "ascending";
           };
+          highlight.enable = true;
+          indent.enable = true;
           pickers.find_files.hidden = true;
         };
       };
