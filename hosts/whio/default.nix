@@ -16,8 +16,9 @@ in
     #+----- Basic configuration ------------------
     ../../lib/nixos/asus.nix
     ../../lib/nixos/base-packages.nix
-    ../../lib/nixos/btrfs.nix
     ../../lib/nixos/base-security.nix
+    ../../lib/nixos/bluetooth.nix
+    ../../lib/nixos/btrfs.nix
     ../../lib/nixos/certificates.nix
     ../../lib/nixos/docker.nix
     ../../lib/nixos/flatpak.nix
@@ -56,7 +57,6 @@ in
   time.timeZone = "Pacific/Auckland";
   i18n.defaultLocale = "en_NZ.UTF-8";
 
-
   networking = {
     hostName = hostname;
     networkmanager.enable = false;
@@ -85,12 +85,12 @@ in
   ];
 
   services = {
-    avahi.enable = true; # Discovery
-    blueman.enable = true; # Bluetooth
+    avahi.enable = true;    # Discovery
+    blueman.enable = true;  # Bluetooth
     libinput.enable = true; # Input
     printing.enable = true; # Printing
     resolved.enable = true; # DNS
-    udev.enable = true; # Hardware
+    udev.enable = true;     # Hardware
   };
 
   users = {
