@@ -1,6 +1,6 @@
 # ./lib/home/nixvim.nix
 {
-  pkgs,
+  config,
   ...
 }: {
 
@@ -236,7 +236,7 @@
 
       treesitter = {
         enable = true;
-        grammarPackages = with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
+        grammarPackages = with config.plugins.treesitter.package.builtGrammars; [
           bash
           c
           comment
