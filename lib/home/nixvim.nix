@@ -1,5 +1,6 @@
 # ./lib/home/nixvim.nix
-{ 
+{
+  config,
   ...
 }: {
 
