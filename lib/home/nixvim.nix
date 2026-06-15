@@ -1,6 +1,6 @@
 # ./lib/home/nixvim.nix
 {
-  config,
+  pkgs,
   ...
 }: {
 
@@ -197,8 +197,8 @@
             installCargo = true;
             installRustc = true;
           };
-          taplo.enable = true;                            # TOML language server      # YAML language server
-          yamlls = {
+          taplo.enable = true;                            # TOML language server
+          yamlls = {                                      # YAML language server
             enable = true;
             settings.yaml.schemas = {
               # GitHub Actions workflow schema
@@ -236,7 +236,7 @@
 
       treesitter = {
         enable = true;
-        grammarPackages = with config.plugins.treesitter.package.builtGrammars; [
+        grammarPackages = with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
           bash
           c
           comment
@@ -247,7 +247,6 @@
           lua
           make
           markdown
-          nix
           regex
           rust
           toml
@@ -256,6 +255,7 @@
           xml
           yaml
         ];
+        nixGrammars = true;
         nixvimInjections = true;
         settings = {
           defaults = {
