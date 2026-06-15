@@ -24,7 +24,7 @@
 
     opts = {
       #+----- folding ----------------------------
-      foldenable = false;
+      foldenable = true;
       foldlevel = 99;
       foldmethod = "indent";
 
@@ -164,20 +164,18 @@
         servers = {
           clangd = {
             enable = true;
-            config = {
-              cmd = [
-                "clangd"
-                "--background-index"
-              ];
-              filetypes = [
-                "c"
-                "cpp"
-              ];
-              root_markers = [
-                "compile_commands.json"
-                "compile_flags.txt"
-              ];
-            };
+            cmd = [
+              "clangd"
+              "--background-index"
+            ];
+            filetypes = [
+              "c"
+              "cpp"
+            ];
+            rootMarkers = [
+              "compile_commands.json"
+              "compile_flags.txt"
+            ];
           };
           jsonls.enable = true;
           lua_ls.enable = true;
@@ -222,21 +220,22 @@
         highlight = {
           enable = true;
         };
-      };
-
-      settings = {
-        defaults = {
-          layout_config = { prompt_position = "top"; };
-          sorting_strategy = "ascending";
+        settings = {
+          defaults = {
+            layout_config = { prompt_position = "top"; };
+            sorting_strategy = "ascending";
+          };
+          pickers.find_files.hidden = true;
         };
-        pickers.find_files.hidden = true;
       };
-
+     
       web-devicons.enable = true;
+
     };
 
     viAlias = true;
     vimAlias = true;
+
   };
 
 }
