@@ -1,6 +1,7 @@
 # ./lib/home/nixvim.nix
 {
   config,
+  pkgs,
   ...
 }: {
 
@@ -22,6 +23,8 @@
         options.noremap = true;
       }
     ];
+
+    nixpkgs.pkgs = pkgs;
 
     opts = {
       #+----- folding ----------------------------
