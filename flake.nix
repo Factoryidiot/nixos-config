@@ -44,8 +44,8 @@
     nix-gaming.url = "github:fufexan/nix-gaming";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     nixvim = {
-      url = "github:nix-community/nixvim";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      url = "github:nix-community/nixvim/release-26.05";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     terminaltexteffects = {
       url = "github:ChrisBuilds/terminaltexteffects/release-0.15.0";
