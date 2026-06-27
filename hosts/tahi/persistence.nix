@@ -34,11 +34,13 @@ in
 
     users.${username} = {
       directories = [
+        ".dotfiles"
         "Projects"
         "VMs"
  
         # .config
         ".config/git"
+        ".config/pi"
 
         {
           directory = ".ssh";
