@@ -136,6 +136,7 @@
           modules = [
             ./hosts/tahi/default.nix
             {
+              nixpkgs.overlays = [ llm-agents.overlays.default ];
               system.stateVersion = "25.11";
             }
           ];
