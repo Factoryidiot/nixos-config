@@ -18,6 +18,7 @@ in
     ../../lib/nixos/base-packages.nix
     ../../lib/nixos/base-security.nix
     ../../lib/nixos/btrfs.nix
+    ../../lib/nixos/llm-agents.nix
     ../../lib/nixos/maintenance.nix
     ../../lib/nixos/nas.nix
     ../../lib/nixos/virt.nix
