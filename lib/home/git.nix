@@ -18,7 +18,7 @@
       { path = "/run/agenix/git-config"; }
     ];
     settings = {
-      url."git@github.com:".insteadOf = [
+      url."git@github.com:".pushInsteadOf = [
         "https://github.com/"
       ];
     };
