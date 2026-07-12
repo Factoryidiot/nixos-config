@@ -129,8 +129,8 @@
 
       nixosConfigurations = {
 
-        kaka = mkNixosSystem {
-          name = "kaka";
+        kea = mkNixosSystem {
+          name = "kea";
           username = "dexter";
           modules = [
             ./hosts/kaka/default.nix
@@ -174,7 +174,7 @@
       formatter.${system} = nixpkgs.legacyPackages.${system}.nixpkgs-fmt;
       packages.${system} = {
         nixos-system-tahi = self.nixosConfigurations.tahi.config.system.build.toplevel;
-        nixos-system-kaka = self.nixosConfigurations.kaka.config.system.build.toplevel;
+        nixos-system-kea = self.nixosConfigurations.kaka.config.system.build.toplevel;
         nixos-system-whio = self.nixosConfigurations.whio.config.system.build.toplevel;
       };
 
