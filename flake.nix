@@ -147,7 +147,10 @@
           modules = [
             ./hosts/tahi/default.nix
             {
-              nixpkgs.overlays = [ llm-agents.overlays.default ];
+              nixpkgs.overlays = [ llm-agents.overlays.shared-nixpkgs ];
+              nixpkgs.config.permittedInsecurePackages = [
+                "pnpm-9.15.9"
+              ];
               system.stateVersion = "25.11";
             }
           ];
@@ -159,9 +162,10 @@
           modules = [
             ./hosts/whio/default.nix
             {
-              nixpkgs.overlays = [ llm-agents.overlays.default ];
+              nixpkgs.overlays = [ llm-agents.overlays.shared-nixpkgs ];
               nixpkgs.config.permittedInsecurePackages = [
                 "electron-39.8.10"
+                "pnpm-9.15.9"
               ];
               system.stateVersion = "25.11";
             }

@@ -53,6 +53,7 @@
       enable = true;
       zplugHome = "${config.programs.zsh.dotDir}/.zplug";
       plugins = [
+        { name = "Aloxaf/fzf-tab"; }
         { name = "zsh-users/zsh-history-substring-search"; }
         #{ name = "jeffreytse/zsh-vi-mode"; }
         #{ name = "zdharma-continuum/fast-syntax-highlighting"; }
