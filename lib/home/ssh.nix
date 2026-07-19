@@ -1,7 +1,5 @@
 # lib/home/ssh.nix
 {
-  config,
-  lib,
   ...
 }: {
 
@@ -11,7 +9,8 @@
 
     settings = {
       "github.com" = {
-        identityFile = "/etc/ssh/ssh_host_ed25519_key";
+        #identityFile = "/etc/ssh/ssh_host_ed25519_key";
+        identityFile = "~/.ssh/id_ed25519";
         identitiesOnly = true;
       };
     
