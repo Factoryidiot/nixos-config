@@ -3,9 +3,8 @@
   agenix,
   inputs,
   ... 
-}:
+}: {
 
-{
   imports = [
     agenix.homeManagerModules.default
     inputs.nixvim.homeModules.nixvim
@@ -15,9 +14,10 @@
     ../../lib/home/development.nix
     ../../lib/home/git.nix
     ../../lib/home/gtk.nix
+    ../../lib/home/ollama.nix
     ../../lib/home/shell.nix
-    ../../lib/home/tmux.nix
     ../../lib/home/nixvim.nix
+    ../../lib/home/tmux.nix
     ../../lib/home/yazi.nix
   ];
 
@@ -25,4 +25,5 @@
     enable = true;
     config.common.default = "*";
   };
+
 }

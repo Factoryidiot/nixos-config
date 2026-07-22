@@ -5,8 +5,9 @@
 }: {
 
   environment.systemPackages = with pkgs.llm-agents; [
-    pi
     gemini-cli
+    opencode   # Interactive TUI Coding Agent
+    openspec   # Spec-Driven Development Framework
   ];
 
 }

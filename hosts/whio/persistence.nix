@@ -74,6 +74,7 @@ in
 
         # misc
         ".config/pulse"
+        ".ollama"
         ".pki"
 
         # Games
