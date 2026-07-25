@@ -58,6 +58,10 @@ in
   i18n.defaultLocale = "en_NZ.UTF-8";
 
   networking = {
+    firewall = {
+      enable = true;
+      allowedTCPPorts = [ 11434 ];
+    };
     hostName = hostname;
     networkmanager.enable = false;
     wireless.iwd = {
