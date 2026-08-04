@@ -27,6 +27,7 @@
       if [ "$TERM" = "linux" ]; then
         fastfetch
       fi
+      eval "$(devenv hook zsh)"
     '';
 
     setOptions = [
