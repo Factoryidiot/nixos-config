@@ -14,7 +14,6 @@
     ../../lib/home/development.nix
     ../../lib/home/git.nix
     ../../lib/home/gtk.nix
-    ../../lib/home/ollama.nix
     ../../lib/home/shell.nix
     ../../lib/home/nixvim.nix
     ../../lib/home/tmux.nix

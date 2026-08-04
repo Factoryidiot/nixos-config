@@ -1,7 +1,7 @@
 # lib/home/desktop.nix
-{ pkgs
-, inputs
-, ...
+{
+  pkgs, 
+  ...
 }:
 
 {
@@ -25,6 +25,7 @@
     pamixer             # Audio control
     playerctl           # CMD-Line to control media players
     webp-pixbuf-loader  # WebP image support
+    wiremix             # TUI mixer for PipeWire
 
     #+----- System Utilities & TUIs --------------
     bitwarden-desktop
@@ -33,7 +34,6 @@
     htop                # TUI process viewer
     impala              # TUI wifi
     ncdu                # Disk usage analyzer with an ncurses interface
-    wiremix             # TUI mixer for PipeWire
 
     #+----- Other desktop dependencies -----------
     brightnessctl       # Brightness control
