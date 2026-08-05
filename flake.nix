@@ -59,18 +59,17 @@
   };
 
   outputs =
-    inputs@{
-      agenix,
-      home-manager,
-      hyprland,
-      impermanence,
-      lanzaboote,
-      llm-agents,
-      nixpkgs,
-      nixpkgs-unstable,
-      nixvim,
-      self,
-      ...
+    inputs@{ agenix
+    , home-manager
+    , hyprland
+    , impermanence
+    , lanzaboote
+    , llm-agents
+    , nixpkgs
+    , nixpkgs-unstable
+    , nixvim
+    , self
+    , ...
     }:
     let
       system = "x86_64-linux"; # The system type we will use
@@ -93,7 +92,7 @@
           };
         })
         ({ ... }: {
-          nixpkgs.overlays = [];
+          nixpkgs.overlays = [ ];
         })
       ];
 
@@ -178,7 +177,7 @@
       formatter.${system} = nixpkgs.legacyPackages.${system}.nixpkgs-fmt;
       packages.${system} = {
         nixos-system-tahi = self.nixosConfigurations.tahi.config.system.build.toplevel;
-        nixos-system-kea = self.nixosConfigurations.kaka.config.system.build.toplevel;
+        nixos-system-kea = self.nixosConfigurations.kea.config.system.build.toplevel;
         nixos-system-whio = self.nixosConfigurations.whio.config.system.build.toplevel;
       };
 
