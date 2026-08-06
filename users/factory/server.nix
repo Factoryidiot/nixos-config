@@ -10,7 +10,6 @@
     agenix.homeManagerModules.default
     inputs.nixvim.homeModules.nixvim
 
-    ../../lib/home/aider.nix
     ../../lib/home/btop.nix
     ../../lib/home/development.nix
     ../../lib/home/git.nix
