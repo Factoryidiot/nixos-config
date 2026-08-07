@@ -59,17 +59,18 @@
   };
 
   outputs =
-    inputs@{ agenix
-    , home-manager
-    , hyprland
-    , impermanence
-    , lanzaboote
-    , llm-agents
-    , nixpkgs
-    , nixpkgs-unstable
-    , nixvim
-    , self
-    , ...
+    inputs@{
+      agenix,
+      home-manager,
+      hyprland,
+      impermanence,
+      lanzaboote,
+      llm-agents,
+      nixpkgs,
+      nixpkgs-unstable,
+      nixvim,
+      self,
+      ...
     }:
     let
       system = "x86_64-linux"; # The system type we will use

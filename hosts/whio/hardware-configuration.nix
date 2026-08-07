@@ -1,10 +1,9 @@
 # /hosts/whio/hardware-configuration.nix
-{
-  config,
-  lib,
-  pkgs,
-  modulesPath,
-  ...
+{ config
+, lib
+, pkgs
+, modulesPath
+, ...
 }:
 let
   btrfsOptions = [ "noatime" "compress=zstd:1" "ssd" "discard=async" ];
@@ -23,7 +22,7 @@ in
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "thunderbolt" "sd_mod" "usbhid" "usb_storage" ];
   boot.initrd.kernelModules = [ ];
   boot.initrd.systemd.enable = true;
-  boot.kernelParams = [ "amd_pstate=active" "amd.iommu=on" ];
+  boot.kernelParams = [ "amd_pstate=active" "iommu=pt" "nvidia-drm.fbdev=1" ];
   boot.kernelModules = [ "amdgpu" "kvm-amd" ];
   boot.extraModulePackages = [ ];
   boot.tmp.cleanOnBoot = true; # clear /tmp on boot to get a stateless /tmp directory
@@ -45,13 +44,15 @@ in
   };
 
   fileSystems."/boot" = lib.mkDefault
-    { device = "/dev/disk/by-uuid/6C28-8A6B";
+    {
+      device = "/dev/disk/by-uuid/6C28-8A6B";
       fsType = "vfat";
       options = [ "fmask=0077" "dmask=0077" ];
     };
 
   fileSystems."/btr_pool" = lib.mkDefault
-    { device = "/dev/disk/by-uuid/${uuid}"; 
+    {
+      device = "/dev/disk/by-uuid/${uuid}";
       fsType = "btrfs";
       options = [ "subvolid=5" ];
     };
@@ -64,32 +65,37 @@ in
     };
 
   fileSystems."/gnu" = lib.mkDefault
-    { device = "/dev/disk/by-uuid/${uuid}"; 
+    {
+      device = "/dev/disk/by-uuid/${uuid}";
       fsType = "btrfs";
       options = btrfsOptions ++ [ "subvol=@guix" ];
     };
 
   fileSystems."/nix" = lib.mkDefault
-    { device = "/dev/disk/by-uuid/${uuid}"; 
+    {
+      device = "/dev/disk/by-uuid/${uuid}";
       fsType = "btrfs";
       options = btrfsOptions ++ [ "subvol=@nix" ];
     };
 
   fileSystems."/persistent" = lib.mkDefault
-    { device = "/dev/disk/by-uuid/${uuid}"; 
+    {
+      device = "/dev/disk/by-uuid/${uuid}";
       fsType = "btrfs";
       options = btrfsOptions ++ [ "subvol=@persistent" ];
       neededForBoot = true;
     };
 
   fileSystems."/snapshots" = lib.mkDefault
-    { device = "/dev/disk/by-uuid/${uuid}"; 
+    {
+      device = "/dev/disk/by-uuid/${uuid}";
       fsType = "btrfs";
       options = btrfsOptions ++ [ "subvol=@snapshots" ];
     };
 
   fileSystems."/swap" = lib.mkDefault
-    { device = "/dev/disk/by-uuid/${uuid}"; 
+    {
+      device = "/dev/disk/by-uuid/${uuid}";
       fsType = "btrfs";
       options = [ "subvol=@swap" "nodatacow" "noatime" ];
     };
@@ -103,7 +109,8 @@ in
   #  };
 
   fileSystems."/tmp" = lib.mkDefault
-    { device = "/dev/disk/by-uuid/${uuid}"; 
+    {
+      device = "/dev/disk/by-uuid/${uuid}";
       fsType = "btrfs";
       options = btrfsOptions ++ [ "subvol=@tmp" ];
     };

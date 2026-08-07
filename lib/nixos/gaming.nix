@@ -1,15 +1,13 @@
 # ./lib/nixos/gaming.nix
-{
-  pkgs,
-  ...
+{ pkgs
+, ...
 }: {
 
-  # For vkBasalt, setting environment variables system-wide.
-  # Note: It's generally better to set these per-game via launch options
-  # or a tool like Goverlay, but for system-wide enabling:
-  environment.sessionVariables = {
-    ENABLE_VKBASALT = "1"; # Enable vkBasalt if gaming is enabled
-  };
+  # For vkBasalt, set per-game via launch options (e.g. in Steam) or Goverlay/MangoHud.
+  # Avoid setting ENABLE_VKBASALT globally as it injects into all Vulkan processes and compositors.
+  # environment.sessionVariables = {
+  #   ENABLE_VKBASALT = "1";
+  # };
 
   environment.systemPackages = with pkgs; [
     #+----- Core gaming utilities ----------------
@@ -32,7 +30,7 @@
   ];
 
   hardware.xpadneo.enable = true;
-  
+
   programs.steam = {
     enable = true;
     dedicatedServer.openFirewall = true;
