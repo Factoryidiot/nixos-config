@@ -1,6 +1,7 @@
 # ./lib/home/desktop/hyprland.nix
-{ config
-, ...
+{
+  config,
+  ...
 }: {
 
   wayland.windowManager.hyprland = {
