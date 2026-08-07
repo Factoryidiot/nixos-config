@@ -40,7 +40,7 @@ in
  
         # .config
         ".config/git"
-        ".config/pi"
+        ".pi"
 
         {
           directory = ".ssh";
