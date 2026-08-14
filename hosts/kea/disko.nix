@@ -14,14 +14,15 @@
           type = "gpt";
           partitions = {
             ESP = {
-              start = "1MiB";
-              end = "500MiB";
               priority = 1;
+              name = "ESP";
+              size = "512M";
               type = "EF00";
               content = {
                 type = "filesystem";
                 format = "vfat";
                 mountpoint = "/boot";
+                mountOptions = [ "umask=0077" ];
               };
             };
             luks = {
