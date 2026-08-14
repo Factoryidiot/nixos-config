@@ -84,12 +84,18 @@ Current Boot Loader:
 ...
 ```
 ### TPM LUKS unlock
-1. Crypt Enroll
+1. Crypt Enroll (run for both the SSD and Storage drives):
 ```sh
-sudo systemd-cryptenroll --tpm2-device auto --tpm2-pcrs "0+2+7+12" --wipe-slot tpm2 /dev/nvme0n1p2
+# Enroll SSD (OS / Persistent)
+sudo systemd-cryptenroll --tpm2-device auto --tpm2-pcrs "0+2+7+12" --wipe-slot tpm2 /dev/sda2
+
+# Enroll Storage (HDD / Bulk)
+sudo systemd-cryptenroll --tpm2-device auto --tpm2-pcrs "0+2+7+12" --wipe-slot tpm2 /dev/sdb1
 ```
+
 2. Recovery Key Enrollment
-This will create another key partition called recovery and a recovery key, store this somewhere safe.
+This will create another key slot called recovery and a recovery key for each drive. Store these somewhere safe:
 ```sh
-sudo systemd-cryptenroll --recovery-key /dev/nvme0n1p2
+sudo systemd-cryptenroll --recovery-key /dev/sda2
+sudo systemd-cryptenroll --recovery-key /dev/sdb1
 ```

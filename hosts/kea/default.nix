@@ -1,7 +1,6 @@
-# ./hosts/whio/default.nix
-{
-  specialArgs,
-  ...
+# ./hosts/kea/default.nix
+{ specialArgs
+, ...
 }:
 let
   inherit (specialArgs) hostname username;
@@ -48,7 +47,7 @@ in
       "vfs_cache_pressure" = 50;
       "vm.swappiness" = 10;
       "vm.dirty_background_ratio" = 5;
-      "vm.dirty_ratio"= 10;
+      "vm.dirty_ratio" = 10;
     };
   };
 
@@ -62,7 +61,8 @@ in
     wireless.iwd = {
       enable = true;
       settings = {
-        General = { # Needed to stop the wifi from flipping to roaming and back
+        General = {
+          # Needed to stop the wifi from flipping to roaming and back
           RoamThreshold = -80;
           RoamThreshold5G = -80;
         };
@@ -84,12 +84,12 @@ in
   ];
 
   services = {
-    avahi.enable = true;    # Discovery
-    blueman.enable = true;  # Bluetooth
+    avahi.enable = true; # Discovery
+    blueman.enable = true; # Bluetooth
     libinput.enable = true; # Input
     printing.enable = true; # Printing
     resolved.enable = true; # DNS
-    udev.enable = true;     # Hardware
+    udev.enable = true; # Hardware
   };
 
   users = {

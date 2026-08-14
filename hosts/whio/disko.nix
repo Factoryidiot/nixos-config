@@ -1,3 +1,4 @@
+# ./hosts/whio/disko.nix
 {
 
   fileSystems."/persistent".neededForBoot = true;

@@ -1,81 +1,126 @@
-# whio - NixOS Installation Guide
+# kea - NixOS Installation Guide
 [[SECUREBOOT]]
-## Hosts
-whio
-```
-Host: ASUS TUF Gaming A15 FA507UI_FA507UI (1.0)
-CPU: AMD Ryzen 9 8945H w/ Radeon 780M Graphics (16) @ 6.23 GHz
-GPU 1: NVIDIA GeForce RTX 4070 Max-Q / Mobile [Discrete]
-GPU 2: AMD Phoenix3 [Integrated]
-Display (NE156FHM-NX6): 1920x1080 @ 144 Hz in 15″ [Built-in]
-Memory: 32 GiB
 
-OS:
-Kernel: Linux
-Shell: zsh 5.9
-WM: Hyprland (Wayland)
-Terminal: Ghostty
-```
-## To do
-These are in no particular order of priority
+## Host Overview
+**Host:** `kea`  
+**User:** `dexter`  
+**Drives:**
+- `/dev/sda` (~232.9 GB SSD) → `/boot` (ESP), LUKS (`crypted_ssd`) → BTRFS (`/`, `/nix`, `/persistent`, `/swap`, `/tmp`, `/gnu`, `/snapshots`)
+- `/dev/sdb` (~931.5 GB Storage) → LUKS (`crypted_storage`) → BTRFS (`/storage` for Games, Steam, Videos, VMs, Downloads via Impermanence)
 
-## Install
-### Prerequsite
-1. `sudo -i`
-2. Clone the repo `git clone https://github.com/your-username/nixos-config.git`.
-### Prepare Disk
-1. Navigate to the desired hosts disko configuration and execute: 
+---
+
+## Installation Process
+
+### 1. Prerequisites
+1. Open a root shell on the NixOS live environment:
+   ```sh
+   sudo -i
+   ```
+2. Clone the repository:
+   ```sh
+   git clone https://github.com/your-username/nixos-config.git
+   cd nixos-config
+   ```
+
+---
+
+### 2. Prepare Disks with Disko
+1. Execute Disko partitioning for `kea`:
+   ```sh
+   nix --experimental-features "nix-command flakes" \
+     run github:nix-community/disko/latest -- \
+     --mode disko \
+     ./hosts/kea/disko.nix
+   ```
+   > [!TIP]
+   > Disko will format `/dev/sda` and `/dev/sdb`, create LUKS2 containers (`crypted_ssd` and `crypted_storage`), establish all BTRFS subvolumes, and mount everything under `/mnt` and `/mnt/storage`.
+
+2. Enable swapfile and confirm:
+   ```sh
+   swapon /mnt/swap/swapfile
+   swapon -s
+   ```
+   > [!TIP]
+   > Confirm swap attributes: `lsattr /mnt/swap` should show `---------------C------ /mnt/swap/swapfile` (No Copy-on-Write).
+   > If not set up automatically, run:
+   > ```sh
+   > btrfs filesystem mkswapfile --size 24g --uuid clear /mnt/swap/swapfile
+   > swapon /mnt/swap/swapfile
+   > ```
+
+3. Verify mountpoints:
+   ```sh
+   lsblk
+   df -h
+   ```
+   Confirm `/mnt`, `/mnt/boot`, `/mnt/nix`, `/mnt/persistent`, `/mnt/storage`, and `/mnt/tmp` are mounted.
+
+---
+
+### 3. Update `hardware-configuration.nix`
+1. Generate the hardware configuration:
+   ```sh
+   nixos-generate-config --root /mnt
+   ```
+
+2. Inspect the generated UUIDs:
+   ```sh
+   ls -la /dev/disk/by-uuid/
+   ```
+   Identify:
+   - `BOOT_ESP_UUID`: UUID of `/dev/sda1` (FAT32 partition)
+   - `SSD_LUKS_UUID`: UUID of `/dev/sda2` (Encrypted SSD partition)
+   - `HDD_LUKS_UUID`: UUID of `/dev/sdb1` (Encrypted Storage partition)
+   - `SSD_BTRFS_UUID`: UUID of `/dev/mapper/crypted_ssd`
+   - `HDD_BTRFS_UUID`: UUID of `/dev/mapper/crypted_storage`
+
+3. Update `hosts/kea/hardware-configuration.nix` with these UUID values.
+
+4. Clean up the generated template files:
+   ```sh
+   rm /mnt/etc/nixos/*
+   ```
+
+---
+
+### 4. Perform Installation
+Run the NixOS installer targeting `kea`:
 ```sh
-nix --experimental-features "nix-command flakes" \
-run github:nix-community/disko/latest -- \
---mode disko \
-./disko.nix
+nixos-install --root /mnt --no-root-password --flake .#kea --no-write-lock-file
 ```
-> !TIP
-> if there are errors in the disko process, we can update the script push to git `rm -rf .cache` and rerun the line above.
-2. Enable swapfile `swapon /mnt/swap/swapfile` and confim `swapon -s` if required
-> [!TIP]
-> Confirm swap, `lsattr /mnt/swap` should output:
->
-> `---------------C------ /mnt/swap/swapfile`
 
 > [!TIP]
-> If a swap partition is not set up we can do this manually
-> `btrfs filesystem mkswapfile --size 24g --uuid clear /mnt/swap/swapfile`
-> Then run swapon see step 2.
+> For verbose diagnostics if evaluation fails:
+> `nixos-install --root /mnt --no-root-password --flake .#kea --no-write-lock-file --show-trace --verbose`
 
-### Update `hardware-configuration`
-Generate a `hardware-configuration.nix` to update the `UUID`s for the hardware-configuration.nix included in the repo we have just cloned.
-1. Create `hardware-configuration.nix` for your current configuration:
-```sh
- nixos-generate-config --root /mnt
-```
-2. Use editor to update the UUIDs found in `/mnt/etc/nixos/hardware-configuration.nix` into the hosts hardware-configuration e.g. `hosts/whio/hardware-configuration.nix`.
-> [!TIP]
-> ls -la /dev/disk/by-uuid/ > uuids
-3. Remove the contents of `rm /mnt/etc/nixos/*`.
-### Perform installation
-From `/nixos-config` run:
-```sh
-nixos-install --root /mnt --no-root-password --flake .#[host-name] --no-write-lock-file
-```
-> [!TIP]
-> To refresh the cache:
-> nix: `--no-eval-cache`
-> --flake: `--option eval-cache false`
+---
 
-> [!TIP]
-> For troubleshooting and extra logging use:
-> --show-trace --verbose
-### Post install
-Move any essential files to their `/persistent` location
-- `mv /mnt/etc/ssh /mnt/persistent/etc`
-- `mv hosts/whio/hardware-configuration.nix /mnt/persistent/home/factory/Projects/`
-- `mv ../nixos-config /mnt/persistent/home/factory/Projects/`
+### 5. Post-Installation Setup
+1. Create persistent user directories on both SSD and Storage:
+   ```sh
+   mkdir -p /mnt/persistent/home/dexter/Projects
+   mkdir -p /mnt/persistent/etc
+   mkdir -p /mnt/storage/home/dexter
+   ```
 
-> [!TIP]
-> **Configure Local PII**
-> After installation, remember to configure your local PII (Git user name and email) by following the instructions in the "Local PII Management" section of this README.
+2. Move SSH keys and configuration:
+   ```sh
+   mv /mnt/etc/ssh /mnt/persistent/etc/
+   cp -r /root/nixos-config /mnt/persistent/home/dexter/Projects/
+   ```
 
-### Reboot
-`reboot`
+3. Ensure correct user ownership (UID 1000, GID 100):
+   ```sh
+   chown -R 1000:100 /mnt/persistent/home/dexter
+   chown -R 1000:100 /mnt/storage/home/dexter
+   ```
+
+---
+
+### 6. Reboot & Enroll TPM2
+1. Reboot into the new system:
+   ```sh
+   reboot
+   ```
+2. Log in as `dexter` and refer to [SECUREBOOT.md](file:///home/factory/Projects/nixos-config/hosts/kea/SECUREBOOT.md) to enroll Secure Boot keys and TPM2 automatic unlocking for both `/dev/sda2` and `/dev/sdb1`.

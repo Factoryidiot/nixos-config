@@ -1,9 +1,12 @@
+# ./hosts/kea/disko.nix
 {
+
   fileSystems."/persistent".neededForBoot = true;
+  fileSystems."/storage".neededForBoot = true;
 
   disko.devices = {
     disk = {
-      # SSD - OS & High-Speed Apps/Games
+      # SSD (NVMe / SATA SSD) - OS, Root, Nix Store, Persistent System & Configs
       main = {
         type = "disk";
         device = "/dev/sda";
@@ -26,8 +29,11 @@
               content = {
                 type = "luks";
                 name = "crypted_ssd";
-                settings.fallbackToPassword = true;
-                settings.allowDiscards = true;
+                settings = {
+                  fallbackToPassword = true;
+                  allowDiscards = true;
+                };
+                initrdUnlock = false;
                 extraFormatArgs = [
                   "--type luks2"
                   "--cipher aes-xts-plain64"
@@ -38,7 +44,9 @@
                   "--use-random"
                   "--verify-passphrase"
                 ];
-                extraOpenArgs = [ "--timeout 10" ];
+                extraOpenArgs = [
+                  "--timeout 10"
+                ];
                 content = {
                   type = "btrfs";
                   extraArgs = [ "-f" ];
@@ -63,6 +71,10 @@
                       mountOptions = [ "compress-force=zstd:1" ];
                       mountpoint = "/snapshots";
                     };
+                    "@swap" = {
+                      mountpoint = "/swap";
+                      swap.swapfile.size = "24G";
+                    };
                     "@tmp" = {
                       mountOptions = [ "compress-force=zstd:1" ];
                       mountpoint = "/tmp";
@@ -75,28 +87,23 @@
         };
       };
 
-      # HDD - Cold Storage & Massive Game Library
+      # HDD / Secondary Disk - General Storage, Steam Games, Large Media & VMs
       storage = {
         type = "disk";
         device = "/dev/sdb";
         content = {
           type = "gpt";
           partitions = {
-            # Dedicated Swap Partition matching your current layout
-            swap = {
-              size = "20G";
-              content = {
-                type = "swap";
-                discardPolicy = "both";
-              };
-            };
-            # The remaining 900+ GB for bulk storage
             luks = {
               size = "100%";
               content = {
                 type = "luks";
-                name = "crypted_hdd";
-                settings.fallbackToPassword = true;
+                name = "crypted_storage";
+                settings = {
+                  fallbackToPassword = true;
+                  allowDiscards = true;
+                };
+                initrdUnlock = false;
                 extraFormatArgs = [
                   "--type luks2"
                   "--cipher aes-xts-plain64"
@@ -107,13 +114,19 @@
                   "--use-random"
                   "--verify-passphrase"
                 ];
-                extraOpenArgs = [ "--timeout 10" ];
+                extraOpenArgs = [
+                  "--timeout 10"
+                ];
                 content = {
                   type = "btrfs";
                   extraArgs = [ "-f" ];
                   subvolumes = {
+                    "/" = {
+                      mountOptions = [ "subvolid=5" ];
+                      mountpoint = "/storage_pool";
+                    };
                     "@storage" = {
-                      mountOptions = [ "compress-force=zstd:3" "noatime" ]; # Higher compression for slow mechanical storage
+                      mountOptions = [ "compress-force=zstd:3" "noatime" ];
                       mountpoint = "/storage";
                     };
                   };
@@ -125,4 +138,5 @@
       };
     };
   };
+
 }

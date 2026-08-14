@@ -1,7 +1,6 @@
-{ 
-  impermanence,
-  specialArgs,
-  ...
+{ impermanence
+, specialArgs
+, ...
 }:
 let
   inherit (specialArgs) username;
@@ -12,6 +11,7 @@ in
     impermanence.nixosModules.default
   ];
 
+  # SSD (/persistent) - Fast I/O: System state, Dotfiles, Development & Configuration
   environment.persistence."/persistent" = {
     hideMounts = true;
     # sets the mount option x-gvfs-hide on all the bind mounts
@@ -47,12 +47,8 @@ in
       directories = [
         ".dotfiles"
         "Documents"
-        "Downloads"
         "Music"
         "Pictures"
-        "Videos"
-        "VMs"
-
         "Projects"
         "tmp"
 
@@ -74,10 +70,6 @@ in
         # misc
         ".config/pulse"
         ".pki"
-
-        # Games
-        ".steam"
-        ".local/share/Steam"
 
         # cloud native
         {
@@ -106,6 +98,23 @@ in
       ];
       files = [
         ".config/zsh/.zsh_history"
+      ];
+    };
+  };
+
+  # Storage Drive (/storage) - Bulk & High-Capacity: Steam Games, Videos, VMs, Downloads
+  environment.persistence."/storage" = {
+    hideMounts = true;
+    users.${username} = {
+      directories = [
+        "Downloads"
+        "Videos"
+        "VMs"
+        "Games"
+
+        # Games & Steam libraries on bulk storage
+        ".steam"
+        ".local/share/Steam"
       ];
     };
   };
