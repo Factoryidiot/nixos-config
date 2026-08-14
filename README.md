@@ -14,7 +14,7 @@ OS:
 Kernel: Linux
 Shell: zsh 5.9
 WM: Hyprland (Wayland)
-Terminal: Alacritty
+Terminal: Ghostty
 ```
 
 ## To do
