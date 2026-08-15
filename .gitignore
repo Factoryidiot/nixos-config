@@ -4,3 +4,5 @@ tmp-external-scripts/
 users/local-user.nix
 flake.lock
 GEMINI.md
+dotfiles
+/dotfiles

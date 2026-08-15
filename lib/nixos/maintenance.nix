@@ -1,4 +1,4 @@
-# lib/nixos/maintenance.nix
+# ./lib/nixos/maintenance.nix
 { lib
 , specialArgs
 , ...
