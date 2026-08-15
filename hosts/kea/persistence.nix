@@ -16,7 +16,6 @@ in
     hideMounts = true;
     # sets the mount option x-gvfs-hide on all the bind mounts
     directories = [
-      "/etc/asusd"
       "/etc/agenix/" # secrets
       #"/etc/NetworkManager/system-connections"
       "/etc/nix/inputs"
@@ -30,8 +29,6 @@ in
       "/var/lib/sbctl" # secure boot
       "/var/lib/systemd/timers/" # cron/timers
       "/var/log" # logs and troubleshooting
-      # network
-      #"/var/lib/tailscale"
     ];
 
     files = [
@@ -52,7 +49,6 @@ in
         "Projects"
         "tmp"
 
-        ".local/share/docker"
 
         {
           directory = ".gnupg";
@@ -71,12 +67,6 @@ in
         ".config/pulse"
         ".pki"
 
-        # cloud native
-        {
-          directory = ".aws";
-          mode = "0700";
-        }
-
         #+----- Browser --------------------------
         ".config/Bitwarden"
         #".config/google-chrome"
@@ -92,9 +82,6 @@ in
 
         ".local/state"
 
-        # language package managers
-        ".npm"
-
       ];
       files = [
         ".config/zsh/.zsh_history"
@@ -109,7 +96,6 @@ in
       directories = [
         "Downloads"
         "Videos"
-        "VMs"
         "Games"
 
         # Games & Steam libraries on bulk storage
