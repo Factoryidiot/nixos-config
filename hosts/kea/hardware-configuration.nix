@@ -15,11 +15,11 @@ let
   # =========================================================================
   # Set all 5 UUIDs here after formatting
   # =========================================================================
-  BOOT_ESP_UUID = "BOOT_ESP_UUID"; # /dev/sda1 (FAT32 EFI partition)
-  SSD_LUKS_UUID = "SSD_LUKS_UUID"; # /dev/sda2 (LUKS partition on SSD)
-  HDD_LUKS_UUID = "HDD_LUKS_UUID"; # /dev/sdb1 (LUKS partition on Storage)
-  SSD_BTRFS_UUID = "SSD_BTRFS_UUID"; # /dev/mapper/crypted_ssd (Decrypted BTRFS filesystem on SSD)
-  HDD_BTRFS_UUID = "HDD_BTRFS_UUID"; # /dev/mapper/crypted_storage (Decrypted BTRFS filesystem on Storage)
+  BOOT_ESP_UUID = "5B8E-6F1D"; # /dev/sda1 (FAT32 EFI partition)
+  SSD_LUKS_UUID = "183e165a-c486-46eb-b124-cef8f85a2892"; # /dev/sda2 (LUKS partition on SSD)
+  HDD_LUKS_UUID = "0d983907-2c76-42eb-9567-3c639b0fca81"; # /dev/sdb1 (LUKS partition on Storage)
+  SSD_BTRFS_UUID = "00d0e26f-d3a3-4f04-a65d-13c7d5899ef6"; # /dev/mapper/crypted_ssd (Decrypted BTRFS filesystem on SSD)
+  HDD_BTRFS_UUID = "f3b7b908-f679-4287-b117-1e315a459bbe"; # /dev/mapper/crypted_storage (Decrypted BTRFS filesystem on Storage)
 in
 {
   imports = [
