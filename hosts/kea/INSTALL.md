@@ -59,27 +59,46 @@
 ---
 
 ### 3. Update `hardware-configuration.nix`
-1. Generate the hardware configuration:
+1. Generate the base hardware configuration:
    ```sh
    nixos-generate-config --root /mnt
    ```
 
-2. Inspect the generated UUIDs:
+2. Retrieve the 5 UUIDs for `hardware-configuration.nix`:
+   You can inspect all devices at once with:
    ```sh
-   ls -la /dev/disk/by-uuid/
+   lsblk -f
    ```
-   Identify:
-   - `BOOT_ESP_UUID`: UUID of `/dev/sda1` (FAT32 partition)
-   - `SSD_LUKS_UUID`: UUID of `/dev/sda2` (Encrypted SSD partition)
-   - `HDD_LUKS_UUID`: UUID of `/dev/sdb1` (Encrypted Storage partition)
-   - `SSD_BTRFS_UUID`: UUID of `/dev/mapper/crypted_ssd`
-   - `HDD_BTRFS_UUID`: UUID of `/dev/mapper/crypted_storage`
+   Or print the exact UUID for each variable directly:
+   ```sh
+   # 1. BOOT_ESP_UUID: EFI partition on SSD (/dev/sda1)
+   blkid -s UUID -o value /dev/sda1
 
-3. Update `hosts/kea/hardware-configuration.nix` with these UUID values.
+   # 2. SSD_LUKS_UUID: Encrypted LUKS partition on SSD (/dev/sda2)
+   blkid -s UUID -o value /dev/sda2
+
+   # 3. HDD_LUKS_UUID: Encrypted LUKS partition on HDD/Storage (/dev/sdb1)
+   blkid -s UUID -o value /dev/sdb1
+
+   # 4. SSD_BTRFS_UUID: Decrypted BTRFS filesystem on SSD (/dev/mapper/crypted_ssd)
+   blkid -s UUID -o value /dev/mapper/crypted_ssd
+
+   # 5. HDD_BTRFS_UUID: Decrypted BTRFS filesystem on HDD/Storage (/dev/mapper/crypted_storage)
+   blkid -s UUID -o value /dev/mapper/crypted_storage
+   ```
+
+3. Update `hosts/kea/hardware-configuration.nix` by setting the 5 variables in the `let` block at the top:
+   ```nix
+   BOOT_ESP_UUID   = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"; # /dev/sda1 (FAT32 EFI partition)
+   SSD_LUKS_UUID   = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"; # /dev/sda2 (LUKS partition on SSD)
+   HDD_LUKS_UUID   = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"; # /dev/sdb1 (LUKS partition on Storage)
+   SSD_BTRFS_UUID  = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"; # /dev/mapper/crypted_ssd (Decrypted BTRFS filesystem on SSD)
+   HDD_BTRFS_UUID  = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"; # /dev/mapper/crypted_storage (Decrypted BTRFS filesystem on Storage)
+   ```
 
 4. Clean up the generated template files:
    ```sh
-   rm /mnt/etc/nixos/*
+   rm -rf /mnt/etc/nixos/*
    ```
 
 ---
