@@ -1,8 +1,7 @@
-# ./lib/nixos/maintenance.nix
-{
-  lib,
-  specialArgs,
-  ...
+# lib/nixos/maintenance.nix
+{ lib
+, specialArgs
+, ...
 }:
 let
   inherit (specialArgs) username;
@@ -12,9 +11,9 @@ in
   systemd.settings.Manager = {
     DefaultTimeoutStopSec = "10s";
   };
-  systemd.user.settings.Manager = {
-    DefaultTimeoutStopSec = "5s";
-  };
+  systemd.user.extraConfig = ''
+    DefaultTimeoutStopSec=5s
+  '';
 
   nix = {
     settings = {
