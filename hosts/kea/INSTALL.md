@@ -64,37 +64,22 @@
    nixos-generate-config --root /mnt
    ```
 
-2. Retrieve the 5 UUIDs for `hardware-configuration.nix`:
-   You can inspect all devices at once with:
+2. Export all 5 UUIDs directly into `hosts/kea/UUID` (formatted as Nix code):
+   Run this single command from your `nixos-config` directory:
    ```sh
-   lsblk -f
+   cat <<EOF > hosts/kea/UUID
+     BOOT_ESP_UUID = "$(blkid -s UUID -o value /dev/sda1)"; # /dev/sda1 (FAT32 EFI partition)
+     SSD_LUKS_UUID = "$(blkid -s UUID -o value /dev/sda2)"; # /dev/sda2 (LUKS partition on SSD)
+     HDD_LUKS_UUID = "$(blkid -s UUID -o value /dev/sdb1)"; # /dev/sdb1 (LUKS partition on Storage)
+     SSD_BTRFS_UUID = "$(blkid -s UUID -o value /dev/mapper/crypted_ssd)"; # /dev/mapper/crypted_ssd (Decrypted BTRFS filesystem on SSD)
+     HDD_BTRFS_UUID = "$(blkid -s UUID -o value /dev/mapper/crypted_storage)"; # /dev/mapper/crypted_storage (Decrypted BTRFS filesystem on Storage)
+   EOF
+   cat hosts/kea/UUID
    ```
-   Or print the exact UUID for each variable directly:
-   ```sh
-   # 1. BOOT_ESP_UUID: EFI partition on SSD (/dev/sda1)
-   blkid -s UUID -o value /dev/sda1
+   > [!TIP]
+   > Using `/dev/mapper/crypted_ssd` and `/dev/mapper/crypted_storage` automatically resolves the correct `dm-X` device mappings for you without any manual mapping needed.
 
-   # 2. SSD_LUKS_UUID: Encrypted LUKS partition on SSD (/dev/sda2)
-   blkid -s UUID -o value /dev/sda2
-
-   # 3. HDD_LUKS_UUID: Encrypted LUKS partition on HDD/Storage (/dev/sdb1)
-   blkid -s UUID -o value /dev/sdb1
-
-   # 4. SSD_BTRFS_UUID: Decrypted BTRFS filesystem on SSD (/dev/mapper/crypted_ssd)
-   blkid -s UUID -o value /dev/mapper/crypted_ssd
-
-   # 5. HDD_BTRFS_UUID: Decrypted BTRFS filesystem on HDD/Storage (/dev/mapper/crypted_storage)
-   blkid -s UUID -o value /dev/mapper/crypted_storage
-   ```
-
-3. Update `hosts/kea/hardware-configuration.nix` by setting the 5 variables in the `let` block at the top:
-   ```nix
-   BOOT_ESP_UUID   = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"; # /dev/sda1 (FAT32 EFI partition)
-   SSD_LUKS_UUID   = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"; # /dev/sda2 (LUKS partition on SSD)
-   HDD_LUKS_UUID   = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"; # /dev/sdb1 (LUKS partition on Storage)
-   SSD_BTRFS_UUID  = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"; # /dev/mapper/crypted_ssd (Decrypted BTRFS filesystem on SSD)
-   HDD_BTRFS_UUID  = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"; # /dev/mapper/crypted_storage (Decrypted BTRFS filesystem on Storage)
-   ```
+3. Update `hosts/kea/hardware-configuration.nix` by replacing the `let` block UUID placeholders with the contents of `hosts/kea/UUID`.
 
 4. Clean up the generated template files:
    ```sh
