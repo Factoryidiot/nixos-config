@@ -1,5 +1,6 @@
 # ./modules/nixos/security-defaults.nix
-{ ...
+{ lib
+, ...
 }: {
 
   # System-level Firewall
@@ -15,8 +16,8 @@
     enableSSHSupport = true;
   };
 
-  # Allow members of 'wheel' to use sudo without a password
-  security.sudo.wheelNeedsPassword = false;
+  # Allow members of 'wheel' to use sudo without a password by default (overridable per host)
+  security.sudo.wheelNeedsPassword = lib.mkDefault false;
 
   # System-level OpenSSH service settings
   services.openssh = {

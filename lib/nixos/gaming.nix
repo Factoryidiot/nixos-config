@@ -30,6 +30,8 @@
   ];
 
   hardware.xpadneo.enable = true;
+  hardware.steam-hardware.enable = true;
+  hardware.uinput.enable = true;
 
   programs.steam = {
     enable = true;
