@@ -35,13 +35,13 @@ in
 
   hardware.nvidia = {
     # Maxwell legacy driver for GTX 960M
-    package = config.boot.kernelPackages.nvidiaPackages.legacy_580;
+    package = config.boot.kernelPackages.nvidiaPackages.legacy_535;
     open = false;
 
     prime = {
       # Intel + NVIDIA bus IDs
       intelBusId = "PCI:0:2:0";
-      nvidiaBusId = "PCI:1:0:0";
+      nvidiaBusId = "PCI:2:0:0";
       offload = {
         enable = true;
         enableOffloadCmd = true; # command: nvidia-offload
