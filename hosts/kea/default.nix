@@ -19,6 +19,7 @@ in
     ../../lib/nixos/bluetooth.nix
     ../../lib/nixos/btrfs.nix
     ../../lib/nixos/certificates.nix
+    ../../lib/nixos/dell.nix
     ../../lib/nixos/flatpak.nix
     ../../lib/nixos/gaming.nix
     ../../lib/nixos/hardware-services.nix
