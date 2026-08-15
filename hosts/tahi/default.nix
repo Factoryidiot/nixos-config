@@ -1,8 +1,7 @@
 # ./hosts/tahi/default.nix
-{
-  lib,
-  specialArgs,
-  ...
+{ lib
+, specialArgs
+, ...
 }:
 let
   inherit (specialArgs) hostname username;
@@ -24,20 +23,18 @@ in
     ../../lib/nixos/virt.nix
     ../../lib/nixos/zram.nix
 
-   #+----- Incus virtualisation ------------------
+    #+----- Incus virtualisation ------------------
     ../../lib/nixos/incus
   ];
 
   hardware.cpu.amd.updateMicrocode = true;
-  hardware.enableRedistributableFirmware = true;
-  hardware.ksm.enable = true;
 
   boot = {
     kernel.sysctl = {
       "vfs_cache_pressure" = 50;
       "vm.swappiness" = 10;
       "vm.dirty_background_ratio" = 5;
-      "vm.dirty_ratio"= 10;
+      "vm.dirty_ratio" = 10;
     };
   };
 

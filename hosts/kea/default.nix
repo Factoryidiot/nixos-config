@@ -32,9 +32,6 @@ in
     ../../lib/nixos/zram.nix
   ];
 
-  hardware.enableRedistributableFirmware = true;
-  hardware.ksm.enable = true;
-
   boot = {
     blacklistedKernelModules = [ "nouveau" ];
     extraModprobeConfig = ''

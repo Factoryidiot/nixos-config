@@ -5,6 +5,9 @@
 
   users.users.${username}.extraGroups = [ "kvm" "libvirtd" ];
 
+  # Kernel Samepage Merging for deduplicating VM memory pages
+  hardware.ksm.enable = true;
+
   environment.systemPackages = with pkgs; [
     spice
     spice-gtk
