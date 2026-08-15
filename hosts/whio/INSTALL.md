@@ -45,15 +45,21 @@ run github:nix-community/disko/latest -- \
 > Then run swapon see step 2.
 
 ### Update `hardware-configuration`
-Generate a `hardware-configuration.nix` to update the `UUID`s for the hardware-configuration.nix included in the repo we have just cloned.
 1. Create `hardware-configuration.nix` for your current configuration:
 ```sh
- nixos-generate-config --root /mnt
+nixos-generate-config --root /mnt
 ```
-2. Use editor to update the UUIDs found in `/mnt/etc/nixos/hardware-configuration.nix` into the hosts hardware-configuration e.g. `hosts/whio/hardware-configuration.nix`.
-> [!TIP]
-> ls -la /dev/disk/by-uuid/ > uuids
-3. Remove the contents of `rm /mnt/etc/nixos/*`.
+2. Export all 3 UUIDs directly into `hosts/whio/UUID` (formatted as Nix code):
+```sh
+cat <<EOF > hosts/whio/UUID
+  BOOT_ESP_UUID  = "$(blkid -s UUID -o value /dev/nvme0n1p1)"; # /dev/nvme0n1p1 (FAT32 EFI partition)
+  NVME_LUKS_UUID = "$(blkid -s UUID -o value /dev/nvme0n1p2)"; # /dev/nvme0n1p2 (LUKS partition on NVMe)
+  BTRFS_UUID     = "$(blkid -s UUID -o value /dev/mapper/crypted)"; # /dev/mapper/crypted (Decrypted BTRFS filesystem)
+EOF
+cat hosts/whio/UUID
+```
+3. Update `hosts/whio/hardware-configuration.nix` with the values from `hosts/whio/UUID`.
+4. Remove the temporary generated directory: `rm -rf /mnt/etc/nixos/*`.
 ### Perform installation
 From `/nixos-config` run:
 ```sh

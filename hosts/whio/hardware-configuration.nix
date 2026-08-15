@@ -7,7 +7,13 @@
 }:
 let
   btrfsOptions = [ "noatime" "compress=zstd:1" "ssd" "discard=async" ];
-  uuid = "528baf24-b6fa-4407-8d49-249a8113c303";
+
+  # =========================================================================
+  # Set all 3 UUIDs here after formatting
+  # =========================================================================
+  BOOT_ESP_UUID = "6C28-8A6B"; # /dev/nvme0n1p1 (FAT32 EFI partition)
+  NVME_LUKS_UUID = "8b152900-298c-4c60-a275-485e1bf2bc9b"; # /dev/nvme0n1p2 (LUKS partition on NVMe)
+  BTRFS_UUID = "528baf24-b6fa-4407-8d49-249a8113c303"; # /dev/mapper/crypted (Decrypted BTRFS filesystem)
 in
 {
 
@@ -36,8 +42,8 @@ in
     "exfat"
   ];
 
-  boot.initrd.luks.devices."crypted".device = "/dev/disk/by-uuid/8b152900-298c-4c60-a275-485e1bf2bc9b";
   boot.initrd.luks.devices."crypted" = {
+    device = "/dev/disk/by-uuid/${NVME_LUKS_UUID}";
     allowDiscards = true;
     bypassWorkqueues = true;
     crypttabExtraOpts = [ "tpm2-device=auto" ];
@@ -45,14 +51,14 @@ in
 
   fileSystems."/boot" = lib.mkDefault
     {
-      device = "/dev/disk/by-uuid/6C28-8A6B";
+      device = "/dev/disk/by-uuid/${BOOT_ESP_UUID}";
       fsType = "vfat";
       options = [ "fmask=0077" "dmask=0077" ];
     };
 
   fileSystems."/btr_pool" = lib.mkDefault
     {
-      device = "/dev/disk/by-uuid/${uuid}";
+      device = "/dev/disk/by-uuid/${BTRFS_UUID}";
       fsType = "btrfs";
       options = [ "subvolid=5" ];
     };
@@ -66,21 +72,21 @@ in
 
   fileSystems."/gnu" = lib.mkDefault
     {
-      device = "/dev/disk/by-uuid/${uuid}";
+      device = "/dev/disk/by-uuid/${BTRFS_UUID}";
       fsType = "btrfs";
       options = btrfsOptions ++ [ "subvol=@guix" ];
     };
 
   fileSystems."/nix" = lib.mkDefault
     {
-      device = "/dev/disk/by-uuid/${uuid}";
+      device = "/dev/disk/by-uuid/${BTRFS_UUID}";
       fsType = "btrfs";
       options = btrfsOptions ++ [ "subvol=@nix" ];
     };
 
   fileSystems."/persistent" = lib.mkDefault
     {
-      device = "/dev/disk/by-uuid/${uuid}";
+      device = "/dev/disk/by-uuid/${BTRFS_UUID}";
       fsType = "btrfs";
       options = btrfsOptions ++ [ "subvol=@persistent" ];
       neededForBoot = true;
@@ -88,14 +94,14 @@ in
 
   fileSystems."/snapshots" = lib.mkDefault
     {
-      device = "/dev/disk/by-uuid/${uuid}";
+      device = "/dev/disk/by-uuid/${BTRFS_UUID}";
       fsType = "btrfs";
       options = btrfsOptions ++ [ "subvol=@snapshots" ];
     };
 
   fileSystems."/swap" = lib.mkDefault
     {
-      device = "/dev/disk/by-uuid/${uuid}";
+      device = "/dev/disk/by-uuid/${BTRFS_UUID}";
       fsType = "btrfs";
       options = [ "subvol=@swap" "nodatacow" "noatime" ];
     };
@@ -110,7 +116,7 @@ in
 
   fileSystems."/tmp" = lib.mkDefault
     {
-      device = "/dev/disk/by-uuid/${uuid}";
+      device = "/dev/disk/by-uuid/${BTRFS_UUID}";
       fsType = "btrfs";
       options = btrfsOptions ++ [ "subvol=@tmp" ];
     };
