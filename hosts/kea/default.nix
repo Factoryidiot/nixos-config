@@ -34,8 +34,8 @@ in
   ];
 
   hardware.nvidia = {
-    # Maxwell legacy driver for GTX 960M
-    package = config.boot.kernelPackages.nvidiaPackages.legacy_535;
+    # Maxwell legacy driver for GTX 960M (compatible with modern kernels)
+    package = config.boot.kernelPackages.nvidiaPackages.legacy_580;
     open = false;
 
     prime = {
