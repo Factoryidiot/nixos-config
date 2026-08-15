@@ -5,12 +5,13 @@
 
   xdg.portal = {
     enable = true;
-    config.common.default = "*"; # This is to fix the warning with xdg-desktop-portal 1.17+
-
-    configPackages = with pkgs; [
-      xdg-desktop-portal-gtk # xdg-desktop-portal-gtk is for GTK applications.
-      xdg-desktop-portal-hyprland # xdg-desktop-portal-hyprland is for Hyprland (wayland).
+    extraPortals = with pkgs; [
+      xdg-desktop-portal-gtk # Fallback for file picker, print dialogs, etc.
     ];
+    config = {
+      common.default = [ "gtk" ];
+      hyprland.default = [ "hyprland" "gtk" ];
+    };
   };
 
 }

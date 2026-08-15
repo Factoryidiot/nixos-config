@@ -1,7 +1,6 @@
 # ./lib/home/zsh.nix
-{
-  config,
-  ...
+{ config
+, ...
 }: {
 
   programs.zsh = {
@@ -27,7 +26,6 @@
       if [ "$TERM" = "linux" ]; then
         fastfetch
       fi
-      eval "$(devenv hook zsh)"
     '';
 
     setOptions = [
@@ -44,10 +42,10 @@
     ];
 
     shellAliases = {
-      diff="--color=auto";
-      grep="rg --color=auto";
+      diff = "--color=auto";
+      grep = "rg --color=auto";
     };
-    
+
     syntaxHighlighting.enable = true;
 
     zplug = {

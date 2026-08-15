@@ -7,6 +7,14 @@ let
   inherit (specialArgs) username;
 in
 {
+  # Fast shutdown and logout (prevents waiting 90s for lingering background daemons)
+  systemd.extraConfig = ''
+    DefaultTimeoutStopSec=10s
+  '';
+  systemd.user.extraConfig = ''
+    DefaultTimeoutStopSec=5s
+  '';
+
   nix = {
     settings = {
       accept-flake-config = true;

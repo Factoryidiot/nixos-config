@@ -1,6 +1,9 @@
 # ./modules/nixos/multimedia.nix
 { ...
 }: {
+  # Enable RealtimeKit for low-latency audio scheduling and XDG portal priority
+  security.rtkit.enable = true;
+
   services.pipewire = {
     enable = true;
     alsa = {
