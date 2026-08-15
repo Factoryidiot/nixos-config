@@ -1,19 +1,20 @@
-# lib/nixos/maintenance.nix
-{ lib
-, specialArgs
-, ...
+# ./lib/nixos/maintenance.nix
+{
+  lib,
+  specialArgs,
+  ...
 }:
 let
   inherit (specialArgs) username;
 in
 {
   # Fast shutdown and logout (prevents waiting 90s for lingering background daemons)
-  systemd.extraConfig = ''
-    DefaultTimeoutStopSec=10s
-  '';
-  systemd.user.extraConfig = ''
-    DefaultTimeoutStopSec=5s
-  '';
+  systemd.settings.Manager = {
+    DefaultTimeoutStopSec = "10s";
+  };
+  systemd.user.settings.Manager = {
+    DefaultTimeoutStopSec = "5s";
+  };
 
   nix = {
     settings = {
