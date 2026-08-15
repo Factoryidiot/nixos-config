@@ -12,10 +12,14 @@ let
   # Optimized for the HDD (no "ssd" flag, higher compression to cut down mechanical I/O)
   hddOptions = [ "noatime" "compress=zstd:3" ];
 
-  # UUID Placeholders - to be filled post-format during installation
-  ssdUuid = "SSD_BTRFS_UUID";
-  hddUuid = "HDD_BTRFS_UUID";
-  bootUuid = "BOOT_ESP_UUID";
+  # =========================================================================
+  # Set all 5 UUIDs here after formatting
+  # =========================================================================
+  BOOT_ESP_UUID = "BOOT_ESP_UUID";
+  SSD_LUKS_UUID = "SSD_LUKS_UUID";
+  HDD_LUKS_UUID = "HDD_LUKS_UUID";
+  SSD_BTRFS_UUID = "SSD_BTRFS_UUID";
+  HDD_BTRFS_UUID = "HDD_BTRFS_UUID";
 in
 {
   imports = [
@@ -51,14 +55,14 @@ in
 
   # LUKS Decryption (Matching Disko partition names)
   boot.initrd.luks.devices."crypted_ssd" = {
-    device = "/dev/disk/by-uuid/SSD_LUKS_UUID";
+    device = "/dev/disk/by-uuid/${SSD_LUKS_UUID}";
     allowDiscards = true;
     bypassWorkqueues = true;
     crypttabExtraOpts = [ "tpm2-device=auto" ];
   };
 
   boot.initrd.luks.devices."crypted_storage" = {
-    device = "/dev/disk/by-uuid/HDD_LUKS_UUID";
+    device = "/dev/disk/by-uuid/${HDD_LUKS_UUID}";
     allowDiscards = true;
     bypassWorkqueues = true;
     crypttabExtraOpts = [ "tpm2-device=auto" ];
@@ -66,7 +70,7 @@ in
 
   # File Systems - Boot / EFI
   fileSystems."/boot" = lib.mkDefault {
-    device = "/dev/disk/by-uuid/${bootUuid}";
+    device = "/dev/disk/by-uuid/${BOOT_ESP_UUID}";
     fsType = "vfat";
     options = [ "fmask=0077" "dmask=0077" ];
   };
@@ -80,57 +84,57 @@ in
 
   # File Systems - SSD Btrfs Subvolumes (OS & Fast Storage)
   fileSystems."/btr_pool" = lib.mkDefault {
-    device = "/dev/disk/by-uuid/${ssdUuid}";
+    device = "/dev/disk/by-uuid/${SSD_BTRFS_UUID}";
     fsType = "btrfs";
     options = [ "subvolid=5" ];
   };
 
   fileSystems."/gnu" = lib.mkDefault {
-    device = "/dev/disk/by-uuid/${ssdUuid}";
+    device = "/dev/disk/by-uuid/${SSD_BTRFS_UUID}";
     fsType = "btrfs";
     options = ssdOptions ++ [ "subvol=@guix" ];
   };
 
   fileSystems."/nix" = lib.mkDefault {
-    device = "/dev/disk/by-uuid/${ssdUuid}";
+    device = "/dev/disk/by-uuid/${SSD_BTRFS_UUID}";
     fsType = "btrfs";
     options = ssdOptions ++ [ "subvol=@nix" ];
   };
 
   fileSystems."/persistent" = lib.mkDefault {
-    device = "/dev/disk/by-uuid/${ssdUuid}";
+    device = "/dev/disk/by-uuid/${SSD_BTRFS_UUID}";
     fsType = "btrfs";
     options = ssdOptions ++ [ "subvol=@persistent" ];
     neededForBoot = true;
   };
 
   fileSystems."/snapshots" = lib.mkDefault {
-    device = "/dev/disk/by-uuid/${ssdUuid}";
+    device = "/dev/disk/by-uuid/${SSD_BTRFS_UUID}";
     fsType = "btrfs";
     options = ssdOptions ++ [ "subvol=@snapshots" ];
   };
 
   fileSystems."/swap" = lib.mkDefault {
-    device = "/dev/disk/by-uuid/${ssdUuid}";
+    device = "/dev/disk/by-uuid/${SSD_BTRFS_UUID}";
     fsType = "btrfs";
     options = [ "subvol=@swap" "nodatacow" "noatime" ];
   };
 
   fileSystems."/tmp" = lib.mkDefault {
-    device = "/dev/disk/by-uuid/${ssdUuid}";
+    device = "/dev/disk/by-uuid/${SSD_BTRFS_UUID}";
     fsType = "btrfs";
     options = ssdOptions ++ [ "subvol=@tmp" ];
   };
 
   # File Systems - HDD Btrfs Subvolumes (Bulk Storage & Games)
   fileSystems."/storage_pool" = lib.mkDefault {
-    device = "/dev/disk/by-uuid/${hddUuid}";
+    device = "/dev/disk/by-uuid/${HDD_BTRFS_UUID}";
     fsType = "btrfs";
     options = [ "subvolid=5" ];
   };
 
   fileSystems."/storage" = lib.mkDefault {
-    device = "/dev/disk/by-uuid/${hddUuid}";
+    device = "/dev/disk/by-uuid/${HDD_BTRFS_UUID}";
     fsType = "btrfs";
     options = hddOptions ++ [ "subvol=@storage" ];
     neededForBoot = true;
