@@ -1,5 +1,6 @@
 # ./hosts/kea/default.nix
-{ specialArgs
+{ config
+, specialArgs
 , ...
 }:
 let
@@ -31,6 +32,22 @@ in
     ../../lib/nixos/virt.nix
     ../../lib/nixos/zram.nix
   ];
+
+  hardware.nvidia = {
+    # Maxwell legacy driver for GTX 960M
+    package = config.boot.kernelPackages.nvidiaPackages.legacy_580;
+    open = false;
+
+    prime = {
+      # Intel + NVIDIA bus IDs
+      intelBusId = "PCI:0:2:0";
+      nvidiaBusId = "PCI:1:0:0";
+      offload = {
+        enable = true;
+        enableOffloadCmd = true; # command: nvidia-offload
+      };
+    };
+  };
 
   boot = {
     blacklistedKernelModules = [ "nouveau" ];
