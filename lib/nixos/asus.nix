@@ -1,12 +1,12 @@
 # ./lib/nixos/asus.nix
-{
-  inputs,
-  pkgs,
-  ...
+{ inputs
+, pkgs
+, ...
 }:
 let
-  unstable-asusctl = inputs.nixpkgs-unstable.legacyPackages.${pkgs.system}.asusctl;
-  unstable-supergfxctl = inputs.nixpkgs-unstable.legacyPackages.${pkgs.system}.supergfxctl;
+  system = pkgs.stdenv.hostPlatform.system;
+  unstable-asusctl = inputs.nixpkgs-unstable.legacyPackages.${system}.asusctl;
+  unstable-supergfxctl = inputs.nixpkgs-unstable.legacyPackages.${system}.supergfxctl;
 in
 {
 
