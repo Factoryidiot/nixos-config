@@ -1,13 +1,10 @@
-# 
-{ 
-  agenix,
-  inputs,
-  ... 
+#
+{ inputs
+, ...
 }:
 
 {
   imports = [
-    agenix.homeManagerModules.default
     inputs.nixvim.homeModules.nixvim
 
     ./core.nix

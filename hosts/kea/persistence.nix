@@ -16,11 +16,9 @@ in
     hideMounts = true;
     # sets the mount option x-gvfs-hide on all the bind mounts
     directories = [
-      "/etc/agenix/" # secrets
       #"/etc/NetworkManager/system-connections"
       "/etc/nix/inputs"
 
-      "/var/lib/agenix"
       "/var/lib/bluetooth"
       "/var/lib/docker"
       "/var/lib/flatpak"
