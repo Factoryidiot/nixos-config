@@ -21,4 +21,12 @@
     pkiBundle = "/var/lib/sbctl";
   };
 
+  #+----- Impermanence Persistence -------------
+  # Modular persistence: persist Secure Boot signing keys and PKI bundle
+  environment.persistence."/persistent" = {
+    directories = [
+      "/var/lib/sbctl"
+    ];
+  };
+
 }

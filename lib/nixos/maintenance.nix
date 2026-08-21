@@ -33,4 +33,12 @@ in
       options = lib.mkDefault "--delete-older-than 7d";
     };
   };
+
+  #+----- Impermanence Persistence -------------
+  # Modular persistence: persist systemd timer timestamps across boots
+  environment.persistence."/persistent" = {
+    directories = [
+      "/var/lib/systemd/timers/"
+    ];
+  };
 }

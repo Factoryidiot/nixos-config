@@ -1,6 +1,11 @@
 { inputs
+, specialArgs ? { }
 , ...
-}: {
+}:
+let
+  inherit (specialArgs) username;
+in
+{
 
   imports = [
     inputs.nix-flatpak.nixosModules.nix-flatpak
@@ -24,6 +29,20 @@
       name = "flathub";
       location = "https://dl.flathub.org/repo/flathub.flatpakrepo";
     }];
+  };
+
+  #+----- Impermanence Persistence -------------
+  # Modular persistence: persist Flatpak system runtimes and per-user application state
+  environment.persistence."/persistent" = {
+    directories = [
+      "/var/lib/flatpak"
+    ];
+    users.${username} = {
+      directories = [
+        ".local/share/flatpak"
+        ".var/app"
+      ];
+    };
   };
 
 }

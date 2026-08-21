@@ -30,4 +30,14 @@
     # Enable USB redirection. This can be used with any Spice client.
     spiceUSBRedirection.enable = true;
   };
+
+  #+----- Impermanence Persistence -------------
+  # Modular persistence: persist virtual machine disks and configurations
+  environment.persistence."/persistent" = {
+    users.${username} = {
+      directories = [
+        "VMs"
+      ];
+    };
+  };
 }

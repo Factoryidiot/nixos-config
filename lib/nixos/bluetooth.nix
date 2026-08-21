@@ -1,6 +1,5 @@
 # ./lib/nixos/bluetooth.nix
-{
-  ...
+{ ...
 }: {
 
   # Disable ERTM, which natively causes pairing and connect/disconnect loops with Xbox controllers
@@ -21,6 +20,14 @@
         FastConnectable = "true";
       };
     };
+  };
+
+  #+----- Impermanence Persistence -------------
+  # Modular persistence: persist Bluetooth pairings and controller connection keys
+  environment.persistence."/persistent" = {
+    directories = [
+      "/var/lib/bluetooth"
+    ];
   };
 
 }

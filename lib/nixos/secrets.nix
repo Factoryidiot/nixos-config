@@ -22,4 +22,13 @@
     };
   };
 
+  #+----- Impermanence Persistence -------------
+  # Modular persistence: persist Agenix keys and decryption state
+  environment.persistence."/persistent" = {
+    directories = [
+      "/etc/agenix"
+      "/var/lib/agenix"
+    ];
+  };
+
 }

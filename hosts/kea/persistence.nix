@@ -16,16 +16,9 @@ in
     hideMounts = true;
     # sets the mount option x-gvfs-hide on all the bind mounts
     directories = [
-      #"/etc/NetworkManager/system-connections"
       "/etc/nix/inputs"
-
-      "/var/lib/bluetooth"
-      "/var/lib/docker"
-      "/var/lib/flatpak"
       "/var/lib/iwd"
       "/var/lib/nixos"
-      "/var/lib/sbctl" # secure boot
-      "/var/lib/systemd/timers/" # cron/timers
       "/var/log" # logs and troubleshooting
     ];
 
@@ -47,7 +40,6 @@ in
         "Projects"
         "tmp"
 
-
         {
           directory = ".gnupg";
           mode = "0700";
@@ -57,9 +49,6 @@ in
           directory = ".ssh";
           mode = "0700";
         }
-        #+----- Flatpak --------------------------
-        ".local/share/flatpak"
-        ".var/app"
 
         # misc
         ".config/pulse"
@@ -95,10 +84,6 @@ in
         "Downloads"
         "Videos"
         "Games"
-
-        # Games & Steam libraries on bulk storage
-        ".steam"
-        ".local/share/Steam"
       ];
     };
   };

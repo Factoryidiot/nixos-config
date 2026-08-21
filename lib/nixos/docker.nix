@@ -28,4 +28,17 @@
     storageDriver = "btrfs";
   };
 
+  #+----- Impermanence Persistence -------------
+  # Modular persistence: persist Docker system storage and rootless/user data
+  environment.persistence."/persistent" = {
+    directories = [
+      "/var/lib/docker"
+    ];
+    users.${username} = {
+      directories = [
+        ".local/share/docker"
+      ];
+    };
+  };
+
 }

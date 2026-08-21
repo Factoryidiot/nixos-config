@@ -1,8 +1,7 @@
 # ./hosts/tahi/persistence.nix
-{
-  impermanence,
-  specialArgs,
-  ...
+{ impermanence
+, specialArgs
+, ...
 }:
 let
   inherit (specialArgs) username;
@@ -16,10 +15,7 @@ in
   environment.persistence."/persistent" = {
     hideMounts = true;
     directories = [
-      "/etc/agenix/" # secrets
       "/etc/nix/inputs"
-      "/var/lib/agenix"
-      "/var/lib/incus"
       "/var/lib/nixos"
       "/var/log" # logs and troubleshooting
     ];
@@ -36,11 +32,9 @@ in
       directories = [
         ".dotfiles"
         "Projects"
-        "VMs"
- 
+
         # .config
         ".config/git"
-        ".pi"
 
         {
           directory = ".ssh";

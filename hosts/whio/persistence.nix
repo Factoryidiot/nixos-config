@@ -1,7 +1,6 @@
-{ 
-  impermanence,
-  specialArgs,
-  ...
+{ impermanence
+, specialArgs
+, ...
 }:
 let
   # Destructure 'username' from the specialArgs passed from flake.nix
@@ -17,22 +16,10 @@ in
     hideMounts = true;
     # sets the mount option x-gvfs-hide on all the bind mounts
     directories = [
-      "/etc/asusd"
-      "/etc/agenix/" # secrets
-      #"/etc/NetworkManager/system-connections"
       "/etc/nix/inputs"
-
-      "/var/lib/agenix"
-      "/var/lib/bluetooth"
-      "/var/lib/docker"
-      "/var/lib/flatpak"
       "/var/lib/iwd"
       "/var/lib/nixos"
-      "/var/lib/sbctl" # secure boot
-      "/var/lib/systemd/timers/" # cron/timers
       "/var/log" # logs and troubleshooting
-      # network
-      #"/var/lib/tailscale"
     ];
 
     files = [
@@ -52,12 +39,9 @@ in
         "Music"
         "Pictures"
         "Videos"
-        "VMs"
 
         "Projects"
         "tmp"
-
-        ".local/share/docker"
 
         {
           directory = ".gnupg";
@@ -68,18 +52,10 @@ in
           directory = ".ssh";
           mode = "0700";
         }
-        #+----- Flatpak --------------------------
-        ".local/share/flatpak"
-        ".var/app"
 
         # misc
         ".config/pulse"
-        ".ollama"
         ".pki"
-
-        # Games
-        ".steam"
-        ".local/share/Steam"
 
         # cloud native
         {

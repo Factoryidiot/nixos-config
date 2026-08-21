@@ -1,7 +1,6 @@
 # ./lib/nixos/core.nix
-{
-  username,
-  ...
+{ username
+, ...
 }:
 {
 
@@ -17,7 +16,7 @@
         {
           name = "default";
           config = {
-            "cloud-init.user-data" = ""; 
+            "cloud-init.user-data" = "";
             "security.privileged" = "false";
           };
           devices = {
@@ -47,6 +46,14 @@
       ];
     };
 
+  };
+
+  #+----- Impermanence Persistence -------------
+  # Modular persistence: persist Incus containers, VMs, networks, and storage pools
+  environment.persistence."/persistent" = {
+    directories = [
+      "/var/lib/incus"
+    ];
   };
 
 }

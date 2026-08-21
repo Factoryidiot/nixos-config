@@ -1,7 +1,12 @@
 # ./lib/nixos/gaming.nix
 { pkgs
+, specialArgs ? { }
 , ...
-}: {
+}:
+let
+  inherit (specialArgs) username;
+in
+{
 
   # For vkBasalt, set per-game via launch options (e.g. in Steam) or Goverlay/MangoHud.
   # Avoid setting ENABLE_VKBASALT globally as it injects into all Vulkan processes and compositors.
@@ -44,6 +49,16 @@
 
   programs.gamemode.enable = true;
 
+  #+----- Impermanence Persistence -------------
+  # Modular persistence: when this gaming module is included, persist Steam data and libraries.
+  environment.persistence."/persistent" = {
+    users.${username} = {
+      directories = [
+        ".steam"
+        ".local/share/Steam"
+      ];
+    };
+  };
 
   # You can also enable mangohud this way if desired, but user removed it.
   # environment.sessionVariables = {

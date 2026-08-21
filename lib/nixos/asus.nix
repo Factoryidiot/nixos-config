@@ -49,4 +49,12 @@ in
 
   services.supergfxd.enable = true;
 
+  #+----- Impermanence Persistence -------------
+  # Modular persistence: persist ROG laptop charge limit, lighting, and fan profiles
+  environment.persistence."/persistent" = {
+    directories = [
+      "/etc/asusd"
+    ];
+  };
+
 }
