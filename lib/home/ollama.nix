@@ -1,6 +1,5 @@
 # lib/home/ssh.nix
-{
-  ...
+{ ...
 }: {
 
   services.ollama = {

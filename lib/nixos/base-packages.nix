@@ -1,7 +1,6 @@
 # ./modules/nixos/base-packages.nix
-{
-  pkgs,
-  ...
+{ pkgs
+, ...
 }: {
 
   nixpkgs.config.allowUnfree = true;

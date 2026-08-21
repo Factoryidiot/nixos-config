@@ -1,8 +1,7 @@
 # ./lib/home/shell/starship.nix
-{
-  config,
-  lib,
-  ...
+{ config
+, lib
+, ...
 }: {
 
   programs.starship = {

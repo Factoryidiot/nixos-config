@@ -1,6 +1,5 @@
 # lib/home/git.nix
-{
-  ...
+{ ...
 }: {
 
   programs.gh = {

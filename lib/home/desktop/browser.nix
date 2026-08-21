@@ -1,7 +1,6 @@
 # ./lib/home/desktop/browser.nix
-{
-  pkgs,
-  ...
+{ pkgs
+, ...
 }: {
 
   home.sessionVariables = {
@@ -26,22 +25,22 @@
       "--enable-zero-copy"
 
       # Hardening Flags (Baking in your policy requirements directly)
-      "--disable-reading-from-canvas"         # Fingerprinting defense
-      "--disable-breakpad"                    # Kills crash dumps to Google
-      "--disable-crash-reporter"              # Stops sending tracking statistics
-      "--metrics-recording-only"              # Never transmit diagnostics data out
-      "--password-store=basic"                # Forces plaintext fallback instead of keyrings
-      "--disable-features=OptimizationGuide"  # Blocks Google's backend GenAI assistance calls
-      "--disable-features=ShoppingList"       # Strips tracking price trackers
-      "--disable-background-networking"       # Drops automatic pre-fetching/captive portals
+      "--disable-reading-from-canvas" # Fingerprinting defense
+      "--disable-breakpad" # Kills crash dumps to Google
+      "--disable-crash-reporter" # Stops sending tracking statistics
+      "--metrics-recording-only" # Never transmit diagnostics data out
+      "--password-store=basic" # Forces plaintext fallback instead of keyrings
+      "--disable-features=OptimizationGuide" # Blocks Google's backend GenAI assistance calls
+      "--disable-features=ShoppingList" # Strips tracking price trackers
+      "--disable-background-networking" # Drops automatic pre-fetching/captive portals
     ];
     package = pkgs.chromium.override { enableWideVine = true; };
   };
 
   programs.firefox = {
     enable = true;
-    languagePacks = ["en-NZ" "en-GB"];
-    package = pkgs.wrapFirefox (pkgs.firefox-unwrapped.override {pipewireSupport = true;}) {};
+    languagePacks = [ "en-NZ" "en-GB" ];
+    package = pkgs.wrapFirefox (pkgs.firefox-unwrapped.override { pipewireSupport = true; }) { };
     profiles.default.settings = {
       "browser.shell.checkDefaultBrowser" = false;
       "extensions.autoDisableScopes" = 0;

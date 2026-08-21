@@ -1,10 +1,9 @@
 # /hosts/tahi/hardware-configuration.nix
-{
-  config,
-  lib,
-  pkgs,
-  modulesPath,
-  ...
+{ config
+, lib
+, pkgs
+, modulesPath
+, ...
 }:
 let
   btrfsOptions = [ "noatime" "compress=zstd:1" "ssd" "discard=async" ];
@@ -48,51 +47,59 @@ in
     };
 
   fileSystems."/nix" = lib.mkDefault
-    { device = "/dev/disk/by-uuid/${uuid}";
+    {
+      device = "/dev/disk/by-uuid/${uuid}";
       fsType = "btrfs";
       options = btrfsOptions ++ [ "subvol=@nix" ];
       neededForBoot = true;
     };
 
   fileSystems."/persistent" = lib.mkDefault
-    { device = "/dev/disk/by-uuid/${uuid}";
+    {
+      device = "/dev/disk/by-uuid/${uuid}";
       fsType = "btrfs";
       options = btrfsOptions ++ [ "subvol=@persistent" ];
       neededForBoot = true;
     };
 
   fileSystems."/boot" = lib.mkDefault
-    { device = "/dev/disk/by-uuid/5398-3214";
+    {
+      device = "/dev/disk/by-uuid/5398-3214";
       fsType = "vfat";
       options = [ "fmask=0077" "dmask=0077" ];
     };
 
   fileSystems."/gnu" = lib.mkDefault
-    { device = "/dev/disk/by-uuid/${uuid}";
+    {
+      device = "/dev/disk/by-uuid/${uuid}";
       fsType = "btrfs";
       options = btrfsOptions ++ [ "subvol=@guix" ];
     };
 
   fileSystems."/snapshots" = lib.mkDefault
-    { device = "/dev/disk/by-uuid/${uuid}";
+    {
+      device = "/dev/disk/by-uuid/${uuid}";
       fsType = "btrfs";
       options = btrfsOptions ++ [ "subvol=@snapshots" ];
     };
 
   fileSystems."/tmp" = lib.mkDefault
-    { device = "/dev/disk/by-uuid/${uuid}";
+    {
+      device = "/dev/disk/by-uuid/${uuid}";
       fsType = "btrfs";
       options = btrfsOptions ++ [ "subvol=@tmp" ];
     };
 
   fileSystems."/btr_pool" = lib.mkDefault
-    { device = "/dev/disk/by-uuid/${uuid}";
+    {
+      device = "/dev/disk/by-uuid/${uuid}";
       fsType = "btrfs";
       options = [ "subvolid=5" ];
     };
 
   fileSystems."/swap" = lib.mkDefault
-    { device = "/dev/disk/by-uuid/${uuid}";
+    {
+      device = "/dev/disk/by-uuid/${uuid}";
       fsType = "btrfs";
       options = [ "subvol=swap" "nodatacow" "noatime" ];
     };

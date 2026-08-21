@@ -1,101 +1,116 @@
-## Secureboot
+# 🔒 kea — Secure Boot & Dual-Drive TPM2 Auto-Unlock Guide
 
-To Implement Secure Book with LUKS and TPM2, to avoid having to manually enter the pass-phrase each time we reboot.
+This guide details how to configure UEFI Secure Boot and bind **both LUKS containers** (`crypted_ssd` on `/dev/sda2` and `crypted_storage` on `/dev/sdb1`) to the **TPM 2.0** chip on `kea`.
 
-Prerequsite:
-- tpm2-tss
-- boot.initrd.systemd.enable = true;
+---
 
-### Configure and enable Secure Boot
-1. Confirm the functional requirements are met
-```sh
+## 📋 Prerequisites
+
+Ensure your system configuration has the following enabled:
+- `tpm2-tss` package
+- `boot.initrd.systemd.enable = true;`
+- Lanzaboote module imported in [`lib/nixos/secureboot.nix`](file:///home/factory/.nixos/lib/nixos/secureboot.nix)
+
+---
+
+## 🔐 Part 1: Secure Boot Key Creation & Enrollment
+
+### 1. Verify UEFI & TPM2 Readiness
+
+```bash
 bootctl status
 ```
-Output:
-```sh
-System:
-     Firmware: UEFI 2.80 (American Megatrends 5.29)
-Firmware Arch: x64
-  Secure Boot: disabled (setup)
- TPM2 Support: yes
- Measured UKI: yes
- Boot into FW: supported
 
-Current Boot Loader:
-      Product: systemd-boot 256.4 
-...
-```
-2. Create Secure Boot keys
-```sh
+Confirm `TPM2 Support: yes` and firmware is in setup mode.
+
+---
+
+### 2. Generate Custom Secure Boot Keys
+
+```bash
 sudo nix run nixpkgs#sbctl create-keys
 ```
-Output:
-```sh
-Created Owner UUID 8ec4b2c3-dc7f-4362-b9a3-0cc17e5a34cd
-Creating secure boot keys...✓
-Secure boot keys created!
+
+---
+
+### 3. Build & Verify EFI Signing
+
+Rebuild the system to generate signed Unified Kernel Images:
+
+```bash
+sudo nixos-rebuild switch --flake ~/.nixos#kea
 ```
-3. Configure NixOS
-4. Rebuild switch, and reboot 
-5. Verify that the set up is ready for Secure Boot
-```sh
+
+Verify that all boot binaries and kernels are signed:
+
+```bash
 sudo nix run nixpkgs#sbctl verify
 ```
-Output
-```sh
-Verifying file database and EFI images in /boot...
-✓ /boot/EFI/BOOT/BOOTX64.EFI is signed
-✓ /boot/EFI/Linux/nixos-generation-100-kr26liccc5utoga5un626z7whlcja5iisqjgwihjecl4bi7ycwsq.efi is signed
-✓ /boot/EFI/Linux/nixos-generation-101-u2aurkraw74u7cd42zqy6abhki3vc6gzaqe2532hp2ulzukxzqca.efi is signed
-✓ /boot/EFI/Linux/nixos-generation-102-hktgabnyiy7xawxxxvkvwg46nsjd547hkjdy7yhw5t463tkhjama.efi is signed
-✓ /boot/EFI/Linux/nixos-generation-98-nlo7qbolb6jhjpgo76v7ltyrg3paysjsk5za5cy3cgd5mh5gp3ia.efi is signed
-✓ /boot/EFI/Linux/nixos-generation-99-e35bimscug7ak2bcbnmvuf46gsxagcp23aouv55ou63qgxc3ljqa.efi is signed
-✗ /boot/EFI/nixos/kernel-6.6.49-k5dr55klogwvuwfxubqzcoinicnx5as73xwvwy2p6oweso7riv3a.efi is not signed
-✓ /boot/EFI/systemd/systemd-bootx64.efi is signed
-```
-5. Reboot and enable Secure Boot in the bios, if it has not been enabled already
-6. Enroll boot keys
-```sh
+
+---
+
+### 4. Enroll Keys into UEFI Firmware
+
+Enroll custom keys with Microsoft vendor keys:
+
+```bash
 sudo nix run nixpkgs#sbctl enroll-keys -- --microsoft
 ```
-Output:
-```sh
-Enrolling keys to EFI variables...
-With vendor keys from microsoft...✓
-Enrolled keys to the EFI variables!
-```
-7. Reboot
-8. Confirm Secure Boot
-```sh
-bootctl status
-```
-Output:
-```sh
-System:
-     Firmware: UEFI 2.80 (American Megatrends 5.29)
-Firmware Arch: x64
-  Secure Boot: enabled (user)
- TPM2 Support: yes
- Measured UKI: yes
- Boot into FW: supported
 
-Current Boot Loader:
-      Product: systemd-boot 256.4 
-...
-```
-### TPM LUKS unlock
-1. Crypt Enroll (run for both the SSD and Storage drives):
-```sh
-# Enroll SSD (OS / Persistent)
+---
+
+### 5. Enable Secure Boot & Verify
+
+1. Reboot the laptop:
+   ```bash
+   sudo reboot
+   ```
+2. Enter BIOS and ensure **Secure Boot** is enabled.
+3. Boot into NixOS and confirm status:
+   ```bash
+   bootctl status
+   ```
+   *Expected: `Secure Boot: enabled (user)`*
+
+---
+
+## 🔑 Part 2: Dual-Drive TPM2 LUKS Auto-Unlock
+
+Enroll the TPM2 chip on **both** the primary SSD container and the secondary storage container:
+
+### 1. Enroll Primary SSD Container (`/dev/sda2`)
+
+```bash
 sudo systemd-cryptenroll --tpm2-device auto --tpm2-pcrs "0+2+7+12" --wipe-slot tpm2 /dev/sda2
+```
 
-# Enroll Storage (HDD / Bulk)
+### 2. Enroll Secondary Storage Container (`/dev/sdb1`)
+
+```bash
 sudo systemd-cryptenroll --tpm2-device auto --tpm2-pcrs "0+2+7+12" --wipe-slot tpm2 /dev/sdb1
 ```
 
-2. Recovery Key Enrollment
-This will create another key slot called recovery and a recovery key for each drive. Store these somewhere safe:
-```sh
+---
+
+### 3. Generate & Save Recovery Keys
+
+Generate recovery keys for both containers and record them in a secure password manager:
+
+```bash
+# Recovery key for SSD
 sudo systemd-cryptenroll --recovery-key /dev/sda2
+
+# Recovery key for Storage HDD
 sudo systemd-cryptenroll --recovery-key /dev/sdb1
 ```
+
+---
+
+### 4. Verify LUKS Key Slots
+
+```bash
+sudo cryptsetup luksDump /dev/sda2
+sudo cryptsetup luksDump /dev/sdb1
+```
+
+Both containers will now unlock seamlessly at boot via TPM2.

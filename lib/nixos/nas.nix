@@ -1,15 +1,14 @@
 # ./lib/nixos/nas.nix
-{
-  pkgs,
-  ...
+{ pkgs
+, ...
 }: {
 
   environment.systemPackages = with pkgs; [
-    gptfdisk        # Provides sgdisk
-    smartmontools   # Check disk health/SMART data
-    pciutils        # For lspci troubleshooting
-    nfs-utils       # If you ever want to mount NFS
-    zfs-autobackup  # Great for future off-site replication
+    gptfdisk # Provides sgdisk
+    smartmontools # Check disk health/SMART data
+    pciutils # For lspci troubleshooting
+    nfs-utils # If you ever want to mount NFS
+    zfs-autobackup # Great for future off-site replication
   ];
 
   fileSystems."/storage/data" = {
@@ -53,15 +52,15 @@
         "guest ok" = "no";
         "create mask" = "0644";
         "directory mask" = "0755";
-         "force user" = "factory"; # Use your username here
+        "force user" = "factory"; # Use your username here
       };
     };
   };
 
   services.zfs = {
-    autoScrub.enable = true;      # Weekly health checks
+    autoScrub.enable = true; # Weekly health checks
     autoSnapshot = {
-      enable = true;              # Automatic "Time Machine" style snapshots
+      enable = true; # Automatic "Time Machine" style snapshots
       flags = "-k -p --utc";
       monthly = 1;
     };

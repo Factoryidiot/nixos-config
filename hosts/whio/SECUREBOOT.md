@@ -1,95 +1,117 @@
-## Secureboot
+# 🔒 whio — Secure Boot & TPM2 LUKS Auto-Unlock Guide
 
-To Implement Secure Book with LUKS and TPM2, to avoid having to manually enter the pass-phrase each time we reboot.
+This guide details how to configure UEFI Secure Boot via **Lanzaboote** and bind disk decryption to the system's **TPM 2.0** chip, enabling passwordless boot security without compromising disk encryption integrity.
 
-Prerequsite:
-- tpm2-tss
-- boot.initrd.systemd.enable = true;
+---
 
-### Configure and enable Secure Boot
-1. Confirm the functional requirements are met
-```sh
+## 📋 Prerequisites
+
+Ensure your system configuration has the following enabled in NixOS:
+- `tpm2-tss` package
+- `boot.initrd.systemd.enable = true;`
+- Lanzaboote module imported in [`lib/nixos/secureboot.nix`](file:///home/factory/.nixos/lib/nixos/secureboot.nix)
+
+---
+
+## 🔐 Part 1: Secure Boot Key Creation & Enrollment
+
+### 1. Verify UEFI & TPM2 Readiness
+
+Check the current firmware boot status:
+
+```bash
 bootctl status
 ```
-Output:
-```sh
-System:
-     Firmware: UEFI 2.80 (American Megatrends 5.29)
-Firmware Arch: x64
-  Secure Boot: disabled (setup)
- TPM2 Support: yes
- Measured UKI: yes
- Boot into FW: supported
 
-Current Boot Loader:
-      Product: systemd-boot 256.4 
-...
-```
-2. Create Secure Boot keys
-```sh
+Confirm that `TPM2 Support: yes` and `Secure Boot: disabled (setup)` or similar setup mode is displayed.
+
+---
+
+### 2. Generate Custom Secure Boot Keys
+
+Generate your owner UUID and cryptographic keys using `sbctl`:
+
+```bash
 sudo nix run nixpkgs#sbctl create-keys
 ```
-Output:
-```sh
-Created Owner UUID 8ec4b2c3-dc7f-4362-b9a3-0cc17e5a34cd
-Creating secure boot keys...✓
-Secure boot keys created!
+
+---
+
+### 3. Build & Verify EFI Signing
+
+Rebuild the system to generate signed Unified Kernel Images (UKIs):
+
+```bash
+sudo nixos-rebuild switch --flake ~/.nixos#whio
 ```
-3. Configure NixOS
-4. Rebuild switch, and reboot 
-5. Verify that the set up is ready for Secure Boot
-```sh
+
+Verify that all boot binaries and kernels are signed:
+
+```bash
 sudo nix run nixpkgs#sbctl verify
 ```
-Output
-```sh
-Verifying file database and EFI images in /boot...
-✓ /boot/EFI/BOOT/BOOTX64.EFI is signed
-✓ /boot/EFI/Linux/nixos-generation-100-kr26liccc5utoga5un626z7whlcja5iisqjgwihjecl4bi7ycwsq.efi is signed
-✓ /boot/EFI/Linux/nixos-generation-101-u2aurkraw74u7cd42zqy6abhki3vc6gzaqe2532hp2ulzukxzqca.efi is signed
-✓ /boot/EFI/Linux/nixos-generation-102-hktgabnyiy7xawxxxvkvwg46nsjd547hkjdy7yhw5t463tkhjama.efi is signed
-✓ /boot/EFI/Linux/nixos-generation-98-nlo7qbolb6jhjpgo76v7ltyrg3paysjsk5za5cy3cgd5mh5gp3ia.efi is signed
-✓ /boot/EFI/Linux/nixos-generation-99-e35bimscug7ak2bcbnmvuf46gsxagcp23aouv55ou63qgxc3ljqa.efi is signed
-✗ /boot/EFI/nixos/kernel-6.6.49-k5dr55klogwvuwfxubqzcoinicnx5as73xwvwy2p6oweso7riv3a.efi is not signed
-✓ /boot/EFI/systemd/systemd-bootx64.efi is signed
-```
-5. Reboot and enable Secure Boot in the bios, if it has not been enabled already
-6. Enroll boot keys
-```sh
+
+> [!IMPORTANT]
+> Ensure all files listed in `/boot/EFI/...` indicate signed status (`✓`).
+
+---
+
+### 4. Enroll Keys into UEFI Firmware
+
+Enroll your custom keys along with Microsoft vendor keys (necessary for GPU option ROMs and firmware updates):
+
+```bash
 sudo nix run nixpkgs#sbctl enroll-keys -- --microsoft
 ```
-Output:
-```sh
-Enrolling keys to EFI variables...
-With vendor keys from microsoft...✓
-Enrolled keys to the EFI variables!
-```
-7. Reboot
-8. Confirm Secure Boot
-```sh
-bootctl status
-```
-Output:
-```sh
-System:
-     Firmware: UEFI 2.80 (American Megatrends 5.29)
-Firmware Arch: x64
-  Secure Boot: enabled (user)
- TPM2 Support: yes
- Measured UKI: yes
- Boot into FW: supported
 
-Current Boot Loader:
-      Product: systemd-boot 256.4 
-...
-```
-### TPM LUKS unlock
-1. Crypt Enroll
-```sh
+---
+
+### 5. Enable Secure Boot & Verify
+
+1. Reboot the system:
+   ```bash
+   sudo reboot
+   ```
+2. Enter UEFI / BIOS settings and ensure **Secure Boot** is set to **Enabled** (if not already enabled automatically).
+3. Once booted into NixOS, verify Secure Boot is active:
+   ```bash
+   bootctl status
+   ```
+   *Expected result: `Secure Boot: enabled (user)`*
+
+---
+
+## 🔑 Part 2: TPM2 Automatic LUKS Unlocking
+
+Once Secure Boot is enforced, bind LUKS volume `/dev/nvme0n1p2` to the TPM2 chip using PCRs `0+2+7+12` (Firmware + Option ROMs + Secure Boot Policy + Unified Kernel Image measurements).
+
+### 1. Enroll TPM2 on the NVMe Drive
+
+```bash
 sudo systemd-cryptenroll --tpm2-device auto --tpm2-pcrs "0+2+7+12" --wipe-slot tpm2 /dev/nvme0n1p2
 ```
-2. Recovery Key Enrollment
-This will create another key partition called recovery and a recovery key, store this somewhere safe.
-```sh
+
+---
+
+### 2. Generate & Save a LUKS Recovery Key
+
+Generate a secondary recovery passphrase in case firmware or PCR measurements change:
+
+```bash
 sudo systemd-cryptenroll --recovery-key /dev/nvme0n1p2
 ```
+
+> [!CAUTION]
+> **Store this recovery key in a safe, offline location (such as a password manager or physical safe).** If firmware updates alter TPM measurements, you will need this key to unlock the drive.
+
+---
+
+### 3. Verify Enrollment
+
+Inspect the keyslots on the LUKS header:
+
+```bash
+sudo cryptsetup luksDump /dev/nvme0n1p2
+```
+
+Confirm that both a `tpm2` token and a `recovery` keyslot are present. On next reboot, the system will unlock automatically via TPM2 without requiring a manual passphrase.

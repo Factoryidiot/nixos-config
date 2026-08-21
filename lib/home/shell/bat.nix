@@ -1,7 +1,6 @@
 # ./lib/home/shell/bat.nix
-{ 
-  pkgs,
-  ...
+{ pkgs
+, ...
 }: {
   programs.bat = {
     enable = true;
@@ -19,7 +18,7 @@
 
   programs.zsh = {
     shellAliases = {
-      cat="bat -pP";
+      cat = "bat -pP";
     };
   };
 

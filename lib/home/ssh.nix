@@ -1,6 +1,5 @@
 # lib/home/ssh.nix
-{
-  ...
+{ ...
 }: {
 
   programs.ssh = {
@@ -13,7 +12,7 @@
         identityFile = "~/.ssh/id_ed25519";
         identitiesOnly = true;
       };
-    
+
       "*" = {
         # Add any global preferences here, or leave empty to stay lean
       };

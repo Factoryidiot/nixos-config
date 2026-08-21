@@ -1,7 +1,6 @@
 # ./lib/home/shell/fzf.nix
-{
-  pkgs,
-  ...
+{ pkgs
+, ...
 }: {
 
   programs.fzf = {
@@ -13,9 +12,9 @@
       "--layout=reverse"
       "--border"
     ];
-    
+
     enableZshIntegration = true; # Adds keybindings and completions
-    
+
     #+----- CTRL+T File Widget -------------------
     fileWidgetCommand = "${pkgs.fd}/bin/fd --type f --hidden --strip-cwd-prefix --exclude .git";
     fileWidgetOptions = [

@@ -1,7 +1,6 @@
 # lib/home/development.nix
-{
-  pkgs,
-  ...
+{ pkgs
+, ...
 }: {
 
   home.packages = with pkgs; [

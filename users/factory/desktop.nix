@@ -1,8 +1,7 @@
 # 
-{ 
-  agenix,
-  inputs,
-  ... 
+{ agenix
+, inputs
+, ...
 }: {
 
   imports = [

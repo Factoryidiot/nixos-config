@@ -1,103 +1,155 @@
-# tahi - NixOS Installation Guide
+# 🛠️ tahi — NixOS Installation Guide
 
-## Host
-tahi
-```
-Host: ProLiant MicroServer Gen10 (Rev B)
-Kernel: Linux 6.8.12-4-pve (This will change after NixOS install)
-CPU: AMD Opteron(tm) X3418 APU (4) @ 1.8 GHz
-GPU 1: Advanced Micro Devices, Inc. [AMD/ATI] Wani [Radeon R5/R6/R7 Graphics]
-Memory: 30 GiB
-```
-## Install
-### Prerequisite
-1.  `sudo -i`
-2.  Clone the repo `git clone https://github.com/factoryidiot/.nixos.git ~/.nixos`
-3.  Navigate to the cloned repository: `cd ~/.nixos`.
-### Prepare Disk
-> [!CAUTION]
-> **CRITICAL: VERIFY TARGET DISK**
-> Your `disko.nix` will be configured to partition your main disk. **Before proceeding, ensure that you have correctly identified the target disk (e.g., `/dev/sdb` or `/dev/sdd`) for your NixOS installation and that you are not accidentally targeting another disk.**
->
-> Run `lsblk -f` to verify disk names and sizes. Running `disko` on the wrong disk will **ERASE ALL DATA** on that disk.
+This document provides an installation runbook for **`tahi`** (HPE ProLiant MicroServer Gen10 headless server & NAS).
 
-1. **Partition and Format with `disko`**:
-First, ensure `hosts/tahi/disko.nix` is updated with the correct main disk device path.
-Then, execute the `disko` command, ensuring it targets `tahi` (which uses your specified main disk):
-```sh
-nix --experimental-features "nix-command flakes" \
-run github:nix-community/disko/latest -- \
---mode disko \
-./disko.nix
-```
-> !TIP
-> If there are errors in the disko process, you may need to update the script, push to git, `rm -rf .cache`, and rerun the line above.
+---
 
-2.  **Enable Swapfile (if configured in `disko.nix`):**
-*   `swapon /mnt/swap/swapfile` and confirm with `swapon -s`.
-> [!TIP]
-> Confirm swap, `lsattr /mnt/swap` should output:
->
-> `---------------C------ /mnt/swap/swapfile`
+## 📋 Host Overview
 
-### Update `hardware-configuration`
-Generate a `hardware-configuration.nix` to get accurate UUIDs for your `tahi` hardware.
-1. Create `hardware-configuration.nix` for your current configuration:
-```sh
-nixos-generate-config --root /mnt
-```
-2. Remove the contents of `/mnt/etc/nixos/*` created by `nixos-generate-config`, as we use our flake for configuration:
-```sh
- rm /mnt/etc/nixos/*
-```
-### Perform Installation
-From `~/.nixos` run:
-```sh
-git add .
-nixos-install --root /mnt --no-root-password --flake .#tahi --no-write-lock-file
-```
-> [!TIP]
-> To refresh the cache:
-> nix: `--no-eval-cache`
-> --flake: `--option eval-cache false`
->
-> For troubleshooting and extra logging use:
-> `--show-trace --verbose`
+- **Host Target:** `tahi`
+- **Primary User:** `factory` (Server mode)
+- **Target OS Disk:** `/dev/sda` (240 GB SATA SSD)
+- **Data Array Disks (DO NOT OVERWRITE):** `/dev/sdb`, `/dev/sdc`, `/dev/sdd`, `/dev/sde` (4x 6 TB HDDs)
+- **Network Interface:** `br0` (`enp2s0f0`) with static IP `172.16.1.200`
 
-### Post install
-Move any essential files to their `/persistent` location
-- `mv /mnt/etc/ssh /mnt/persistent/etc`
-- `cp hosts/tahi/hardware-configuration.nix /mnt/persistent/home/factory/.nixos/hosts/tahi/`
-- `mv ~/.nixos /mnt/persistent/home/factory/`
+---
 
-> [!TIP]
-> **Configure Local PII**
-> After installation, remember to configure your local PII (Git user name and email) by following the instructions in the "Local PII Management" section of this README.
+## 🚀 Installation Runbook
 
-#### SSH Access (Post-Reboot Preparation)
+### Step 1: Boot & Elevate to Root
 
-Before rebooting, ensure you set up SSH access for the `factory` user, as it's configured for persistence and password authentication is disabled.
+1. Boot into the NixOS Minimal Live ISO on `tahi`.
+2. Elevate to root:
+   ```bash
+   sudo -i
+   ```
+3. Verify network connectivity:
+   ```bash
+   ip a
+   ping -c 3 nixos.org
+   ```
 
-1. **Retrieve your SSH Public Key:**
-On your client machine (the one you'll be SSHing *from*), get your public SSH key. It's usually in `~/.ssh/id_rsa.pub` (or `id_ed25519.pub`). Copy its content.
+---
+
+### Step 2: Clone Configuration Repository
+
 ```bash
-cat ~/.ssh/id_rsa.pub
-# Copy the entire output string (e.g., ssh-rsa AAAA...)
+git clone https://github.com/factoryidiot/.nixos.git ~/.nixos
+cd ~/.nixos
 ```
-1. **Add your Public Key to the `factory` User's `authorized_keys` on the Installed `tahi` System:**
-While you are still in the installation environment (before rebooting), perform these commands. We assume `/mnt` is the mount point for your newly installed system's root.
-2. Add your public key to the authorized_keys file
-```sh
-echo "PASTE_YOUR_PUBLIC_SSH_KEY_HERE" >> /mnt/persistent/home/factory/.ssh/authorized_keys
-```
-3. Set correct permissions for the authorized_keys file
-```sh
-chmod 600 /mnt/persistent/home/factory/.ssh/authorized_keys
-```
-4. **SSH into `tahi` after Reboot:**
-Once `tahi` has rebooted and acquired a network address, you should be able to SSH into it as the `factory` user:
-```sh
-ssh factory@<tahi_ip_address_or_hostname>
-```
-### Reboot
-`reboot`
+
+---
+
+### Step 3: Prepare OS Disk with Disko
+
+> [!CAUTION]
+> **CRITICAL: VERIFY TARGET DISK BEFORE PARTITIONING**
+> Ensure `/dev/sda` corresponds to the 240 GB SATA SSD. **Do NOT run Disko on `/dev/sdb`, `/dev/sdc`, `/dev/sdd`, or `/dev/sde` as they contain storage array data.**
+>
+> Run `lsblk -o NAME,SIZE,MODEL,TRAN` to verify disk assignments.
+
+1. Execute Disko partitioning targeting `tahi`:
+   ```bash
+   nix --experimental-features "nix-command flakes" \
+     run github:nix-community/disko/latest -- \
+     --mode disko \
+     ./hosts/tahi/disko.nix
+   ```
+
+2. Enable and verify the swapfile:
+   ```bash
+   swapon /mnt/swap/swapfile
+   swapon -s
+   ```
+
+3. Verify active mounts:
+   ```bash
+   lsblk
+   df -h
+   ```
+   Confirm `/mnt`, `/mnt/boot`, `/mnt/nix`, `/mnt/persistent`, and `/mnt/tmp` are mounted.
+
+---
+
+### Step 4: Generate Hardware Configuration & UUIDs
+
+1. Generate hardware configuration scan:
+   ```bash
+   nixos-generate-config --root /mnt
+   ```
+
+2. Retrieve the filesystem UUIDs:
+   ```bash
+   blkid -s UUID -o value /dev/sda2
+   blkid -s UUID -o value /dev/sda1
+   ```
+
+3. Update [`hosts/tahi/hardware-configuration.nix`](file:///home/factory/.nixos/hosts/tahi/hardware-configuration.nix) with the SSD UUIDs for `/dev/sda2` (`uuid`) and `/dev/sda1` (`/boot`).
+
+4. Clean up temporary template files:
+   ```bash
+   rm -rf /mnt/etc/nixos/*
+   ```
+
+---
+
+### Step 5: Execute NixOS Installation
+
+1. Stage local changes:
+   ```bash
+   git add .
+   ```
+
+2. Run the NixOS installer targeting `tahi`:
+   ```bash
+   nixos-install --root /mnt --no-root-password --flake .#tahi --no-write-lock-file
+   ```
+
+---
+
+### Step 6: Post-Installation Persistence & SSH Bootstrap
+
+Because `tahi` is a headless server with password authentication disabled (`PasswordAuthentication = false`), **you MUST inject your SSH public key into `/persistent` before rebooting**.
+
+1. Create persistent directory structure:
+   ```bash
+   mkdir -p /mnt/persistent/home/factory/.ssh
+   mkdir -p /mnt/persistent/home/factory/.nixos
+   mkdir -p /mnt/persistent/etc
+   ```
+
+2. Move generated SSH host keys:
+   ```bash
+   mv /mnt/etc/ssh /mnt/persistent/etc/
+   ```
+
+3. Copy the configuration repository to persistent storage:
+   ```bash
+   cp -r ~/.nixos/* ~/.nixos/.* /mnt/persistent/home/factory/.nixos/ 2>/dev/null || cp -r ~/.nixos /mnt/persistent/home/factory/
+   ```
+
+4. Add your authorized client SSH public key:
+   ```bash
+   echo "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFJCkeOcvLsmdbtI/gkuqGSB5XQYLaLdF74M3Ck2vPuQ rhys@whio" >> /mnt/persistent/home/factory/.ssh/authorized_keys
+   ```
+
+5. Set strict permissions and ownership (`1000:100` for user `factory`):
+   ```bash
+   chmod 700 /mnt/persistent/home/factory/.ssh
+   chmod 600 /mnt/persistent/home/factory/.ssh/authorized_keys
+   chown -R 1000:100 /mnt/persistent/home/factory
+   ```
+
+---
+
+### Step 7: Reboot & Verify Remote Access
+
+1. Reboot the server:
+   ```bash
+   reboot
+   ```
+
+2. From your workstation (`whio`), verify SSH connectivity once `tahi` comes online:
+   ```bash
+   ssh factory@172.16.1.200
+   ```

@@ -1,15 +1,14 @@
 # ./lib/nixos/incus/step-ca.nix
-{
-  pkgs,
-  hostname,
-  ...
+{ pkgs
+, hostname
+, ...
 }:
 let
   containerName = "${hostname}-ca";
-  
+
   # Manual configuration - choosing an IP for the CA
   ipAddr = {
-    tahi = "172.16.1.204"; 
+    tahi = "172.16.1.204";
   };
   hostIP = ipAddr."${hostname}";
 
@@ -95,7 +94,7 @@ in
       RemainAfterExit = true;
     };
 
-  script = ''
+    script = ''
       # 1. Create a persistent password on the HOST if it doesn't exist
       # This stays on Tahi, not in your Nix config.
       PW_FILE="/var/lib/incus/secrets/${containerName}-pass.txt"

@@ -1,7 +1,6 @@
 # ./lib/nixos/snapper.nix
-{
-  specialArgs,
-  ...
+{ specialArgs
+, ...
 }:
 let
   inherit (specialArgs) username;

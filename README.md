@@ -1,189 +1,169 @@
-# .nixos
+# ❄️ .nixos
 
-## Hosts
-whio
-```
-Host: ASUS TUF Gaming A15 FA507UI_FA507UI (1.0)
-CPU: AMD Ryzen 9 8945H w/ Radeon 780M Graphics (16) @ 6.23 GHz
-GPU 1: NVIDIA GeForce RTX 4070 Max-Q / Mobile [Discrete]
-GPU 2: AMD Phoenix3 [Integrated]
-Display (NE156FHM-NX6): 1920x1080 @ 144 Hz in 15″ [Built-in]
-Memory: 32 GiB
-
-OS:
-Kernel: Linux
-Shell: zsh 5.9
-WM: Hyprland (Wayland)
-Terminal: Ghostty
-```
-
-## To do
-These are in no particular order of priority
-
-## Install
-### Prerequsite
-1. `sudo -i`
-2. Clone the repo `git clone https://github.com/factoryidiot/.nixos.git ~/.nixos`.
-### Prepare Disk
-1. Navigate to the desired hosts disko configuration and execute: 
-```sh
-nix --experimental-features "nix-command flakes" \
-run github:nix-community/disko/latest -- \
---mode disko \
-./disko.nix
-```
-> !TIP
-> if there are errors in the disko process, we can update the script push to git `rm -rf .cache` and rerun the line above.
-2. Enable swapfile `swapon /mnt/swap/swapfile` and confim `swapon -s` if required
-> [!TIP]
-> Confirm swap, `lsattr /mnt/swap` should output:
->
-> `---------------C------ /mnt/swap/swapfile`
-
-> [!TIP]
-> If a swap partition is not set up we can do this manually
-> `btrfs filesystem mkswapfile --size 24g --uuid clear /mnt/swap/swapfile`
-> Then run swapon see step 2.
-
-### Update `hardware-configuration`
-Generate a `hardware-configuration.nix` to update the `UUID`s for the hardware-configuration.nix included in the repo we have just cloned.
-1. Create `hardware-configuration.nix` for your current configuration:
-```sh
- nixos-generate-config --root /mnt
-```
-2. Use editor to update the UUIDs found in `/mnt/etc/nixos/hardware-configuration.nix` into the hosts hardware-configuration e.g. `hosts/whio/hardware-configuration.nix`.
-> [!TIP]
-> ls -la /dev/disk/by-uuid/ > uuids
-3. Remove the contents of `rm /mnt/etc/nixos/*`.
-
-### Perform installation
-From `~/.nixos` run:
-```sh
-nixos-install --root /mnt --no-root-password --flake .#[host-name] --no-write-lock-file
-```
-> [!TIP]
-> To refresh the cache:
-> nix: `--no-eval-cache`
-> --flake: `--option eval-cache false`
-
-> [!TIP]
-> For troubleshooting and extra logging use:
-> --show-trace --verbose
-
-### Post install
-Move any essential files to their `/persistent` location
-- `mv /mnt/etc/ssh /mnt/persistent/etc`
-- `cp hosts/whio/hardware-configuration.nix /mnt/persistent/home/factory/.nixos/hosts/whio/`
-- `mv ~/.nixos /mnt/persistent/home/factory/`
-
-> [!TIP]
-> **Configure Local PII**
-> After installation, remember to configure your local PII (Git user name and email) by following the instructions in the "Local PII Management" section of this README.
-
-### Reboot
-`reboot`
+Declarative, reproducible, and stateless multi-host configuration powered by **NixOS Flakes**, **Home Manager**, **Disko**, and **Impermanence**.
 
 ---
 
-## Secureboot
+## 📖 Architecture & Design Principles
 
-To Implement Secure Book with LUKS and TPM2, to avoid having to manually enter the pass-phrase each time we reboot.
+This repository manages configurations for personal workstations, gaming laptops, and home servers from a single unified codebase.
 
-Prerequsite:
-- tpm2-tss
-- boot.initrd.systemd.enable = true;
+- **Stateless Root (Erase Your Darlings):** The root filesystem (`/`) runs entirely in `tmpfs` (RAM). Every reboot wipes the ephemeral state clean, preventing configuration drift and bit rot.
+- **Declarative Persistence:** Persistent state (dotfiles, browser profiles, SSH host keys, logs, project files) is explicitly managed via [`impermanence`](https://github.com/nix-community/impermanence) and preserved on dedicated Btrfs subvolumes.
+- **Automated Partitioning:** Disk layouts, LUKS2 encryption containers, swapfiles, and Btrfs subvolumes are declaratively defined using [`disko`](https://github.com/nix-community/disko).
+- **Hardened Boot Security:** UEFI Secure Boot integration using [`lanzaboote`](https://github.com/nix-community/lanzaboote) with TPM2-backed automated LUKS unlocking (`systemd-cryptenroll`).
+- **Secrets Management:** Encrypted secrets using [`agenix`](https://github.com/ryan4yin/ragenix) (`secrets/` directory).
+- **Decoupled Dotfiles:** Application dotfiles reside in an external repository (`~/.dotfiles`) and are seamlessly linked into the user environment via Home Manager.
 
-### Configure and enable Secure Boot
-1. Confirm the functional requirements are met
+---
 
-```
-bootctl status
-```
-Output:
-```
-System:
-     Firmware: UEFI 2.80 (American Megatrends 5.29)
-Firmware Arch: x64
-  Secure Boot: disabled (setup)
- TPM2 Support: yes
- Measured UKI: yes
- Boot into FW: supported
+## 🖥️ Hosts & Hardware Matrix
 
-Current Boot Loader:
-      Product: systemd-boot 256.4 
-...
+| Host | Type & Chassis | CPU | GPU | Memory | Storage Architecture | Target User & Role | Documentation |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| [**whio**](file:///home/factory/.nixos/hosts/whio/README.md) | ASUS TUF Gaming A15 (FA507UI) | AMD Ryzen 9 8945H (16T @ 5.26 GHz) | NVIDIA RTX 4070 Mobile + AMD Radeon 780M | 32 GiB DDR5 | 1 TB NVMe SSD (LUKS2 + Btrfs + tmpfs root) | `factory`<br>*(Primary Daily Workstation & Gaming)* | [Specs](file:///home/factory/.nixos/hosts/whio/README.md) • [Install](file:///home/factory/.nixos/hosts/whio/INSTALL.md) • [SecureBoot](file:///home/factory/.nixos/hosts/whio/SECUREBOOT.md) |
+| [**kea**](file:///home/factory/.nixos/hosts/kea/README.md) | Dell Gaming Laptop | Intel Core Mobile | Intel HD + NVIDIA GTX 960M (Legacy 580) | 16/32 GiB DDR4 | 240 GB SSD (OS LUKS) + 1 TB HDD (Storage LUKS) | `dexter`<br>*(Secondary Gaming & Portable Rig)* | [Specs](file:///home/factory/.nixos/hosts/kea/README.md) • [Install](file:///home/factory/.nixos/hosts/kea/INSTALL.md) • [SecureBoot](file:///home/factory/.nixos/hosts/kea/SECUREBOOT.md) |
+| [**tahi**](file:///home/factory/.nixos/hosts/tahi/README.md) | HPE ProLiant MicroServer Gen10 | AMD Opteron X3418 APU (4C @ 1.8 GHz) | AMD Radeon R5/R6/R7 (Integrated) | 30 GiB DDR4 ECC | 240 GB SSD (OS) + 4x 6 TB HDD (ZFS Pool / NAS) | `factory`<br>*(Headless Hypervisor, NAS & Server)* | [Specs](file:///home/factory/.nixos/hosts/tahi/README.md) • [Install](file:///home/factory/.nixos/hosts/tahi/INSTALL.md) |
 
-```
-2. Create Secure Boot keys
-```
-sudo nix run nixpkgs#sbctl create-keys
-```
-Output:
-```
-Created Owner UUID 8ec4b2c3-dc7f-4362-b9a3-0cc17e5a34cd
-Creating secure boot keys...✓
-Secure boot keys created!
-```
-3. Configure NixOS
-4. Rebuild switch, and reboot 
-5. Verify that the set up is ready for Secure Boot
-```
-sudo nix run nixpkgs#sbctl verify
-```
-Output
-```
-Verifying file database and EFI images in /boot...
-✓ /boot/EFI/BOOT/BOOTX64.EFI is signed
-✓ /boot/EFI/Linux/nixos-generation-100-kr26liccc5utoga5un626z7whlcja5iisqjgwihjecl4bi7ycwsq.efi is signed
-✓ /boot/EFI/Linux/nixos-generation-101-u2aurkraw74u7cd42zqy6abhki3vc6gzaqe2532hp2ulzukxzqca.efi is signed
-✓ /boot/EFI/Linux/nixos-generation-102-hktgabnyiy7xawxxxvkvwg46nsjd547hkjdy7yhw5t463tkhjama.efi is signed
-✓ /boot/EFI/Linux/nixos-generation-98-nlo7qbolb6jhjpgo76v7ltyrg3paysjsk5za5cy3cgd5mh5gp3ia.efi is signed
-✓ /boot/EFI/Linux/nixos-generation-99-e35bimscug7ak2bcbnmvuf46gsxagcp23aouv55ou63qgxc3ljqa.efi is signed
-✗ /boot/EFI/nixos/kernel-6.6.49-k5dr55klogwvuwfxubqzcoinicnx5as73xwvwy2p6oweso7riv3a.efi is not signed
-✓ /boot/EFI/systemd/systemd-bootx64.efi is signed
-```
-5. Reboot and enable Secure Boot in the bios, if it has not been enabled already
-6. Enroll boot keys
-```
-sudo nix run nixpkgs#sbctl enroll-keys -- --microsoft
-```
-Output:
-```
-Enrolling keys to EFI variables...
-With vendor keys from microsoft...✓
-Enrolled keys to the EFI variables!
-```
-7. Reboot
-8. Confirm Secure Boot
-```
-bootctl status
-```
-Output:
-```
-System:
-     Firmware: UEFI 2.80 (American Megatrends 5.29)
-Firmware Arch: x64
-  Secure Boot: enabled (user)
- TPM2 Support: yes
- Measured UKI: yes
- Boot into FW: supported
+---
 
-Current Boot Loader:
-      Product: systemd-boot 256.4 
+### Host Summaries
 
-...
+#### 1. [`whio`](file:///home/factory/.nixos/hosts/whio/README.md) — Primary Workstation & Gaming Laptop
+- **Chassis:** ASUS TUF Gaming A15 (FA507UI)
+- **Primary Use:** Daily driver workstation, software development, LLM tooling, and gaming.
+- **Desktop Environment:** Hyprland (Wayland), Ghostty terminal, Waybar, Walker launcher, SwayOSD, Mako notifications.
+- **Hardware Integration:** ASUS WMI daemon (`asusd`), NVIDIA PRIME offload graphics switching, Lanzaboote Secure Boot + TPM2 LUKS auto-unlock.
+- 🔗 **Guides:** [Hardware Specs](file:///home/factory/.nixos/hosts/whio/README.md) | [Installation Guide](file:///home/factory/.nixos/hosts/whio/INSTALL.md) | [Secure Boot Setup](file:///home/factory/.nixos/hosts/whio/SECUREBOOT.md)
+
+#### 2. [`kea`](file:///home/factory/.nixos/hosts/kea/README.md) — Dual-Drive Gaming Laptop
+- **Chassis:** Dell Gaming Laptop
+- **Primary Use:** Portable gaming and workstation rig for user `dexter`.
+- **Storage Strategy:** Tiered dual-drive layout:
+  - **SSD (`/dev/sda`):** High-speed LUKS2 Btrfs container for OS, Nix store, tmpfs root, swapfile, and active configuration.
+  - **HDD (`/dev/sdb`):** High-capacity LUKS2 Btrfs storage (`/storage`) with `zstd:3` compression for Steam library, games, VMs, and downloads.
+- **Hardware Integration:** Dell SMBIOS battery charge limiting (50–80% thresholds), Intel `thermald`, NVIDIA legacy driver (`legacy_580`) with PRIME offload.
+- 🔗 **Guides:** [Hardware Specs](file:///home/factory/.nixos/hosts/kea/README.md) | [Installation Guide](file:///home/factory/.nixos/hosts/kea/INSTALL.md) | [Secure Boot Setup](file:///home/factory/.nixos/hosts/kea/SECUREBOOT.md)
+
+#### 3. [`tahi`](file:///home/factory/.nixos/hosts/tahi/README.md) — Headless Server, NAS & Hypervisor
+- **Chassis:** HPE ProLiant MicroServer Gen10 (Rev B)
+- **Primary Use:** 24/7 Home server, Incus container/VM virtualization, ZFS/NFS network storage, LLM inference agent host.
+- **Network Configuration:** Static bridged network interface (`br0` on `172.16.1.200/24`) with `systemd-networkd` and `nftables`.
+- **Storage Strategy:** Fast SATA SSD for OS and stateless runtime + 4x 6 TB enterprise storage drives configured for ZFS pools and NFS shares.
+- 🔗 **Guides:** [Hardware Specs](file:///home/factory/.nixos/hosts/tahi/README.md) | [Installation Guide](file:///home/factory/.nixos/hosts/tahi/INSTALL.md)
+
+---
+
+## 📁 Repository Layout
 
 ```
-### TPM LUKS unlock
-1. Crypt Enroll
+.nixos/
+├── flake.nix                  # Flake entry point (inputs, outputs, nixosConfigurations)
+├── flake.lock                 # Flake input lockfile
+├── GEMINI.md                  # Development guidelines & architecture rules
+├── README.md                  # Global documentation & hosts matrix
+├── hosts/                     # Machine-specific configurations
+│   ├── whio/                  # ASUS TUF Gaming A15 laptop
+│   │   ├── default.nix        # System configuration & imported modules
+│   │   ├── disko.nix          # Declarative disk partitioning (single NVMe)
+│   │   ├── hardware-configuration.nix
+│   │   ├── persistence.nix    # Impermanence paths
+│   │   ├── README.md          # Granular hardware & disk specs
+│   │   ├── INSTALL.md         # Step-by-step install guide
+│   │   └── SECUREBOOT.md      # Secure Boot & TPM2 auto-unlock guide
+│   ├── kea/                   # Dell laptop (dual drive)
+│   │   ├── default.nix
+│   │   ├── disko.nix          # Dual-drive partitioning (SSD + HDD)
+│   │   ├── hardware-configuration.nix
+│   │   ├── persistence.nix
+│   │   ├── README.md          # Granular hardware & disk specs
+│   │   ├── INSTALL.md         # Step-by-step install guide
+│   │   └── SECUREBOOT.md      # Dual-drive Secure Boot & TPM2 guide
+│   └── tahi/                  # HPE ProLiant MicroServer Gen10
+│       ├── default.nix
+│       ├── disko.nix          # Server disk partitioning
+│       ├── hardware-configuration.nix
+│       ├── persistence.nix
+│       ├── README.md          # Granular server & storage specs
+│       └── INSTALL.md         # Server install guide & SSH bootstrap
+├── lib/                       # Reusable modules
+│   ├── nixos/                 # System-level modules (NVIDIA, Btrfs, ASUS, Dell, Incus, etc.)
+│   └── home/                  # User-level modules (Hyprland, Waybar, Nixvim, Shell, etc.)
+├── users/                     # User home-manager configurations
+│   ├── factory/               # Workstation / Server user
+│   └── dexter/                # Laptop user
+└── secrets/                   # Encrypted agenix secrets
 ```
-sudo systemd-cryptenroll --tpm2-device auto --tpm2-pcrs "0+2+7+12" --wipe-slot tpm2 /dev/nvme0n1p2
 
-```
-2. Recovery Key Enrollment
-This will create another key partition called recovery and a recovery key, store this somewhere safe.
-```
-sudo systemd-cryptenroll --recovery-key /dev/nvme0n1p2
+---
 
+## ⚡ Common Operations & Workflow
+
+### Rebuilding & Switching Configurations
+
+```bash
+# Rebuild and switch current machine (auto-detects hostname)
+sudo nixos-rebuild switch --flake ~/.nixos
+
+# Rebuild a specific target host
+sudo nixos-rebuild switch --flake ~/.nixos#whio
+sudo nixos-rebuild switch --flake ~/.nixos#kea
+sudo nixos-rebuild switch --flake ~/.nixos#tahi
+
+# Build without activating (useful for testing)
+nixos-rebuild build --flake ~/.nixos#whio
 ```
 
+### Checking & Formatting
+
+```bash
+# Evaluate and validate flake checks
+nix flake check
+
+# Format all Nix files according to repository guidelines
+nix fmt
+```
+
+### Updating Flake Inputs
+
+```bash
+# Update all inputs
+nix flake update
+
+# Update a single input (e.g. nixpkgs, hyprland)
+nix flake lock --update-input nixpkgs
+```
+
+---
+
+## 📋 Roadmap & To-Do List
+
+### 🔒 Security & Secrets
+- [ ] **Agenix Consolidation:** Migrate remaining plain credential files to encrypted `agenix` secrets.
+- [ ] **YubiKey / FIDO2 Authentication:** Implement declarative PAM support for hardware security keys on login and `sudo`.
+- [ ] **Automated Key Backup:** Create automated, encrypted offline backup scripts for Secure Boot and LUKS recovery keys.
+
+### 🖥️ Host & Hardware Optimization
+- [ ] **ASUS ROG/TUF Fine-Tuning (`whio`):** Declaratively configure custom fan curves and battery charge threshold via `asusd` and `supergfxctl`.
+- [ ] **Dell Power & Thermals (`kea`):** Calibrate `thermald` XML profiles and TLP power governors for optimal battery vs. gaming performance.
+- [ ] **Incus Container Templates (`tahi`):** Automate NixOS and Alpine microVM / container image provisioning on Incus.
+- [ ] **ZFS Scrubbing & Health Monitoring (`tahi`):** Set up automated scheduled ZFS scrubs with systemd health check notifications.
+
+### 🎨 Desktop & User Environment
+- [ ] **Walker Plugins:** Add custom Walker plugins for systemd service management and clipboard history filtering.
+- [ ] **Waybar Modules:** Add dynamic GPU temperature, battery threshold, and network throughput monitors.
+- [ ] **Ghostty & Nixvim Sync:** Complete color scheme and keymap harmonization between terminal and editor.
+
+### 📦 Dotfiles & Tooling
+- [ ] **Dotfiles Symlink Verification:** Add a validation script to verify all expected `~/.dotfiles` symlinks on fresh installations.
+- [ ] **LLM Agent Sidecars:** Expand local Ollama and agent toolchain integrations across workstation and server.
+
+---
+
+## 🚀 Installation
+
+For detailed, host-specific installation steps, partition commands, UUID helpers, and post-installation workflows, refer to each host's dedicated guide:
+
+- 📖 [**whio Installation Guide**](file:///home/factory/.nixos/hosts/whio/INSTALL.md)
+- 📖 [**kea Installation Guide**](file:///home/factory/.nixos/hosts/kea/INSTALL.md)
+- 📖 [**tahi Installation Guide**](file:///home/factory/.nixos/hosts/tahi/INSTALL.md)

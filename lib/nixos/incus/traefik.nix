@@ -1,8 +1,7 @@
 # ./lib/nixos/incus/traefik.nix
-{
-  pkgs,
-  hostname,
-  ...
+{ pkgs
+, hostname
+, ...
 }:
 let
   containerName = "${hostname}-traefik";
@@ -72,88 +71,88 @@ in
       RemainAfterExit = true;
     };
     script = ''
-      until ${pkgs.incus}/bin/incus info >/dev/null 2>&1; do sleep 1; done
+            until ${pkgs.incus}/bin/incus info >/dev/null 2>&1; do sleep 1; done
 
-      if ! ${pkgs.incus}/bin/incus list --format csv -c n | grep -qx "${containerName}"; then
-        ${pkgs.incus}/bin/incus init images:debian/12/cloud ${containerName} --profile default
-      fi
+            if ! ${pkgs.incus}/bin/incus list --format csv -c n | grep -qx "${containerName}"; then
+              ${pkgs.incus}/bin/incus init images:debian/12/cloud ${containerName} --profile default
+            fi
 
-      ${pkgs.incus}/bin/incus config set ${containerName} volatile.eth0.hwaddr ${hostMAC}
-      ${pkgs.incus}/bin/incus config set ${containerName} user.user-data - < ${cloudConfig}
-      ${pkgs.incus}/bin/incus start ${containerName} || true
+            ${pkgs.incus}/bin/incus config set ${containerName} volatile.eth0.hwaddr ${hostMAC}
+            ${pkgs.incus}/bin/incus config set ${containerName} user.user-data - < ${cloudConfig}
+            ${pkgs.incus}/bin/incus start ${containerName} || true
 
-      # --- INJECT ROOT TRUST FROM HOST (Fixed Cryptographic Chain) ---
-      # Wait briefly for container filesystem mount paths to stabilize
-      sleep 2
-      ${pkgs.incus}/bin/incus file push ${../../../hosts/tahi/tahi_root.crt} ${containerName}/usr/local/share/ca-certificates/tahi-root.crt
-      ${pkgs.incus}/bin/incus exec ${containerName} -- update-ca-certificates
+            # --- INJECT ROOT TRUST FROM HOST (Fixed Cryptographic Chain) ---
+            # Wait briefly for container filesystem mount paths to stabilize
+            sleep 2
+            ${pkgs.incus}/bin/incus file push ${../../../hosts/tahi/tahi_root.crt} ${containerName}/usr/local/share/ca-certificates/tahi-root.crt
+            ${pkgs.incus}/bin/incus exec ${containerName} -- update-ca-certificates
 
-      # --- Static Configuration (The Engine) ---
-      ${pkgs.incus}/bin/incus exec ${containerName} -- sh -c "cat <<'EOF' > /etc/traefik/traefik.yml
-entryPoints:
-  web:
-    address: \":80\"
-    http:
-      redirections:
-        entryPoint:
-          to: websecure
-          scheme: https
-  websecure:
-    address: \":443\"
-
-certificatesResolvers:
-  stepca:
-    acme:
-      email: \"admin@tahi.lan\"
-      caServer: \"https://172.16.1.204/acme/acme/directory\"
-      storage: \"/etc/traefik/acme.json\"
-      httpChallenge:
-        entryPoint: web
-
-api:
-  dashboard: true
-
-providers:
-  file:
-    directory: /etc/traefik/conf.d/
-    watch: true
-EOF"
-
-      # --- Dynamic Configuration (The Routes) ---
-
-      # 1. Incus UI/API Route (TCP Passthrough for mTLS)
-      ${pkgs.incus}/bin/incus exec ${containerName} -- sh -c "cat <<'EOF' > /etc/traefik/conf.d/incus.yml
-tcp:
-  routers:
-    incus:
-      rule: \"HostSNI(\`incus.lan\`)\"
-      service: incus-service
+            # --- Static Configuration (The Engine) ---
+            ${pkgs.incus}/bin/incus exec ${containerName} -- sh -c "cat <<'EOF' > /etc/traefik/traefik.yml
       entryPoints:
-        - websecure
-      tls:
-        passthrough: true
+        web:
+          address: \":80\"
+          http:
+            redirections:
+              entryPoint:
+                to: websecure
+                scheme: https
+        websecure:
+          address: \":443\"
 
-  services:
-    incus-service:
-      loadBalancer:
-        servers:
-          - address: \"172.16.1.200:8443\"
-EOF"
+      certificatesResolvers:
+        stepca:
+          acme:
+            email: \"admin@tahi.lan\"
+            caServer: \"https://172.16.1.204/acme/acme/directory\"
+            storage: \"/etc/traefik/acme.json\"
+            httpChallenge:
+              entryPoint: web
 
-      # 2. Traefik Dashboard Route
-      ${pkgs.incus}/bin/incus exec ${containerName} -- sh -c "cat <<'EOF' > /etc/traefik/conf.d/dashboard.yml
-http:
-  routers:
-    dashboard:
-      rule: \"Host(\`traefik.lan\`)\"
-      service: api@internal
-      entryPoints:
-        - websecure
-      tls:
-        certResolver: stepca
-EOF"
+      api:
+        dashboard: true
 
-      ${pkgs.incus}/bin/incus exec ${containerName} -- systemctl restart traefik
+      providers:
+        file:
+          directory: /etc/traefik/conf.d/
+          watch: true
+      EOF"
+
+            # --- Dynamic Configuration (The Routes) ---
+
+            # 1. Incus UI/API Route (TCP Passthrough for mTLS)
+            ${pkgs.incus}/bin/incus exec ${containerName} -- sh -c "cat <<'EOF' > /etc/traefik/conf.d/incus.yml
+      tcp:
+        routers:
+          incus:
+            rule: \"HostSNI(\`incus.lan\`)\"
+            service: incus-service
+            entryPoints:
+              - websecure
+            tls:
+              passthrough: true
+
+        services:
+          incus-service:
+            loadBalancer:
+              servers:
+                - address: \"172.16.1.200:8443\"
+      EOF"
+
+            # 2. Traefik Dashboard Route
+            ${pkgs.incus}/bin/incus exec ${containerName} -- sh -c "cat <<'EOF' > /etc/traefik/conf.d/dashboard.yml
+      http:
+        routers:
+          dashboard:
+            rule: \"Host(\`traefik.lan\`)\"
+            service: api@internal
+            entryPoints:
+              - websecure
+            tls:
+              certResolver: stepca
+      EOF"
+
+            ${pkgs.incus}/bin/incus exec ${containerName} -- systemctl restart traefik
     '';
   };
 }

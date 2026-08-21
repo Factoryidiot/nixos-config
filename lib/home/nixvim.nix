@@ -1,8 +1,7 @@
 # ./lib/home/nixvim.nix
-{
-  config,
-  pkgs,
-  ...
+{ config
+, pkgs
+, ...
 }: {
 
   programs.nixvim = {
@@ -190,7 +189,7 @@
             ];
           };
           cssls.enable = true;
-          docker_compose_language_service.enable = true;  # Docker Compose language server
+          docker_compose_language_service.enable = true; # Docker Compose language server
           html.enable = true;
           jsonls.enable = true;
           lua_ls.enable = true;
@@ -200,8 +199,9 @@
             installCargo = true;
             installRustc = true;
           };
-          taplo.enable = true;                            # TOML language server
-          yamlls = {                                      # YAML language server
+          taplo.enable = true; # TOML language server
+          yamlls = {
+            # YAML language server
             enable = true;
             settings.yaml.schemas = {
               # GitHub Actions workflow schema
@@ -270,7 +270,7 @@
           pickers.find_files.hidden = true;
         };
       };
-     
+
       web-devicons.enable = true;
 
     };

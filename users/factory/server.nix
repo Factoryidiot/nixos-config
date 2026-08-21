@@ -1,8 +1,6 @@
-
-{ 
-  agenix,
-  inputs,
-  ... 
+{ agenix
+, inputs
+, ...
 }:
 
 {

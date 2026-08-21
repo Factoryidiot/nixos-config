@@ -1,87 +1,154 @@
-# whio - NixOS Installation Guide
-[[SECUREBOOT]]
-## Hosts
-whio
+# 🛠️ whio — NixOS Installation Guide
+
+This document provides a step-by-step runbook for performing a fresh, clean installation of NixOS on the **`whio`** host (ASUS TUF Gaming A15) using Disko, Impermanence, and Btrfs.
+
+---
+
+## 📋 Host Overview
+
+- **Host Target:** `whio`
+- **Primary User:** `factory`
+- **Target Drive:** `/dev/nvme0n1` (1 TB NVMe SSD)
+- **Encryption:** LUKS2 (`crypted`)
+- **Filesystem:** Btrfs with `tmpfs` stateless root
+
+---
+
+## 🚀 Installation Runbook
+
+### Step 1: Boot & Elevate to Root
+
+1. Boot into the latest NixOS Minimal or Graphical Live ISO.
+2. Open a terminal and elevate to a root shell:
+   ```bash
+   sudo -i
+   ```
+3. Ensure network connectivity:
+   ```bash
+   ping -c 3 nixos.org
+   ```
+
+---
+
+### Step 2: Clone Configuration Repository
+
+Clone this configuration repository to a temporary location:
+
+```bash
+git clone https://github.com/factoryidiot/.nixos.git ~/.nixos
+cd ~/.nixos
 ```
-Host: ASUS TUF Gaming A15 FA507UI_FA507UI (1.0)
-CPU: AMD Ryzen 9 8945H w/ Radeon 780M Graphics (16) @ 6.23 GHz
-GPU 1: NVIDIA GeForce RTX 4070 Max-Q / Mobile [Discrete]
-GPU 2: AMD Phoenix3 [Integrated]
-Display (NE156FHM-NX6): 1920x1080 @ 144 Hz in 15″ [Built-in]
-Memory: 32 GiB
 
-OS:
-Kernel: Linux
-Shell: zsh 5.9
-WM: Hyprland (Wayland)
-Terminal: Ghostty
-```
-## To do
-These are in no particular order of priority
+---
 
-## Install
-### Prerequsite
-1. `sudo -i`
-2. Clone the repo `git clone https://github.com/factoryidiot/.nixos.git ~/.nixos`.
-### Prepare Disk
-1. Navigate to the desired hosts disko configuration and execute: 
-```sh
-nix --experimental-features "nix-command flakes" \
-run github:nix-community/disko/latest -- \
---mode disko \
-./disko.nix
-```
-> !TIP
-> if there are errors in the disko process, we can update the script push to git `rm -rf .cache` and rerun the line above.
-2. Enable swapfile `swapon /mnt/swap/swapfile` and confim `swapon -s` if required
-> [!TIP]
-> Confirm swap, `lsattr /mnt/swap` should output:
->
-> `---------------C------ /mnt/swap/swapfile`
+### Step 3: Prepare Disk with Disko
 
-> [!TIP]
-> If a swap partition is not set up we can do this manually
-> `btrfs filesystem mkswapfile --size 24g --uuid clear /mnt/swap/swapfile`
-> Then run swapon see step 2.
+1. Execute the automated Disko partitioning script for `whio`:
+   ```bash
+   nix --experimental-features "nix-command flakes" \
+     run github:nix-community/disko/latest -- \
+     --mode disko \
+     ./hosts/whio/disko.nix
+   ```
 
-### Update `hardware-configuration`
-1. Create `hardware-configuration.nix` for your current configuration:
-```sh
-nixos-generate-config --root /mnt
-```
-2. Export all 3 UUIDs directly into `hosts/whio/UUID` (formatted as Nix code):
-```sh
-cat <<EOF > hosts/whio/UUID
-  BOOT_ESP_UUID  = "$(blkid -s UUID -o value /dev/nvme0n1p1)"; # /dev/nvme0n1p1 (FAT32 EFI partition)
-  NVME_LUKS_UUID = "$(blkid -s UUID -o value /dev/nvme0n1p2)"; # /dev/nvme0n1p2 (LUKS partition on NVMe)
-  BTRFS_UUID     = "$(blkid -s UUID -o value /dev/mapper/crypted)"; # /dev/mapper/crypted (Decrypted BTRFS filesystem)
-EOF
-cat hosts/whio/UUID
-```
-3. Update `hosts/whio/hardware-configuration.nix` with the values from `hosts/whio/UUID`.
-4. Remove the temporary generated directory: `rm -rf /mnt/etc/nixos/*`.
-### Perform installation
-From `~/.nixos` run:
-```sh
-nixos-install --root /mnt --no-root-password --flake .#[host-name] --no-write-lock-file
-```
-> [!TIP]
-> To refresh the cache:
-> nix: `--no-eval-cache`
-> --flake: `--option eval-cache false`
+   > [!TIP]
+   > Disko will partition `/dev/nvme0n1`, create the LUKS2 container (`crypted`), create all Btrfs subvolumes (`@nix`, `@persistent`, `@swap`, `@tmp`, `@guix`, `@snapshots`), and mount the hierarchy under `/mnt`.
 
-> [!TIP]
-> For troubleshooting and extra logging use:
-> --show-trace --verbose
-### Post install
-Move any essential files to their `/persistent` location
-- `mv /mnt/etc/ssh /mnt/persistent/etc`
-- `cp hosts/whio/hardware-configuration.nix /mnt/persistent/home/factory/.nixos/hosts/whio/`
-- `mv ~/.nixos /mnt/persistent/home/factory/`
+2. Enable and verify the swapfile:
+   ```bash
+   swapon /mnt/swap/swapfile
+   swapon -s
+   ```
 
-> [!TIP]
-> **Configure Local PII**
-> After installation, remember to configure your local PII (Git user name and email) by following the instructions in the "Local PII Management" section of this README.
+   > [!NOTE]
+   > Verify that Copy-on-Write (CoW) is disabled on the swapfile:
+   > `lsattr /mnt/swap/swapfile` should display `---------------C------ /mnt/swap/swapfile`.
 
-### Reboot
-`reboot`
+3. Verify active mounts:
+   ```bash
+   lsblk
+   df -h
+   ```
+
+---
+
+### Step 4: Generate Hardware UUIDs
+
+1. Generate standard NixOS configuration templates:
+   ```bash
+   nixos-generate-config --root /mnt
+   ```
+
+2. Export the partition and filesystem UUIDs directly into a helper file `hosts/whio/UUID`:
+   ```bash
+   cat <<EOF > hosts/whio/UUID
+     BOOT_ESP_UUID  = "$(blkid -s UUID -o value /dev/nvme0n1p1)"; # /dev/nvme0n1p1 (FAT32 EFI partition)
+     NVME_LUKS_UUID = "$(blkid -s UUID -o value /dev/nvme0n1p2)"; # /dev/nvme0n1p2 (LUKS partition on NVMe)
+     BTRFS_UUID     = "$(blkid -s UUID -o value /dev/mapper/crypted)"; # /dev/mapper/crypted (Decrypted BTRFS filesystem)
+   EOF
+   cat hosts/whio/UUID
+   ```
+
+3. Update the `let` block in [`hosts/whio/hardware-configuration.nix`](file:///home/factory/.nixos/hosts/whio/hardware-configuration.nix) to match the UUIDs generated above.
+
+4. Remove the temporary template directory:
+   ```bash
+   rm -rf /mnt/etc/nixos/*
+   ```
+
+---
+
+### Step 5: Execute NixOS Installation
+
+1. Stage local changes in git if any files were edited:
+   ```bash
+   git add .
+   ```
+
+2. Run the NixOS installer targeting `whio`:
+   ```bash
+   nixos-install --root /mnt --no-root-password --flake .#whio --no-write-lock-file
+   ```
+
+   > [!TIP]
+   > If evaluation issues occur, append `--show-trace --verbose` for detailed stack traces.
+
+---
+
+### Step 6: Post-Installation Persistence Setup
+
+Before rebooting, prepare the persistent directories so essential services and configurations survive the stateless tmpfs reboot:
+
+1. Create persistent directory structure for the user:
+   ```bash
+   mkdir -p /mnt/persistent/home/factory/.nixos
+   mkdir -p /mnt/persistent/etc
+   ```
+
+2. Move generated host SSH keys to persistent storage:
+   ```bash
+   mv /mnt/etc/ssh /mnt/persistent/etc/
+   ```
+
+3. Copy the repository to persistent user storage:
+   ```bash
+   cp -r ~/.nixos/* ~/.nixos/.* /mnt/persistent/home/factory/.nixos/ 2>/dev/null || cp -r ~/.nixos /mnt/persistent/home/factory/
+   ```
+
+4. Set proper file ownership (`1000:100` for user `factory`):
+   ```bash
+   chown -R 1000:100 /mnt/persistent/home/factory
+   ```
+
+---
+
+### Step 7: Reboot & Boot Security Setup
+
+1. Reboot the system into the newly installed NixOS:
+   ```bash
+   reboot
+   ```
+
+2. After logging into `whio`, follow the [**whio Secure Boot & TPM2 Guide**](file:///home/factory/.nixos/hosts/whio/SECUREBOOT.md) to:
+   - Enroll Secure Boot keys using `sbctl`.
+   - Enroll the TPM2 security chip for automatic LUKS decryption.

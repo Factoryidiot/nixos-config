@@ -1,7 +1,6 @@
 # lib/home/gtk.nix
-{
-  pkgs,
-  ...
+{ pkgs
+, ...
 }: {
 
   gtk = {

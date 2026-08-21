@@ -1,6 +1,5 @@
 # ./lib/home/eza.nix
-{
-  ...
+{ ...
 }: {
 
   programs.eza = {

@@ -1,6 +1,5 @@
 # ./lib/home/shell/zoxide.nix
-{
-  ...
+{ ...
 }: {
 
   programs.zoxide = {

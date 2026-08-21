@@ -1,6 +1,5 @@
 # ./lib/nixos/default.nix
-{
-  ...
+{ ...
 }:
 {
 
