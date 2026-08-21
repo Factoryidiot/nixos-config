@@ -31,6 +31,7 @@ in
     users.${username} = {
       directories = [
         ".dotfiles"
+        ".nixos"
         "Projects"
 
         # .config

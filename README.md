@@ -1,4 +1,4 @@
-# nixos-config
+# .nixos
 
 ## Hosts
 whio
@@ -23,7 +23,7 @@ These are in no particular order of priority
 ## Install
 ### Prerequsite
 1. `sudo -i`
-2. Clone the repo `git clone https://github.com/your-username/nixos-config.git`.
+2. Clone the repo `git clone https://github.com/factoryidiot/.nixos.git ~/.nixos`.
 ### Prepare Disk
 1. Navigate to the desired hosts disko configuration and execute: 
 ```sh
@@ -57,7 +57,7 @@ Generate a `hardware-configuration.nix` to update the `UUID`s for the hardware-c
 3. Remove the contents of `rm /mnt/etc/nixos/*`.
 
 ### Perform installation
-From `/nixos-config` run:
+From `~/.nixos` run:
 ```sh
 nixos-install --root /mnt --no-root-password --flake .#[host-name] --no-write-lock-file
 ```
@@ -73,8 +73,8 @@ nixos-install --root /mnt --no-root-password --flake .#[host-name] --no-write-lo
 ### Post install
 Move any essential files to their `/persistent` location
 - `mv /mnt/etc/ssh /mnt/persistent/etc`
-- `mv hosts/whio/hardware-configuration.nix /mnt/persistent/home/factory/Projects/`
-- `mv ../nixos-config /mnt/persistent/home/factory/Projects/`
+- `cp hosts/whio/hardware-configuration.nix /mnt/persistent/home/factory/.nixos/hosts/whio/`
+- `mv ~/.nixos /mnt/persistent/home/factory/`
 
 > [!TIP]
 > **Configure Local PII**

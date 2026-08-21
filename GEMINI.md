@@ -1,6 +1,6 @@
 # Gemini Code Assistant Guidelines
 
-This document provides a comprehensive overview of the `nixos-config` project, its architecture, and development guidelines. The purpose of this file is to maximize the utility of the Gemini CLI for maintaining design consistency and providing accurate feature implementation advice.
+This document provides a comprehensive overview of the `.nixos` project, its architecture, and development guidelines. The purpose of this file is to maximize the utility of the Gemini CLI for maintaining design consistency and providing accurate feature implementation advice.
 
 ## 1. CONTEXT
 
@@ -42,7 +42,7 @@ The project is structured to separate concerns for hosts, users, and reusable mo
   - `/lib/nixos/`: Modules for system-level services and packages (e.g., `nvidia.nix`, `secureboot.nix`).
   - `/lib/home/`: Modules for user-level applications and dotfiles (e.g., `git.nix`, `zsh.nix`, `desktop/hyprland.nix`).
 
-- **External Dotfiles (`~/.dotfiles`)**: Raw configuration files (dotfiles) for various applications are now managed in a *separate* Git repository, typically cloned to `~/.dotfiles`. These files are linked into the user's home directory by `home-manager` using the `home.file` option. This approach decouples raw dotfiles from the Nix configuration repository, allowing for easier management and sharing of application-specific configurations independently.
+- **External Dotfiles (`~/.dotfiles`)**: Raw configuration files (dotfiles) for various applications are now managed in a *separate* Git repository, typically cloned to `~/.dotfiles`. These files are linked into the user's home directory by `home-manager` using the `home.file` option. This approach decouples raw dotfiles from the Nix configuration repository (`~/.nixos`), allowing for easier management and sharing of application-specific configurations independently.
 
 - **`/secrets`**: Manages encrypted secrets using `agenix`. `secrets.nix` defines the secrets, and the actual secret files are encrypted and stored in the directory.
 
@@ -70,7 +70,7 @@ Adherence to these guidelines is crucial for maintaining the quality and consist
 
 ### Adding New Applications and Configurations
 
-1.  **Dotfiles:** Add the new application's configuration file(s) to your *external* `~/.dotfiles` repository. This repository should be kept separate from `nixos-config`.
+1.  **Dotfiles:** Add the new application's configuration file(s) to your *external* `~/.dotfiles` repository. This repository should be kept separate from `~/.nixos`.
 2.  **Home Manager Module:** Create a new module in `/lib/home` (or `/lib/home/desktop` for GUI apps) to manage the application.
     - This module should have an `enable` option.
     - When enabled, it should:

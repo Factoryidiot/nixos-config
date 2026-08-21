@@ -19,8 +19,8 @@
    ```
 2. Clone the repository:
    ```sh
-   git clone https://github.com/your-username/nixos-config.git
-   cd nixos-config
+   git clone https://github.com/factoryidiot/.nixos.git ~/.nixos
+   cd ~/.nixos
    ```
 
 ---
@@ -65,7 +65,7 @@
    ```
 
 2. Export all 5 UUIDs directly into `hosts/kea/UUID` (formatted as Nix code):
-   Run this single command from your `nixos-config` directory:
+   Run this single command from your `~/.nixos` directory:
    ```sh
    cat <<EOF > hosts/kea/UUID
      BOOT_ESP_UUID = "$(blkid -s UUID -o value /dev/sda1)"; # /dev/sda1 (FAT32 EFI partition)
@@ -103,7 +103,7 @@ nixos-install --root /mnt --no-root-password --flake .#kea --no-write-lock-file
 ### 5. Post-Installation Setup
 1. Create persistent user directories on both SSD and Storage:
    ```sh
-   mkdir -p /mnt/persistent/home/dexter/Projects
+   mkdir -p /mnt/persistent/home/dexter/.nixos
    mkdir -p /mnt/persistent/etc
    mkdir -p /mnt/storage/home/dexter
    ```
@@ -111,7 +111,7 @@ nixos-install --root /mnt --no-root-password --flake .#kea --no-write-lock-file
 2. Move SSH keys and configuration:
    ```sh
    mv /mnt/etc/ssh /mnt/persistent/etc/
-   cp -r /root/nixos-config /mnt/persistent/home/dexter/Projects/
+   cp -r ~/.nixos/* ~/.nixos/.* /mnt/persistent/home/dexter/.nixos/ 2>/dev/null || cp -r ~/.nixos /mnt/persistent/home/dexter/
    ```
 
 3. Ensure correct user ownership (UID 1000, GID 100):
@@ -127,4 +127,4 @@ nixos-install --root /mnt --no-root-password --flake .#kea --no-write-lock-file
    ```sh
    reboot
    ```
-2. Log in as `dexter` and refer to [SECUREBOOT.md](file:///home/factory/Projects/nixos-config/hosts/kea/SECUREBOOT.md) to enroll Secure Boot keys and TPM2 automatic unlocking for both `/dev/sda2` and `/dev/sdb1`.
+2. Log in as `dexter` and refer to [SECUREBOOT.md](./SECUREBOOT.md) to enroll Secure Boot keys and TPM2 automatic unlocking for both `/dev/sda2` and `/dev/sdb1`.

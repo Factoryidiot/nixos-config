@@ -15,11 +15,11 @@ This section guides you through setting up your NixOS system, including Git and 
 
 ### 1. Clone the NixOS Configuration Repository (HTTPS)
 
-On a brand-new NixOS machine, clone this `nixos-config` repository using HTTPS, as SSH keys are not yet configured.
+On a brand-new NixOS machine, clone this `.nixos` repository using HTTPS, as SSH keys are not yet configured.
 
 ```sh
-git clone https://github.com/your-username/nixos-config.git
-cd nixos-config
+git clone https://github.com/factoryidiot/.nixos.git ~/.nixos
+cd ~/.nixos
 ```
 
 ### 2. Enter the Development Shell
@@ -69,7 +69,7 @@ For your machine to decrypt secrets, its SSH host key must be registered in `sec
     On a machine that *already* has decryption access (or if you can securely transfer the host key):
     *   Add the extracted new host key to `secrets/secrets.nix` under a new variable (e.g., `laptop2 = "ssh-ed25519 AAAA...";`).
     *   Add that new variable to the `publicKeys` list for all relevant `.age` files within `secrets/secrets.nix`.
-    *   Run `agenix --rekey` from the `nixos-config/secrets/` directory to re-encrypt secrets for the new host:
+    *   Run `agenix --rekey` from the `~/.nixos/secrets/` directory to re-encrypt secrets for the new host:
         ```sh
         cd secrets/
         agenix --rekey
@@ -87,7 +87,7 @@ The `GEMINI.md` context mentions that your raw configuration files (dotfiles) ar
 
 To simplify the initial setup and ensure dotfiles are immediately available:
 
-Instead of manually cloning the `~/.dotfiles` repository, you can manage them directly within your `nixos-config` repository or use `home-manager` to clone them. However, for a quicker bootstrap, consider using `home.file` to link dotfiles that are *also* part of this `nixos-config` repository (e.g., in a hypothetical `config/` directory within `nixos-config`).
+Instead of manually cloning the `~/.dotfiles` repository, you can manage them directly within your `.nixos` repository or use `home-manager` to clone them. However, for a quicker bootstrap, consider using `home.file` to link dotfiles that are *also* part of this `.nixos` repository (e.g., in a hypothetical `config/` directory within `.nixos`).
 
 *Since the current setup explicitly uses an *external* `~/.dotfiles` repo, the most straightforward approach for a "fresh install" will involve getting Git/SSH working first so that repo can be cloned.* The instructions above for SSH setup address this.
 

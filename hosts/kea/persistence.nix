@@ -34,6 +34,7 @@ in
     users.${username} = {
       directories = [
         ".dotfiles"
+        ".nixos"
         "Documents"
         "Music"
         "Pictures"

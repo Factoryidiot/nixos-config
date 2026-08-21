@@ -12,8 +12,8 @@ Memory: 30 GiB
 ## Install
 ### Prerequisite
 1.  `sudo -i`
-2.  Clone the repo `git clone https://github.com/Factoryidiot/nixos-config.git`
-3.  Navigate to the cloned repository: `cd /nixos-config`.
+2.  Clone the repo `git clone https://github.com/factoryidiot/.nixos.git ~/.nixos`
+3.  Navigate to the cloned repository: `cd ~/.nixos`.
 ### Prepare Disk
 > [!CAUTION]
 > **CRITICAL: VERIFY TARGET DISK**
@@ -51,7 +51,7 @@ nixos-generate-config --root /mnt
  rm /mnt/etc/nixos/*
 ```
 ### Perform Installation
-From `/mnt/config` run:
+From `~/.nixos` run:
 ```sh
 git add .
 nixos-install --root /mnt --no-root-password --flake .#tahi --no-write-lock-file
@@ -67,8 +67,8 @@ nixos-install --root /mnt --no-root-password --flake .#tahi --no-write-lock-file
 ### Post install
 Move any essential files to their `/persistent` location
 - `mv /mnt/etc/ssh /mnt/persistent/etc`
-- `cp hosts/tahi/hardware-configuration.nix /mnt/persistent/home/factory/Projects/`
-- `mv ../nixos-config /mnt/persistent/home/factory/Projects/`
+- `cp hosts/tahi/hardware-configuration.nix /mnt/persistent/home/factory/.nixos/hosts/tahi/`
+- `mv ~/.nixos /mnt/persistent/home/factory/`
 
 > [!TIP]
 > **Configure Local PII**
